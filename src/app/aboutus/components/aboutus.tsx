@@ -231,7 +231,7 @@ const AnimatedNumber: React.FC<AnimatedNumberProps> = ({
 const CONTACT = {
   phonePretty: "(407) 555-0134",
   phoneHref: "+14075550134",
-  email: "pediatricians@yourhealthpediatrics.com",
+  email: "info@yourhealthadults.com",
   address: "Kissimmee, Condado de Osceola, FL",
 };
 

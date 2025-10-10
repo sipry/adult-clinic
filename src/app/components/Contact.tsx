@@ -14,8 +14,6 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { useTranslation } from "../contexts/TranslationContext";
-import wave from "@/../public/assets/svg/wave.svg";
-
 /* ---------- Motion utils ---------- */
 function usePrefersReducedMotion(): boolean {
   const [reduced, setReduced] = React.useState(false);
@@ -159,7 +157,7 @@ const ContactSplitWithForm: React.FC = () => {
   const { t } = useTranslation();
 
   const ADDRESS = "201 Hilda St Suite # 10, Kissimmee, FL 34741";
-  const EMAIL = "pediatricians@yourhealthadult.com";
+  const EMAIL = "info@yourhealthadult.com";
   const PHONE_DISPLAY = "(407) 554-5707";
   const PHONE_TEL = "+407554-5707";
   const FAX_DISPLAY = "(321) 900-4411";
@@ -299,18 +297,13 @@ const ContactSplitWithForm: React.FC = () => {
       id="contact"
       className="relative pb-20 bg-gradient-to-b from-white via-sky-50 to-white pt-16 sm:pt-20 scroll-mt-10 overflow-x-clip overflow-hidden"
     >
-      <img
-        src={wave.src}
-        alt=""
-        aria-hidden="true"
-        className="pointer-events-none select-none absolute inset-x-0 -top-1 w-full h-auto opacity-20 -rotate-180 z-0"
-      />
+
 
       {/* Header */}
       <div className="relative z-10">
         <div className="mx-auto max-w-7xl px-6 lg:px-8 text-center">
           <Reveal y={8} delay={0}>
-            <p className="text-xs font-semibold tracking-[0.2em] text-lime-900 uppercase mb-3">
+            <p className="text-xs font-semibold tracking-[0.2em] text-sky-900 uppercase mb-3">
               {t("contact.pretitle")}
             </p>
           </Reveal>

@@ -82,7 +82,7 @@ const ClinicInfoStrip: React.FC<ClinicInfoStripProps> = ({
   const { t } = useTranslation();
 
   // Datos internos hardcodeados
-  const email = "pediatricians@yourhealthpediatrics.com";
+  const email = "info@yourhealthadults.com";
   const phone = "+(407) 574 4848";
   const location = "201 Hilda St Suite # 10, Kissimmee, FL 34741";
 

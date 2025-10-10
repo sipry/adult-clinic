@@ -199,12 +199,12 @@ const Footer: React.FC = () => {
             </li>
             <li className="flex items-start gap-2 text-xs">
               <a
-                href="mailto:pediatricians@yourhealthpediatrics.com"
+                href="mailto:info@yourhealthadults.com"
                 className="hover:text-white leading-snug"
                 aria-label={t("footer.contact.emailAria")}
               >
-                <span className="block">pediatricians@</span>
-                <span>yourhealthpediatrics.com</span>
+                <span className="block">info@</span>
+                <span>yourhealthadults.com</span>
               </a>
             </li>
             <li className="flex items-start gap-2 text-xs">
