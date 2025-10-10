@@ -14,6 +14,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { useTranslation } from "../contexts/TranslationContext";
+import wave from "@/../public/assets/svg/wave.svg";
 
 /* ---------- Motion utils ---------- */
 function usePrefersReducedMotion(): boolean {
@@ -132,14 +133,13 @@ const Reveal: React.FC<{
 
 /* ---------- Tipos ---------- */
 type FormState = {
-  name: string;
-  patientName: string;     
+  patientName: string;     // <- ahora el primer campo
   email: string;
   phone: string;
-  reason: string;        
+  reason: string;
   appointmentType: "nueva" | "seguimiento";
   doctor: string;
-  message: string
+  message: string;
   agree: boolean;
   company?: string;
 };
@@ -159,11 +159,11 @@ const ContactSplitWithForm: React.FC = () => {
   const { t } = useTranslation();
 
   const ADDRESS = "201 Hilda St Suite # 10, Kissimmee, FL 34741";
-  const EMAIL = "pediatricians@yourhealthpediatrics.com";
-  const PHONE_DISPLAY = "(407) 574 - 4848";
-  const PHONE_TEL = "+14075744848";
-  const FAX_DISPLAY = "(407) 518 - 1919";
-  const FAX_TEL = "+1405744848";
+  const EMAIL = "pediatricians@yourhealthadult.com";
+  const PHONE_DISPLAY = "(407) 554-5707";
+  const PHONE_TEL = "+407554-5707";
+  const FAX_DISPLAY = "(321) 900-4411";
+  const FAX_TEL = "+321900-4411";
 
   const mapQuery = React.useMemo(() => encodeURIComponent(ADDRESS), [ADDRESS]);
   const MAP_LINK = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
@@ -176,7 +176,6 @@ const ContactSplitWithForm: React.FC = () => {
 
   /* ---------- Estado del formulario ---------- */
   const [form, setForm] = React.useState<FormState>({
-    name: "",
     patientName: "",
     email: "",
     phone: "",
@@ -208,13 +207,12 @@ const ContactSplitWithForm: React.FC = () => {
   );
 
   const validate = React.useCallback((): string | null => {
-    if (!form.name.trim()) return t("contact.form.errors.name");
     if (!form.patientName.trim()) return t("contact.form.errors.patientName");
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) return t("contact.form.errors.email");
     // Teléfono requerido + longitud mínima
     const phoneDigits = form.phone.replace(/\D/g, "");
     if (!phoneDigits || phoneDigits.length < 10) return t("contact.form.errors.phoneRequired");
-    // Motivo requerido (no puede ser la opción placeholder)
+    // Motivo requerido
     if (!form.reason) return t("contact.form.errors.reason");
     if (form.company) return t("contact.form.errors.bot");
     if (!WEB3FORMS_KEY) return "Missing Web3Forms Access Key. Set NEXT_PUBLIC_WEB3FORMS_KEY in .env.local";
@@ -235,15 +233,15 @@ const ContactSplitWithForm: React.FC = () => {
         const fd = new FormData();
         fd.append("access_key", WEB3FORMS_KEY);
 
-        // Meta
-        fd.append("subject", "Website contact — Your Health Pediatrics");
-        fd.append("replyto", form.email);
-        fd.append("from_name", form.name);
-        fd.append("from_email", form.email);
+        // ---------- Meta ----------
+        fd.append("subject", "Website contact — Your Health Adult Care");
+        fd.append("replyto", form.email);            // respuestas al email del remitente
+        fd.append("from_name", form.patientName);    // usar el nombre del paciente como remitente visible
+        // NO usamos from_email para evitar duplicación
+        // fd.append("from_email", form.email);
 
-        // Campos
-        fd.append("name", form.name);
-        fd.append("patientName", form.patientName);
+        // ---------- Campos del cuerpo ----------
+        fd.append("patientName", form.patientName);  // primer campo
         fd.append("email", form.email);
         fd.append("phone", form.phone);
         fd.append("reason", form.reason);
@@ -262,11 +260,9 @@ const ContactSplitWithForm: React.FC = () => {
           throw new Error(reason);
         }
 
-        // Mensaje de éxito (puedes internacionalizar este string o usar una key)
+        // Éxito
         setSuccess(t("contact.form.success"));
-        // Limpio valores pero dejo success para mostrar el panel bonito
         setForm({
-          name: "",
           patientName: "",
           email: "",
           phone: "",
@@ -303,13 +299,18 @@ const ContactSplitWithForm: React.FC = () => {
       id="contact"
       className="relative pb-20 bg-gradient-to-b from-white via-sky-50 to-white pt-16 sm:pt-20 scroll-mt-10 overflow-x-clip overflow-hidden"
     >
-
+      <img
+        src={wave.src}
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none select-none absolute inset-x-0 -top-1 w-full h-auto opacity-20 -rotate-180 z-0"
+      />
 
       {/* Header */}
       <div className="relative z-10">
         <div className="mx-auto max-w-7xl px-6 lg:px-8 text-center">
           <Reveal y={8} delay={0}>
-            <p className="text-xs font-semibold tracking-[0.2em] text-sky-900 uppercase mb-3">
+            <p className="text-xs font-semibold tracking-[0.2em] text-lime-900 uppercase mb-3">
               {t("contact.pretitle")}
             </p>
           </Reveal>
@@ -339,10 +340,10 @@ const ContactSplitWithForm: React.FC = () => {
                         <CheckCircle2 className="h-9 w-9 text-green-600" aria-hidden="true" />
                       </div>
                       <h3 className="mt-4 text-2xl font-semibold text-gray-900">
-                        {t("contact.form.done.title") /* p.e. “¡Mensaje enviado!” */}
+                        {t("contact.form.done.title")}
                       </h3>
                       <p className="mt-2 text-sm text-gray-600">
-                        {t("contact.form.done.subtitle") /* p.e. “Gracias por escribirnos. Te contactaremos pronto por teléfono o email.” */}
+                        {t("contact.form.done.subtitle")}
                       </p>
 
                       <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
@@ -398,25 +399,7 @@ const ContactSplitWithForm: React.FC = () => {
                           aria-hidden="true"
                         />
 
-                        {/* Nombre remitente */}
-                        <div className="col-span-1">
-                          <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                            {t("contact.form.fields.name.label")}
-                          </label>
-                          <input
-                            id="name"
-                            name="name"
-                            type="text"
-                            value={form.name}
-                            onChange={onChange}
-                            required
-                            autoComplete="name"
-                            className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-200"
-                            placeholder={t("contact.form.fields.name.placeholder")}
-                          />
-                        </div>
-
-                        {/* Nombre del paciente */}
+                        {/* Patient Name (primer campo) */}
                         <div className="col-span-1">
                           <label htmlFor="patientName" className="block text-sm font-medium text-gray-700">
                             {t("contact.form.fields.patientName.label")}
@@ -428,7 +411,7 @@ const ContactSplitWithForm: React.FC = () => {
                             value={form.patientName}
                             onChange={onChange}
                             required
-                            autoComplete="off"
+                            autoComplete="name"
                             className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-200"
                             placeholder={t("contact.form.fields.patientName.placeholder")}
                           />
@@ -471,7 +454,7 @@ const ContactSplitWithForm: React.FC = () => {
                           />
                         </div>
 
-                        {/* Motivo (con placeholder deshabilitado) */}
+                        {/* Motivo */}
                         <div className="col-span-1">
                           <label htmlFor="reason" className="block text-sm font-medium text-gray-700">
                             {t("contact.form.fields.reason.label")}
@@ -494,7 +477,7 @@ const ContactSplitWithForm: React.FC = () => {
                           </select>
                         </div>
 
-                        {/* Tipo de cita (al lado del motivo en md+) */}
+                        {/* Tipo de cita */}
                         <fieldset className="col-span-1 self-end">
                           <legend className="block text-sm font-medium text-gray-700">
                             {t("contact.form.fields.appointmentType.label")}

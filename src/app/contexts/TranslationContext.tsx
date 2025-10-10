@@ -69,10 +69,10 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'about.text3': 'Nuestro compromiso es claro: resolver tus dudas con un lenguaje sencillo, actuar con evidencia y estar disponibles cuando más nos necesites.',
     'about.stats.experience': 'Años de Experiencia',
     'about.stats.families': 'Familias Felices',
-    'about.title.detail': 'Your Health Pediatrics: Atención pediátrica bilingüe',
+    'about.title.detail': 'Your Health Adult Care: Atención pediátrica bilingüe',
     'about.cta1.detail': 'Conoce Nuestro Equipo',
     'about.cta2.detail': 'Programar Cita',
-    'about.mission.text1': 'En Your Health Pediatrics promovemos la salud de niños y adolescentes (0–18) con atención accesible y de alta calidad. Queremos superar expectativas y ser la clínica pediátrica bilingüe preferida en Osceola.',
+    'about.mission.text1': 'En Your Health Adult Care promovemos la salud de niños y adolescentes (0–18) con atención accesible y de alta calidad. Queremos superar expectativas y ser la clínica pediátrica bilingüe preferida en Osceola.',
     'about.mission.text2': 'Osceola es diverso y cada vez más hispano; en Kissimmee, 60% habla español en casa. Por eso nuestro equipo es bilingüe y ofrece un trato cercano y respetuoso.',
     'about.mission.title': 'Nuestra Mision',
     'about.details.title2': 'Queremos cuidar a tus seres queridos',
@@ -85,7 +85,7 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'about.peso': 'Peso saludable',
     'about.peso.detail': 'Hábitos y seguimiento personalizado.',
     'about.mission': 'Nuestra Misión',
-    'mission.text1': 'La misión de Your Health Pediatrics es promover la salud y el bienestar de la población pediátrica local, brindando atención accesible y de alta calidad a niños, desde recién nacidos hasta adolescentes (18 años). Your Health Pediatrics aspira a brindar servicios que superen las expectativas de nuestros pacientes, resultando en niños sanos y padres felices, lo que la convierte en la clínica pediátrica bilingüe preferida en el condado de Osceola.',
+    'mission.text1': 'La misión de Your Health Adult Care es promover la salud y el bienestar de la población pediátrica local, brindando atención accesible y de alta calidad a niños, desde recién nacidos hasta adolescentes (18 años). Your Health Adult Care aspira a brindar servicios que superen las expectativas de nuestros pacientes, resultando en niños sanos y padres felices, lo que la convierte en la clínica pediátrica bilingüe preferida en el condado de Osceola.',
     'mission.text2': 'Las estadísticas muestran que Osceola es uno de los condados de más rápido crecimiento en Florida y en la nación. Esto subraya la importancia de atender a un grupo diverso de culturas e idiomas en la zona. Por eso es fundamental para nosotros contar con pediatras y personal bilingüe en nuestra clínica.',
     'about.equipo': 'Atención humana, cercana y en tu idioma.',
 
@@ -385,7 +385,7 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
 
 
     // Marca y tagline
-    'footer.brand': 'Your Health Pediatrics',
+    'footer.brand': 'Your Health Adult Care',
     'footer.tagline': 'Cuidando la salud de tus pequeños con dedicación y cariño.',
     'footer.cta': 'Agendar cita',
     'footer.ctaAria': 'Agendar cita',
@@ -458,7 +458,7 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'about.text4': 'Our commitment is clear: to resolve your doubts in simple language, act with evidence, and be available when you need us most.',
     'about.stats.experience': 'Years of Experience',
     'about.stats.families': 'Happy Families',
-    'about.title.detail': 'Your Health Pediatrics: Bilingual Pediatric Care',
+    'about.title.detail': 'Your Health Adult Care: Bilingual Pediatric Care',
     'about.cta1.detail': 'Meet Our Providers',
     'about.cta2.detail': 'Schedule Apointment',
     'about.mission.title': 'Our Mission',
@@ -472,10 +472,10 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'about.peso': 'Healthy weight',
     'about.peso.detail': 'Habits and personalized follow up.',
     'about.mission': 'Our Mission',
-    'mission.text1': "The mission of Your Health Pediatrics is to promote the health and well-being of the local pediatric population by providing accessible, high-quality care to children from newborns to adolescents (18 years and older). Your Health Pediatrics aspires to provide services that exceed our patients' expectations, resulting in healthy children and happy parents, making it the preferred bilingual pediatric clinic in Osceola County.",
+    'mission.text1': "The mission of Your Health Adult Care is to promote the health and well-being of the local pediatric population by providing accessible, high-quality care to children from newborns to adolescents (18 years and older). Your Health Adult Care aspires to provide services that exceed our patients' expectations, resulting in healthy children and happy parents, making it the preferred bilingual pediatric clinic in Osceola County.",
     'mission.text2': "Statistics show that Osceola is one of the fastest-growing counties in Florida and the nation. This underscores the importance of serving a diverse group of cultures and languages ​​in the area. That's why it's critical for us to have bilingual pediatricians and staff at our clinic.",
     'about.equipo': 'Human attention, close and in your language.',
-    'about.mission.text1': 'At Your Health Pediatrics, we promote the health of children and adolescents (0–18) with accessible, high-quality care. We aim to exceed expectations and be Osceola’s preferred bilingual pediatric clinic.',
+    'about.mission.text1': 'At Your Health Adult Care, we promote the health of children and adolescents (0–18) with accessible, high-quality care. We aim to exceed expectations and be Osceola’s preferred bilingual pediatric clinic.',
     'about.mission.text2': 'Osceola is diverse and increasingly Hispanic; in Kissimmee, 60% speak Spanish at home. That’s why our team is bilingual and offers warm, respectful care.',
 
 
@@ -770,7 +770,7 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
 
 
     // Brand and tagline
-    'footer.brand': 'Your Health Pediatrics',
+    'footer.brand': 'Your Health Adult Care',
     'footer.tagline': 'Caring for your little ones with dedication and kindness.',
     'footer.cta': 'Book appointment',
     'footer.ctaAria': 'Book appointment',

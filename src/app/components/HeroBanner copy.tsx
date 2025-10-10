@@ -33,7 +33,7 @@ const slides = [
 ];
 
 const EYEBROW = 'PEDIATRIC & FAMILY CARE';
-const HEADLINE_TOP = 'Your health Pediatrics';
+const HEADLINE_TOP = 'Your Health Adult Care';
 
 const ONLY_FADE = false;
 

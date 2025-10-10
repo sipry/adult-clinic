@@ -213,7 +213,7 @@ const Navbar: React.FC<NavbarProps> = ({ scheme = 'auto' }) => {
           {/* Header - no se encoge */}
           <div className="shrink-0 flex items-center justify-between p-6 border-b border-gray-200">
             <div className="flex items-center space-x-2">
-              <span className="text-md tracking-wide font-semibold text-gray-800">Your Health Pediatrics</span>
+              <span className="text-md tracking-wide font-semibold text-gray-800">Your Health Adult Care</span>
             </div>
             <button
               onClick={closeMobileMenu}

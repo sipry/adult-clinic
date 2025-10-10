@@ -24,7 +24,7 @@ const Location: React.FC = () => {
           <div className="p-8 text-center">
             <h4 className="text-xl font-semibold text-gray-800 mb-4">{t('about.location.title')}</h4>
             <div className="mb-4">
-              <p className="text-gray-600 font-medium">Your Health Pediatrics</p>
+              <p className="text-gray-600 font-medium">Your Health Adult Care</p>
               <p className="text-gray-600">201 Hilda St Suite # 10 Kissimmee FL 34741</p>
             </div>
             <div className="rounded-lg overflow-hidden shadow-md">
@@ -36,7 +36,7 @@ const Location: React.FC = () => {
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Your Health Pediatrics Location"
+                title="Your Health Adult Care Location"
               ></iframe>
             </div>
           </div>
