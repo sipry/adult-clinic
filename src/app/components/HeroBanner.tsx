@@ -21,7 +21,7 @@ import heropaint from '@/../public/assets/images/hero-paint.jpg';
 const slides = [
 
 
-  { src: heropaint.src, alt: 'Globo 3', pos: '50% 10%' },
+  { src: heropaint.src, alt: 'Globo 3', pos: '50% 1%' },
   // { src: demo3.src, alt: 'Globo 3', pos: '50% 90%' },
   // { src: globo6.src, alt: 'Globo 3', pos: '50% 90%' },
   // { src: globo8.src, alt: 'Globo 3', pos: '50% 90%' },
