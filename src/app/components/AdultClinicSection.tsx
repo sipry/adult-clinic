@@ -11,7 +11,6 @@ import {
   Languages,
   Users,
 } from "lucide-react";
-import wave from "@/../public/assets/svg/wave.svg";
 import { useTranslation } from "../contexts/TranslationContext";
 
 export type ClinicPromoDeluxeFinalProps = {
@@ -95,14 +94,7 @@ export default function ClinicPromoDeluxeFinal({
       className="relative isolate overflow-hidden bg-white mt-14 pb-20"
       aria-labelledby="adult-clinic-heading"
     >
-      {/* Fondo “ola” */}
-      <img
-        src={wave.src}
-        alt=""
-        aria-hidden="true"
-        draggable={false}
-        className="pointer-events-none select-none absolute inset-x-0 -bottom-1 w-full h-auto opacity-20 -z-10"
-      />
+     
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 py-16 sm:py-20">
         <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-16">

@@ -14,7 +14,6 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { useTranslation } from "../contexts/TranslationContext";
-import wave from "@/../public/assets/svg/wave.svg";
 
 /* ---------- Motion utils ---------- */
 function usePrefersReducedMotion(): boolean {
@@ -147,8 +146,8 @@ type FormState = {
 
 const MAX_CHARS = 800;
 const DOCTORS: string[] = [
-  "Dra. Martha I. Acosta",
-  "Dr. Eduardo F. Bolumen",
+  "Dr. Jaime Acosta",
+  "Dr. Juan Ortiz Diaz",
 ];
 
 /* ---------- Web3Forms ---------- */
@@ -304,18 +303,13 @@ const ContactSplitWithForm: React.FC = () => {
       id="contact"
       className="relative pb-20 bg-gradient-to-b from-white via-sky-50 to-white pt-16 sm:pt-20 scroll-mt-10 overflow-x-clip overflow-hidden"
     >
-      <img
-        src={wave.src}
-        alt=""
-        aria-hidden="true"
-        className="pointer-events-none select-none absolute inset-x-0 -top-1 w-full h-auto opacity-20 -rotate-180 z-0"
-      />
+
 
       {/* Header */}
       <div className="relative z-10">
         <div className="mx-auto max-w-7xl px-6 lg:px-8 text-center">
           <Reveal y={8} delay={0}>
-            <p className="text-xs font-semibold tracking-[0.2em] text-lime-900 uppercase mb-3">
+            <p className="text-xs font-semibold tracking-[0.2em] text-sky-900 uppercase mb-3">
               {t("contact.pretitle")}
             </p>
           </Reveal>

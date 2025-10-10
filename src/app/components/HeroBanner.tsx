@@ -13,14 +13,7 @@ import {
 } from 'framer-motion';
 
 
-import flowerField from '@/../public/assets/images/flower-field.jpg';
-import woman from '@/../public/assets/images/woman.jpg';
-import globo4 from '@/../public/assets/images/globo4.jpg';
-import globo6 from '@/../public/assets/images/globo6.jpg';
-import globo8 from '@/../public/assets/images/globo8.jpg';
-import demo1 from '@/../public/assets/images/demo1.jpg';
-import demo2 from '@/../public/assets/images/demo2.jpg';
-import demo3 from '@/../public/assets/images/demo3.jpg';
+import heropaint from '@/../public/assets/images/hero-paint.jpg';
 
 
 
@@ -28,18 +21,18 @@ import demo3 from '@/../public/assets/images/demo3.jpg';
 const slides = [
 
 
-  { src: globo4.src, alt: 'Globo 3', pos: '50% 90%' },
+  { src: heropaint.src, alt: 'Globo 3', pos: '50% 10%' },
   // { src: demo3.src, alt: 'Globo 3', pos: '50% 90%' },
-  { src: globo6.src, alt: 'Globo 3', pos: '50% 90%' },
-  { src: globo8.src, alt: 'Globo 3', pos: '50% 90%' },
-  { src: demo1.src, alt: 'Globo 3', pos: '50% 90%' },
-  { src: woman.src, alt: 'Woman', pos: '50% 90%' },
-  { src: demo2.src, alt: 'Globo 3', pos: '50% 90%' },
-  { src: flowerField.src, alt: 'Flower Field', pos: '50% 90%' },
+  // { src: globo6.src, alt: 'Globo 3', pos: '50% 90%' },
+  // { src: globo8.src, alt: 'Globo 3', pos: '50% 90%' },
+  // { src: demo1.src, alt: 'Globo 3', pos: '50% 90%' },
+  // { src: woman.src, alt: 'Woman', pos: '50% 90%' },
+  // { src: demo2.src, alt: 'Globo 3', pos: '50% 90%' },
+  // { src: flowerField.src, alt: 'Flower Field', pos: '50% 90%' },
 
 ];
 
-const HEADLINE_TOP = 'Your health Pediatrics';
+const HEADLINE_TOP = 'Your Health Adult Care';
 const ONLY_FADE = false;
 const AUTOPLAY_MS = 6000;
 
@@ -202,17 +195,17 @@ export default function HeroBannerMixedCentered() {
               className="mt-3 font-bold text-white leading-[0.95]
                          whitespace-nowrap text-3xl sm:text-5xl md:text-6xl lg:text-7xl"
             >
-              {topWords.map((w, idx) => (
+              {/* {topWords.map((w, idx) => ( */}
                 <motion.span
-                  key={idx}
-                  variants={prefersReducedMotion || ONLY_FADE
-                    ? { hidden: { opacity: 0 }, show: { opacity: 1, transition: { duration: 0.36 } } }
-                    : { hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0, transition: { duration: 0.36, ease: 'easeOut' } } }}
-                  className="inline-block mr-3"
+                  // key={idx}
+                  // variants={prefersReducedMotion || ONLY_FADE
+                  //   ? { hidden: { opacity: 0 }, show: { opacity: 1, transition: { duration: 0.36 } } }
+                  //   : { hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0, transition: { duration: 0.36, ease: 'easeOut' } } }}
+                  // className="inline-block mr-3"
                 >
-                  {w}
+               Your Health Adult Care
                 </motion.span>
-              ))}
+              {/* ))} */}
             </motion.h2>
 
             {/* subtitle */}

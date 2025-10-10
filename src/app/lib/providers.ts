@@ -1,5 +1,5 @@
 import doctorAvatar from "@/../public/assets/images/foto-doctora.jpg";
-import maleAvatar from "@/../public/assets/images/Bolumen.jpeg";
+import maleAvatar from "@/../public/assets/images/Juan.jpg";
 import { useTranslation } from "../contexts/TranslationContext";
 
 export interface ProviderItem {
@@ -38,7 +38,7 @@ export const useProvidersData = () => {
     },
     {
       id: "dr-james-thompson",
-      name: "Dr. Eduardo F. Bolumen, MD",
+      name: "Dr. Juan Ortiz Guevara, MD",
       title: t("providers.dr2.title"),
       image: maleAvatar,
       education: t("providers.dr2.education"),

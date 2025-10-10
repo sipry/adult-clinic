@@ -202,7 +202,7 @@ const CompactMedicalPlans: React.FC = () => {
 
       <section
         id="insurance"
-        className="bg-[#e0eaff]/95 scroll-mt-28 py-5 overflow-x-clip"
+        className="bg-white scroll-mt-28 py-5 overflow-x-clip"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="py-16 md:py-12 px-2">
@@ -252,7 +252,7 @@ const CompactMedicalPlans: React.FC = () => {
                 <Reveal y={14} delay={140}>
                   <button
                     onClick={() => setInsuranceOpen(true)}
-                    className="mt-0 bg-lime-900 text-white font-semibold px-10 py-3 md:px-16 rounded-lg transition-all inline-flex items-center gap-2 text-sm hover:scale-105"
+                    className="mt-0 bg-sky-900 text-white font-semibold px-10 py-3 md:px-16 rounded-lg transition-all inline-flex items-center gap-2 text-sm hover:scale-105"
                   >
                     <Search className="w-4 h-4" />
                     <span>{t("insurance.search")}</span>

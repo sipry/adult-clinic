@@ -153,8 +153,8 @@ const IconBubble: React.FC<{ children: React.ReactNode; active?: boolean }> = ({
     className="relative z-10 grid size-16 place-items-center rounded-full bg-white shadow-sm ring-1 ring-black/5"
     style={{ willChange: "transform" }}
   >
-    <div className="grid size-12 place-items-center rounded-full bg-lime-100">
-      <div className="text-lime-900">{children}</div>
+    <div className="grid size-12 place-items-center rounded-full bg-sky-100">
+      <div className="text-sky-900">{children}</div>
     </div>
   </motion.div>
 );
@@ -227,7 +227,7 @@ export default function AppointmentProcess({
           {/* Texto (primero en el DOM, arriba en mobile, derecha en desktop) */}
           <div className="order-1 lg:order-2 text-center lg:text-left max-w-2xl mx-auto lg:mx-0">
             <Reveal y={8} delay={0}>
-              <div className="text-xs font-semibold tracking-[0.2em] text-lime-900 uppercase mb-3">
+              <div className="text-xs font-semibold tracking-[0.2em] text-sky-900 uppercase mb-3">
                 {eyebrowText}
               </div>
             </Reveal>
@@ -279,18 +279,7 @@ export default function AppointmentProcess({
 
       <div className="pointer-events-none absolute inset-0 -z-10 bg-sky-950/[0.01]" />
 
-      <img
-        src={balloon2.src}
-        alt=""
-        aria-hidden
-        className="pointer-events-none select-none absolute -right-50 md:-right-40 top-10 z-10 w-[500px] h-auto opacity-70 bounce-slow"
-      />
-      <img
-        src={wave.src}
-        alt=""
-        aria-hidden
-        className="pointer-events-none select-none absolute right-0 bottom-0 w-full h-auto opacity-15 -z-20"
-      />
+     
     </section>
   );
 }

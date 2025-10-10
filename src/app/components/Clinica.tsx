@@ -9,7 +9,7 @@ import oficina3 from "@/../public/assets/images/oficina-3.jpg";
 import oficina4 from "@/../public/assets/images/oficina-4.jpg";
 import oficina5 from "@/../public/assets/images/oficina-5.jpg";
 import oficina7 from "@/../public/assets/images/outside-clinic.jpg";
-import wave from "@/../public/assets/svg/wave.svg";
+
 
 /* -------------------- Datos -------------------- */
 const defaultImages = [
@@ -239,13 +239,7 @@ export default function SeccionOficinaPediatra({
   return (
     <div className="relative w-full overflow-hidden ">
       {/* Wave decorativo */}
-      <img
-        src={wave.src}
-        alt=""
-        aria-hidden
-        className="pointer-events-none select-none absolute inset-x-0 -top-1 w-full h-auto opacity-16 rotate-180 z-0 block"
-      />
-
+    
       <section
         id="gallery"
         className="relative z-10 pt-24 pb-10 scroll-mt-10"
@@ -254,7 +248,7 @@ export default function SeccionOficinaPediatra({
         {/* Título + CTA + Flechas */}
         <div className="text-center mb-6 mx-auto max-w-7xl lg:px-8 px-4 sm:px-6">
           <Reveal y={8} delay={0}>
-            <p className="text-xs font-semibold tracking-[0.2em] text-lime-900 uppercase mb-3">
+            <p className="text-xs font-semibold tracking-[0.2em] text-sky-900 uppercase mb-3">
               {t("clinic.pretitle")}
             </p>
           </Reveal>
@@ -269,7 +263,7 @@ export default function SeccionOficinaPediatra({
             <div className="mt-3 flex items-center justify-center gap-2 mb-15">
               <Link
                 href={"/gallery"}
-                className="bg-amber-200 text-gray-800 font-semibold px-10 py-3 md:px-16 rounded-sm transition-all inline-flex items-center gap-2 text-sm hover:scale-102"
+                className="bg-sky-900 text-white font-semibold px-10 py-3 md:px-16 rounded-sm transition-all inline-flex items-center gap-2 text-sm hover:scale-102"
               >
                 <span>{t("clinic.cta")}</span>
                 <ChevronRight className="w-4 h-4" />
@@ -281,7 +275,7 @@ export default function SeccionOficinaPediatra({
                 onClick={() => scrollOne(-1)}
                 aria-label="Foto anterior"
                 title="Anterior"
-                className="bg-lime-800 text-white font-semibold px-10 py-3 md:px-10 rounded-sm transition-all inline-flex items-center gap-2 text-sm hover:scale-105"              >
+                className="bg-sky-900 text-white font-semibold px-10 py-3 md:px-10 rounded-sm transition-all inline-flex items-center gap-2 text-sm hover:scale-105"              >
                 <ChevronLeft className="w-4 h-5" />
               </button>
               {/* Flecha Derecha (uno-por-uno) */}
@@ -290,7 +284,7 @@ export default function SeccionOficinaPediatra({
                 onClick={() => scrollOne(1)}
                 aria-label="Foto siguiente"
                 title="Siguiente"
-                className="bg-lime-800 text-white font-semibold px-10 py-3 md:px-10 rounded-sm transition-all inline-flex items-center gap-2 text-sm hover:scale-105"              >
+                className="bg-sky-900 text-white font-semibold px-10 py-3 md:px-10 rounded-sm transition-all inline-flex items-center gap-2 text-sm hover:scale-105"              >
                 <ChevronRight className="w-4 h-5" />
               </button>
             </div>

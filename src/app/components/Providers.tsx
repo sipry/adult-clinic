@@ -4,7 +4,6 @@ import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useProvidersData } from "../provider/data";
-import wave from "@/../public/assets/svg/wave.svg";
 import providersSvg from "@/../public/assets/svg/providers.svg";
 import { useTranslation } from "../contexts/TranslationContext";
 
@@ -138,27 +137,14 @@ const Providers: React.FC<ProvidersProps> = ({ onProviderClick }) => {
       id="providers"
       className="relative bg-white pt-24 pb-10 md:pt-28 md:pb-12 overflow-hidden scroll-mt-28"
     >
-      {/* === DECORATIONS === */}
-      <img
-        src={wave.src}
-        alt=""
-        aria-hidden="true"
-        className="pointer-events-none select-none absolute top-0 lg:-top-10 left-0 w-full opacity-20 z-0 rotate-180"
-      />
 
-      <img
-        src={providersSvg.src}
-        alt=""
-        aria-hidden="true"
-        className="pointer-events-none absolute -bottom-20 left-0 hidden xl:block w-[400px] h-[400px] opacity-60"
-      />
 
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-20 px-6 lg:px-8 xl:grid-cols-5">
         {/* Section Header */}
         <div className="max-w-2xl xl:col-span-2 z-10">
 
           <Reveal y={8} delay={0}>
-            <p className="text-xs font-semibold tracking-[0.2em] text-lime-900 uppercase mb-3">
+            <p className="text-xs font-semibold tracking-[0.2em] text-sky-900 uppercase mb-3">
               {t('providers.pretitle')}
             </p>
           </Reveal>
@@ -230,7 +216,7 @@ const Providers: React.FC<ProvidersProps> = ({ onProviderClick }) => {
                     <div className="mt-6">
                       <Link
                         href={`/provider/${provider.id}`}
-                        className="inline-flex items-center justify-center gap-1.5 px-3 h-9 rounded-sm bg-lime-900 text-white text-sm font-medium transition-colors duration-200 w-30"
+                        className="inline-flex items-center justify-center gap-1.5 px-3 h-9 rounded-sm bg-sky-900 text-white text-sm font-medium transition-colors duration-200 w-30"
                       >
                         {t('proider.cta')}
                         <ArrowRight className="w-4 h-4" />

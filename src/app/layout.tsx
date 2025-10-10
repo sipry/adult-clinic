@@ -13,8 +13,8 @@ const merriweather = Merriweather({
 });
 
 export const metadata: Metadata = {
-  title: "Your Health Pediatrics",
-  description: "Pediatric clinic site",
+  title: "Your Health Adult Care",
+  description: "Adult health care clinic site",
 };
 
 // IMPORTANTE: que sea STRING, no IIFE ejecutada.

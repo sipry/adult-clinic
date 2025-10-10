@@ -49,7 +49,7 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'nav.process': 'Proceso',
 
     // Hero Banner
-    'hero.pretitle': 'CUIDADO PEDIÁTRICO Y FAMILIAR',
+    'hero.pretitle': 'CUIDADO FAMILIAR',
     'hero.subtitle': 'Servicios pediátricos cercanos y confiables para cuidar lo más valioso: tu familia.',
     'hero.contact': 'Programar una cita',
     'hero.portal': 'Explorar servicios',
@@ -437,14 +437,14 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'nav.process': 'Process',
 
     // Hero Banner
-    'hero.pretitle': 'PEDIATRIC & FAMILY CARE',
-    'hero.subtitle': "Close and reliable pediatric services to care for what matters most: your family.",
+    'hero.pretitle': 'FAMILY CARE',
+    'hero.subtitle': "Close and reliable services to care for what matters most: your family.",
     'hero.contact': 'Schedule an appointment',
     'hero.portal': 'Explore Services',
 
     // About Us
     'about.pretitle': 'About Us',
-    'about.title': 'Your trusted pediatrician',
+    'about.title': 'Your trusted Experts',
     'about.subtitle': 'Prevention, clarity, and science in every consultation.',
     'about.bullet1': 'Vaccine calendar up to date',
     'about.bullet2': 'Growth and development check-ups',

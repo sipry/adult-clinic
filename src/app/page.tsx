@@ -45,7 +45,7 @@ function App() {
           <AwardsStrip />
           <Process />
           <StackedMasonryGallery/>
-          <AdultClinicSection />
+          {/* <AdultClinicSection /> */}
           <Contact />
           <Footer />
           <ScrollToTop showAfterPx={200} hideNearTopPx={4} />

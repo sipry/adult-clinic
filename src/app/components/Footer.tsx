@@ -62,7 +62,7 @@ const Footer: React.FC = () => {
   const year = new Date().getFullYear();
   const FACEBOOK_URL = "#";
   const INSTAGRAM_URL = "#";
-  const ADDRESS = "201 Hilda St Suite # 10, Kissimmee, FL 34741";
+  const ADDRESS = "201 Hilda St Suite 15 Kisseemmee  FL 34741 United States";
   const mapQuery = React.useMemo(() => encodeURIComponent(ADDRESS), [ADDRESS]);
   const MAP_EMBED_SRC = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
   const MAP_LINK = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
@@ -153,7 +153,7 @@ const Footer: React.FC = () => {
           </p>
           <Link
             href="/contact"
-            className="group inline-flex items-center gap-2 rounded-md bg-lime-900 px-4 py-3 text-sm font-light text-white shadow-md hover:bg-sky-700 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 w-full sm:w-auto justify-center"
+            className="group inline-flex items-center gap-2 rounded-md bg-sky-700 px-4 py-3 text-sm font-light text-white shadow-md hover:bg-sky-700 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 w-full sm:w-auto justify-center"
             aria-label={t("footer.ctaAria")}
           >
             <Calendar className="w-4 h-4"/>

@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import Image, { type StaticImageData } from "next/image";
 import FemaleDoctor from "@/../public/assets/images/foto-doctora.jpg";
-import MaleDoctor from "@/../public/assets/images/Bolumen.jpeg";
+import MaleDoctor from "@/../public/assets/images/Juan.jpg";
 import balloon from "@/../public/assets/svg/balloon.svg";
 import { useTranslation } from "@/app/contexts/TranslationContext";
 
@@ -326,7 +326,7 @@ export default function AboutUs() {
       },
       {
         id: "dr-james-thompson",
-        name: "Dr. Eduardo F. Bolumen, MD",
+        name: "Dr. Juan Ortiz Guevara, MD",
         tagline: t("providers.dr2.title"),
         langs: t('providers.dr1.languages'),
         bio: t('provider.bio.dr2'),

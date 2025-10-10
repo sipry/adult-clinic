@@ -151,7 +151,7 @@ const Navbar: React.FC<NavbarProps> = ({ scheme = 'auto' }) => {
             <Link
               href="/contact"
               className={`transition-transform transition-colors rounded-sm duration-300 font-normal text-sm py-2 px-10 tracking-wide hover:scale-105 ${solidNav
-                ? 'bg-lime-900 text-white shadow-lg'
+                ? 'bg-sky-900 text-white shadow-lg'
                 : 'bg-white text-black shadow-lg'
                 }`}
             >
@@ -171,7 +171,7 @@ const Navbar: React.FC<NavbarProps> = ({ scheme = 'auto' }) => {
               <Link
                 href="/contact"
                 className={`font-normal py-2 px-8 hover:scale-105 text-sm ${solidNav
-                  ? 'bg-lime-900 rounded-sm text-white shadow-lg'
+                  ? 'bg-sky-900 rounded-sm text-white shadow-lg'
                   : 'bg-white text-black rounded-sm'
                   }`}
               >
@@ -240,7 +240,7 @@ const Navbar: React.FC<NavbarProps> = ({ scheme = 'auto' }) => {
                     className={[
                       'block text-md font-medium transition-colors py-2 tracking-wide',
                       isActive
-                        ? 'text-lime-700'
+                        ? 'text-sky-700'
                         : 'text-gray-700 hover:text-sky-900',
                     ].join(' ')}
                   >
