@@ -2,7 +2,18 @@
 import React from "react";
 import { useTranslation } from "../contexts/TranslationContext";
 
-// -------- Types --------
+/* -------------------- Paleta de colores -------------------- */
+const PALETTE = {
+  amber: "#B67B39",  // ámbar cálido
+  moss: "#7C8C4D",   // verde musgo
+  wine: "#812D20",   // vino terroso
+  ochre: "#D8C27A",  // ocre claro
+  olive: "#4F5635",  // oliva profundo
+  cream: "#FAF4E6",  // crema suave
+  dark: "#2B2725",   // marrón oscuro
+};
+
+/* -------------------- Tipos -------------------- */
 export type StripItem = {
   value: string;
   href?: string;
@@ -19,7 +30,7 @@ export type ClinicInfoStripProps = {
   className?: string;
 };
 
-// -------- Helpers --------
+/* -------------------- Helpers -------------------- */
 const toArray = (v?: string | string[]) => (v ? (Array.isArray(v) ? v : [v]) : []);
 const digits = (v: string) => v.replace(/[^\d+]/g, "");
 const mapsLink = (addr: string) =>
@@ -42,20 +53,35 @@ const Icon: React.FC<{ name?: StripItem["icon"]; className?: string }> = ({ name
         <svg aria-hidden="true" viewBox="0 0 24 24" className={className}>
           <path
             fill="currentColor"
-            d="M6.6 10.8a15.6 15.6 0 006.6 6.6l2.2-2.2c.3-.3.8-.4 1.2-.3 1 .3 2 .5 3.1.5.7 0 1.3.6 1.3 1.3v3.4c0 .7-.6 1.3-1.3 1.3C10.5 21.4 2.6 13.5 2.6 3.3 2.6 2.6 3.2 2 3.9 2h3.4c.7 0 1.3.6 1.3 1.3 0 1.1.2 2.1.5 3.1.1.4 0 .9-.3 1.2L6.6 10.8z"
+            d="M6.6 10.8a15.6 15.6 0 006.6 6.6l2.2-2.2c.3-.3.8-.4 1.2-.3 
+            1 .3 2 .5 3.1.5.7 0 1.3.6 1.3 1.3v3.4c0 
+            .7-.6 1.3-1.3 1.3C10.5 21.4 2.6 13.5 
+            2.6 3.3 2.6 2.6 3.2 2 3.9 2h3.4c.7 0 
+            1.3.6 1.3 1.3 0 1.1.2 2.1.5 3.1.1.4 
+            0 .9-.3 1.2L6.6 10.8z"
           />
         </svg>
       );
     case "pin":
       return (
         <svg aria-hidden="true" viewBox="0 0 24 24" className={className}>
-          <path fill="currentColor" d="M12 2a7 7 0 00-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 00-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z" />
+          <path
+            fill="currentColor"
+            d="M12 2a7 7 0 00-7 7c0 5.25 7 13 7 
+            13s7-7.75 7-13a7 7 0 00-7-7zm0 
+            9.5a2.5 2.5 0 110-5 2.5 2.5 0 
+            010 5z"
+          />
         </svg>
       );
     case "clock":
       return (
         <svg aria-hidden="true" viewBox="0 0 24 24" className={className}>
-          <path fill="currentColor" d="M12 2a10 10 0 100 20 10 10 0 000-20zm.75 10.25V6h-1.5v7h5v-1.5h-3.5z" />
+          <path
+            fill="currentColor"
+            d="M12 2a10 10 0 100 20 10 10 0 
+            000-20zm.75 10.25V6h-1.5v7h5v-1.5h-3.5z"
+          />
         </svg>
       );
     case "globe":
@@ -63,28 +89,37 @@ const Icon: React.FC<{ name?: StripItem["icon"]; className?: string }> = ({ name
         <svg aria-hidden="true" viewBox="0 0 24 24" className={className}>
           <path
             fill="currentColor"
-            d="M12 2a10 10 0 100 20 10 10 0 000-20zm6.9 9h-3.2a14 14 0 00-1.26-4.69A8.52 8.52 0 0118.9 11zm-5.4 0H10.5c.22-1.91.86-3.72 1.73-5.11.86 1.39 1.5 3.2 1.72 5.11zM8.3 11H5.1a8.52 8.52 0 014.46-4.69A14 14 0 008.3 11zM5.1 13h3.2c.22 1.91.86 3.72 1.73 5.11A8.52 8.52 0 015.1 13zm5.4 0h3a12.9 12.9 0 01-1.72 5.11A12.9 12.9 0 0110.5 13zm4.1 0h3.2a8.52 8.52 0 01-4.46 4.69c.54-1.07.97-2.33 1.26-4.69z"
+            d="M12 2a10 10 0 100 20 10 10 0 
+            000-20zm6.9 9h-3.2a14 14 0 00-1.26-4.69A8.52 
+            8.52 0 0118.9 11zm-5.4 0H10.5c.22-1.91.86-3.72 
+            1.73-5.11.86 1.39 1.5 3.2 1.72 5.11zM8.3 
+            11H5.1a8.52 8.52 0 014.46-4.69A14 14 
+            0 008.3 11zM5.1 13h3.2c.22 1.91.86 3.72 
+            1.73 5.11A8.52 8.52 0 015.1 13zm5.4 
+            0h3a12.9 12.9 0 01-1.72 5.11A12.9 
+            12.9 0 0110.5 13zm4.1 0h3.2a8.52 
+            8.52 0 01-4.46 4.69c.54-1.07.97-2.33 
+            1.26-4.69z"
           />
         </svg>
       );
   }
 };
 
-// -------- Component --------
+/* -------------------- Componente -------------------- */
 const ClinicInfoStrip: React.FC<ClinicInfoStripProps> = ({
-  bgClassName = "bg-sky-900",
-  textClassName = "text-white",
-  dotClassName = "text-gray-800/70",
+  bgClassName,
+  textClassName,
+  dotClassName,
   speedSec = 50,
   pauseOnHover = false,
   className = "",
 }) => {
   const { t } = useTranslation();
 
-  // Datos internos hardcodeados
   const email = "info@yourhealthadults.com";
   const phone = "+(407) 574 4848";
-  const location = "201 Hilda St Suite # 10, Kissimmee, FL 34741";
+  const location = "201 Hilda St Suite #10, Kissimmee, FL 34741";
 
   const built: StripItem[] = [
     {
@@ -110,9 +145,13 @@ const ClinicInfoStrip: React.FC<ClinicInfoStripProps> = ({
 
   return (
     <div
-      className={`group relative ${bgClassName} ${textClassName} ${className} py-4`}
+      className={`group relative ${className} py-4`}
       aria-label="Información de la clínica, desplazándose"
       role="region"
+      style={{
+        backgroundColor: PALETTE.olive,
+        color: PALETTE.cream,
+      }}
     >
       <div
         className="overflow-hidden"
@@ -131,10 +170,10 @@ const ClinicInfoStrip: React.FC<ClinicInfoStripProps> = ({
             } as React.CSSProperties
           }
         >
-          <StripCopy built={built} dotClassName={dotClassName} ariaHidden />
-          <StripCopy built={built} dotClassName={dotClassName} ariaHidden />
-          <StripCopy built={built} dotClassName={dotClassName} ariaHidden />
-          <StripCopy built={built} dotClassName={dotClassName} ariaHidden />
+          <StripCopy built={built} dotColor={PALETTE.amber} ariaHidden />
+          <StripCopy built={built} dotColor={PALETTE.amber} ariaHidden />
+          <StripCopy built={built} dotColor={PALETTE.amber} ariaHidden />
+          <StripCopy built={built} dotColor={PALETTE.amber} ariaHidden />
         </div>
       </div>
 
@@ -157,9 +196,9 @@ const ClinicInfoStrip: React.FC<ClinicInfoStripProps> = ({
 
 const StripCopy: React.FC<{
   built: StripItem[];
-  dotClassName: string;
+  dotColor: string;
   ariaHidden?: boolean;
-}> = ({ built, dotClassName, ariaHidden }) => {
+}> = ({ built, dotColor, ariaHidden }) => {
   return (
     <div
       className="flex flex-none shrink-0 items-center gap-10"
@@ -169,16 +208,28 @@ const StripCopy: React.FC<{
         <React.Fragment key={`${ariaHidden ? "b" : "a"}-${i}`}>
           <a
             href={it.href}
-            className="inline-flex items-center gap-3 text-base sm:text-lg font-semibold/none hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 rounded-sm px-1"
+            className="inline-flex items-center gap-3 text-base sm:text-lg font-semibold/none hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 rounded-sm px-1"
+            style={{
+              color: PALETTE.cream,
+              transition: "color 0.2s ease",
+            }}
+            onMouseEnter={(e) => ((e.currentTarget.style.color = PALETTE.ochre))}
+            onMouseLeave={(e) => ((e.currentTarget.style.color = PALETTE.cream))}
           >
             {it.customIcon ?? <Icon name={it.icon} className="h-5 w-5" />}
             <span>{it.value}</span>
           </a>
-          <span className={`mx-6 ${dotClassName}`} aria-hidden="true">•</span>
+          <span
+            className="mx-6"
+            style={{ color: dotColor }}
+            aria-hidden="true"
+          >
+            •
+          </span>
         </React.Fragment>
       ))}
     </div>
   );
-};                   
+};
 
 export default ClinicInfoStrip;

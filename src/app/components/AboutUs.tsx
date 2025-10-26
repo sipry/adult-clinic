@@ -3,6 +3,17 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "../contexts/TranslationContext";
 import brandGrid from "@/../public/assets/svg/brand-grid.svg";
 
+/* -------------------- Palette -------------------- */
+const PALETTE = {
+  amber:  "#B67B39", // dorado cálido
+  moss:   "#7C8C4D", // verde musgo
+  wine:   "#812D20", // vino terroso
+  ochre:  "#D8C27A", // ocre claro
+  olive:  "#4F5635", // oliva profundo
+  cream:  "#FAF4E6", // crema suave
+  dark:   "#2B2725", // marrón oscuro neutro
+};
+
 /* -------------------- Utils -------------------- */
 const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
 
@@ -162,7 +173,6 @@ const AnimatedNumber: React.FC<AnimatedNumberProps> = ({
 
   useEffect(() => {
     if (!play) return;
-
     if (prefersReduced.current || durationMs <= 0) {
       setValue(end);
       return;
@@ -182,7 +192,6 @@ const AnimatedNumber: React.FC<AnimatedNumberProps> = ({
     };
 
     if (delayMs && delayMs > 0) {
-
       timeoutRef.current = window.setTimeout(run, delayMs);
     } else {
       run();
@@ -221,58 +230,31 @@ export const AboutUsProfessional: React.FC = () => {
       ref={sectionRef}
       id="about"
       className="relative overflow-hidden pt-20 pb-20 md:pt-28 md:pb-10"
+      style={{ backgroundColor: PALETTE.cream }}
     >
-      {/* ===== Decorative SVGs ===== */}
-      {/* Top-left */}
-      <img
-        src={brandGrid.src}
-        alt=""
-        aria-hidden="true"
-        className="
-          pointer-events-none select-none
-          absolute -top-10 -left-10
-          w-[220px] opacity-10
-          md:w-[320px]
-          lg:w-[380px]
-          z-0
-        "
-      />
-      {/* Bottom-right */}
-      <img
-        src={brandGrid.src}
-        alt=""
-        aria-hidden="true"
-        className="
-          pointer-events-none select-none
-          absolute bottom-0 right-0
-          translate-x-8 translate-y-8
-          w-[220px] opacity-10
-          md:w-[320px]
-          lg:w-[380px]
-          rotate-180
-          z-0
-        "
-      />
-      {/* ========================== */}
+      {/* Decorative SVGs */}
 
-      {/* Content wrapper with higher z-index */}
+
       <div className="relative z-10 max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-14 items-center">
         {/* Left column */}
         <div>
-          <Reveal y={8} delay={0}>
-            <div className="text-xs font-semibold tracking-[0.2em] text-sky-900 uppercase mb-3">
+          <Reveal y={8}>
+            <div className="text-xs font-semibold tracking-[0.2em] uppercase mb-3"
+              style={{ color: PALETTE.moss }}>
               {t("about.pretitle")}
             </div>
           </Reveal>
 
           <Reveal y={12} delay={60}>
-            <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 leading-[1.1] mb-5">
+            <h2 className="text-4xl md:text-5xl font-extrabold leading-[1.1] mb-5"
+              style={{ color: PALETTE.dark }}>
               {t("about.title")}
             </h2>
           </Reveal>
 
           <Reveal y={14} delay={120}>
-            <p className="text-slate-600 text-lg leading-relaxed mb-6">
+            <p className="text-lg leading-relaxed mb-6"
+              style={{ color: PALETTE.olive }}>
               {t("about.subtitle")}
             </p>
           </Reveal>
@@ -281,10 +263,11 @@ export const AboutUsProfessional: React.FC = () => {
             {[t("about.bullet1"), t("about.bullet2"), t("about.bullet3")].map((item, idx) => (
               <Reveal key={item} y={14} delay={160 + idx * 90}>
                 <li className="flex items-start gap-3">
-                  <span className="mt-1 h-5 w-5 rounded-sm bg-sky-100 text-sky-900 grid place-items-center text-xs font-bold">
+                  <span className="mt-1 h-5 w-5 rounded-sm grid place-items-center text-xs font-bold"
+                    style={{ backgroundColor: PALETTE.ochre, color: PALETTE.dark }}>
                     ✓
                   </span>
-                  <span className="text-slate-700">{item}</span>
+                  <span style={{ color: PALETTE.dark }}>{item}</span>
                 </li>
               </Reveal>
             ))}
@@ -292,33 +275,41 @@ export const AboutUsProfessional: React.FC = () => {
 
           <div className="flex flex-wrap gap-3 mb-10">
             <Reveal y={12} delay={160}>
-              <a
-                href="#contact"
-                className="inline-flex w-full items-center gap-2 rounded-sm bg-sky-900 hover:bg-sky-700 text-white font-semibold px-6 py-3 shadow-lg transition"
-              >
+              <a href="#contact"
+                className="inline-flex w-full items-center gap-2 rounded-sm font-semibold px-6 py-3 shadow-lg transition"
+                style={{
+                  backgroundColor: PALETTE.moss,
+                  color: PALETTE.cream,
+                }}>
                 {t("about.cta1")}
               </a>
             </Reveal>
             <Reveal y={12} delay={220}>
-              <a
-                href="#services"
-                className="inline-flex  lg:w-full w-62 items-center gap-2 rounded-sm bg-white ring-1 ring-slate-200 text-slate-700 hover:bg-slate-50 font-semibold px-6 py-3 shadow-sm"
-              >
+              <a href="#services"
+                className="inline-flex lg:w-full w-62 items-center gap-2 rounded-sm font-semibold px-6 py-3 shadow-sm"
+                style={{
+                  backgroundColor: PALETTE.cream,
+                  border: `1px solid ${PALETTE.olive}`,
+                  color: PALETTE.olive,
+                }}>
                 {t("about.cta2")}
               </a>
             </Reveal>
           </div>
 
-          {/* Trust bar / logos */}
           <Reveal y={10} delay={260}>
             <div className="mt-6">
-              <div className="text-xs uppercase tracking-wider text-slate-500 mb-3">
+              <div className="text-xs uppercase tracking-wider mb-3"
+                style={{ color: PALETTE.olive }}>
                 {t("about.insurance")}
               </div>
               <div className="flex flex-wrap items-center gap-x-8 gap-y-3 opacity-70 grayscale">
                 {["Aetna", "BlueCross", "Humana", "Triple-S", "Mapfre"].map((logo, i) => (
                   <Reveal key={logo} y={8} delay={280 + i * 80}>
-                    <span className="text-sm font-semibold text-slate-500">{logo}</span>
+                    <span className="text-sm font-semibold"
+                      style={{ color: PALETTE.olive }}>
+                      {logo}
+                    </span>
                   </Reveal>
                 ))}
               </div>
@@ -328,19 +319,20 @@ export const AboutUsProfessional: React.FC = () => {
 
         {/* Right column */}
         <div className="relative">
-          <div className="space-y-6 md:space-y-7 text-slate-600 text-lg leading-relaxed mt-6">
+          <div className="space-y-6 md:space-y-7 text-lg leading-relaxed mt-6"
+            style={{ color: PALETTE.dark }}>
             {[t("about.text1"), t("about.text2"), t("about.text3")].map((txt, i) => (
               <Reveal key={i} y={14} delay={80 + i * 120}>
                 <p>{txt}</p>
               </Reveal>
             ))}
 
-            {/* Metrics */}
             <Reveal y={16} delay={120}>
               <div className="mt-8 flex items-end justify-center gap-10">
                 <Reveal y={10} delay={140}>
                   <div className="flex flex-col items-center text-center">
-                    <span className="tabular-nums text-3xl md:text-4xl font-extrabold text-sky-900">
+                    <span className="tabular-nums text-3xl md:text-4xl font-extrabold"
+                      style={{ color: PALETTE.wine }}>
                       <AnimatedNumber
                         end={10000}
                         compact
@@ -349,20 +341,24 @@ export const AboutUsProfessional: React.FC = () => {
                         play={sectionInView}
                       />
                     </span>
-                    <span className="mt-1 text-sm text-slate-600">
+                    <span className="mt-1 text-sm"
+                      style={{ color: PALETTE.olive }}>
                       {t("about.stats.families")}
                     </span>
                   </div>
                 </Reveal>
 
-                <span className="hidden sm:block h-10 w-px bg-slate-200" />
+                <span className="hidden sm:block h-10 w-px"
+                  style={{ backgroundColor: PALETTE.olive }} />
 
                 <Reveal y={10} delay={200}>
                   <div className="flex flex-col items-center text-center">
-                    <span className="tabular-nums text-3xl md:text-4xl font-extrabold text-sky-900">
+                    <span className="tabular-nums text-3xl md:text-4xl font-extrabold"
+                      style={{ color: PALETTE.wine }}>
                       <AnimatedNumber end={20} suffix="+" durationMs={800} play={sectionInView} />
                     </span>
-                    <span className="mt-1 text-sm text-slate-600">
+                    <span className="mt-1 text-sm"
+                      style={{ color: PALETTE.olive }}>
                       {t("about.stats.experience")}
                     </span>
                   </div>

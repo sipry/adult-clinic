@@ -517,19 +517,29 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'services.search.empty': 'No results to display.',
 
     // Services list (array of objects)
-    'services.list': [
-      { key: 'well-visit', title: 'Well Visit', description: 'Regular checkups to ensure healthy growth and development at every stage.' },
-      { key: 'sick-visit', title: 'Sick Visit', description: 'Medical care when your child is experiencing unexpected symptoms or discomfort.' },
-      { key: 'follow-up', title: 'Follow-up Appointment', description: 'Visits to monitor progress after a treatment or diagnosis.' },
-      { key: 'immunizations', title: 'Immunizations', description: 'Essential vaccines to protect your child against preventable diseases.' },
-      { key: 'food-allergy-test', title: 'Food Allergy Test', description: 'Evaluations to detect possible reactions to common foods.' },
-      { key: 'environmental-allergy-test', title: 'Environmental Allergy Test', description: 'Diagnosis of allergies related to dust, pollen, pets, or other triggers.' },
-      { key: 'vision-screening', title: 'Vision Screening', description: 'Quick test to identify vision problems that may affect learning.' },
-      { key: 'audiology-screening', title: 'Audiology Screening', description: 'Hearing evaluation to ensure healthy language and communication development.' },
-      { key: 'obesity-care-plan', title: 'Obesity Care Plan', description: 'Medical and nutritional support to encourage healthy weight and lifestyle habits.' },
-      { key: 'asthma-care-plan', title: 'Asthma Care Plan', description: 'Personalized management to control symptoms and improve quality of life.' },
-      { key: 'adhd-care-plan', title: 'ADHD Care Plan', description: 'Strategies and follow-up to support your child’s academic and emotional development.' },
-    ],
+'services.list': [
+  {
+    key: 'preventive-medicine',
+    title: 'Preventive Medicine',
+    description: 'Focused on maintaining health and preventing illness through regular checkups, screenings, and lifestyle guidance.',
+  },
+  {
+    key: 'adult-immunizations',
+    title: 'Adult Immunizations',
+    description: 'Comprehensive vaccination services to protect adults from preventable diseases.',
+  },
+  {
+    key: 'minor-injury-treatment',
+    title: 'Minor Injury Diagnosis and Treatment',
+    description: 'Prompt care for sprains, cuts, and other minor injuries to support a fast recovery.',
+  },
+  {
+    key: 'chronic-disease-management',
+    title: 'Chronic Disease Management',
+    description: 'Ongoing support and personalized care plans for managing chronic conditions like diabetes or hypertension.',
+  },
+],
+
 
     // Providers
     'providers.pretitle': 'Trusted Care',
