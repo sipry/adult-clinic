@@ -5,8 +5,16 @@ import { motion, animate } from "framer-motion";
 import { UserRound, Calendar, Stethoscope } from "lucide-react";
 import { useTranslation } from "../contexts/TranslationContext";
 
-import balloon2 from "@/../public/assets/svg/balloon2.svg";
-import wave from "@/../public/assets/svg/wave.svg";
+/* 🎨 Paleta pictórica */
+const PALETTE = {
+  amber: "#B67B39",  // ámbar cálido
+  moss: "#7C8C4D",   // verde musgo
+  wine: "#812D20",   // vino terroso
+  ochre: "#D8C27A",  // ocre claro
+  olive: "#4F5635",  // oliva profundo
+  cream: "#FAF4E6",  // crema suave
+  dark: "#2B2725",   // marrón oscuro
+};
 
 /* ---------- Motion utils ---------- */
 function usePrefersReducedMotion() {
@@ -75,6 +83,7 @@ function useInOutViewport<T extends HTMLElement>(
   return inView;
 }
 
+/* ---------- Reveal animation ---------- */
 type RevealProps = {
   children: React.ReactNode;
   className?: string;
@@ -87,6 +96,7 @@ type RevealProps = {
   threshold?: number;
   rootMargin?: string;
 };
+
 const Reveal: React.FC<RevealProps> = ({
   children,
   className,
@@ -112,11 +122,11 @@ const Reveal: React.FC<RevealProps> = ({
   const style: React.CSSProperties = reduce
     ? {}
     : {
-      opacity: shown ? 1 : 0,
-      transform: shown ? "none" : `translate(${x}px, ${y}px) scale(${scale})`,
-      transition: `opacity ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms, transform ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms`,
-      willChange: "opacity, transform",
-    };
+        opacity: shown ? 1 : 0,
+        transform: shown ? "none" : `translate(${x}px, ${y}px) scale(${scale})`,
+        transition: `opacity ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms, transform ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms`,
+        willChange: "opacity, transform",
+      };
 
   return (
     <div ref={ref} className={className} style={style} aria-hidden={!shown}>
@@ -142,7 +152,7 @@ export type AppointmentProcessProps = {
   stepDurationSec?: number;
 };
 
-// Icon bubble — zoom con framer-motion
+/* ---------- Icon bubble ---------- */
 const IconBubble: React.FC<{ children: React.ReactNode; active?: boolean }> = ({
   children,
   active,
@@ -150,11 +160,18 @@ const IconBubble: React.FC<{ children: React.ReactNode; active?: boolean }> = ({
   <motion.div
     animate={active ? { scale: [1, 1.14, 1] } : { scale: 1 }}
     transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-    className="relative z-10 grid size-16 place-items-center rounded-full bg-white shadow-sm ring-1 ring-black/5"
-    style={{ willChange: "transform" }}
+    className="relative z-10 grid size-16 place-items-center rounded-full shadow-md"
+    style={{
+      willChange: "transform",
+      backgroundColor: PALETTE.cream,
+      border: `2px solid ${PALETTE.olive}`,
+    }}
   >
-    <div className="grid size-12 place-items-center rounded-full bg-sky-100">
-      <div className="text-sky-900">{children}</div>
+    <div
+      className="grid size-12 place-items-center rounded-full"
+      style={{ backgroundColor: PALETTE.olive }}
+    >
+      <div style={{ color: PALETTE.cream }}>{children}</div>
     </div>
   </motion.div>
 );
@@ -216,28 +233,34 @@ export default function AppointmentProcess({
   return (
     <section
       ref={sectionRef}
-      className={
-        "relative isolate px-6 pt-20 md:pt-28 lg:pt-32 pb-10 md:pb-18 lg:pb-22 overflow-hidden " +
-        className
-      }
+      className={`relative isolate overflow-hidden px-6 pt-20 md:pt-28 lg:pt-32 pb-10 md:pb-18 lg:pb-22 ${className}`}
+      style={{ backgroundColor: PALETTE.cream }}
     >
-      
       <div className="relative z-20">
         <div className="grid gap-14 lg:grid-cols-2 lg:gap-24 mx-auto max-w-7xl ">
-          {/* Texto (primero en el DOM, arriba en mobile, derecha en desktop) */}
+          {/* Texto */}
           <div className="order-1 lg:order-2 text-center lg:text-left max-w-2xl mx-auto lg:mx-0">
             <Reveal y={8} delay={0}>
-              <div className="text-xs font-semibold tracking-[0.2em] text-sky-900 uppercase mb-3">
+              <div
+                className="text-xs font-semibold tracking-[0.2em] uppercase mb-3"
+                style={{ color: PALETTE.olive }}
+              >
                 {eyebrowText}
               </div>
             </Reveal>
             <Reveal y={12} delay={80}>
-              <h2 className="mt-6 text-4xl font-extrabold tracking-tight text-zinc-900 md:text-5xl">
+              <h2
+                className="mt-6 text-4xl font-extrabold tracking-tight md:text-5xl"
+                style={{ color: PALETTE.dark }}
+              >
                 {headingText}
               </h2>
             </Reveal>
             <Reveal y={12} delay={140}>
-              <p className="mt-6 text-lg leading-8 text-zinc-600">
+              <p
+                className="mt-6 text-lg leading-8"
+                style={{ color: `${PALETTE.dark}cc` }}
+              >
                 {blurbText}
               </p>
             </Reveal>
@@ -249,24 +272,25 @@ export default function AppointmentProcess({
               {stepsData.map((step, idx) => (
                 <li
                   key={step.id}
-                  className="
-                    relative
-                    grid gap-y-4 gap-x-6
-                    grid-cols-1 text-center place-items-center
-                    md:grid-cols-[64px_1fr] md:text-left md:place-items-start
-                  "
+                  className="relative grid gap-y-4 gap-x-6 grid-cols-1 text-center place-items-center md:grid-cols-[64px_1fr] md:text-left md:place-items-start"
                 >
                   <div className="col-start-1 md:row-span-2">
                     <IconBubble active={current === idx}>{step.icon}</IconBubble>
                   </div>
 
                   <Reveal y={6} delay={0} duration={520}>
-                    <h3 className="md:col-start-2 text-xl font-semibold tracking-tight text-zinc-900">
+                    <h3
+                      className="md:col-start-2 text-xl font-semibold tracking-tight"
+                      style={{ color: PALETTE.dark }}
+                    >
                       {step.title}
                     </h3>
                   </Reveal>
                   <Reveal y={8} delay={50} duration={520}>
-                    <p className="md:col-start-2 mt-2 text-base leading-7 text-zinc-600">
+                    <p
+                      className="md:col-start-2 mt-2 text-base leading-7"
+                      style={{ color: `${PALETTE.dark}aa` }}
+                    >
                       {step.description}
                     </p>
                   </Reveal>
@@ -277,9 +301,10 @@ export default function AppointmentProcess({
         </div>
       </div>
 
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-sky-950/[0.01]" />
-
-     
+      <div
+        className="pointer-events-none absolute inset-0 -z-10"
+        style={{ backgroundColor: `${PALETTE.olive}05` }}
+      />
     </section>
   );
 }

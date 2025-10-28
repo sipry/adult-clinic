@@ -1,9 +1,20 @@
 "use client";
 
 import React from "react";
-import { Calendar } from "lucide-react";
+import { Calendar, MapPin, Mail, Phone, Facebook, Instagram } from "lucide-react";
 import Link from "next/link";
 import { useTranslation } from "../contexts/TranslationContext";
+
+/* 🎨 Paleta pictórica */
+const PALETTE = {
+  amber: "#B67B39",  // ámbar cálido
+  moss: "#7C8C4D",   // verde musgo
+  wine: "#812D20",   // vino terroso
+  ochre: "#D8C27A",  // ocre claro
+  olive: "#4F5635",  // oliva profundo
+  cream: "#FAF4E6",  // crema suave
+  dark: "#2B2725",   // marrón oscuro
+};
 
 /* ---------- Motion utils: Reveal on scroll ---------- */
 function usePrefersReducedMotion(): boolean {
@@ -62,7 +73,7 @@ const Footer: React.FC = () => {
   const year = new Date().getFullYear();
   const FACEBOOK_URL = "#";
   const INSTAGRAM_URL = "#";
-  const ADDRESS = "201 Hilda St Suite 15 Kisseemmee  FL 34741 United States";
+  const ADDRESS = "201 Hilda St Suite 15, Kissimmee, FL 34741, United States";
   const mapQuery = React.useMemo(() => encodeURIComponent(ADDRESS), [ADDRESS]);
   const MAP_EMBED_SRC = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
   const MAP_LINK = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
@@ -103,11 +114,17 @@ const Footer: React.FC = () => {
         transition: `opacity ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms, transform ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms`,
         willChange: "opacity, transform",
       };
-      return <div ref={ref} className={className} style={style} aria-hidden={!shown}>{children}</div>;
+      return <div ref={ref} className={className} style={style}>{children}</div>;
     };
 
   return (
-    <footer className="bg-sky-950 text-gray-300 overflow-hidden">
+    <footer
+      className="overflow-hidden"
+      style={{
+        background: `linear-gradient(to bottom right, ${PALETTE.olive}, ${PALETTE.dark})`,
+        color: `${PALETTE.cream}`,
+      }}
+    >
       {/* Map strip */}
       <Reveal y={16} delay={120}>
         <div>
@@ -122,117 +139,113 @@ const Footer: React.FC = () => {
                 allowFullScreen
                 referrerPolicy="no-referrer-when-downgrade"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-white/60 via-white/20 to-transparent pointer-events-none" />
-              <a
-                href={MAP_LINK}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={t("contact.map.open")}
-                title={t("contact.map.open")}
-                className="absolute inset-0 block md:hidden"
-              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#2B272580] via-transparent to-transparent pointer-events-none" />
+              <a href={MAP_LINK} target="_blank" rel="noopener noreferrer" className="absolute inset-0 block md:hidden" />
             </div>
           </div>
         </div>
       </Reveal>
 
       {/* Main content */}
-      <div
-        className="
-          max-w-7xl mx-auto px-6 py-12 grid gap-x-8 gap-y-10
-          grid-cols-1
-          sm:grid-cols-2
-          md:grid-cols-[minmax(0,3fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,2fr)_minmax(0,2fr)]
-        "
-      >
-        {/* 1) Brand — BIG */}
-        <div className="min-w-0 sm:col-span-2 md:col-span-1">
-          <h2 className="text-2xl font-bold mb-3">{t("footer.brand")}</h2>
-          <p className="text-gray-400 text-sm mb-4 leading-relaxed">
-            {t("footer.tagline")}
-          </p>
+      <div className="max-w-7xl mx-auto px-6 py-12 grid gap-x-8 gap-y-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-5">
+        {/* Brand */}
+        <div className="sm:col-span-2">
+          <h2 className="text-2xl font-semibold mb-3" style={{ color: PALETTE.ochre }}>
+            {t("footer.brand")}
+          </h2>
+          <p className="text-sm mb-5 opacity-90">{t("footer.tagline")}</p>
           <Link
             href="/contact"
-            className="group inline-flex items-center gap-2 rounded-md bg-sky-700 px-4 py-3 text-sm font-light text-white shadow-md hover:bg-sky-700 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 w-full sm:w-auto justify-center"
-            aria-label={t("footer.ctaAria")}
+            className="inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm font-semibold shadow-md hover:opacity-90 transition"
+            style={{
+              backgroundColor: PALETTE.amber,
+              color: PALETTE.cream,
+            }}
           >
-            <Calendar className="w-4 h-4"/>
+            <Calendar className="w-4 h-4" />
             {t("footer.cta")}
           </Link>
         </div>
 
-        {/* 2) Enlaces — SMALL */}
-        <nav className="min-w-0 sm:col-span-1">
-          <h3 className="text-base font-semibold mb-3">{t("footer.nav.title")}</h3>
-          <ul className="space-y-2 text-gray-400 text-xs">
-            <li><Link href="/" className="hover:text-white">{t("footer.nav.home")}</Link></li>
-            <li><Link href="/all-services" className="hover:text-white">{t("footer.nav.services")}</Link></li>
-            <li><Link href="/about" className="hover:text-white">{t("footer.nav.about")}</Link></li>
-            <li><Link href="/contact" className="hover:text-white">{t("footer.nav.contact")}</Link></li>
-            <li><Link href="/appointment" className="hover:text-white">{t("footer.nav.appointment")}</Link></li>
+        {/* Links */}
+        <nav>
+          <h3 className="text-base font-semibold mb-3" style={{ color: PALETTE.ochre }}>
+            {t("footer.nav.title")}
+          </h3>
+          <ul className="space-y-2 text-sm opacity-90">
+            <li><Link href="/" className="hover:opacity-100 hover:text-amber-200">{t("footer.nav.home")}</Link></li>
+            <li><Link href="/all-services" className="hover:opacity-100 hover:text-amber-200">{t("footer.nav.services")}</Link></li>
+            <li><Link href="/about" className="hover:opacity-100 hover:text-amber-200">{t("footer.nav.about")}</Link></li>
+            <li><Link href="/contact" className="hover:opacity-100 hover:text-amber-200">{t("footer.nav.contact")}</Link></li>
+            <li><Link href="/appointment" className="hover:opacity-100 hover:text-amber-200">{t("footer.nav.appointment")}</Link></li>
           </ul>
         </nav>
 
-        {/* 3) Social — SMALL */}
-        <div className="min-w-0 sm:col-span-1">
-          <h3 className="text-base font-semibold mb-3">{t("footer.social.title")}</h3>
-          <ul className="space-y-2 text-gray-400 text-xs">
-            <li className="flex items-start gap-2">
-              <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className="hover:text-white break-words" aria-label={t("footer.social.facebookAria")}>
-                {t("footer.social.facebook")}
+        {/* Contact */}
+        <div>
+          <h3 className="text-base font-semibold mb-3" style={{ color: PALETTE.ochre }}>
+            {t("footer.contact.title")}
+          </h3>
+          <ul className="space-y-2 text-sm opacity-90">
+            <li className="flex gap-2 items-start">
+              <Phone className="w-4 h-4 shrink-0" style={{ color: PALETTE.ochre }} />
+              <span>(407) 574 - 4848</span>
+            </li>
+            <li className="flex gap-2 items-start">
+              <Mail className="w-4 h-4 shrink-0" style={{ color: PALETTE.ochre }} />
+              <a href="mailto:info@yourhealthadults.com" className="hover:text-amber-200">
+                info@yourhealthadults.com
               </a>
             </li>
-            <li className="flex items-start gap-2">
-              <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="hover:text-white break-words" aria-label={t("footer.social.instagramAria")}>
-                {t("footer.social.instagram")}
-              </a>
+            <li className="flex gap-2 items-start">
+              <MapPin className="w-4 h-4 shrink-0" style={{ color: PALETTE.ochre }} />
+              <span>{t("footer.contact.address.line1")}<br />{t("footer.contact.address.line2")}</span>
             </li>
           </ul>
         </div>
 
-        {/* 4) Contáctanos — BIG */}
-        <div className="min-w-0 sm:col-span-1">
-          <h3 className="text-base font-semibold mb-3">{t("footer.contact.title")}</h3>
-          <ul className="space-y-3 text-gray-400">
-            <li className="flex items-start gap-2 text-xs">
-              <span className="break-words">(407) 574 - 4848</span>
-            </li>
-            <li className="flex items-start gap-2 text-xs">
-              <a
-                href="mailto:info@yourhealthadults.com"
-                className="hover:text-white leading-snug"
-                aria-label={t("footer.contact.emailAria")}
-              >
-                <span className="block">info@</span>
-                <span>yourhealthadults.com</span>
-              </a>
-            </li>
-            <li className="flex items-start gap-2 text-xs">
-              <span className="break-words">
-                {t("footer.contact.address.line1")}
-                <br />
-                {t("footer.contact.address.line2")}
-              </span>
-            </li>
-          </ul>
-        </div>
-
-        {/* 5) Horarios — BIG */}
-        <div className="min-w-0 sm:col-span-1">
-          <h3 className="text-base font-semibold mb-3">{t("footer.hours.title")}</h3>
-          <ul className="space-y-2 text-gray-400">
-            <li className="flex items-start gap-2 text-xs">
-              <span className="break-words">{t("footer.hours.weekdays")}</span>
-            </li>
-            <li className="flex items-start gap-2 text-xs">
-              <span className="break-words">{t("footer.hours.weekend")}</span>
-            </li>
-          </ul>
+        {/* Social */}
+        <div>
+          <h3 className="text-base font-semibold mb-3" style={{ color: PALETTE.ochre }}>
+            {t("footer.social.title")}
+          </h3>
+          <div className="flex flex-col gap-2">
+            <a
+              href={FACEBOOK_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-sm px-3 py-2 text-sm font-semibold shadow-md hover:opacity-90 transition"
+              style={{ backgroundColor: PALETTE.olive, color: PALETTE.cream }}
+            >
+              <Facebook className="h-4 w-4" />
+              Facebook
+            </a>
+            <a
+              href={INSTAGRAM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-sm px-3 py-2 text-sm font-semibold shadow-md hover:opacity-90 transition"
+              style={{
+                background: `linear-gradient(45deg, ${PALETTE.wine}, ${PALETTE.amber})`,
+                color: PALETTE.cream,
+              }}
+            >
+              <Instagram className="h-4 w-4" />
+              Instagram
+            </a>
+          </div>
         </div>
       </div>
 
-      {/* Copy rights */}
-      <div className="border-t border-white/20 py-4 text-center text-xs text-gray-400 mt-6">
+      {/* Copy */}
+      <div
+        className="text-center text-xs py-4 border-t"
+        style={{
+          borderColor: `${PALETTE.cream}33`,
+          backgroundColor: `${PALETTE.dark}`,
+          color: `${PALETTE.cream}cc`,
+        }}
+      >
         <p>© {year} {t("footer.brand")}. {t("footer.copyright")}</p>
       </div>
     </footer>

@@ -26,7 +26,7 @@ export const useProvidersData = () => {
 
   const providers: ProviderItem[] = [
     {
-      id: "dr-maria-rodriguez",
+      id: "dr-Jaime-acosta",
       name: "Dra. Martha I. Acosta, MD",
       title: t("providers.dr1.title"),
       image: doctorAvatar,
@@ -34,10 +34,11 @@ export const useProvidersData = () => {
       experience: t("providers.dr1.experience"),
       languages: t("providers.dr1.languages"),
       bio: t("provider.bio.dr1"),
-      // sin bio2
+      bio2: opt("provider.bio.dr1.text2"),
+
     },
     {
-      id: "dr-james-thompson",
+      id: "dr-Juan-Ortiz ",
       name: "Dr. Juan Ortiz Guevara, MD",
       title: t("providers.dr2.title"),
       image: maleAvatar,

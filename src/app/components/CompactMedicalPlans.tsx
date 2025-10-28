@@ -5,6 +5,17 @@ import { Search } from "lucide-react";
 import { useTranslation } from "../contexts/TranslationContext";
 import InsuranceModal from "./InsuranceModal";
 
+/* 🎨 Paleta pictórica */
+const PALETTE = {
+  amber: "#B67B39",  // ámbar cálido
+  moss: "#7C8C4D",   // verde musgo
+  wine: "#812D20",   // vino terroso
+  ochre: "#D8C27A",  // ocre claro
+  olive: "#4F5635",  // oliva profundo
+  cream: "#FAF4E6",  // crema suave
+  dark: "#2B2725",   // marrón oscuro
+};
+
 /* ---------- Utils: motion ---------- */
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(false);
@@ -72,7 +83,8 @@ function useInOutViewport<T extends HTMLElement>(
   return inView;
 }
 
-type RevealProps = {
+/* ---------- Animación Reveal ---------- */
+const Reveal: React.FC<{
   children: React.ReactNode;
   className?: string;
   delay?: number;
@@ -83,9 +95,7 @@ type RevealProps = {
   once?: boolean;
   threshold?: number;
   rootMargin?: string;
-};
-
-const Reveal: React.FC<RevealProps> = ({
+}> = ({
   children,
   className,
   delay = 0,
@@ -123,7 +133,7 @@ const Reveal: React.FC<RevealProps> = ({
   );
 };
 
-/* ---------- Component ---------- */
+/* ---------- Componente Principal ---------- */
 const CompactMedicalPlans: React.FC = () => {
   const { t } = useTranslation();
   const [insuranceOpen, setInsuranceOpen] = useState(false);
@@ -131,13 +141,11 @@ const CompactMedicalPlans: React.FC = () => {
   return (
     <>
       <style jsx>{`
-        /* Evita scroll-x por transform + mask en Safari iOS */
         .marquee-viewport {
           position: relative;
           isolation: isolate;
           overflow: hidden;
         }
-        /* Fade lateral con mask: solo en >= md para evitar bug en móviles */
         @media (min-width: 768px) {
           .marquee-viewport {
             mask-image: linear-gradient(
@@ -156,34 +164,6 @@ const CompactMedicalPlans: React.FC = () => {
             );
           }
         }
-
-        .marquee-viewport::before,
-        .marquee-viewport::after {
-          content: "";
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          width: 2.5rem;
-          pointer-events: none;
-          z-index: 1;
-        }
-        .marquee-viewport::before {
-          left: 0;
-          background: linear-gradient(
-            to right,
-            rgba(255, 255, 255, 1),
-            rgba(255, 255, 255, 0)
-          );
-        }
-        .marquee-viewport::after {
-          right: 0;
-          background: linear-gradient(
-            to left,
-            rgba(255, 255, 255, 1),
-            rgba(255, 255, 255, 0)
-          );
-        }
-
         .marquee-track {
           display: flex;
           width: max-content;
@@ -202,63 +182,69 @@ const CompactMedicalPlans: React.FC = () => {
 
       <section
         id="insurance"
-        className="bg-white scroll-mt-28 py-5 overflow-x-clip"
+        className="scroll-mt-28 py-16 md:py-20 overflow-x-clip"
+        style={{
+          backgroundColor: PALETTE.cream,
+        }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="py-16 md:py-12 px-2">
-            <div className="grid lg:grid-cols-2 gap-10 md:gap-12 items-center">
-              {/* Izquierda */}
-              <div className="min-w-0 text-center lg:text-left">
-                <Reveal y={8}>
-                  <h2 className="text-xl md:text-4xl font-bold text-gray-800 mb-2">
-                    {t("insurance.title")}
-                  </h2>
-                </Reveal>
-                <Reveal y={12} delay={80}>
-                  <p className="text-base text-gray-600 leading-relaxed max-w-xl mx-auto lg:mx-0">
-                    {t("insurance.subtitle")}
-                  </p>
-                </Reveal>
-              </div>
+          <div className="grid lg:grid-cols-2 gap-10 md:gap-12 items-center">
+            {/* Izquierda */}
+            <div className="min-w-0 text-center lg:text-left">
+              <Reveal y={8}>
+                <h2
+                  className="text-xl md:text-4xl font-bold mb-2"
+                  style={{ color: PALETTE.dark }}
+                >
+                  {t("insurance.title")}
+                </h2>
+              </Reveal>
+              <Reveal y={12} delay={80}>
+                <p
+                  className="text-base leading-relaxed max-w-xl mx-auto lg:mx-0"
+                  style={{ color: PALETTE.olive }}
+                >
+                  {t("insurance.subtitle")}
+                </p>
+              </Reveal>
+            </div>
 
-              {/* Derecha */}
-              <div className="relative flex flex-col items-center min-w-0">
-                <Reveal y={0} x={0} delay={60} className="w-full">
-                  <div className="marquee-viewport w-full py-4 min-h-[40px] flex items-center overflow-x-hidden">
-                    <div className="marquee-track items-center gap-x-12 opacity-70">
-                      {[...Array(2)].map((_, idx) => (
-                        <div key={idx} className="flex items-center gap-x-12">
-                          <span className="text-sm font-semibold text-slate-500">
-                            Aetna
+            {/* Derecha */}
+            <div className="relative flex flex-col items-center min-w-0">
+              <Reveal y={0} x={0} delay={60} className="w-full">
+                <div className="marquee-viewport w-full py-4 min-h-[40px] flex items-center overflow-x-hidden">
+                  <div className="marquee-track items-center gap-x-12 opacity-80">
+                    {[...Array(2)].map((_, idx) => (
+                      <div key={idx} className="flex items-center gap-x-12">
+                        {["Aetna", "BlueCross", "Humana", "Cigna", "UnitedHealthcare"].map((name) => (
+                          <span
+                            key={name}
+                            className="text-sm font-semibold"
+                            style={{ color: PALETTE.moss }}
+                          >
+                            {name}
                           </span>
-                          <span className="text-sm font-semibold text-slate-500">
-                            BlueCross
-                          </span>
-                          <span className="text-sm font-semibold text-slate-500">
-                            Humana
-                          </span>
-                          <span className="text-sm font-semibold text-slate-500">
-                            Cigna
-                          </span>
-                          <span className="text-sm font-semibold text-slate-500">
-                            UnitedHealthcare
-                          </span>
-                        </div>
-                      ))}
-                    </div>
+                        ))}
+                      </div>
+                    ))}
                   </div>
-                </Reveal>
+                </div>
+              </Reveal>
 
-                <Reveal y={14} delay={140}>
-                  <button
-                    onClick={() => setInsuranceOpen(true)}
-                    className="mt-0 bg-sky-900 text-white font-semibold px-10 py-3 md:px-16 rounded-lg transition-all inline-flex items-center gap-2 text-sm hover:scale-105"
-                  >
-                    <Search className="w-4 h-4" />
-                    <span>{t("insurance.search")}</span>
-                  </button>
-                </Reveal>
-              </div>
+              <Reveal y={14} delay={140}>
+                <button
+                  onClick={() => setInsuranceOpen(true)}
+                  className="mt-2 font-semibold px-10 py-3 md:px-16 rounded-lg transition-all inline-flex items-center gap-2 text-sm hover:scale-105"
+                  style={{
+                    backgroundColor: PALETTE.olive,
+                    color: PALETTE.cream,
+                    boxShadow: `0 4px 10px ${PALETTE.dark}33`,
+                  }}
+                >
+                  <Search className="w-4 h-4" />
+                  <span>{t("insurance.search")}</span>
+                </button>
+              </Reveal>
             </div>
           </div>
         </div>

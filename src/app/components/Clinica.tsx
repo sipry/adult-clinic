@@ -10,6 +10,16 @@ import oficina4 from "@/../public/assets/images/oficina-4.jpg";
 import oficina5 from "@/../public/assets/images/oficina-5.jpg";
 import oficina7 from "@/../public/assets/images/outside-clinic.jpg";
 
+/* 🎨 Paleta pictórica */
+const PALETTE = {
+  amber: "#B67B39",
+  moss: "#7C8C4D",
+  wine: "#812D20",
+  ochre: "#D8C27A",
+  olive: "#4F5635",
+  cream: "#FAF4E6",
+  dark: "#2B2725",
+};
 
 /* -------------------- Datos -------------------- */
 const defaultImages = [
@@ -41,19 +51,15 @@ function useInOutViewport<T extends HTMLElement>(
   React.useEffect(() => {
     const el = ref.current;
     if (!el || typeof window === "undefined") return;
-
     let io: IntersectionObserver | null = null;
     let raf = 0;
-
     const visibleNow = () => {
       const r = el.getBoundingClientRect();
       const vh = window.innerHeight || document.documentElement.clientHeight;
       const vw = window.innerWidth || document.documentElement.clientWidth;
       return r.top < vh && r.bottom > 0 && r.left < vw && r.right > 0;
     };
-
     const check = () => { raf = 0; setInView(visibleNow()); };
-
     if ("IntersectionObserver" in window) {
       io = new IntersectionObserver(
         (ents) => ents.forEach((e) => setInView(e.isIntersecting || e.intersectionRatio > 0)),
@@ -61,12 +67,10 @@ function useInOutViewport<T extends HTMLElement>(
       );
       io.observe(el);
     }
-
     raf = requestAnimationFrame(check);
     const onScroll = () => { if (!raf) raf = requestAnimationFrame(check); };
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
-
     return () => {
       if (io) io.disconnect();
       if (raf) cancelAnimationFrame(raf);
@@ -74,7 +78,6 @@ function useInOutViewport<T extends HTMLElement>(
       window.removeEventListener("resize", onScroll);
     };
   }, [ref, options?.threshold, options?.rootMargin]);
-
   return inView;
 }
 
@@ -139,25 +142,21 @@ export default function SeccionOficinaPediatra({
   withFades?: boolean;
 }) {
   const { t } = useTranslation();
-
   const wrapRef = React.useRef<HTMLDivElement | null>(null);
   const baseStripRef = React.useRef<HTMLUListElement | null>(null);
 
-  // Repetimos el strip para simular loop infinito
-  const REPEAT = 7; // impar para tener centro
+  const REPEAT = 7;
   const MID = Math.floor(REPEAT / 2);
 
   const [stripW, setStripW] = React.useState(0);
-  const [step, setStep] = React.useState(0); // ancho de 1 tarjeta + gap
+  const [step, setStep] = React.useState(0);
   const [noSnap, setNoSnap] = React.useState(false);
 
-  // Medir ancho del strip base + step exacto (card + gap)
   const measure = React.useCallback(() => {
     const ul = baseStripRef.current;
     if (!ul) return;
     const w = Math.ceil(ul.scrollWidth);
     setStripW(w);
-
     const firstCard = ul.querySelector<HTMLElement>(".card");
     const cardW = firstCard?.getBoundingClientRect().width ?? 0;
     const cs = getComputedStyle(ul);
@@ -168,7 +167,6 @@ export default function SeccionOficinaPediatra({
     setStep(cardW + gap);
   }, []);
 
-  // Medir en mount/resize
   React.useEffect(() => {
     measure();
     const ro = new ResizeObserver(measure);
@@ -182,14 +180,12 @@ export default function SeccionOficinaPediatra({
     };
   }, [measure]);
 
-  // Posicionar al centro al conocer stripW
   React.useEffect(() => {
     const scroller = wrapRef.current;
     if (!scroller || !stripW) return;
     jumpTo(scroller, stripW * MID);
   }, [stripW]);
 
-  // Teletransporte silencioso (sin snap ni smooth)
   const jumpTo = (el: HTMLDivElement, left: number) => {
     setNoSnap(true);
     const prev = el.style.scrollBehavior;
@@ -201,15 +197,12 @@ export default function SeccionOficinaPediatra({
     });
   };
 
-  // Recentrar si nos acercamos a bordes
   React.useEffect(() => {
     const el = wrapRef.current;
     if (!el || !stripW) return;
-
     let raf = 0;
     const nearLeft = stripW * 0.5;
     const nearRight = stripW * (REPEAT - 1.5);
-
     const onScroll = () => {
       if (raf) return;
       raf = requestAnimationFrame(() => {
@@ -222,12 +215,10 @@ export default function SeccionOficinaPediatra({
         }
       });
     };
-
     el.addEventListener("scroll", onScroll, { passive: true });
     return () => el.removeEventListener("scroll", onScroll);
   }, [stripW]);
 
-  // Avanza exactamente 1 tarjeta (uno-por-uno)
   const scrollOne = (dir: -1 | 1) => {
     const el = wrapRef.current;
     if (!el || !step) return;
@@ -237,82 +228,94 @@ export default function SeccionOficinaPediatra({
   };
 
   return (
-    <div className="relative w-full overflow-hidden ">
-      {/* Wave decorativo */}
-    
+    <div
+      className="relative w-full overflow-hidden"
+      style={{
+        background: `linear-gradient(to bottom right, ${PALETTE.cream}, ${PALETTE.cream})`,
+        color: PALETTE.cream,
+
+      }}
+    >
       <section
         id="gallery"
         className="relative z-10 pt-24 pb-10 scroll-mt-10"
         aria-label="Oficina física de la pediatra"
       >
-        {/* Título + CTA + Flechas */}
         <div className="text-center mb-6 mx-auto max-w-7xl lg:px-8 px-4 sm:px-6">
           <Reveal y={8} delay={0}>
-            <p className="text-xs font-semibold tracking-[0.2em] text-sky-900 uppercase mb-3">
+            <p
+              className="text-xs font-semibold tracking-[0.2em] uppercase mb-3"
+              style={{ color: PALETTE.ochre }}
+            >
               {t("clinic.pretitle")}
             </p>
           </Reveal>
           <Reveal y={12} delay={70}>
-            <h2 className="mt-6 mb-6 text-4xl md:text-5xl font-bold leading-tight text-gray-800">
+            <h2
+              className="mt-6 mb-6 text-4xl md:text-5xl font-bold leading-tight"
+              style={{ color: PALETTE.dark }}
+            >
               {t("clinic.title")}
             </h2>
           </Reveal>
 
-          {/* Botón Galería + Flechas */}
           <Reveal y={14} delay={140}>
             <div className="mt-3 flex items-center justify-center gap-2 mb-15">
               <Link
                 href={"/gallery"}
-                className="bg-sky-900 text-white font-semibold px-10 py-3 md:px-16 rounded-sm transition-all inline-flex items-center gap-2 text-sm hover:scale-102"
+                className="font-semibold px-10 py-3 md:px-16 rounded-sm transition-all inline-flex items-center gap-2 text-sm hover:scale-105"
+                style={{
+                  backgroundColor: PALETTE.amber,
+                  color: PALETTE.cream,
+                }}
               >
                 <span>{t("clinic.cta")}</span>
                 <ChevronRight className="w-4 h-4" />
               </Link>
 
-              {/* Flecha Izquierda (uno-por-uno) */}
               <button
                 type="button"
                 onClick={() => scrollOne(-1)}
                 aria-label="Foto anterior"
-                title="Anterior"
-                className="bg-sky-900 text-white font-semibold px-10 py-3 md:px-10 rounded-sm transition-all inline-flex items-center gap-2 text-sm hover:scale-105"              >
+                className="font-semibold px-10 py-3 md:px-10 rounded-sm transition-all inline-flex items-center gap-2 text-sm hover:scale-105"
+                style={{
+                  backgroundColor: PALETTE.olive,
+                  color: PALETTE.cream,
+                }}
+              >
                 <ChevronLeft className="w-4 h-5" />
               </button>
-              {/* Flecha Derecha (uno-por-uno) */}
+
               <button
                 type="button"
                 onClick={() => scrollOne(1)}
                 aria-label="Foto siguiente"
-                title="Siguiente"
-                className="bg-sky-900 text-white font-semibold px-10 py-3 md:px-10 rounded-sm transition-all inline-flex items-center gap-2 text-sm hover:scale-105"              >
+                className="font-semibold px-10 py-3 md:px-10 rounded-sm transition-all inline-flex items-center gap-2 text-sm hover:scale-105"
+                style={{
+                  backgroundColor: PALETTE.olive,
+                  color: PALETTE.cream,
+                }}
+              >
                 <ChevronRight className="w-4 h-5" />
               </button>
             </div>
           </Reveal>
         </div>
 
-        {/* Galería infinita con snap por tarjeta */}
         <Reveal y={16} delay={100}>
           <div
             ref={wrapRef}
             id="gallery-scroller"
-            className={`marquee-wrap ${withFades ? "with-fades" : ""} ${noSnap ? "no-snap" : ""} relative rounded-3xl bg-white/10`}
+            className={`marquee-wrap ${withFades ? "with-fades" : ""} ${noSnap ? "no-snap" : ""} relative rounded-3xl`}
             role="region"
             aria-label="Galería de fotos infinita"
             tabIndex={0}
           >
-            {/* Strip base oculto para medir (ancho + step) */}
             <ul ref={baseStripRef} className="strip measure-only" aria-hidden="true">
               {images.map((img, i) => (
                 <li key={`base-${i}`} className="card">
                   <figure className="card-frame">
-                    <img
-                      src={img.src}
-                      alt=""
-                      loading="lazy"
-                      decoding="async"
-                      className="card-img"
-                    />
+                    <img src={img.src} alt="" loading="lazy" decoding="async" className="card-img" />
                   </figure>
                 </li>
               ))}
@@ -331,7 +334,6 @@ export default function SeccionOficinaPediatra({
                           decoding="async"
                           className="card-img"
                         />
-                        <figcaption className="sr-only">{img.alt}</figcaption>
                       </figure>
                     </li>
                   ))}
@@ -341,9 +343,7 @@ export default function SeccionOficinaPediatra({
           </div>
         </Reveal>
 
-        {/* Estilos */}
         <style>{`
-          /* Contenedor desplazable infinito */
           .marquee-wrap {
             --card-h: clamp(180px, 32vw, 320px);
             overflow-x: auto;
@@ -353,43 +353,11 @@ export default function SeccionOficinaPediatra({
             scrollbar-width: none;
           }
           .marquee-wrap::-webkit-scrollbar { display: none; }
-
-          /* Desactivar snap temporalmente para teletransportes */
           .marquee-wrap.no-snap { scroll-snap-type: none !important; }
-
-          /* Fades opcionales en bordes */
-          .marquee-wrap.with-fades {
-            --fade: 64px;
-            -webkit-mask-image: linear-gradient(to right, transparent, black var(--fade), black calc(100% - var(--fade)), transparent);
-                    mask-image: linear-gradient(to right, transparent, black var(--fade), black calc(100% - var(--fade)), transparent);
-          }
-
           .repeat-row { display: inline-flex; }
-
-          /* Lista y tarjetas */
-          .strip { 
-            display:flex; 
-            gap:16px; 
-            padding:16px; 
-            width: max-content;
-          }
-
-          /* Strip oculto solo para medir ancho exacto */
-          .strip.measure-only { 
-            position: absolute; 
-            visibility: hidden; 
-            pointer-events: none; 
-            height: 0; 
-            padding: 0; 
-            margin: 0; 
-            gap: 16px;
-          }
-
-          .card { 
-            flex:0 0 auto; 
-            scroll-snap-align: start; 
-          }
-
+          .strip { display:flex; gap:16px; padding:16px; width: max-content; }
+          .strip.measure-only { position:absolute; visibility:hidden; pointer-events:none; height:0; padding:0; margin:0; gap:16px; }
+          .card { flex:0 0 auto; scroll-snap-align:start; }
           .card-frame {
             height: var(--card-h);
             aspect-ratio: 4 / 3;
@@ -402,15 +370,6 @@ export default function SeccionOficinaPediatra({
             place-items: center;
           }
           .card-img { width: 100%; height: 100%; object-fit: cover; }
-
-          @media (min-width: 768px) {
-            .strip { gap: 18px; padding: 18px; }
-            .card-frame { border-radius: 24px; }
-          }
-          @media (min-width: 1024px) {
-            .strip { gap: 22px; padding: 22px; }
-            .card-frame { border-radius: 26px; }
-          }
         `}</style>
       </section>
     </div>

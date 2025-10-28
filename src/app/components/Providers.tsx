@@ -4,8 +4,18 @@ import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useProvidersData } from "../provider/data";
-import providersSvg from "@/../public/assets/svg/providers.svg";
 import { useTranslation } from "../contexts/TranslationContext";
+
+/* 🎨 Paleta pictórica */
+const PALETTE = {
+  amber: "#B67B39",  // ámbar cálido
+  moss: "#7C8C4D",   // verde musgo
+  wine: "#812D20",   // vino terroso
+  ochre: "#D8C27A",  // ocre claro
+  olive: "#4F5635",  // oliva profundo
+  cream: "#FAF4E6",  // crema suave
+  dark: "#2B2725",   // marrón oscuro
+};
 
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(false);
@@ -73,6 +83,7 @@ function useInOutViewport<T extends HTMLElement>(
   return inView;
 }
 
+/* ✨ Reveal animation */
 type RevealProps = {
   children: React.ReactNode;
   className?: string;
@@ -85,6 +96,7 @@ type RevealProps = {
   threshold?: number;
   rootMargin?: string;
 };
+
 const Reveal: React.FC<RevealProps> = ({
   children,
   className,
@@ -102,7 +114,6 @@ const Reveal: React.FC<RevealProps> = ({
   const [shown, setShown] = useState(false);
   const reduce = usePrefersReducedMotion();
 
-
   useEffect(() => {
     if (inView) setShown(true);
     else if (!once) setShown(false);
@@ -111,11 +122,11 @@ const Reveal: React.FC<RevealProps> = ({
   const style: React.CSSProperties = reduce
     ? {}
     : {
-      opacity: shown ? 1 : 0,
-      transform: shown ? "none" : `translate(${x}px, ${y}px) scale(${scale})`,
-      transition: `opacity ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms, transform ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms`,
-      willChange: "opacity, transform",
-    };
+        opacity: shown ? 1 : 0,
+        transform: shown ? "none" : `translate(${x}px, ${y}px) scale(${scale})`,
+        transition: `opacity ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms, transform ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms`,
+        willChange: "opacity, transform",
+      };
 
   return (
     <div ref={ref} className={className} style={style} aria-hidden={!shown}>
@@ -124,6 +135,7 @@ const Reveal: React.FC<RevealProps> = ({
   );
 };
 
+/* 🔶 Componente principal */
 interface ProvidersProps {
   onProviderClick?: (providerId: string) => void;
 }
@@ -135,32 +147,39 @@ const Providers: React.FC<ProvidersProps> = ({ onProviderClick }) => {
   return (
     <section
       id="providers"
-      className="relative bg-white pt-24 pb-10 md:pt-28 md:pb-12 overflow-hidden scroll-mt-28"
+      className="relative pt-24 pb-10 md:pt-28 md:pb-12 overflow-hidden scroll-mt-28"
+      style={{ backgroundColor: PALETTE.cream }}
     >
-
-
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-20 px-6 lg:px-8 xl:grid-cols-5">
         {/* Section Header */}
         <div className="max-w-2xl xl:col-span-2 z-10">
-
           <Reveal y={8} delay={0}>
-            <p className="text-xs font-semibold tracking-[0.2em] text-sky-900 uppercase mb-3">
-              {t('providers.pretitle')}
+            <p
+              className="text-xs font-semibold tracking-[0.2em] uppercase mb-3"
+              style={{ color: PALETTE.olive }}
+            >
+              {t("providers.pretitle")}
             </p>
           </Reveal>
 
-          <h2 className="text-4xl font-semibold tracking-tight text-gray-800 sm:text-5xl">
-            {t('providers.title')}
-          </h2>
+          <Reveal y={8} delay={40}>
+            <h2
+              className="text-4xl font-semibold tracking-tight sm:text-5xl"
+              style={{ color: PALETTE.dark }}
+            >
+              {t("providers.title")}
+            </h2>
+          </Reveal>
 
-          <p className="mt-6 text-lg/8 text-gray-600">
-            {t('providers.subtitle')}
-          </p>
-
+          <Reveal y={8} delay={80}>
+            <p className="mt-6 text-lg leading-relaxed" style={{ color: PALETTE.olive }}>
+              {t("providers.subtitle")}
+            </p>
+          </Reveal>
         </div>
 
         {/* Providers List */}
-        <ul role="list" className="divide-y divide-gray-200 xl:col-span-3">
+        <ul role="list" className="divide-y xl:col-span-3" style={{ borderColor: `${PALETTE.dark}22` }}>
           {providers.map((provider) => {
             const imgSrc =
               typeof provider.image === "string"
@@ -175,38 +194,50 @@ const Providers: React.FC<ProvidersProps> = ({ onProviderClick }) => {
                 <img
                   alt={provider.name}
                   src={imgSrc}
-                  className="aspect-4/5 w-52 flex-none rounded-2xl object-cover outline-1 -outline-offset-1 outline-black/5 z-10"
+                  className="aspect-4/5 w-52 flex-none rounded-2xl object-cover shadow-md"
                   loading="lazy"
+                  style={{
+                    outline: `1px solid ${PALETTE.dark}22`,
+                    backgroundColor: `${PALETTE.dark}08`,
+                  }}
                 />
 
                 <div className="max-w-xl flex-auto">
                   <Reveal y={6} delay={0} duration={520}>
-                    <h3 className="text-lg font-semibold text-gray-900">
+                    <h3 className="text-lg font-semibold" style={{ color: PALETTE.dark }}>
                       {provider.name}
                     </h3>
                   </Reveal>
 
                   <Reveal y={6} delay={40} duration={520}>
-                    <p className="text-base text-sky-900 font-medium z-10">
+                    <p
+                      className="text-base font-medium z-10"
+                      style={{ color: PALETTE.moss }}
+                    >
                       {provider.title}
                     </p>
                   </Reveal>
 
                   <Reveal y={8} delay={80} duration={520}>
-                    <p className="mt-6 text-base text-gray-600">
+                    <p
+                      className="mt-6 text-base leading-relaxed"
+                      style={{ color: `${PALETTE.dark}cc` }}
+                    >
                       {((bio) => {
-                        const MAX = 102; // cámbialo a lo que quieras
-                        return bio.length > MAX ? bio.slice(0, MAX).trimEnd() + " ..." : bio;
+                        const MAX = 102;
+                        return bio.length > MAX
+                          ? bio.slice(0, MAX).trimEnd() + " ..."
+                          : bio;
                       })(provider?.bio ?? "")}
                     </p>
                   </Reveal>
 
                   <Reveal y={8} delay={120} duration={520}>
                     <div className="mt-4 space-y-1">
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm" style={{ color: `${PALETTE.dark}99` }}>
                         {provider.experience}
                       </p>
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm" style={{ color: `${PALETTE.dark}99` }}>
                         {provider.languages}
                       </p>
                     </div>
@@ -216,9 +247,13 @@ const Providers: React.FC<ProvidersProps> = ({ onProviderClick }) => {
                     <div className="mt-6">
                       <Link
                         href={`/provider/${provider.id}`}
-                        className="inline-flex items-center justify-center gap-1.5 px-3 h-9 rounded-sm bg-sky-900 text-white text-sm font-medium transition-colors duration-200 w-30"
+                        className="inline-flex items-center justify-center gap-1.5 px-3 h-9 rounded-md text-sm font-medium transition-all duration-200 w-30"
+                        style={{
+                          backgroundColor: PALETTE.olive,
+                          color: PALETTE.cream,
+                        }}
                       >
-                        {t('proider.cta')}
+                        {t("provider.cta")}
                         <ArrowRight className="w-4 h-4" />
                       </Link>
                     </div>

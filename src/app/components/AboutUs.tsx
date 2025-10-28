@@ -5,13 +5,13 @@ import brandGrid from "@/../public/assets/svg/brand-grid.svg";
 
 /* -------------------- Palette -------------------- */
 const PALETTE = {
-  amber:  "#B67B39", // dorado cálido
-  moss:   "#7C8C4D", // verde musgo
-  wine:   "#812D20", // vino terroso
-  ochre:  "#D8C27A", // ocre claro
-  olive:  "#4F5635", // oliva profundo
-  cream:  "#FAF4E6", // crema suave
-  dark:   "#2B2725", // marrón oscuro neutro
+  amber: "#B67B39", // dorado cálido
+  moss: "#7C8C4D", // verde musgo
+  wine: "#812D20", // vino terroso
+  ochre: "#D8C27A", // ocre claro
+  olive: "#4F5635", // oliva profundo
+  cream: "#FAF4E6", // crema suave
+  dark: "#2B2725", // marrón oscuro neutro
 };
 
 /* -------------------- Utils -------------------- */
@@ -120,11 +120,11 @@ const Reveal: React.FC<RevealProps> = ({
   const style: React.CSSProperties = reduce
     ? {}
     : {
-        opacity: shown ? 1 : 0,
-        transform: shown ? "none" : `translate(${x}px, ${y}px) scale(${scale})`,
-        transition: `opacity ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms, transform ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms`,
-        willChange: "opacity, transform",
-      };
+      opacity: shown ? 1 : 0,
+      transform: shown ? "none" : `translate(${x}px, ${y}px) scale(${scale})`,
+      transition: `opacity ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms, transform ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms`,
+      willChange: "opacity, transform",
+    };
 
   return (
     <div ref={ref} className={className} style={style} aria-hidden={!shown}>
@@ -210,9 +210,9 @@ const AnimatedNumber: React.FC<AnimatedNumberProps> = ({
     const fmt = compact
       ? new Intl.NumberFormat(undefined, { notation: "compact", maximumFractionDigits: 0 }).format(n)
       : new Intl.NumberFormat(undefined, {
-          minimumFractionDigits: fractionDigits,
-          maximumFractionDigits: fractionDigits,
-        }).format(n);
+        minimumFractionDigits: fractionDigits,
+        maximumFractionDigits: fractionDigits,
+      }).format(n);
     return fmt + suffix;
   }, [value, compact, fractionDigits, suffix]);
 
@@ -304,14 +304,20 @@ export const AboutUsProfessional: React.FC = () => {
                 {t("about.insurance")}
               </div>
               <div className="flex flex-wrap items-center gap-x-8 gap-y-3 opacity-70 grayscale">
-                {["Aetna", "BlueCross", "Humana", "Triple-S", "Mapfre"].map((logo, i) => (
-                  <Reveal key={logo} y={8} delay={280 + i * 80}>
-                    <span className="text-sm font-semibold"
-                      style={{ color: PALETTE.olive }}>
-                      {logo}
-                    </span>
-                  </Reveal>
-                ))}
+                {["OSCAR",
+                  "CIGNA",
+                  "SUNSHINE HEALTH",
+                  "HUMANA MEDICAID",
+                  "AETNA",
+                  "UNITED HEALTH CARE",
+                  "HEALTH FIRST"].map((logo, i) => (
+                    <Reveal key={logo} y={8} delay={280 + i * 80}>
+                      <span className="text-sm font-semibold"
+                        style={{ color: PALETTE.olive }}>
+                        {logo}
+                      </span>
+                    </Reveal>
+                  ))}
               </div>
             </div>
           </Reveal>

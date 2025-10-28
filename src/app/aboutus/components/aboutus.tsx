@@ -317,15 +317,16 @@ export default function AboutUs() {
   const DOCTORS: Doctor[] = useMemo(
     () => [
       {
-        id: "dr-maria-rodriguez",
+        id: "dr-Jaime-acosta",
         name: "Dra. Martha I. Acosta, MD",
         tagline: t("providers.dr1.title"),
         langs: t('providers.dr1.languages'),
         bio: t('provider.bio.dr1'),
+        bio2: t("provider.bio.dr1.text2"),
         photo: FemaleDoctor,
       },
       {
-        id: "dr-james-thompson",
+        id: "dr-Juan-Ortiz ",
         name: "Dr. Juan Ortiz Guevara, MD",
         tagline: t("providers.dr2.title"),
         langs: t('providers.dr1.languages'),

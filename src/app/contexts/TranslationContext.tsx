@@ -452,10 +452,10 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'about.cta1': 'Learn more about us',
     'about.cta2': 'See all Services',
     'about.insurance': 'Trusted by',
-    'about.text1': 'At our bilingual clinic, we are dedicated to providing high-quality medical care for the little ones. Our vision is focused on the comprehensive well-being of each child, ensuring they grow up healthy and happy.',
-    'about.text2': 'info are primary care physicians (PCPs) for children, infants, and adolescents. They are trained to meet the unique needs of children, through all of their developmental stages, as they grow and mature.',
-    'about.text3': 'We provide vaccines, manage common illnesses (asthma, allergies, infections), offer newborn guidance, and support healthy weight management, among other pediatric needs.',
-    'about.text4': 'Our commitment is clear: to resolve your doubts in simple language, act with evidence, and be available when you need us most.',
+    'about.text1': 'A primary care physician (PCP) is a healthcare professional, usually a general practitioner, who provides comprehensive long-term medical care. They are the first point of contact for most health issues, from routine and preventive checkups to the treatment of common illnesses. They can also refer patients to specialists and coordinate their care.',
+    'about.text2': 'At Your Health Adult Care, our primary care physicians specialize in the treatment of acute and chronic conditions, such as high cholesterol and hypertension, diabetes, heart disease, asthma, geriatric medicine, and minor injury care. They also offer everything from annual checkups to immunizations. Let our experienced family physicians provide you with compassionate and personalized care.',
+    // 'about.text3': "We'll help you stay healthy with regular checkups, recover from injuries, and manage acute and chronic conditions. At YHAC, you'll receive comprehensive care, including adult preventive medicine, senior care, lab services, immunizations, minor injury care, and a friendly, bilingual staff.",
+    'about.text3': "",
     'about.stats.experience': 'Years of Experience',
     'about.stats.families': 'Happy Families',
     'about.title.detail': 'Your Health Adult Care: Bilingual Pediatric Care',
@@ -517,28 +517,28 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'services.search.empty': 'No results to display.',
 
     // Services list (array of objects)
-'services.list': [
-  {
-    key: 'preventive-medicine',
-    title: 'Preventive Medicine',
-    description: 'Focused on maintaining health and preventing illness through regular checkups, screenings, and lifestyle guidance.',
-  },
-  {
-    key: 'adult-immunizations',
-    title: 'Adult Immunizations',
-    description: 'Comprehensive vaccination services to protect adults from preventable diseases.',
-  },
-  {
-    key: 'minor-injury-treatment',
-    title: 'Minor Injury Diagnosis and Treatment',
-    description: 'Prompt care for sprains, cuts, and other minor injuries to support a fast recovery.',
-  },
-  {
-    key: 'chronic-disease-management',
-    title: 'Chronic Disease Management',
-    description: 'Ongoing support and personalized care plans for managing chronic conditions like diabetes or hypertension.',
-  },
-],
+    'services.list': [
+      {
+        key: 'preventive-medicine',
+        title: 'Preventive Medicine',
+        description: 'Focused on maintaining health and preventing illness through regular checkups, screenings, and lifestyle guidance.',
+      },
+      {
+        key: 'adult-immunizations',
+        title: 'Adult Immunizations',
+        description: 'Comprehensive vaccination services to protect adults from preventable diseases.',
+      },
+      {
+        key: 'minor-injury-treatment',
+        title: 'Minor Injury Diagnosis and Treatment',
+        description: 'Prompt care for sprains, cuts, and other minor injuries to support a fast recovery.',
+      },
+      {
+        key: 'chronic-disease-management',
+        title: 'Chronic Disease Management',
+        description: 'Ongoing support and personalized care plans for managing chronic conditions like diabetes or hypertension.',
+      },
+    ],
 
 
     // Providers
@@ -567,7 +567,8 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'providers.cta.subtitle': 'Schedule an appointment today and experience the exceptional pediatric healthcare your child deserves.',
     'providers.schedule': 'Schedule Appointment',
     'providers.meet': 'Meet the Team',
-    'provider.bio.dr1': 'Dr. Martha I. Acosta is an established and skilled physician who has practiced in Florida for over 20 years. She is recognized in the field for providing quality, patient centered care for children from newborns to adolescents.',
+    'provider.bio.dr1': 'Dr. Jaime A. Acosta, MD, is a highly skilled and compassionate general practitioner committed to providing comprehensive healthcare services to adult patients in Kissimmee, Florida. With a focus on continuity of care and preventative medicine, he offers personalized treatment plans to address a wide range of medical conditions and promote overall well-being.',
+    'provider.bio.dr1.text2': 'At Your Health Adult Care, he offers a variety of services, including health screenings, acute and chronic disease management, and minor surgical procedures. Dr. Acosta is a general medicine specialist, licensed to practice medicine in Florida, Michigan, and Puerto Rico, and affiliated with AdventHealth Network. He is currently accepting new patients.',
     'provider.bio.dr2': 'Dr. Eduardo F. Bolumen is a skilled and compassionate pediatrician practicing in Florida. He has provided comprehensive care to infants, children, and adolescents for over two decades.',
     'proider.cta': 'See more',
     'provider.bio.dr2.text2': 'Dr. Bolumen combines his experience with a compassionate approach to ensure optimal health outcomes and promote overall well-being.',

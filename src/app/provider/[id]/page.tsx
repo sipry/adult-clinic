@@ -107,7 +107,7 @@ const isMeaningful = (v: string | undefined): v is string => {
 /** 🔹 Mapping temporal: planes por doctora/doctor.
  *  Si ya los traes en tu data (p.ej. p.insurancePlans), reemplaza esto por esa fuente. */
 const DOCTOR_PLANS: Record<string, string[]> = {
-  "Dra. Martha I. Acosta": [
+  "Dra. Jaime ": [
     "AETNA HEALTHCARE (PPO)",
     "BETTER HEALTHCARE (Commercial)",
     "BLUE CROSS & BLUE SHIELD (PPO)",
@@ -121,7 +121,7 @@ const DOCTOR_PLANS: Record<string, string[]> = {
     "SUNSHINE HEALTHCARE (Medicaid)",
     "UNITED HEALTHCARE (PPO)",
   ],
-  "Dr. Eduardo F. Bolumen": [
+  "Dr. Eduardo": [
     "CMS - SUNSHINE (Medicaid)",
     "HUMANA HEALTHCARE (Medicaid)",
     "OSCAR HEALTHCARE (Commercial)",
@@ -155,7 +155,7 @@ export default function ProviderDetailPage() {
 
   // 2) segundo párrafo opcional:
   const fallbackDr2 =
-    p.id === "dr-james-thompson" ? t("provider.bio.dr2.text2") : "";
+    p.id === "dr-Juan-Ortiz " ? t("provider.bio.dr2.text2") : "";
 
   const secondParagraph = isMeaningful(p.bio2)
     ? p.bio2
