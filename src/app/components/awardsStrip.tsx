@@ -54,8 +54,8 @@ const AwardsStrip: FC = () => {
       role="region"
       aria-label={t("awards.regionLabel")}
       style={{
-        backgroundColor: PALETTE.olive, // fondo contrastante
-        color: PALETTE.cream, // texto claro
+        backgroundColor: PALETTE.amber, // fondo contrastante
+        color: PALETTE.dark, // texto claro
       }}
     >
       <div
@@ -117,11 +117,11 @@ const StripCopy: FC<{ awards: AwardItem[]; ariaHidden?: boolean }> = ({
         const content = (
           <span
             className="inline-flex items-center gap-2 text-sm sm:text-base font-semibold px-1 transition-colors duration-200"
-            style={{ color: PALETTE.cream }}
+            style={{ color: PALETTE.dark }}
           >
             <span
               className="text-xs sm:text-sm"
-              style={{ color: PALETTE.ochre, opacity: 0.9 }}
+              style={{ color: PALETTE.dark, opacity: 0.9 }}
             >
               {t("awards.label")}
             </span>
@@ -148,7 +148,7 @@ const StripCopy: FC<{ awards: AwardItem[]; ariaHidden?: boolean }> = ({
                 rel="noopener noreferrer"
                 aria-label={t("awards.linkLabel")}
                 className="hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(250,244,230,0.5)] rounded-sm"
-                style={{ color: PALETTE.cream }}
+                style={{ color: PALETTE.dark }}
               >
                 {content}
               </a>
@@ -157,7 +157,7 @@ const StripCopy: FC<{ awards: AwardItem[]; ariaHidden?: boolean }> = ({
             )}
             <span
               className="mx-4"
-              style={{ color: PALETTE.amber, opacity: 0.8 }}
+              style={{ color: PALETTE.dark, opacity: 0.8 }}
               aria-hidden="true"
             >
               •

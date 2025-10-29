@@ -597,7 +597,7 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
 
     // Clinica
     'clinic.pretitle': 'Our office',
-    'clinic.title': 'A Place Designed for Your Little Ones’ Comfort',
+    'clinic.title': 'A place designed for your Comfort',
     'clinic.cta': 'View Gallery',
 
     // Adult / Clinic for adults (traducción fiel del original)
