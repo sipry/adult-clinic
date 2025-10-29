@@ -255,13 +255,14 @@ const ServicesRail: React.FC<{ featuredKeys?: string[] }> = ({
                         style={{ height: cardH }}
                         tabIndex={0}
                       >
-                        {/* Frente con el MISMO color base */}
+                   
                         <div
                           className="absolute inset-0 p-5 md:p-6 [backface-visibility:hidden] flex flex-col items-center justify-center text-center rounded-2xl"
                           style={{
                             backgroundColor: color.base,
                             color: color.dark,
-                            backgroundImage: "radial-gradient(1200px 600px at 20% 0%, rgba(255,255,255,0.1), transparent 60%)",
+                            backgroundImage:
+                              "radial-gradient(1200px 600px at 20% 0%, rgba(255,255,255,0.1), transparent 60%)",
                           }}
                         >
                           <div
@@ -274,16 +275,25 @@ const ServicesRail: React.FC<{ featuredKeys?: string[] }> = ({
                           >
                             <Icon className="w-6 h-6 md:w-7 md:h-7" />
                           </div>
-                          <h3 className="text-lg md:text-xl font-bold">{s.title}</h3>
-                          <p className="mt-2 text-sm md:text-base line-clamp-2 max-w-[30ch]" style={{ opacity: 0.9 }}>
+
+                          <h3 className="text-lg md:text-xl font-bold mb-2">{s.title}</h3>
+
+                          {/* 🔹 Descripción truncada */}
+                          <p className="text-sm md:text-base line-clamp-2 max-w-[28ch] opacity-90 mb-3">
                             {s.description}
                           </p>
-                          <span className="mt-4 inline-flex items-center text-sm font-medium underline-offset-2 hover:underline" style={{ color: color.dark }}>
+
+                          {/* 🔹 Botón “View Details” */}
+                          <Link
+                            href={s.href || "#"}
+                            className="inline-flex items-center text-sm font-semibold underline-offset-2 hover:underline"
+                            style={{ color: color.dark }}
+                          >
                             {t("services.details") || "View Details"}
-                          </span>
+                          </Link>
                         </div>
 
-                        {/* Reverso (mismo color base) */}
+                        {/* Reverso también con descripción resumida */}
                         <div
                           className="absolute inset-0 rounded-2xl [transform:rotateY(180deg)] [backface-visibility:hidden] flex flex-col items-center justify-center text-center p-5 md:p-6"
                           style={{
@@ -291,23 +301,34 @@ const ServicesRail: React.FC<{ featuredKeys?: string[] }> = ({
                             color: color.dark,
                           }}
                         >
-                          <h4 className="font-extrabold text-xl md:text-2xl leading-tight mb-3 max-w-[28ch]">
+                          <h4
+                            className="text-lg md:text-xl font-semibold mb-4 px-4 py-1 rounded-md border-b border-white/30 tracking-wide max-w-[28ch] mx-auto"
+                            style={{
+                              letterSpacing: "0.05em",
+                              backdropFilter: "blur(2px)",
+                            }}
+                          >
                             {s.title}
                           </h4>
-                          <div className="text-sm md:text-base leading-relaxed max-w-[34ch] mb-4 opacity-95">
+
+                          {/* 🔹 Descripción truncada igual que al frente */}
+                          <p className="text-sm md:text-base line-clamp-3 max-w-[32ch] opacity-95 mb-4">
                             {s.description}
-                          </div>
+                          </p>
+
+                          {/* 🔹 Botón para ver más */}
                           <Link
                             href={s.href || "#"}
                             className="inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-semibold hover:scale-105 transition-transform"
                             style={{
-                              backgroundColor: color.light,
-                              color: color.dark,
+                              backgroundColor: color.dark,
+                              color: color.base,
                             }}
                           >
                             {t("services.details") || "View Details"}
                           </Link>
                         </div>
+
                       </article>
                     </div>
                   </li>
