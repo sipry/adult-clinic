@@ -265,7 +265,7 @@ export default function SeccionOficinaPediatra({
                 href={"/gallery"}
                 className="font-semibold px-10 py-3 md:px-16 rounded-sm transition-all inline-flex items-center gap-2 text-sm hover:scale-105"
                 style={{
-                  backgroundColor: PALETTE.amber,
+                  backgroundColor: PALETTE.wine,
                   color: PALETTE.cream,
                 }}
               >

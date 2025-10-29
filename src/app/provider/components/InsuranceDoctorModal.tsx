@@ -44,7 +44,7 @@ const stripInitials = (s: string) => s.replace(/-[a-z]-/g, "-").replace(/-{2,}/g
 /* =============== DATA por defecto (ajusta tus IDs reales) =============== */
 
 const INSURANCE_BY_ID_DEFAULT: Record<string, string[]> = {
-  "Dra. Martha I. Acosta": [
+  "Dr. Jaime A. Acosta": [
     "AETNA HEALTHCARE",
     "BETTER HEALTHCARE",
     "BLUE CROSS & BLUE SHIELD",
@@ -58,7 +58,7 @@ const INSURANCE_BY_ID_DEFAULT: Record<string, string[]> = {
     "SUNSHINE HEALTHCARE",
     "UNITED HEALTHCARE",
   ],
-  "Dr. Eduardo F. Bolumen": [
+  "Dr. Juan Ortiz Guevara": [
     "CMS - SUNSHINE",
     "HUMANA HEALTHCARE",
     "OSCAR HEALTHCARE",

@@ -24,30 +24,26 @@ type Props = {
   doctorPlans?: Record<string, string[]>;
 };
 
-const DEFAULT_DOCTORS = ["Dra. Martha Acosta", "Dr. Eduardo F. Bolumen"];
+const DEFAULT_DOCTORS = ["Dra. Martha Acosta", "Dr. Juan Ortiz Guevara"];
 
 const DEFAULT_DOCTOR_PLANS: Record<string, string[]> = {
-  "Dra. Martha I. Acosta": [
-    "AETNA HEALTHCARE",
-    "BETTER HEALTHCARE",
-    "BLUE CROSS & BLUE SHIELD",
-    "CIGNA HEALTHCARE",
-    "CMS - SUNSHINE",
-    "FIRST HEALTHCARE",
+  "Dr. Jaime A. Acosta": [
+    "OSCAR",
+    "CIGNA",
+    "SUNSHINE HEALTH",
+    "HUMANA MEDICAID",
+    "AETNA",
+    "UNITED HEALTH CARE",
     "HEALTH FIRST",
-    "HUMANA HEALTHCARE",
-    "OSCAR HEALTHCARE",
-    "SIMPLY HEALTHCARE",
-    "SUNSHINE HEALTHCARE",
-    "UNITED HEALTHCARE",
   ],
-  "Dr. Eduardo F. Bolumen": [
-    "CMS - SUNSHINE",
-    "HUMANA HEALTHCARE",
-    "OSCAR HEALTHCARE",
-    "SIMPLY HEALTHCARE",
-    "SUNSHINE HEALTHCARE",
-    "UNITED HEALTHCARE",
+  "Dr. Juan Ortiz Guevara": [
+    "OSCAR",
+    "CIGNA",
+    "SUNSHINE HEALTH",
+    "HUMANA MEDICAID",
+    "AETNA",
+    "UNITED HEALTH CARE",
+    "HEALTH FIRST"
   ],
 };
 
@@ -79,8 +75,8 @@ export default function InsuranceModal({
       doctors?.length
         ? doctors
         : Object.keys(plansByDoctor).length
-        ? Object.keys(plansByDoctor)
-        : DEFAULT_DOCTORS;
+          ? Object.keys(plansByDoctor)
+          : DEFAULT_DOCTORS;
     return base.slice().sort((a, b) => a.localeCompare(b, "es", { sensitivity: "base" }));
   }, [doctors, plansByDoctor]);
 

@@ -106,7 +106,7 @@ const Navbar: React.FC<NavbarProps> = ({ scheme = 'auto' }) => {
           solidNav ? 'shadow-lg backdrop-blur-md' : 'shadow-none backdrop-blur-0'
         ].join(' ')}
         style={{
-          backgroundColor: solidNav ? `${PALETTE.cream}ee` : 'transparent',
+          backgroundColor: solidNav ? `${PALETTE.cream}` : 'transparent',
           transition: 'background-color 400ms ease, box-shadow 400ms ease',
         }}
       >

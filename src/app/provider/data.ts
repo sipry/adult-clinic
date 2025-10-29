@@ -8,6 +8,7 @@ export interface ProviderItem {
   title: string;
   image: { src: string } | string;
   education: string;
+  education2?: string; // <— opcional
   residency: string;
   experience: string;
   languages: string;
@@ -23,11 +24,12 @@ export const useProvidersData = () => {
 
   const providers: ProviderItem[] = [
     {
-      id: "dr-Jaime-acosta",
-      name: "Dra. Martha I. Acosta, MD",
+      id: "dr-Jaime-Acosta",
+      name: "Dr. Jaime A. Acosta , MD",
       title: t("providers.dr1.title"),
       image: doctorAvatar,
       education: t("providers.dr1.education"),
+      education2: t("providers.dr1.education2"),
       residency: "",
       experience: t("providers.dr1.experience"),
       languages: t("providers.dr1.languages"),
@@ -36,7 +38,7 @@ export const useProvidersData = () => {
 
     },
     {
-      id: "dr-Juan-Ortiz ",
+      id: "dr-Juan-Ortiz",
       name: "Dr. Juan Ortiz Guevara, MD",
       title: t("providers.dr2.title"),
       image: maleAvatar,

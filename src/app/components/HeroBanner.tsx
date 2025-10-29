@@ -11,25 +11,20 @@ import {
   useInView,
   type Variants,
 } from 'framer-motion';
-
-
 import heropaint from '@/../public/assets/images/hero-paint.jpg';
 
-
-
+const PALETTE = {
+  amber: "#B67B39",  // ámbar cálido
+  moss: "#7C8C4D",   // verde musgo
+  wine: "#812D20",   // vino terroso
+  ochre: "#D8C27A",  // ocre claro
+  olive: "#4F5635",  // oliva profundo
+  cream: "#FAF4E6",  // crema suave
+  dark: "#2B2725",   // marrón oscuro
+};
 
 const slides = [
-
-
   { src: heropaint.src, alt: 'Globo 3', pos: '50% 1%' },
-  // { src: demo3.src, alt: 'Globo 3', pos: '50% 90%' },
-  // { src: globo6.src, alt: 'Globo 3', pos: '50% 90%' },
-  // { src: globo8.src, alt: 'Globo 3', pos: '50% 90%' },
-  // { src: demo1.src, alt: 'Globo 3', pos: '50% 90%' },
-  // { src: woman.src, alt: 'Woman', pos: '50% 90%' },
-  // { src: demo2.src, alt: 'Globo 3', pos: '50% 90%' },
-  // { src: flowerField.src, alt: 'Flower Field', pos: '50% 90%' },
-
 ];
 
 const HEADLINE_TOP = 'Your Health Adult Care';
@@ -196,15 +191,15 @@ export default function HeroBannerMixedCentered() {
                          whitespace-nowrap text-3xl sm:text-5xl md:text-6xl lg:text-7xl"
             >
               {/* {topWords.map((w, idx) => ( */}
-                <motion.span
-                  // key={idx}
-                  // variants={prefersReducedMotion || ONLY_FADE
-                  //   ? { hidden: { opacity: 0 }, show: { opacity: 1, transition: { duration: 0.36 } } }
-                  //   : { hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0, transition: { duration: 0.36, ease: 'easeOut' } } }}
-                  // className="inline-block mr-3"
-                >
-               Your Health Adult Care
-                </motion.span>
+              <motion.span
+              // key={idx}
+              // variants={prefersReducedMotion || ONLY_FADE
+              //   ? { hidden: { opacity: 0 }, show: { opacity: 1, transition: { duration: 0.36 } } }
+              //   : { hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0, transition: { duration: 0.36, ease: 'easeOut' } } }}
+              // className="inline-block mr-3"
+              >
+                Your Health Adult Care
+              </motion.span>
               {/* ))} */}
             </motion.h2>
 
@@ -227,22 +222,24 @@ export default function HeroBannerMixedCentered() {
                 variants={buttonV}
                 whileHover={prefersReducedMotion || ONLY_FADE ? undefined : { scale: 1.04, transition: { duration: 0.12, ease: 'easeOut' } }}
                 whileTap={prefersReducedMotion || ONLY_FADE ? undefined : { scale: 0.98 }}
-                className="inline-flex items-center justify-center px-5 py-3 rounded-sm font-semibold text-sm md:text-base bg-white text-black shadow-[--shadow]"
+                className="inline-flex items-center justify-center px-5 py-3 rounded-sm font-semibold text-sm md:text-base text-black shadow-[--shadow]"
+                style={{ backgroundColor: PALETTE.cream }}
                 aria-label={t('hero.contact') ?? 'Book an appointment'}
               >
                 {t('hero.contact') ?? 'Book an appointment'}
               </motion.a>
 
+
               <motion.a
                 href="/#services"
                 variants={buttonV}
-                whileHover={prefersReducedMotion || ONLY_FADE ? undefined : { scale: 1.04, transition: { duration: 0.12, ease: 'easeOut' } }}
-                whileTap={prefersReducedMotion || ONLY_FADE ? undefined : { scale: 0.98 }}
-                className="inline-flex items-center justify-center px-5 py-3 rounded-sm font-medium text-sm md:text-base border border-white/50 text-white/95 bg-white/5 backdrop-blur hover:bg-white/10"
-                aria-label={t('hero.portal') ?? 'Patient Portal'}
+                whileHover={{ scale: 1.04 }}
+                className="inline-flex items-center justify-center px-5 py-3 rounded-sm font-medium text-sm md:text-base border border-white/50 bg-transparent"
+                style={{ color: PALETTE.cream }}
               >
                 {t('hero.portal') ?? 'Patient Portal'}
               </motion.a>
+
             </motion.div>
           </div>
         </div>

@@ -614,20 +614,8 @@ const ContactSplitWithForm: React.FC = () => {
                         </div>
                       </div>
 
-                      {/* Aceptación (opcional visible) */}
-                      <div className="md:col-span-2">
-                        <label className="inline-flex items-center gap-2 text-sm" style={{ color: PALETTE.dark }}>
-                          <input
-                            type="checkbox"
-                            name="agree"
-                            checked={form.agree}
-                            onChange={onChange}
-                            className="h-4 w-4 border rounded"
-                            style={{ accentColor: PALETTE.olive }}
-                          />
-                          {t("contact.form.fields.agree") || "I agree to be contacted back."}
-                        </label>
-                      </div>
+  
+                    
 
                       {/* Submit */}
                       <div className="md:col-span-2">

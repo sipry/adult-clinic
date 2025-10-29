@@ -104,33 +104,6 @@ const isMeaningful = (v: string | undefined): v is string => {
   return !!s && s !== "provider.bio.dr2.text2";
 };
 
-/** 🔹 Mapping temporal: planes por doctora/doctor.
- *  Si ya los traes en tu data (p.ej. p.insurancePlans), reemplaza esto por esa fuente. */
-const DOCTOR_PLANS: Record<string, string[]> = {
-  "Dra. Jaime ": [
-    "AETNA HEALTHCARE (PPO)",
-    "BETTER HEALTHCARE (Commercial)",
-    "BLUE CROSS & BLUE SHIELD (PPO)",
-    "CIGNA HEALTHCARE (PPO)",
-    "CMS - SUNSHINE (Medicaid)",
-    "FIRST HEALTHCARE (Commercial)",
-    "HEALTH FIRST (Commercial)",
-    "HUMANA HEALTHCARE (Medicaid)",
-    "OSCAR HEALTHCARE (Commercial)",
-    "SIMPLY HEALTHCARE (Medicaid)",
-    "SUNSHINE HEALTHCARE (Medicaid)",
-    "UNITED HEALTHCARE (PPO)",
-  ],
-  "Dr. Eduardo": [
-    "CMS - SUNSHINE (Medicaid)",
-    "HUMANA HEALTHCARE (Medicaid)",
-    "OSCAR HEALTHCARE (Commercial)",
-    "SIMPLY HEALTHCARE (Medicaid)",
-    "SUNSHINE HEALTHCARE (Medicaid)",
-    "UNITED HEALTHCARE (PPO)",
-  ],
-};
-
 /* ============ Page ============ */
 export default function ProviderDetailPage() {
   const params = useParams<{ id: string }>();
@@ -173,23 +146,12 @@ export default function ProviderDetailPage() {
     p.conditions && p.conditions.length > 0
       ? p.conditions
       : [
-        "Well visit",
-        "Sick Visit",
-        "Follow up",
-        "Immunizations",
-        "Food Allergy test",
-        "Environmental Allergy test",
-        "Vision screening",
-        "Audiology screening",
-        "Obesity care plan",
-        "Asthma care plan",
-        "ADHD care plan",
+        "Preventive Medicine",
+        "Adult Immunizations",
+        "Minor Illness Diagnosis and Treatment",
+        "Minor Injury Diagnosis and Treatment",
+        "Chronic Disease Management",
       ];
-
-  const board: string[] =
-    p.board && p.board.length > 0
-      ? p.board
-      : ["American Board of Pediatrics — Board Certified in Pediatric Medicine"];
 
   const educationList: string[] = Array.isArray(p.educationList)
     ? p.educationList
@@ -213,9 +175,6 @@ export default function ProviderDetailPage() {
       title: it.title,
       photo: typeof it.image === "string" ? it.image : it.image.src,
     }));
-
-  // 🔹 planes para ESTA doctora/doctor (desde mapping temporal)
-  const doctorPlans = DOCTOR_PLANS[p.name] ?? [];
 
   // (Opcional) Teléfono para el pie del modal
   const phoneHref = "tel:+14075744848";

@@ -107,31 +107,31 @@ const Reveal: React.FC<{
   threshold = 0.2,
   rootMargin = "0px 0px -10% 0px",
 }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInOutViewport(ref, { threshold, rootMargin });
-  const [shown, setShown] = useState(false);
-  const reduce = usePrefersReducedMotion();
+    const ref = useRef<HTMLDivElement>(null);
+    const inView = useInOutViewport(ref, { threshold, rootMargin });
+    const [shown, setShown] = useState(false);
+    const reduce = usePrefersReducedMotion();
 
-  useEffect(() => {
-    if (inView) setShown(true);
-    else if (!once) setShown(false);
-  }, [inView, once]);
+    useEffect(() => {
+      if (inView) setShown(true);
+      else if (!once) setShown(false);
+    }, [inView, once]);
 
-  const style: React.CSSProperties = reduce
-    ? {}
-    : {
+    const style: React.CSSProperties = reduce
+      ? {}
+      : {
         opacity: shown ? 1 : 0,
         transform: shown ? "none" : `translate(${x}px, ${y}px) scale(${scale})`,
         transition: `opacity ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms, transform ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms`,
         willChange: "opacity, transform",
       };
 
-  return (
-    <div ref={ref} className={className} style={style} aria-hidden={!shown}>
-      {children}
-    </div>
-  );
-};
+    return (
+      <div ref={ref} className={className} style={style} aria-hidden={!shown}>
+        {children}
+      </div>
+    );
+  };
 
 /* ---------- Componente Principal ---------- */
 const CompactMedicalPlans: React.FC = () => {
@@ -216,15 +216,21 @@ const CompactMedicalPlans: React.FC = () => {
                   <div className="marquee-track items-center gap-x-12 opacity-80">
                     {[...Array(2)].map((_, idx) => (
                       <div key={idx} className="flex items-center gap-x-12">
-                        {["Aetna", "BlueCross", "Humana", "Cigna", "UnitedHealthcare"].map((name) => (
-                          <span
-                            key={name}
-                            className="text-sm font-semibold"
-                            style={{ color: PALETTE.moss }}
-                          >
-                            {name}
-                          </span>
-                        ))}
+                        {["OSCAR",
+                          "CIGNA",
+                          "SunshineHealth",
+                          "HumanaMedicaid",
+                          "AETNA",
+                          "UnitedHealthCare",
+                          "HealthFirst"].map((name) => (
+                            <span
+                              key={name}
+                              className="text-sm font-semibold"
+                              style={{ color: PALETTE.moss }}
+                            >
+                              {name}
+                            </span>
+                          ))}
                       </div>
                     ))}
                   </div>

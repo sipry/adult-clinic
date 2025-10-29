@@ -318,7 +318,7 @@ export default function AboutUs() {
     () => [
       {
         id: "dr-Jaime-acosta",
-        name: "Dra. Martha I. Acosta, MD",
+        name: "Dr. Jaime A. Acosta, MD",
         tagline: t("providers.dr1.title"),
         langs: t('providers.dr1.languages'),
         bio: t('provider.bio.dr1'),

@@ -278,7 +278,7 @@ export const AboutUsProfessional: React.FC = () => {
               <a href="#contact"
                 className="inline-flex w-full items-center gap-2 rounded-sm font-semibold px-6 py-3 shadow-lg transition"
                 style={{
-                  backgroundColor: PALETTE.moss,
+                  backgroundColor: PALETTE.olive,
                   color: PALETTE.cream,
                 }}>
                 {t("about.cta1")}
