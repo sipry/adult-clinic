@@ -24,10 +24,9 @@ const PALETTE = {
 };
 
 const slides = [
-  { src: heropaint.src, alt: 'Globo 3', pos: '50% 1%' },
+  { src: heropaint.src, alt: 'Globo 3', pos: '100% 0%' }, // parte superior derecha
 ];
 
-const HEADLINE_TOP = 'Your Health Adult Care';
 const ONLY_FADE = false;
 const AUTOPLAY_MS = 6000;
 
@@ -103,7 +102,6 @@ export default function HeroBannerMixedCentered() {
     [prefersReducedMotion]
   );
 
-  const topWords = useMemo(() => HEADLINE_TOP.split(' '), []);
   const subtitleText = (t('hero.subtitle') as string) || '';
 
   // keyboard nav for dots (← →)
@@ -151,10 +149,13 @@ export default function HeroBannerMixedCentered() {
                 fill
                 priority={idx === 0}
                 sizes="100vw"
-                className="object-cover"
-                style={{ objectPosition: s.pos }}
-                quality={80}
+                className="object-cover scale-150"
+                style={{
+                  objectPosition: 'right top',
+                }}
+                quality={90}
               />
+
             </motion.div>
           );
         })}
@@ -171,7 +172,8 @@ export default function HeroBannerMixedCentered() {
           <div className="w-full max-w-5xl px-6 md:px-10 text-center">
             {/* pretitle */}
             <motion.div
-              className="text-[11px] md:text-lg tracking-[0.28em] text-white/80 uppercase"
+              className="text-[11px] md:text-lg tracking-[0.28em]  uppercase"
+              style={{ color: PALETTE.cream }}
               initial="hidden"
               animate={eyebrowCtrls}
               variants={eyebrowV}
@@ -187,8 +189,9 @@ export default function HeroBannerMixedCentered() {
                 hidden: { opacity: 0 },
                 show: { opacity: 1, transition: { staggerChildren: 0.02, delayChildren: 0.06 } },
               }}
-              className="mt-3 font-bold text-white leading-[0.95]
+              className="mt-3 font-bold leading-[0.95]
                          whitespace-nowrap text-3xl sm:text-5xl md:text-6xl lg:text-7xl"
+              style={{ color: PALETTE.cream }}
             >
               {/* {topWords.map((w, idx) => ( */}
               <motion.span
