@@ -453,8 +453,8 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'about.cta1': 'Learn more about us',
     'about.cta2': 'See all Services',
     'about.insurance': 'Trusted by',
-    'about.text1': 'A primary care physician (PCP) is a healthcare professional, usually a general practitioner, who provides comprehensive long-term medical care. They are the first point of contact for most health issues, from routine and preventive checkups to the treatment of common illnesses. They can also refer patients to specialists and coordinate their care.',
-    'about.text2': 'At Your Health Adult Care, our primary care physicians specialize in the treatment of acute and chronic conditions, such as high cholesterol and hypertension, ....',
+    'about.text1': 'Un médico de atención primaria (PCP) brinda cuidado médico integral y continuo, sirviendo como el primer punto de contacto para chequeos preventivos, enfermedades comunes y la coordinación con especialistas.',
+    'about.text2': 'En Your Health Adult Care (YHAC), los médicos de atención primaria tratan condiciones agudas y crónicas como colesterol alto, hipertensión, diabetes, enfermedades cardíacas, asma y más. Ofrecen chequeos anuales, vacunaciones y atención personalizada.',
     // 'about.text3': "We'll help you stay healthy with regular checkups, recover from injuries, and manage acute and chronic conditions. At YHAC, you'll receive comprehensive care, including adult preventive medicine, senior care, lab services, immunizations, minor injury care, and a friendly, bilingual staff.",
     'about.text3': "",
     'about.stats.experience': 'Years of Experience',
@@ -522,22 +522,28 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
       {
         key: 'preventive-medicine',
         title: 'Preventive Medicine',
-        description: 'Focused on maintaining health and preventing illness through regular checkups, screenings, and lifestyle guidance.',
+        description: 'Medical screenings and treatments that can help you avoid unnecessary illness and detect a potentially dangerous health condition while it is in its earliest and most treatable stage',
       },
       {
         key: 'adult-immunizations',
         title: 'Adult Immunizations',
-        description: 'Comprehensive vaccination services to protect adults from preventable diseases.',
+        description: 'Our doctors provide all CDC-recommended immunizations including those that protect you against Influenza (Flu), Pneumococcal Infections; HPV, Hepatitis, Shingles, RSV and more.',
+      },
+                  {
+        key: 'minor-illness-diagnosis',
+        title: 'Minor Illness Diagnosis and Treatment',
+        description: 'Evaluating and treating commonly diagnosed acute illnesses like cold and flu that do not require hospitalization.',
       },
       {
         key: 'minor-injury-treatment',
         title: 'Minor Injury Diagnosis and Treatment',
-        description: 'Prompt care for sprains, cuts, and other minor injuries to support a fast recovery.',
+        description: 'Evaluating and treating injuries that are not life threatening and can commonly be managed in a primary care physician’s office',
       },
+
       {
         key: 'chronic-disease-management',
         title: 'Chronic Disease Management',
-        description: 'Ongoing support and personalized care plans for managing chronic conditions like diabetes or hypertension.',
+        description: 'Regular monitoring and treatment of chronic diseases ranging from cardiovascular disease to Obesity, Diabetes, COPD, Asthma and Arthritis. Our multidisciplinary approach to Primary Care gives you the tools and support you need at any age and stage of your health.',
       },
     ],
 

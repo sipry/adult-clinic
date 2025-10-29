@@ -275,7 +275,7 @@ export const AboutUsProfessional: React.FC = () => {
 
           <div className="flex flex-wrap gap-3 mb-10">
             <Reveal y={12} delay={160}>
-              <a href="#contact"
+              <a href="/aboutus"
                 className="inline-flex w-full items-center gap-2 rounded-sm font-semibold px-6 py-3 shadow-lg transition"
                 style={{
                   backgroundColor: PALETTE.olive,
