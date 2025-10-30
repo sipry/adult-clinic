@@ -1,4 +1,3 @@
-// app/galeria/components/Gallery.tsx
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
@@ -7,20 +6,35 @@ import type { StaticImageData } from "next/image";
 
 /* 👇 Ajusta las rutas según tu proyecto */
 import oficina1 from "@/../public/assets/images/oficina-1.jpg";
+import oficina2 from "@/../public/assets/images/oficina-2.jpg";
 import oficina3 from "@/../public/assets/images/oficina-3.jpg";
 import oficina4 from "@/../public/assets/images/oficina-4.jpg";
 import oficina5 from "@/../public/assets/images/oficina-5.jpg";
+import oficina6 from "@/../public/assets/images/oficina-6.jpg";
 
-type Category = "Instalaciones" | "Corte de cinta";
+/* 🎨 Paleta */
+const PALETTE = {
+  amber: "#B67B39", // dorado cálido
+  moss: "#7C8C4D", // verde musgo
+  wine: "#812D20", // vino terroso
+  ochre: "#D8C27A", // ocre claro
+  olive: "#4F5635", // oliva profundo
+  cream: "#FAF4E6", // crema suave
+  dark: "#2B2725", // marrón oscuro neutro
+};
+
+type Category = "Instalaciones";
 type GalleryItem = { id: string; src: string; alt: string; category: Category };
 
 const toSrc = (img: StaticImageData) => img?.src ?? "";
 
 const ITEMS: GalleryItem[] = [
   { id: "g1", src: toSrc(oficina1), alt: "Recepción", category: "Instalaciones" },
-  { id: "g3", src: toSrc(oficina3), alt: "Corte de cinta - equipo", category: "Corte de cinta" },
+  { id: "g2", src: toSrc(oficina2), alt: "Recepción", category: "Instalaciones" },
+  { id: "g3", src: toSrc(oficina3), alt: "Corte de cinta - equipo", category: "Instalaciones" },
   { id: "g4", src: toSrc(oficina4), alt: "Box de atención", category: "Instalaciones" },
-  { id: "g5", src: toSrc(oficina5), alt: "Corte de cinta - invitados", category: "Corte de cinta" },
+  { id: "g5", src: toSrc(oficina5), alt: "Corte de cinta - invitados", category: "Instalaciones" },
+  { id: "g6", src: toSrc(oficina6), alt: "Corte de cinta - equipo", category: "Instalaciones" },
 ];
 
 export default function Gallery({
@@ -74,14 +88,21 @@ export default function Gallery({
   const current = filtered[index];
 
   return (
-    <section className="pt-40 pb-20 bg-white">
+    <section style={{ backgroundColor: PALETTE.cream }} className="pt-40 pb-20">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Título */}
         <header className="mb-6">
-          <h1 className="text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
+          <h1
+            className="text-4xl font-extrabold tracking-tight sm:text-5xl"
+            style={{ color: PALETTE.dark }}
+          >
             {title}
           </h1>
-          {subtitle ? <p className="mt-2 text-lg text-gray-600">{subtitle}</p> : null}
+          {subtitle ? (
+            <p className="mt-2 text-lg" style={{ color: PALETTE.olive }}>
+              {subtitle}
+            </p>
+          ) : null}
         </header>
 
         {/* Filtros */}
@@ -92,19 +113,21 @@ export default function Gallery({
               <button
                 key={c}
                 onClick={() => setActive(c)}
-                className={[
-                  "rounded-full px-3 py-1 text-sm font-medium ring-1 ring-inset transition-colors",
-                  isActive
-                    ? "bg-sky-900 text-white ring-sky-900"
-                    : "bg-sky-50 text-sky-900 ring-sky-200 hover:bg-sky-100",
-                ].join(" ")}
+                className="rounded-full px-3 py-1 text-sm font-medium ring-1 ring-inset transition-colors"
+                style={{
+                  backgroundColor: isActive ? PALETTE.olive : `${PALETTE.ochre}33`,
+                  color: isActive ? PALETTE.cream : PALETTE.dark,
+                  borderColor: PALETTE.olive,
+                }}
                 aria-pressed={isActive}
               >
                 {c}
               </button>
             );
           })}
-          <span className="ml-2 text-sm text-gray-500">{filtered.length} fotos</span>
+          <span className="ml-2 text-sm" style={{ color: PALETTE.olive }}>
+            {filtered.length} fotos
+          </span>
         </div>
 
         {/* Masonry */}
@@ -112,7 +135,11 @@ export default function Gallery({
           {filtered.map((item, i) => (
             <figure
               key={item.id}
-              className="mb-4 break-inside-avoid rounded-2xl border border-gray-200 bg-white p-2 shadow-sm transition-shadow hover:shadow"
+              className="mb-4 break-inside-avoid rounded-2xl p-2 transition-transform hover:scale-[1.01]"
+              style={{
+                backgroundColor: PALETTE.cream,
+                border: `1px solid ${PALETTE.olive}33`,
+              }}
             >
               <button
                 className="group block w-full overflow-hidden rounded-xl"
@@ -136,21 +163,22 @@ export default function Gallery({
         <div
           role="dialog"
           aria-modal="true"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 sm:p-6 md:p-8"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-8"
+          style={{ backgroundColor: "rgba(43,39,37,0.9)" }} // fondo oscuro según PALETTE.dark
           onClick={(e) => {
             if (e.target === e.currentTarget) close();
           }}
         >
-          {/* Controles FIJOS al viewport (no dependen del tamaño de la imagen) */}
+          {/* Controles */}
           <button
             onClick={(e) => {
               e.stopPropagation();
               close();
             }}
-            className="fixed z-[60] rounded-full bg-white/15 p-3 md:p-3.5 text-white backdrop-blur-md transition hover:bg-white/25 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            className="fixed z-[60] rounded-full p-3 md:p-3.5 text-white backdrop-blur-md transition hover:scale-105 focus:outline-none focus-visible:ring-2"
             aria-label="Cerrar"
             style={{
-              // respeta notch/safe-area
+              backgroundColor: `${PALETTE.dark}66`,
               top: "max(0.75rem, env(safe-area-inset-top))",
               right: "max(0.75rem, env(safe-area-inset-right))",
             }}
@@ -163,8 +191,9 @@ export default function Gallery({
               e.stopPropagation();
               prev();
             }}
-            className="fixed left-2 sm:left-4 md:left-6 top-1/2 z-[60] -translate-y-1/2 rounded-full bg-white/15 p-3 md:p-3.5 text-white backdrop-blur-md transition hover:bg-white/25 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            className="fixed left-2 sm:left-4 md:left-6 top-1/2 z-[60] -translate-y-1/2 rounded-full p-3 md:p-3.5 text-white backdrop-blur-md transition hover:scale-105 focus:outline-none"
             aria-label="Anterior"
+            style={{ backgroundColor: `${PALETTE.dark}66` }}
           >
             <ChevronLeft className="h-7 w-7 md:h-8 md:w-8" />
           </button>
@@ -174,22 +203,19 @@ export default function Gallery({
               e.stopPropagation();
               next();
             }}
-            className="fixed right-2 sm:right-4 md:right-6 top-1/2 z-[60] -translate-y-1/2 rounded-full bg-white/15 p-3 md:p-3.5 text-white backdrop-blur-md transition hover:bg-white/25 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            className="fixed right-2 sm:right-4 md:right-6 top-1/2 z-[60] -translate-y-1/2 rounded-full p-3 md:p-3.5 text-white backdrop-blur-md transition hover:scale-105 focus:outline-none"
             aria-label="Siguiente"
+            style={{ backgroundColor: `${PALETTE.dark}66` }}
           >
             <ChevronRight className="h-7 w-7 md:h-8 md:w-8" />
           </button>
 
-          {/* Imagen centrada y responsiva */}
+          {/* Imagen centrada */}
           <div className="relative z-50 max-h-[90vh] w-full max-w-6xl">
-            {/* Scrim suave arriba/abajo para contraste de los controles en móviles */}
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/40 to-transparent" />
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/40 to-transparent" />
-
             <img
               src={current.src}
               alt={current.alt}
-              className="mx-auto max-h-[90vh] w-auto max-w-full rounded-xl object-contain shadow-2xl"
+              className="mx-auto max-h-[90vh] w-auto max-w-full rounded-xl object-contain"
               onClick={(e) => e.stopPropagation()}
             />
           </div>

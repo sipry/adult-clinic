@@ -289,9 +289,7 @@ const ContactSplitWithForm: React.FC = () => {
       ref={sectionRef}
       id="contact"
       className="relative pb-20 pt-16 sm:pt-20 scroll-mt-10 overflow-x-clip overflow-hidden"
-      style={{
-        background: `linear-gradient(to bottom, ${PALETTE.cream}, ${PALETTE.amber}10)`,
-      }}
+      style={{ backgroundColor: PALETTE.cream }}
     >
       {/* Header */}
       <div className="relative z-10">
