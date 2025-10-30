@@ -8,13 +8,13 @@ import Link from 'next/link';
 
 /* 🎨 Paleta pictórica */
 const PALETTE = {
-  amber: "#B67B39",  // ámbar cálido
-  moss: "#7C8C4D",   // verde musgo
-  wine: "#812D20",   // vino terroso
-  ochre: "#D8C27A",  // ocre claro
-  olive: "#4F5635",  // oliva profundo
-  cream: "#FAF4E6",  // crema suave
-  dark: "#2B2725",   // marrón oscuro
+  amber: "#B67B39",
+  moss: "#7C8C4D",
+  wine: "#812D20",
+  ochre: "#D8C27A",
+  olive: "#4F5635",
+  cream: "#FAF4E6",
+  dark: "#2B2725",
 };
 
 type NavbarScheme = 'auto' | 'white' | 'dark';
@@ -39,36 +39,17 @@ const Navbar: React.FC<NavbarProps> = ({ scheme = 'auto' }) => {
     const applyScrollState = () => setIsScrolled(window.scrollY > 50);
     applyScrollState();
     window.addEventListener('scroll', applyScrollState, { passive: true });
-    window.addEventListener('load', applyScrollState);
-    window.addEventListener('pageshow', applyScrollState);
-    const sections = Array.from(document.querySelectorAll<HTMLElement>('section[id]'));
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActiveSection(entry.target.id);
-        });
-      },
-      { threshold: 0.5 }
-    );
-    sections.forEach((sec) => observer.observe(sec));
+
     const onResize = () => {
       if (window.innerWidth >= 1280) setIsMobileMenuOpen(false);
     };
     window.addEventListener('resize', onResize);
+
     return () => {
       window.removeEventListener('scroll', applyScrollState);
-      window.removeEventListener('load', applyScrollState);
-      window.removeEventListener('pageshow', applyScrollState);
       window.removeEventListener('resize', onResize);
-      sections.forEach((sec) => observer.unobserve(sec));
     };
   }, []);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setIsScrolled(window.scrollY > 50);
-    }
-  }, [pathname]);
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
@@ -88,35 +69,34 @@ const Navbar: React.FC<NavbarProps> = ({ scheme = 'auto' }) => {
       'relative group transition-colors duration-300 hover:scale-105 font-medium text-sm tracking-widest',
       solidNav
         ? (isActive
-            ? 'text-[#2B2725]' // marrón oscuro
-            : 'text-[#4F5635] hover:text-[#2B2725]') // oliva → marrón
+          ? 'text-[#2B2725]'
+          : 'text-[#4F5635] hover:text-[#2B2725]')
         : (isActive
-            ? 'text-[#FAF4E6]' // crema sobre fondo oscuro
-            : 'text-[#FAF4E6] hover:text-[#D8C27A]') // crema → ocre
+          ? 'text-[#FAF4E6]'
+          : 'text-[#FAF4E6] hover:text-[#D8C27A]')
     ].join(' ');
 
   return (
     <>
       <header
-        data-solid={solidNav ? 'true' : 'false'}
         className={[
           'fixed top-0 left-0 right-0 z-50',
           'px-4 sm:px-6 lg:px-12 xl:px-16 2xl:px-24',
-          'py-4 transition-all duration-500',
-          solidNav ? 'shadow-lg backdrop-blur-md' : 'shadow-none backdrop-blur-0'
+          'py-4 transition-all duration-500 flex items-center justify-between',
+          solidNav ? 'shadow-lg backdrop-blur-md' : 'shadow-none'
         ].join(' ')}
         style={{
           backgroundColor: solidNav ? `${PALETTE.cream}` : 'transparent',
           transition: 'background-color 400ms ease, box-shadow 400ms ease',
         }}
       >
-        <nav className="flex items-center justify-between w-full">
-          <Link href="/" className="flex items-center gap-2">
-          
-          </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden xl:flex items-center space-x-6 ml-auto m-2">
+
+        {/* 🌐 Main navigation group */}
+        <div className="flex items-center ml-auto">
+          {/* 🧩 Stage 1 — links visible only on large screens */}
+          <div className="hidden xl:flex items-center space-x-6 mr-4">
+
             {navLinks.map(({ href, id, label }) => {
               const isActive = activeSection === id;
               return (
@@ -131,19 +111,14 @@ const Navbar: React.FC<NavbarProps> = ({ scheme = 'auto' }) => {
                 </a>
               );
             })}
+          </div>
 
-            <div
-              className="transition-colors duration-300"
-              style={{
-                color: solidNav ? PALETTE.dark : PALETTE.cream,
-              }}
-            >
-              <LanguageToggle />
-            </div>
-
+          {/* 🧩 Stage 2 — toggle & button remain visible on md+, hidden on sm */}
+          <div className="hidden md:flex items-center gap-3">
+            <LanguageToggle scrolled={isScrolled} />
             <Link
               href="/contact"
-              className="transition-transform rounded-sm duration-300 font-normal text-sm py-2 px-10 tracking-wide hover:scale-105 shadow-lg"
+              className="transition-transform rounded-sm duration-300 font-normal text-sm py-2 px-6 tracking-wide hover:scale-105 shadow-md"
               style={{
                 backgroundColor: solidNav ? PALETTE.olive : PALETTE.cream,
                 color: solidNav ? PALETTE.cream : PALETTE.dark,
@@ -153,22 +128,94 @@ const Navbar: React.FC<NavbarProps> = ({ scheme = 'auto' }) => {
             </Link>
           </div>
 
-          {/* Mobile Controls */}
-          <div className="flex items-center gap-2 ml-auto xl:hidden">
-            <button
-              onClick={toggleMobileMenu}
-              className="p-2 transition-transform duration-200 hover:scale-110"
-              style={{
-                color: solidNav ? PALETTE.dark : PALETTE.cream,
-              }}
-              aria-label="Toggle mobile menu"
-              aria-expanded={isMobileMenuOpen}
+          <button
+            onClick={toggleMobileMenu}
+            className="p-2 ml-3 flex xl:hidden transition-transform duration-200 hover:scale-110"
+            style={{ color: solidNav ? PALETTE.dark : PALETTE.cream }}
+            aria-label="Toggle mobile menu"
+            aria-expanded={isMobileMenuOpen}
+          >
+            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+
+
+        </div>
+      </header>
+
+      {/* 🌓 Overlay */}
+      {isMobileMenuOpen && (
+        <div
+          className="fixed inset-0 bg-black/60 z-[55] transition-opacity duration-300 xl:hidden"
+          onClick={closeMobileMenu}
+        />
+      )}
+      {/* Drawer */}
+      <div
+        role="dialog"
+        aria-modal="true"
+        className={`fixed top-0 right-0 w-80 max-w-[90vw] shadow-2xl z-[60]
+    transform transition-transform duration-300 ease-in-out
+    ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}
+    h-dvh xl:hidden`}
+        style={{ backgroundColor: PALETTE.cream }}
+      >
+        <div className="flex flex-col h-full">
+          {/* Header */}
+          <div className="shrink-0 flex items-center justify-between p-6 border-b border-gray-200">
+            <span
+              className="text-md tracking-wide font-semibold"
+              style={{ color: PALETTE.dark }}
             >
-              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              Your Health Adult Care
+            </span>
+            <button
+              onClick={closeMobileMenu}
+              className="p-2 transition-colors"
+              style={{ color: PALETTE.dark }}
+              aria-label="Close mobile menu"
+            >
+              <X className="w-5 h-5" />
             </button>
           </div>
-        </nav>
-      </header>
+
+          {/* Body */}
+          <nav className="flex-1 min-h-0 px-6 py-8 overflow-y-auto">
+            <div className="space-y-6">
+              {navLinks.map(({ href, id, label }) => {
+                const isActive = activeSection === id;
+                return (
+                  <a
+                    key={href}
+                    href={href}
+                    onClick={closeMobileMenu}
+                    className={`block text-md font-medium py-2 tracking-wide transition-colors ${isActive
+                      ? 'text-[#7C8C4D]'
+                      : 'text-[#2B2725] hover:text-[#812D20]'
+                      }`}
+                  >
+                    {label}
+                  </a>
+                );
+              })}
+            </div>
+          </nav>
+
+          {/* Footer */}
+          <div className="shrink-0 p-6 border-t border-gray-300 flex justify-center">
+            <Link
+              href="/contact"
+              onClick={closeMobileMenu}
+              className="inline-flex items-center font-semibold py-3 px-4 rounded-sm transition-colors"
+              style={{
+                backgroundColor: PALETTE.olive,
+                color: PALETTE.cream,
+              }}
+            >
+              {t('nav.explore')}
+            </Link>
+          </div>
+        </div>
+      </div>
     </>
   );
 };

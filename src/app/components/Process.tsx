@@ -300,11 +300,6 @@ export default function AppointmentProcess({
           </Reveal>
         </div>
       </div>
-
-      <div
-        className="pointer-events-none absolute inset-0 -z-10"
-        style={{ backgroundColor: `${PALETTE.olive}05` }}
-      />
     </section>
   );
 }

@@ -5,13 +5,13 @@ import { useTranslation } from "../contexts/TranslationContext";
 
 /* 🎨 Paleta pictórica */
 const PALETTE = {
-  amber: "#B67B39",  // ámbar cálido
-  moss: "#7C8C4D",   // verde musgo
-  wine: "#812D20",   // vino terroso
-  ochre: "#D8C27A",  // ocre claro
-  olive: "#4F5635",  // oliva profundo
-  cream: "#FAF4E6",  // crema suave
-  dark: "#2B2725",   // marrón oscuro
+  amber: "#B67B39",
+  moss: "#7C8C4D",
+  wine: "#812D20",
+  ochre: "#D8C27A",
+  olive: "#4F5635",
+  cream: "#FAF4E6",
+  dark: "#2B2725",
 };
 
 type Props = {
@@ -23,7 +23,6 @@ const LanguageToggle: React.FC<Props> = ({ scrolled }) => {
   const { language, setLanguage } = useTranslation();
   const [internalScrolled, setInternalScrolled] = useState(false);
 
-  // Si no se pasa prop, detecta scroll localmente
   useEffect(() => {
     if (scrolled !== undefined) return;
     const onScroll = () => setInternalScrolled(window.scrollY > 10);
@@ -40,7 +39,7 @@ const LanguageToggle: React.FC<Props> = ({ scrolled }) => {
   const activeBtn = {
     backgroundColor: isScrolled ? PALETTE.olive : PALETTE.cream,
     color: isScrolled ? PALETTE.cream : PALETTE.dark,
-    boxShadow: isScrolled ? `0 1px 3px ${PALETTE.dark}33` : `0 1px 3px ${PALETTE.dark}33`,
+    boxShadow: `0 1px 3px ${PALETTE.dark}33`,
   };
 
   const inactiveBtn = {
@@ -57,7 +56,14 @@ const LanguageToggle: React.FC<Props> = ({ scrolled }) => {
     <div
       className="flex items-center gap-2 rounded-md px-2 py-1 transition-colors duration-200"
       style={{
-        backgroundColor: isScrolled ? `${PALETTE.cream}cc` : `${PALETTE.dark}66`,
+        // 👇 Fondo ligeramente grisáceo / neutro para resaltar sutilmente
+        backgroundColor: isScrolled
+          ? "rgba(240, 236, 226, 0.92)" // un toque más gris que PALETTE.cream
+          : "rgba(43, 39, 37, 0.55)",   // un poco más neutro en modo oscuro
+        boxShadow: isScrolled
+          ? `inset 0 0 4px rgba(0,0,0,0.06)`
+          : `inset 0 0 4px rgba(255,255,255,0.08)`,
+        backdropFilter: "blur(4px)",
       }}
     >
       <Globe

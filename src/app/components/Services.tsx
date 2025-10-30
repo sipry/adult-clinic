@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import {
   Baby, Brain, Activity, ChevronLeft, ChevronRight, Heart, Clock, Shield, Syringe, Eye,
+  Palette,
 } from "lucide-react";
 import Link from "next/link";
 import { useTranslation, ServiceTranslation } from "@/app/contexts/TranslationContext";
@@ -180,7 +181,7 @@ const ServicesRail: React.FC<{ featuredKeys?: string[] }> = ({
               <Link
                 href="/services"
                 className="inline-flex items-center rounded-md px-10 py-3 text-sm font-semibold text-white shadow-sm hover:scale-105 transition-transform"
-                style={{ backgroundColor: "#B67B39" }}
+                style={{ backgroundColor: "#B67B39", color: "#FAF4E6" }}
               >
                 {t("service.seeAll.button") || "See all services"}
               </Link>

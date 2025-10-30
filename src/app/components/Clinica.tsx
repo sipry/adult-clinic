@@ -235,9 +235,8 @@ export default function SeccionOficinaPediatra({
     <div
       className="relative w-full overflow-hidden"
       style={{
-        background: `linear-gradient(to bottom right, ${PALETTE.cream}, ${PALETTE.cream})`,
+        backgroundColor: PALETTE.cream,
         color: PALETTE.cream,
-
       }}
     >
       <section

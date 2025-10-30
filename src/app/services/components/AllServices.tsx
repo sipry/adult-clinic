@@ -14,8 +14,6 @@ import {
   Eye,
 } from "lucide-react";
 import { useTranslation, ServiceTranslation } from "@/app/contexts/TranslationContext";
-import wave from "@/../public/assets/svg/wave.svg";
-import stars from "@/../public/assets/svg/stars.svg";
 import ServiceDetailsPanel, { ServiceDetailsBasic } from "../components/ServiceSidePanel";
 import InsuranceModal from "@/app/components/InsuranceModal";
 
@@ -56,7 +54,7 @@ function AllServicesFallback() {
 }
 
 export default function AllServices() {
-  
+
   return (
     <Suspense fallback={<AllServicesFallback />}>
       <AllServicesInner />
@@ -286,18 +284,7 @@ function AllServicesInner() {
 
   return (
     <main className="relative overflow-hidden bg-white mt-8">
-      <img
-        src={wave.src}
-        alt=""
-        aria-hidden="true"
-        className="pointer-events-none select-none absolute -top-1 w-full opacity-20 rotate-180"
-      />
-      <img
-        src={stars.src}
-        alt=""
-        aria-hidden="true"
-        className="pointer-events-none select-none absolute -left-10 top-10 w-[320px] opacity-60"
-      />
+
 
       {/* Hero */}
       <section className="relative z-10 pt-24 pb-10 md:pt-32 md:pb-14">

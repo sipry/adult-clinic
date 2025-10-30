@@ -62,13 +62,19 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'about.cta1': 'Más sobre nosotros',
     'about.cta2': 'Ver todos los Servicios',
     'about.insurance': 'Con la confianza de',
-    'about.text1': 'Un médico de atención primaria (PCP) brinda cuidado integral y es el primer contacto para la mayoría de las necesidades de salud, desde chequeos preventivos hasta el tratamiento de enfermedades comunes.',
-    'about.text2': 'En Your Health Adult Care (YHAC), tratamos condiciones agudas y crónicas como diabetes, hipertensión, enfermedades del corazón y asma. También ofrecemos exámenes anuales, vacunas y atención para lesiones menores.',
-    'about.text3': 'En YHAC, recibirás atención personalizada y bilingüe para mantenerte saludable, recuperarte de enfermedades y cuidar tu bienestar a largo plazo.', 'about.stats.experience': 'Años de Experiencia',
+    'about.text1': 'Un médico de atención primaria ofrece atención médica continua y completa. Es el primer punto de contacto para chequeos preventivos, tratamiento de enfermedades comunes y coordinación con especialistas cuando es necesario.',
+    'about.text2': 'En Your Health Adult Care tratamos una amplia variedad de condiciones agudas y crónicas, como diabetes, hipertensión, enfermedades del corazón y asma. Nuestros médicos brindan atención compasiva y personalizada, adaptada a las necesidades de cada paciente.',
+    'about.text3': 'Te ayudamos a mantener tu bienestar con chequeos regulares, medicina preventiva, laboratorios, vacunas y atención bilingüe en un ambiente cálido y profesional.',
     'about.stats.families': 'Familias Felices',
 
     // detalles de about us (TODO)
-    'about.title.detail': 'Your Health Adult Care: Atención pediátrica bilingüe',
+    'about.title.detail': 'Your Health Adult Care: Atención médica bilingüe',
+    'about.text1.detail': 'Un médico de atención primaria (PCP, por sus siglas en inglés) es un profesional de la salud, generalmente un médico general, que brinda atención médica integral y a largo plazo. Son el primer punto de contacto para la mayoría de los problemas de salud, desde chequeos rutinarios y preventivos hasta el tratamiento de enfermedades comunes. También pueden derivar a los pacientes a especialistas y coordinar su atención.',
+    'about.text2.detail': 'En Your Health Adult Care, nuestros médicos de atención primaria se especializan en el tratamiento de afecciones agudas y crónicas, como colesterol alto e hipertensión, diabetes, enfermedades cardíacas, asma, medicina geriátrica y atención de lesiones menores. También ofrecen desde chequeos anuales hasta vacunaciones. Permita que nuestros médicos de familia con experiencia le brinden una atención compasiva y personalizada.',
+    'about.text3.detail': 'Le ayudaremos a mantenerse saludable con chequeos regulares, recuperarse de lesiones y manejar afecciones agudas y crónicas. En YHAC, recibirá una atención integral que incluye medicina preventiva para adultos, cuidado de personas mayores, servicios de laboratorio, vacunaciones, atención de lesiones menores y un personal amable y bilingüe.',
+
+
+
     'about.cta1.detail': 'Conoce Nuestro Equipo',
     'about.cta2.detail': 'Programar Cita',
     'about.mission.text1': 'En Your Health Adult Care promovemos la salud de niños y adolescentes (0–18) con atención accesible y de alta calidad. Queremos superar expectativas y ser la clínica pediátrica bilingüe preferida en Osceola.',
@@ -452,14 +458,18 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'about.cta1': 'Learn More About Us',
     'about.cta2': 'View All Services',
     'about.insurance': 'Trusted by',
-    'about.text1': 'A primary care physician (PCP) provides comprehensive care and is your first contact for most health needs, from preventive checkups to treating common illnesses.',
-    'about.text2': 'At Your Health Adult Care (YHAC), we treat acute and chronic conditions such as diabetes, hypertension, heart disease, and asthma. We also offer annual exams, vaccines, and minor injury care.',
-    'about.text3': 'At YHAC, you’ll receive personalized, bilingual care to stay healthy, recover from illness, and maintain your long-term well-being.',
+    'about.text1': 'A primary care physician provides continuous, comprehensive care. They are your first point of contact for preventive checkups, common illnesses, and coordination with specialists when needed.',
+    'about.text2': 'At Your Health Adult Care, we treat a wide range of acute and chronic conditions such as diabetes, hypertension, heart disease, and asthma. Our physicians offer compassionate, personalized care tailored to each patient’s needs.',
+    'about.text3': 'We help you stay healthy with regular checkups, preventive medicine, lab services, vaccines, and bilingual care in a warm and professional environment.',
     'about.stats.experience': 'Years of Experience',
     'about.stats.families': 'Happy Families',
 
     // detalles de about us (TODO)
-    'about.title.detail': 'Your Health Adult Care: Bilingual Pediatric Care',
+    'about.title.detail': 'Your Health Adult Care: Bilingual Medical Care',
+    'about.text1.detail': 'A primary care physician (PCP) is a healthcare professional, usually a general practitioner, who provides comprehensive long-term medical care. They are the first point of contact for most health issues, from routine and preventive checkups to the treatment of common illnesses. They can also refer patients to specialists and coordinate their care.',
+    'about.text2.detail': 'At Your Health Adult Care, our primary care physicians specialize in the treatment of acute and chronic conditions, such as high cholesterol and hypertension, diabetes, heart disease, asthma, geriatric medicine, and minor injury care. They also offer everything from annual checkups to immunizations. Let our experienced family physicians provide you with compassionate and personalized care.',
+    'about.text3.detail': "We'll help you stay healthy with regular checkups, recover from injuries, and manage acute and chronic conditions. At YHAC, you'll receive comprehensive care, including adult preventive medicine, senior care, lab services, immunizations, minor injury care, and a friendly, bilingual staff.",
+
     'about.cta1.detail': 'Meet Our Providers',
     'about.cta2.detail': 'Schedule Apointment',
     'about.mission.title': 'Our Mission',

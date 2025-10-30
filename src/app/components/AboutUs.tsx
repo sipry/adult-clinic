@@ -325,7 +325,7 @@ export const AboutUsProfessional: React.FC = () => {
 
         {/* Right column */}
         <div className="relative">
-          <div className="space-y-6 md:space-y-7 text-lg leading-relaxed mt-6"
+          <div className="space-y-3 md:space-y-3 text-lg leading-relaxed mt-6"
             style={{ color: PALETTE.dark }}>
             {[t("about.text1"), t("about.text2"), t("about.text3")].map((txt, i) => (
               <Reveal key={i} y={14} delay={80 + i * 120}>

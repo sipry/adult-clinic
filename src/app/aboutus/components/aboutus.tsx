@@ -3,9 +3,8 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import Image, { type StaticImageData } from "next/image";
-import FemaleDoctor from "@/../public/assets/images/foto-doctora.jpg";
-import MaleDoctor from "@/../public/assets/images/Juan.jpg";
-import balloon from "@/../public/assets/svg/balloon.svg";
+import doctorjaime from "@/../public/assets/images/avatar.jpg";
+import doctorjuan from "@/../public/assets/images/Juan.jpg";
 import { useTranslation } from "@/app/contexts/TranslationContext";
 
 /* ====================== Utils ====================== */
@@ -323,7 +322,7 @@ export default function AboutUs() {
         langs: t('providers.dr1.languages'),
         bio: t('provider.bio.dr1'),
         bio2: t("provider.bio.dr1.text2"),
-        photo: FemaleDoctor,
+        photo: doctorjaime,
       },
       {
         id: "dr-Juan-Ortiz ",
@@ -331,7 +330,7 @@ export default function AboutUs() {
         tagline: t("providers.dr2.title"),
         langs: t('providers.dr1.languages'),
         bio: t('provider.bio.dr2'),
-        photo: MaleDoctor,
+        photo: doctorjuan,
       },
     ],
     [t]
@@ -340,15 +339,7 @@ export default function AboutUs() {
 
   return (
     <main className="relative overflow-hidden">
-      {/* Hero (SVGs dentro del section para que no queden tapados) */}
       <section ref={heroRef} className="relative pt-30 md:pt-20 bg-white mb-20">
-        {/* Decorativos */}
-        <img
-          src={asset(balloon)}
-          alt=""
-          aria-hidden="true"
-          className="pointer-events-none select-none absolute -right-60 top-40 opacity-20 w-[500px] z-10 bounce-slow"
-        />
 
         {/* Contenido */}
         <div className="relative z-10 max-w-7xl mx-auto px-6 pt-20">
@@ -365,13 +356,20 @@ export default function AboutUs() {
           </Reveal>
 
           <Reveal y={14} delay={120}>
-            <p className="text-slate-600 text-lg leading-relaxed max-w-3xl">
-              {t("about.text1")}
+            <p className="text-slate-600 text-lg leading-relaxed max-w-none">
+              {t("about.text1.detail")}
             </p>
           </Reveal>
+
+          <Reveal y={14} delay={120}>
+            <p className="text-slate-600 text-lg leading-relaxed max-w-none mt-2">
+              {t("about.text2.detail")}
+            </p>
+          </Reveal>
+
            <Reveal y={14} delay={120}>
-            <p className="text-slate-600 text-lg leading-relaxed max-w-3xl mt-2">
-              {t("about.text2")}
+            <p className="text-slate-600 text-lg leading-relaxed max-w-none mt-2">
+              {t("about.text3.detail")}
             </p>
           </Reveal>
 
@@ -394,7 +392,6 @@ export default function AboutUs() {
             </Reveal>
           </div>
 
-          {/* Métricas (play atado al heroInView) */}
           <Reveal y={16} delay={240}>
             <div className="mt-10 flex items-end flex-wrap gap-8">
               <div className="flex flex-col items-start">
@@ -426,6 +423,7 @@ export default function AboutUs() {
             </div>
           </Reveal>
         </div>
+
       </section>
 
       {/* Misión */}
@@ -469,11 +467,11 @@ export default function AboutUs() {
                     </div>
                   </div>
                   <p className="mt-4 text-slate-700 leading-relaxed">
-                      {((bio) => {
-                        const MAX = 150; // cámbialo a lo que quieras
-                        return bio.length > MAX ? bio.slice(0, MAX).trimEnd() + " ..." : bio;
-                      })(d?.bio ?? "")}
-                    </p>
+                    {((bio) => {
+                      const MAX = 150; // cámbialo a lo que quieras
+                      return bio.length > MAX ? bio.slice(0, MAX).trimEnd() + " ..." : bio;
+                    })(d?.bio ?? "")}
+                  </p>
 
                   <div className="mt-auto flex flex-wrap gap-3 pt-4">
                     <Link
