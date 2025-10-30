@@ -7,13 +7,13 @@ import { useTranslation } from "../contexts/TranslationContext";
 
 /* 🎨 Paleta pictórica */
 const PALETTE = {
-  amber: "#B67B39",  // ámbar cálido
-  moss: "#7C8C4D",   // verde musgo
-  wine: "#812D20",   // vino terroso
-  ochre: "#D8C27A",  // ocre claro
-  olive: "#4F5635",  // oliva profundo
-  cream: "#FAF4E6",  // crema suave
-  dark: "#2B2725",   // marrón oscuro
+  amber: "#B67B39",
+  moss: "#7C8C4D",
+  wine: "#812D20",
+  ochre: "#D8C27A",
+  olive: "#4F5635",
+  cream: "#FAF4E6",
+  dark: "#2B2725",
 };
 
 /* ---------- Motion utils: Reveal on scroll ---------- */
@@ -121,8 +121,8 @@ const Footer: React.FC = () => {
     <footer
       className="overflow-hidden"
       style={{
-        background: `linear-gradient(to bottom right, ${PALETTE.olive}, ${PALETTE.dark})`,
-        color: `${PALETTE.cream}`,
+        backgroundColor: PALETTE.dark,
+        color: PALETTE.cream,
       }}
     >
       {/* Map strip */}
@@ -139,7 +139,7 @@ const Footer: React.FC = () => {
                 allowFullScreen
                 referrerPolicy="no-referrer-when-downgrade"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#2B272580] via-transparent to-transparent pointer-events-none" />
+              {/* Se quitó el gradiente */}
               <a href={MAP_LINK} target="_blank" rel="noopener noreferrer" className="absolute inset-0 block md:hidden" />
             </div>
           </div>
@@ -225,10 +225,7 @@ const Footer: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-sm px-3 py-2 text-sm font-semibold shadow-md hover:opacity-90 transition"
-              style={{
-                background: `linear-gradient(45deg, ${PALETTE.wine}, ${PALETTE.amber})`,
-                color: PALETTE.cream,
-              }}
+              style={{ backgroundColor: PALETTE.wine, color: PALETTE.cream }}
             >
               <Instagram className="h-4 w-4" />
               Instagram
@@ -242,7 +239,7 @@ const Footer: React.FC = () => {
         className="text-center text-xs py-4 border-t"
         style={{
           borderColor: `${PALETTE.cream}33`,
-          backgroundColor: `${PALETTE.dark}`,
+          backgroundColor: PALETTE.dark,
           color: `${PALETTE.cream}cc`,
         }}
       >
