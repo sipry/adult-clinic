@@ -169,11 +169,10 @@ const ServicesGrid: React.FC = () => {
                   border: "1px solid rgba(0,0,0,0.06)",
                   boxShadow: "0 3px 10px rgba(0,0,0,0.06)",
                   color: PALETTE.dark,
-                  minHeight: "380px", // 🔹 altura total consistente
+                  minHeight: "320px", // 🔹 altura mínima uniforme
                 }}
               >
-                <div className="flex flex-col">
-                  {/* 🔹 Icono */}
+                <div>
                   <div
                     className="mb-4 grid h-14 w-14 place-items-center rounded-full"
                     style={{
@@ -184,34 +183,21 @@ const ServicesGrid: React.FC = () => {
                     <Icon className="h-6 w-6" style={{ color: PALETTE.base }} />
                   </div>
 
-                  {/* 🔹 Contenedor fijo para título */}
-                  <div style={{ minHeight: "56px" }}> {/* ≈ dos líneas */}
-                    <h3
-                      className="text-lg font-bold leading-snug"
-                      style={{ color: PALETTE.dark }}
-                    >
-                      {s.title}
-                    </h3>
-                  </div>
+                  <h3
+                    className="text-lg font-bold mb-2"
+                    style={{ color: PALETTE.dark }}
+                  >
+                    {s.title}
+                  </h3>
 
-                  {/* 🔹 Contenedor fijo para descripción */}
-                  <div style={{ minHeight: "66px", marginTop: "0.5rem" }}> {/* ≈ tres líneas */}
-                    <p
-                      className="text-sm leading-relaxed"
-                      style={{
-                        color: "rgba(43,39,37,0.8)",
-                        overflow: "hidden",
-                        display: "-webkit-box",
-                        WebkitBoxOrient: "vertical",
-                        WebkitLineClamp: 3,
-                      }}
-                    >
-                      {shortDesc}
-                    </p>
-                  </div>
+                  <p
+                    className="text-sm leading-relaxed"
+                    style={{ color: "rgba(43,39,37,0.8)" }}
+                  >
+                    {shortDesc}
+                  </p>
                 </div>
 
-                {/* 🔹 Botón alineado al fondo */}
                 <div className="mt-6">
                   <button
                     onClick={() => setDetail(s.id)}
@@ -225,6 +211,7 @@ const ServicesGrid: React.FC = () => {
                   </button>
                 </div>
               </article>
+
             );
           })}
 
