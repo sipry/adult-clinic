@@ -5,10 +5,12 @@ import Link from "next/link";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import { useTranslation } from "../contexts/TranslationContext";
 
+import oficina1 from "@/../public/assets/images/oficina-1.jpg";
+import oficina2 from "@/../public/assets/images/oficina-2.jpg";
 import oficina3 from "@/../public/assets/images/oficina-3.jpg";
 import oficina4 from "@/../public/assets/images/oficina-4.jpg";
 import oficina5 from "@/../public/assets/images/oficina-5.jpg";
-import oficina7 from "@/../public/assets/images/outside-clinic.jpg";
+import oficina6 from "@/../public/assets/images/oficina-6.jpg";
 
 /* 🎨 Paleta pictórica */
 const PALETTE = {
@@ -23,10 +25,12 @@ const PALETTE = {
 
 /* -------------------- Datos -------------------- */
 const defaultImages = [
-  { alt: "Consultorio pediátrico", src: oficina3.src },
-  { alt: "Consultorio pediátrico", src: oficina4.src },
-  { alt: "Consultorio pediátrico", src: oficina5.src },
-  { alt: "Fachada exterior", src: oficina7.src },
+  { alt: "Consultorio", src: oficina1.src },
+  { alt: "Consultorio", src: oficina2.src },
+  { alt: "Consultorio", src: oficina3.src },
+  { alt: "Consultorio", src: oficina4.src },
+  { alt: "Consultorio", src: oficina5.src },
+  { alt: "Fachada exterior", src: oficina6.src },
 ];
 
 /* -------------------- Utils motion / reveal -------------------- */
