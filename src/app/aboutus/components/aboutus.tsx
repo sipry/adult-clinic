@@ -7,6 +7,17 @@ import doctorjaime from "@/../public/assets/images/avatar.jpg";
 import doctorjuan from "@/../public/assets/images/Juan.jpg";
 import { useTranslation } from "@/app/contexts/TranslationContext";
 
+/* ====================== Palette ====================== */
+const PALETTE = {
+  amber: "#B67B39", // dorado cálido
+  moss: "#7C8C4D", // verde musgo
+  wine: "#812D20", // vino terroso
+  ochre: "#D8C27A", // ocre claro
+  olive: "#4F5635", // oliva profundo
+  cream: "#FAF4E6", // crema suave
+  dark: "#2B2725", // marrón oscuro neutro
+};
+
 /* ====================== Utils ====================== */
 const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
 
@@ -177,12 +188,6 @@ const AnimatedNumber: React.FC<AnimatedNumberProps> = ({
   useEffect(() => {
     if (!play) return;
 
-    if (prefersReduced.current || durationMs <= 0) {
-      setValue(end);
-      return;
-    }
-    setValue(start);
-
     const run = () => {
       const t0 = performance.now();
       const delta = end - start;
@@ -209,31 +214,24 @@ const AnimatedNumber: React.FC<AnimatedNumberProps> = ({
     };
   }, [play, start, end, durationMs, delayMs]);
 
-  const display = useMemo(() => {
+  const display = React.useMemo(() => {
     const n = Math.round(value);
-    const fmt = compact
+    const base = compact
       ? new Intl.NumberFormat(undefined, {
         notation: "compact",
-        maximumFractionDigits: 0,
-      }).format(n)
+        maximumFractionDigits: fractionDigits,
+      }).format(n).toLowerCase() // ← “10k”
       : new Intl.NumberFormat(undefined, {
         minimumFractionDigits: fractionDigits,
         maximumFractionDigits: fractionDigits,
       }).format(n);
-    return fmt + suffix;
+    return base + suffix;
   }, [value, compact, fractionDigits, suffix]);
 
   return <span className={className}>{display}</span>;
 };
 
-/* ====================== Data ====================== */
-const CONTACT = {
-  phonePretty: "(407) 555-0134",
-  phoneHref: "+14075550134",
-  email: "info@yourhealthadults.com",
-  address: "Kissimmee, Condado de Osceola, FL",
-};
-
+/* ====================== Types & Data ====================== */
 type Doctor = {
   id: string;
   name: string;
@@ -243,60 +241,21 @@ type Doctor = {
   photo?: string | StaticImageData;
 };
 
-/* ====================== Sections ====================== */
-function Description() {
-  const { t } = useTranslation();
-  return (
-    <section className="relative z-0 py-14 md:py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-6">
-        <Reveal y={10}>
-          <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 mb-6">
-            {t("about.details.title2")}
-          </h2>
-        </Reveal>
-
-        <div className="grid md:grid-cols-4 gap-5">
-          {[
-            { title: t("about.vacunas"), desc: t("about.vacunas.detail") },
-            { title: t("about.enfermedades"), desc: t("about.enfermedades.detail") },
-            { title: t("about.newborn"), desc: t("about.newborn.detail") },
-            { title: t("about.peso"), desc: t("about.peso.detail") },
-          ].map(({ title, desc }) => (
-            <div
-              key={title}
-              className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm"
-            >
-              <svg viewBox="0 0 24 24" className="h-8 w-8 mb-3" fill="none" aria-hidden="true">
-                <circle cx="12" cy="12" r="10" className="stroke-lime-800/20" strokeWidth="2" />
-                <path
-                  d="M7 12l3 3 7-7"
-                  className="stroke-lime-800"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-              <h3 className="font-semibold text-slate-900">{title}</h3>
-              <p className="text-sm text-slate-600 mt-1">{desc}</p>
-            </div>
-          ))}
-        </div>
-
-        <p className="text-slate-600 mt-6">{t("about.text3")}</p>
-      </div>
-    </section>
-  );
-}
-
 function Mission() {
   const { t } = useTranslation();
   return (
-    <section className="relative z-10 bg-white">
-      <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 mb-5">
+    <section style={{ backgroundColor: PALETTE.cream }}>
+      <div className="max-w-7xl mx-auto px-6 py-16">
+        <h2
+          className="text-2xl md:text-3xl font-extrabold mb-5"
+          style={{ color: PALETTE.dark }}
+        >
           {t("about.mission")}
         </h2>
-        <div className="prose prose-slate max-w-none text-slate-700 leading-relaxed">
+        <div
+          className="prose max-w-none leading-relaxed"
+          style={{ color: PALETTE.olive }}
+        >
           <p className="mt-0 mb-6 text-lg">{t("mission.text1")}</p>
           <p className="mt-0 text-lg">{t("mission.text2")}</p>
         </div>
@@ -310,65 +269,81 @@ export default function AboutUs() {
   const heroRef = useRef<HTMLElement>(null);
   const heroInView = useInOutViewport(heroRef, { threshold: 0.2 });
   const { t } = useTranslation();
-  const sectionRef = useRef<HTMLElement>(null);;
+  const sectionRef = useRef<HTMLElement>(null);
 
-  // Build translated doctors list *inside* the component
+  // Lista de doctores traducida
   const DOCTORS: Doctor[] = useMemo(
     () => [
       {
         id: "dr-Jaime-acosta",
         name: "Dr. Jaime A. Acosta, MD",
         tagline: t("providers.dr1.title"),
-        langs: t('providers.dr1.languages'),
-        bio: t('provider.bio.dr1'),
-        bio2: t("provider.bio.dr1.text2"),
+        langs: t("providers.dr1.languages"),
+        bio: t("provider.bio.dr1"),
         photo: doctorjaime,
       },
       {
-        id: "dr-Juan-Ortiz ",
+        id: "dr-Juan-Ortiz",
         name: "Dr. Juan Ortiz Guevara, MD",
         tagline: t("providers.dr2.title"),
-        langs: t('providers.dr1.languages'),
-        bio: t('provider.bio.dr2'),
+        langs: t("providers.dr2.languages"),
+        bio: t("provider.bio.dr2"),
         photo: doctorjuan,
       },
     ],
     [t]
   );
 
-
   return (
-    <main className="relative overflow-hidden">
-      <section ref={heroRef} className="relative pt-30 md:pt-20 bg-white mb-20">
-
-        {/* Contenido */}
+    <main style={{ backgroundColor: PALETTE.cream }}>
+      {/* Hero / About */}
+      <section
+        ref={heroRef}
+        className="relative pt-30 md:pt-20 mb-20"
+        style={{ backgroundColor: PALETTE.cream }}
+      >
         <div className="relative z-10 max-w-7xl mx-auto px-6 pt-20">
           <Reveal y={8}>
-            <p className="text-xs font-semibold tracking-[0.2em] text-lime-900 uppercase mb-3">
+            <p
+              className="text-xs font-semibold tracking-[0.2em] uppercase mb-3"
+              style={{ color: PALETTE.moss }}
+            >
               {t("about.pretitle")}
             </p>
           </Reveal>
 
           <Reveal y={12} delay={60}>
-            <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 leading-[1.1] mb-5">
+            <h1
+              className="text-4xl md:text-5xl font-extrabold leading-[1.1] mb-5"
+              style={{ color: PALETTE.dark }}
+            >
               {t("about.title.detail")}
             </h1>
           </Reveal>
 
           <Reveal y={14} delay={120}>
-            <p className="text-slate-600 text-lg leading-relaxed max-w-none">
+            <p
+              className="text-lg leading-relaxed max-w-none"
+              style={{ color: PALETTE.olive }}
+            >
               {t("about.text1.detail")}
             </p>
           </Reveal>
 
           <Reveal y={14} delay={120}>
-            <p className="text-slate-600 text-lg leading-relaxed max-w-none mt-2">
+            <p
+              className="text-lg leading-relaxed max-w-none mt-2"
+              style={{ color: PALETTE.olive }}
+            >
               {t("about.text2.detail")}
             </p>
           </Reveal>
 
-           <Reveal y={14} delay={120}>
-            <p className="text-slate-600 text-lg leading-relaxed max-w-none mt-2">
+          <Reveal y={14} delay={120}>
+            <p
+              className="text-lg leading-relaxed max-w-none mt-2"
+              style={{ color: PALETTE.olive }}
+            >
               {t("about.text3.detail")}
             </p>
           </Reveal>
@@ -377,7 +352,11 @@ export default function AboutUs() {
             <Reveal y={12} delay={160}>
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 rounded-sm bg-lime-900 px-6 py-3 font-semibold text-white shadow-lg transition hover:scale-105"
+                className="inline-flex items-center gap-2 rounded-sm px-6 py-3 font-semibold shadow-lg transition hover:scale-105"
+                style={{
+                  backgroundColor: PALETTE.olive,
+                  color: PALETTE.cream,
+                }}
               >
                 {t("about.cta2.detail")}
               </Link>
@@ -385,7 +364,11 @@ export default function AboutUs() {
             <Reveal y={12} delay={220}>
               <Link
                 href="#equipo"
-                className="inline-flex items-center gap-2 rounded-sm bg-amber-200 text-slate-800 transition hover:scale-105 font-semibold px-6 py-3 shadow-sm"
+                className="inline-flex items-center gap-2 rounded-sm px-6 py-3 font-semibold shadow-sm transition hover:scale-105"
+                style={{
+                  backgroundColor: PALETTE.ochre,
+                  color: PALETTE.dark,
+                }}
               >
                 {t("about.cta1.detail")}
               </Link>
@@ -395,7 +378,10 @@ export default function AboutUs() {
           <Reveal y={16} delay={240}>
             <div className="mt-10 flex items-end flex-wrap gap-8">
               <div className="flex flex-col items-start">
-                <span className="tabular-nums text-3xl md:text-4xl font-extrabold text-lime-700">
+                <span
+                  className="tabular-nums text-3xl md:text-4xl font-extrabold"
+                  style={{ color: PALETTE.wine }}
+                >
                   +
                   <AnimatedNumber
                     end={10000}
@@ -405,48 +391,79 @@ export default function AboutUs() {
                     play={heroInView}
                   />
                 </span>
-
-                <span className="mt-1 text-sm text-slate-600">
+                <span className="mt-1 text-sm" style={{ color: PALETTE.olive }}>
                   {t("about.stats.families")}
                 </span>
               </div>
-              <span className="hidden sm:block h-10 w-px bg-slate-200" />
+
+              <span
+                className="hidden sm:block h-10 w-px"
+                style={{ backgroundColor: PALETTE.olive }}
+              />
+
               <div className="flex flex-col items-start">
-                <span className="tabular-nums text-3xl md:text-4xl font-extrabold text-lime-700">
+                <span
+                  className="tabular-nums text-3xl md:text-4xl font-extrabold"
+                  style={{ color: PALETTE.wine }}
+                >
                   +
                   <AnimatedNumber end={20} durationMs={800} play={heroInView} />
                 </span>
-                <span className="mt-1 text-sm text-slate-600">
+                <span className="mt-1 text-sm" style={{ color: PALETTE.olive }}>
                   {t("about.stats.experience")}
                 </span>
               </div>
             </div>
           </Reveal>
         </div>
-
       </section>
 
       {/* Misión */}
       <Mission />
 
-      {/* Doctores */}
-      <section id="equipo" ref={sectionRef} className="relative z-10 py-14 md:py-20 bg-white scroll-mt-10">
+      {/* Doctores / Providers */}
+      {/* Doctores / Providers */}
+      <section
+        id="equipo"
+        ref={sectionRef}
+        className="relative z-10 py-14 md:py-20 scroll-mt-10"
+        style={{ backgroundColor: PALETTE.cream }}
+      >
         <div className="max-w-7xl mx-auto px-6">
           <Reveal y={10}>
-            <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 mb-3">
+            <h2
+              className="text-2xl md:text-3xl font-extrabold mb-3"
+              style={{ color: PALETTE.dark }}
+            >
               {t("providers.title")}
             </h2>
           </Reveal>
           <Reveal y={12}>
-            <p className="text-slate-600 mb-8">{t("about.equipo")}</p>
+            <p style={{ color: PALETTE.olive, marginBottom: "2rem" }}>
+              {t("about.equipo")}
+            </p>
           </Reveal>
 
           <div className="grid md:grid-cols-2 gap-6 items-stretch">
             {DOCTORS.map((d, i) => (
-              <Reveal key={d.name} y={12} delay={i * 90}>
-                <article className="group relative rounded-xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition h-full flex flex-col">
+              <Reveal key={d.id} y={12} delay={i * 90}>
+                <article
+                  className="group relative rounded-xl p-6 transition h-full flex flex-col shadow-sm hover:shadow-md"
+                  style={{
+                    backgroundColor: PALETTE.cream, // mismo fondo
+                    border: `1px solid ${PALETTE.olive}40`, // borde semitransparente
+                    boxShadow:
+                      "0 2px 6px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.06)", // sombra sutil
+                  }}
+                >
                   <div className="flex items-start gap-4">
-                    <div className="relative h-24 w-24 rounded-xl bg-slate-100 ring-1 ring-slate-200 shrink-0 overflow-hidden">
+                    <div
+                      className="relative h-24 w-24 rounded-xl overflow-hidden shrink-0 ring-1"
+                      style={{
+                        backgroundColor: `${PALETTE.olive}15`,
+                        borderColor: `${PALETTE.olive}33`,
+                      }}
+                    >
                       {d.photo ? (
                         <Image
                           src={d.photo}
@@ -455,31 +472,56 @@ export default function AboutUs() {
                           className="object-cover"
                         />
                       ) : (
-                        <div className="grid place-items-center h-full w-full text-[11px] text-slate-500">
+                        <div
+                          className="grid place-items-center h-full w-full text-[11px]"
+                          style={{ color: `${PALETTE.dark}99` }}
+                        >
                           Añade foto
                         </div>
                       )}
                     </div>
                     <div>
-                      <h3 className="text-lg font-extrabold text-slate-900">{d.name}</h3>
-                      <p className="text-sm text-slate-600">{d.tagline}</p>
-                      <p className="mt-1 text-[13px] text-slate-500">{d.langs}</p>
+                      <h3
+                        className="text-lg font-extrabold"
+                        style={{ color: PALETTE.dark }}
+                      >
+                        {d.name}
+                      </h3>
+                      <p className="text-sm" style={{ color: PALETTE.olive }}>
+                        {d.tagline}
+                      </p>
+                      <p
+                        className="mt-1 text-[13px]"
+                        style={{ color: `${PALETTE.dark}99` }}
+                      >
+                        {d.langs}
+                      </p>
                     </div>
                   </div>
-                  <p className="mt-4 text-slate-700 leading-relaxed">
+
+                  <p
+                    className="mt-4 leading-relaxed"
+                    style={{ color: PALETTE.dark }}
+                  >
                     {((bio) => {
-                      const MAX = 150; // cámbialo a lo que quieras
-                      return bio.length > MAX ? bio.slice(0, MAX).trimEnd() + " ..." : bio;
+                      const MAX = 150;
+                      return bio.length > MAX
+                        ? bio.slice(0, MAX).trimEnd() + " ..."
+                        : bio;
                     })(d?.bio ?? "")}
                   </p>
 
                   <div className="mt-auto flex flex-wrap gap-3 pt-4">
                     <Link
                       href={`/provider/${d.id}`}
-                      className="inline-flex items-center rounded-sm bg-lime-900 px-4 py-2 text-sm font-semibold text-white shadow transition hover:scale-[1.02]"
+                      className="inline-flex items-center rounded-sm px-4 py-2 text-sm font-semibold shadow transition hover:scale-[1.02]"
+                      style={{
+                        backgroundColor: PALETTE.olive,
+                        color: PALETTE.cream,
+                      }}
                       aria-label={`Agendar cita con ${d.name}`}
                     >
-                      {t('proider.cta')}
+                      {t("provider.cta")}
                     </Link>
                   </div>
                 </article>
@@ -488,6 +530,7 @@ export default function AboutUs() {
           </div>
         </div>
       </section>
+
     </main>
   );
 }

@@ -392,7 +392,7 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
 
     // Marca y tagline
     'footer.brand': 'Your Health Adult Care',
-    'footer.tagline': 'Cuidando la salud de tus pequeños con dedicación y cariño.',
+    'footer.tagline': 'Cuidando la salud de tu familia con dedicación y cariño.',
     'footer.cta': 'Agendar cita',
     'footer.ctaAria': 'Agendar cita',
 
@@ -801,7 +801,7 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
 
     // Brand and tagline
     'footer.brand': 'Your Health Adult Care',
-    'footer.tagline': 'Caring for your little ones with dedication and kindness.',
+    'footer.tagline': 'Caring for your family with dedication and kindness.',
     'footer.cta': 'Book appointment',
     'footer.ctaAria': 'Book appointment',
 

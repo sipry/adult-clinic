@@ -5,27 +5,20 @@ import Link from "next/link";
 import { useParams, notFound } from "next/navigation";
 import { useProvidersData } from "../data";
 import { useTranslation } from "@/app/contexts/TranslationContext";
-import InsuranceDoctorModal from "../components/InsuranceDoctorModal"; // ⬅️ ajusta la ruta si es necesario
+import InsuranceDoctorModal from "../components/InsuranceDoctorModal";
 
-type Provider = {
-  id: string;
-  name: string;
-  title: string;
-  image: string | { src: string };
-  bio: string;
-  bio2?: string;
-  languages?: string;
-  experience?: string | number;
-  conditions?: string[];
-  board?: string[];
-  education?: string | string[];
-  educationList?: string[];
-  memberships?: string[];
-  research?: string[];
-  rating?: number;
-  reviews?: number;
+/* 🎨 Paleta */
+const PALETTE = {
+  amber: "#B67B39",
+  moss: "#7C8C4D",
+  wine: "#812D20",
+  ochre: "#D8C27A",
+  olive: "#4F5635",
+  cream: "#FAF4E6",
+  dark: "#2B2725",
 };
 
+/* ============ Subcomponentes ============ */
 const Section = ({
   title,
   children,
@@ -33,23 +26,28 @@ const Section = ({
   title: string;
   children: React.ReactNode;
 }) => (
-  <section className="rounded-sm bg-white p-6">
-    <h3 className="mb-3 text-lg font-semibold text-slate-900">{title}</h3>
-    <div className="prose prose-slate max-w-none text-sm leading-relaxed">
+  <section className="rounded-md p-6" style={{ backgroundColor: PALETTE.cream }}>
+    <h3 className="mb-3 text-lg font-semibold" style={{ color: PALETTE.dark }}>
+      {title}
+    </h3>
+    <div
+      className="prose max-w-none text-sm leading-relaxed"
+      style={{ color: PALETTE.olive }}
+    >
       {children}
     </div>
   </section>
 );
 
 const Bullet = ({ items }: { items: string[] }) => (
-  <ul className="mt-2 list-disc space-y-2 pl-5 text-slate-700">
+  <ul className="mt-2 list-disc space-y-2 pl-5" style={{ color: PALETTE.olive }}>
     {items.map((t, i) => (
       <li key={i}>{t}</li>
     ))}
   </ul>
 );
 
-/* Item vertical para doctores relacionados */
+/* Doctor relacionado */
 function RelatedDoctorItem({
   id,
   name,
@@ -63,88 +61,78 @@ function RelatedDoctorItem({
 }) {
   const { t } = useTranslation();
   return (
-    <li className="flex items-start gap-4 py-4">
+    <li className="flex items-start gap-4 py-4 bg-transparent">
       <img
         src={photo}
         alt={name}
-        className="h-32 w-32 flex-none rounded-sm object-cover"
+        className="h-32 w-32 flex-none rounded-md object-cover"
       />
       <div className="min-w-0 flex-1">
-        <h4 className="font-semibold text-slate-900">{name}</h4>
-        <p className="mt-0.5 text-xs text-slate-500">{title}</p>
+        <h4 className="font-semibold" style={{ color: PALETTE.dark }}>
+          {name}
+        </h4>
+        <p className="mt-0.5 text-xs" style={{ color: `${PALETTE.olive}CC` }}>
+          {title}
+        </p>
 
         <Link
           href={`/provider/${id}`}
-          className="mt-2 ml-2 inline-block text-xs font-medium text-lime-900 rounded-sm hover:underline"
+          className="mt-2 ml-1 inline-block text-xs font-medium hover:underline transition"
+          style={{ color: PALETTE.moss }}
         >
-          {t("proider.cta")}
+          {t("provider.cta")}
         </Link>
       </div>
     </li>
   );
 }
 
-/** Utilidad: convierte string/string[] en lista limpia */
+/* Utilidades */
 const toList = (v?: string | string[]) =>
   Array.isArray(v)
-    ? v
-      .filter(Boolean)
-      .map((s) => s.trim())
-      .filter(Boolean)
+    ? v.filter(Boolean).map((s) => s.trim())
     : typeof v === "string"
       ? v
-        .split(/[\n•|]+/) // soporta saltos de línea, bullets y barras
+        .split(/[\n•|]+/)
         .map((s) => s.trim())
         .filter(Boolean)
       : [];
 
-/** Type predicate para estrechar a string cuando hay contenido real */
 const isMeaningful = (v: string | undefined): v is string => {
   const s = v?.trim();
   return !!s && s !== "provider.bio.dr2.text2";
 };
 
-/* ============ Page ============ */
+/* ============ Página Principal ============ */
 export default function ProviderDetailPage() {
   const params = useParams<{ id: string }>();
-  const providers = useProvidersData() as Provider[];
+  const providers = useProvidersData();
+
   const { t } = useTranslation();
   const p = providers.find((it) => it.id === params.id);
   if (!p) notFound();
 
   const avatar = typeof p.image === "string" ? p.image : p.image.src;
-
-  // Modal state
   const [insuranceOpen, setInsuranceOpen] = React.useState(false);
 
-  // 1) párrafos base desde p.bio
   const baseParagraphs =
     typeof p.bio === "string" && p.bio.includes("\n")
-      ? p.bio
-        .split("\n")
-        .map((s) => s.trim())
-        .filter(Boolean)
+      ? p.bio.split("\n").map((s) => s.trim()).filter(Boolean)
       : [p.bio];
 
-  // 2) segundo párrafo opcional:
-  const fallbackDr2 =
-    p.id === "dr-Juan-Ortiz " ? t("provider.bio.dr2.text2") : "";
-
+  const fallbackDr2 = p.id === "dr-Juan-Ortiz" ? t("provider.bio.dr2.text2") : "";
   const secondParagraph = isMeaningful(p.bio2)
     ? p.bio2
     : isMeaningful(fallbackDr2)
       ? fallbackDr2
       : undefined;
-
-  // 3) compón la lista final
   const aboutParagraphs = isMeaningful(secondParagraph)
     ? [...baseParagraphs, secondParagraph.trim()]
     : baseParagraphs;
 
-  // ----- estas constantes ya sin (p as any) -----
   const conditions: string[] =
-    p.conditions && p.conditions.length > 0
-      ? p.conditions
+    (p as any).conditions && (p as any).conditions.length > 0
+      ? (p as any).conditions
       : [
         "Preventive Medicine",
         "Adult Immunizations",
@@ -153,17 +141,8 @@ export default function ProviderDetailPage() {
         "Chronic Disease Management",
       ];
 
-  const educationList: string[] = Array.isArray(p.educationList)
-    ? p.educationList
-    : Array.isArray(p.education)
-      ? p.education
-      : typeof p.education === "string"
-        ? p.education
-          .split(/[\n•|]/)
-          .map((s) => s.trim())
-          .filter(Boolean)
-        : [];
 
+  const educationList = toList(p.education);
   const navbarOffset = 88;
   const toPx = (v: number | string) => (typeof v === "number" ? `${v}px` : v);
 
@@ -176,94 +155,139 @@ export default function ProviderDetailPage() {
       photo: typeof it.image === "string" ? it.image : it.image.src,
     }));
 
-  // (Opcional) Teléfono para el pie del modal
-  const phoneHref = "tel:+14075744848";
-
   return (
     <>
       {/* Contenido principal */}
       <div
-        className="mx-auto max-w-6xl px-4"
-        style={{ paddingTop: toPx(navbarOffset) }}
+        className="min-h-screen mx-auto max-w-6xl px-4"
+        style={{
+          paddingTop: toPx(navbarOffset),
+          backgroundColor: PALETTE.cream,
+        }}
       >
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
           {/* Sidebar */}
           <aside className="lg:col-span-4">
             <div
-              className="sticky"
-              style={{ top: `calc(${toPx(navbarOffset)} + 16px)` }}
+              className="sticky rounded-md p-6 bg-transparent"
+              style={{
+                top: `calc(${toPx(navbarOffset)} + 16px)`,
+              }}
             >
-              <div className="bg-white p-6">
-                <div className="overflow-hidden rounded-sm">
-                  <img
-                    src={avatar}
-                    alt={p.name}
-                    className="aspect-square w-full object-cover"
-                  />
-                </div>
-
-                <div className="my-6 h-px bg-slate-200" />
-
-                <h2 className="text-xl font-semibold text-slate-900">
-                  {p.name}
-                </h2>
-                <p className="mt-1 text-sm text-slate-600">{p.title}</p>
-
-                {p.languages ? (
-                  <div className="mt-4">
-                    <p className="text-sm font-semibold text-slate-900">
-                      Languages:
-                    </p>
-                    <p className="mt-1 text-sm text-slate-700">{p.languages}</p>
-                  </div>
-                ) : null}
-
-                {p.experience ? (
-                  <div className="mt-4">
-                    <p className="text-sm font-semibold text-slate-900">
-                      Years of Experience
-                    </p>
-                    <p className="mt-1 text-sm text-slate-700">
-                      {p.experience}
-                    </p>
-                  </div>
-                ) : null}
-
-                {/* Botón existente (contacto) */}
-                <Link
-                  href="/contact"
-                  className="mt-6 inline-flex w-full items-center justify-center rounded-sm bg-lime-900 px-4 py-2 text-sm font-semibold text-white hover:scale-105 transition"
-                >
-                  {t("about.cta2.detail")}
-                </Link>
-
-                {/* NUEVOS BOTONES */}
-                <div className="mt-3 grid grid-cols-1 gap-2">
-                  <a
-                    href="/services"
-                    className="inline-flex w-full items-center justify-center rounded-sm border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-900 hover:bg-slate-50 transition"
-                  >
-                    {t('service.seeAll.button')}
-                  </a>
-
-                  {/* Abre el modal con planes de ESTA doctora/doctor */}
-                  <button
-                    type="button"
-                    onClick={() => setInsuranceOpen(true)}
-                    className="inline-flex w-full items-center justify-center rounded-sm border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-900 hover:bg-slate-50 transition"
-                  >
-                    {t('provider.see.insurance')}
-                  </button>
-                </div>
+              <div className="overflow-hidden rounded-lg">
+                <img
+                  src={avatar}
+                  alt={p.name}
+                  className="aspect-square w-full object-cover rounded-lg"
+                />
               </div>
+
+              <div
+                className="my-6 h-px"
+                style={{ backgroundColor: `${PALETTE.olive}33` }}
+              />
+
+              <h2
+                className="text-xl font-semibold"
+                style={{ color: PALETTE.dark }}
+              >
+                {p.name}
+              </h2>
+              <p
+                className="mt-1 text-sm"
+                style={{ color: `${PALETTE.olive}CC` }}
+              >
+                {p.title}
+              </p>
+
+              {p.languages && (
+                <div className="mt-4">
+                  <p
+                    className="text-sm font-semibold"
+                    style={{ color: PALETTE.dark }}
+                  >
+                    Languages
+                  </p>
+                  <p
+                    className="mt-1 text-sm"
+                    style={{ color: `${PALETTE.olive}CC` }}
+                  >
+                    {p.languages}
+                  </p>
+                </div>
+              )}
+
+              {p.experience && (
+                <div className="mt-4">
+                  <p
+                    className="text-sm font-semibold"
+                    style={{ color: PALETTE.dark }}
+                  >
+                    Years of Experience
+                  </p>
+                  <p
+                    className="mt-1 text-sm"
+                    style={{ color: `${PALETTE.olive}CC` }}
+                  >
+                    {p.experience}
+                  </p>
+                </div>
+              )}
+
+              {/* Botón principal */}
+              <Link
+                href="/contact"
+                className="mt-6 inline-flex w-full items-center justify-center rounded-sm px-4 py-2 text-sm font-semibold transition hover:scale-[1.03]"
+                style={{
+                  backgroundColor: PALETTE.olive,
+                  color: PALETTE.cream,
+                  boxShadow: "0 3px 8px rgba(0,0,0,0.15)",
+                }}
+              >
+                {t("about.cta2.detail")}
+              </Link>
+
+              {/* Botones secundarios */}
+              <div className="mt-3 grid grid-cols-1 gap-2">
+                <a
+                  href="/services"
+                  className="inline-flex w-full items-center justify-center rounded-sm px-4 py-2 text-sm font-medium transition hover:scale-[1.02]"
+                  style={{
+                    color: PALETTE.dark,
+                    backgroundColor: PALETTE.cream,
+                    boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+                    border: `1px solid ${PALETTE.olive}33`, // borde sutil oliva translúcido
+                  }}
+                >
+                  {t("service.seeAll.button")}
+                </a>
+
+                <button
+                  type="button"
+                  onClick={() => setInsuranceOpen(true)}
+                  className="inline-flex w-full items-center justify-center rounded-sm px-4 py-2 text-sm font-medium transition hover:scale-[1.02]"
+                  style={{
+                    color: PALETTE.dark,
+                    backgroundColor: PALETTE.cream,
+                    boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+                    border: `1px solid ${PALETTE.olive}33`, // borde igual al de arriba
+                  }}
+                >
+                  {t("provider.see.insurance")}
+                </button>
+              </div>
+
             </div>
           </aside>
 
-          {/* Main content */}
+          {/* Contenido principal */}
           <main className="lg:col-span-8">
             <div className="space-y-6">
               <Section title="About the Doctor">
-                <div className="space-y-4 text-[15px] leading-7 text-gray-700">
+                <div
+                  className="space-y-4 text-[15px] leading-7"
+                  style={{ color: PALETTE.olive }}
+                >
                   {aboutParagraphs.map((t, i) => (
                     <p key={i}>{t}</p>
                   ))}
@@ -272,7 +296,7 @@ export default function ProviderDetailPage() {
 
               {conditions.length > 0 && (
                 <div id="services">
-                  <Section title={t('provider.treated')}>
+                  <Section title={t("provider.treated")}>
                     <Bullet items={conditions} />
                   </Section>
                 </div>
@@ -288,14 +312,14 @@ export default function ProviderDetailPage() {
         </div>
       </div>
 
-      {/* Footer con Related Doctors (vertical list) */}
+      {/* Footer con doctores relacionados */}
       {related.length > 0 && (
-        <footer className="mt-12">
+        <footer className="mt-12" style={{ backgroundColor: PALETTE.cream }}>
           <div className="mx-auto max-w-6xl px-4 py-10">
-            <h3 className="mb-4 text-lg font-semibold text-slate-900">
+            <h3 className="mb-4 text-lg font-semibold" style={{ color: PALETTE.dark }}>
               Related Doctors
             </h3>
-            <ul className="divide-y divide-slate-200 bg-white p-2">
+            <ul className="rounded-md p-2 bg-transparent space-y-2">
               {related.map((d) => (
                 <RelatedDoctorItem
                   key={d.id}
@@ -310,7 +334,7 @@ export default function ProviderDetailPage() {
         </footer>
       )}
 
-      {/* ⬇️ Modal de insurance por doctora/doctor */}
+      {/* Modal de insurance */}
       <InsuranceDoctorModal
         open={insuranceOpen}
         onClose={() => setInsuranceOpen(false)}
