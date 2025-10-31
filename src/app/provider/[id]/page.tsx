@@ -130,17 +130,18 @@ export default function ProviderDetailPage() {
     ? [...baseParagraphs, secondParagraph.trim()]
     : baseParagraphs;
 
-  const conditions: string[] =
-    (p as any).conditions && (p as any).conditions.length > 0
-      ? (p as any).conditions
-      : [
-        "Preventive Medicine",
-        "Adult Immunizations",
-        "Minor Illness Diagnosis and Treatment",
-        "Minor Injury Diagnosis and Treatment",
-        "Chronic Disease Management",
-      ];
+  // ✅ Corrección ESLint: tipado y código limpio
+  const defaultConditions = [
+    "Preventive Medicine",
+    "Adult Immunizations",
+    "Minor Illness Diagnosis and Treatment",
+    "Minor Injury Diagnosis and Treatment",
+    "Chronic Disease Management",
+  ];
 
+  const conditions: string[] = Array.isArray(p.conditions) && p.conditions.length > 0
+    ? p.conditions
+    : defaultConditions;
 
   const educationList = toList(p.education);
   const navbarOffset = 88;
@@ -256,7 +257,7 @@ export default function ProviderDetailPage() {
                     color: PALETTE.dark,
                     backgroundColor: PALETTE.cream,
                     boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
-                    border: `1px solid ${PALETTE.olive}33`, // borde sutil oliva translúcido
+                    border: `1px solid ${PALETTE.olive}33`,
                   }}
                 >
                   {t("service.seeAll.button")}
@@ -270,13 +271,12 @@ export default function ProviderDetailPage() {
                     color: PALETTE.dark,
                     backgroundColor: PALETTE.cream,
                     boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
-                    border: `1px solid ${PALETTE.olive}33`, // borde igual al de arriba
+                    border: `1px solid ${PALETTE.olive}33`,
                   }}
                 >
                   {t("provider.see.insurance")}
                 </button>
               </div>
-
             </div>
           </aside>
 

@@ -14,6 +14,8 @@ export interface ProviderItem {
   languages: string;
   bio: string;
   bio2?: string; // <— opcional
+  conditions?: string[];
+
 }
 
 /**
