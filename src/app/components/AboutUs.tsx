@@ -197,7 +197,8 @@ export const AboutUsProfessional: React.FC = () => {
           <Reveal y={14} delay={120}>
             <p
               className="text-lg leading-relaxed mb-6"
-              style={{ color: BASE_PALETTE[IDX.accentCool].base }}
+              style={{ color: "#7EC4C2" }}
+
             >
               {t("about.subtitle")}
             </p>
