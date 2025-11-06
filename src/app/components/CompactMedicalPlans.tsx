@@ -5,16 +5,20 @@ import { Search } from "lucide-react";
 import { useTranslation } from "../contexts/TranslationContext";
 import InsuranceModal from "./InsuranceModal";
 
-/* 🎨 Paleta pictórica */
-const PALETTE = {
-  amber: "#B67B39",  // ámbar cálido
-  moss: "#7C8C4D",   // verde musgo
-  wine: "#812D20",   // vino terroso
-  ochre: "#D8C27A",  // ocre claro
-  olive: "#4F5635",  // oliva profundo
-  cream: "#FAF4E6",  // crema suave
-  dark: "#2B2725",   // marrón oscuro
-};
+/* 🎨 Paleta unificada (misma que services) */
+const PALETTE = [
+  { base: "#9ADAD8", back: "#7EC4C2", text: "#001219" }, // 0
+  { base: "#C8E7DA", back: "#A8D1C2", text: "#001219" }, // 1
+  { base: "#F5EBC6", back: "#EAD7A4", text: "#001219" }, // 2
+  { base: "#FFD77A", back: "#EEC46A", text: "#001219" }, // 3
+  { base: "#F3A96C", back: "#E48B4F", text: "#001219" }, // 4
+  { base: "#E48C7A", back: "#D67463", text: "#001219" }, // 5
+  { base: "#E57B76", back: "#D66A65", text: "#001219" }, // 6
+  { base: "#DC767B", back: "#C85D61", text: "#001219" }, // 7
+];
+
+/* azul referencia para subtítulo (como el screenshot) */
+const SUBTITLE_BLUE = "#275E71";
 
 /* ---------- Utils: motion ---------- */
 function usePrefersReducedMotion() {
@@ -107,31 +111,31 @@ const Reveal: React.FC<{
   threshold = 0.2,
   rootMargin = "0px 0px -10% 0px",
 }) => {
-    const ref = useRef<HTMLDivElement>(null);
-    const inView = useInOutViewport(ref, { threshold, rootMargin });
-    const [shown, setShown] = useState(false);
-    const reduce = usePrefersReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInOutViewport(ref, { threshold, rootMargin });
+  const [shown, setShown] = useState(false);
+  const reduce = usePrefersReducedMotion();
 
-    useEffect(() => {
-      if (inView) setShown(true);
-      else if (!once) setShown(false);
-    }, [inView, once]);
+  useEffect(() => {
+    if (inView) setShown(true);
+    else if (!once) setShown(false);
+  }, [inView, once]);
 
-    const style: React.CSSProperties = reduce
-      ? {}
-      : {
+  const style: React.CSSProperties = reduce
+    ? {}
+    : {
         opacity: shown ? 1 : 0,
         transform: shown ? "none" : `translate(${x}px, ${y}px) scale(${scale})`,
         transition: `opacity ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms, transform ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms`,
         willChange: "opacity, transform",
       };
 
-    return (
-      <div ref={ref} className={className} style={style} aria-hidden={!shown}>
-        {children}
-      </div>
-    );
-  };
+  return (
+    <div ref={ref} className={className} style={style} aria-hidden={!shown}>
+      {children}
+    </div>
+  );
+};
 
 /* ---------- Componente Principal ---------- */
 const CompactMedicalPlans: React.FC = () => {
@@ -184,7 +188,7 @@ const CompactMedicalPlans: React.FC = () => {
         id="insurance"
         className="scroll-mt-28 py-16 md:py-20 overflow-x-clip"
         style={{
-          backgroundColor: PALETTE.cream,
+          backgroundColor: "#FFFFFF", // siempre blanco
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -194,7 +198,7 @@ const CompactMedicalPlans: React.FC = () => {
               <Reveal y={8}>
                 <h2
                   className="text-xl md:text-4xl font-bold mb-2"
-                  style={{ color: PALETTE.dark }}
+                  style={{ color: PALETTE[0].text }} // #001219
                 >
                   {t("insurance.title")}
                 </h2>
@@ -202,7 +206,7 @@ const CompactMedicalPlans: React.FC = () => {
               <Reveal y={12} delay={80}>
                 <p
                   className="text-base leading-relaxed max-w-xl mx-auto lg:mx-0"
-                  style={{ color: PALETTE.olive }}
+                  style={{ color: SUBTITLE_BLUE }}
                 >
                   {t("insurance.subtitle")}
                 </p>
@@ -216,21 +220,23 @@ const CompactMedicalPlans: React.FC = () => {
                   <div className="marquee-track items-center gap-x-12 opacity-80">
                     {[...Array(2)].map((_, idx) => (
                       <div key={idx} className="flex items-center gap-x-12">
-                        {["OSCAR",
+                        {[
+                          "OSCAR",
                           "CIGNA",
                           "SunshineHealth",
                           "HumanaMedicaid",
                           "AETNA",
                           "UnitedHealthCare",
-                          "HealthFirst"].map((name) => (
-                            <span
-                              key={name}
-                              className="text-sm font-semibold"
-                              style={{ color: PALETTE.moss }}
-                            >
-                              {name}
-                            </span>
-                          ))}
+                          "HealthFirst",
+                        ].map((name) => (
+                          <span
+                            key={name}
+                            className="text-sm font-semibold"
+                            style={{ color: PALETTE[0].text }}
+                          >
+                            {name}
+                          </span>
+                        ))}
                       </div>
                     ))}
                   </div>
@@ -242,9 +248,9 @@ const CompactMedicalPlans: React.FC = () => {
                   onClick={() => setInsuranceOpen(true)}
                   className="mt-2 font-semibold px-10 py-3 md:px-16 rounded-lg transition-all inline-flex items-center gap-2 text-sm hover:scale-105"
                   style={{
-                    backgroundColor: PALETTE.olive,
-                    color: PALETTE.cream,
-                    boxShadow: `0 4px 10px ${PALETTE.dark}33`,
+                    backgroundColor: PALETTE[7].back, // #C85D61
+                    color: "#FFFFFF",
+                    boxShadow: `0 4px 10px ${PALETTE[0].text}33`,
                   }}
                 >
                   <Search className="w-4 h-4" />
