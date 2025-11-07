@@ -10,6 +10,7 @@ import oficina3 from "@/../public/assets/images/oficina-3.webp";
 import oficina4 from "@/../public/assets/images/oficina-4.webp";
 import oficina5 from "@/../public/assets/images/oficina-5.webp";
 import oficina6 from "@/../public/assets/images/oficina-6.webp";
+import oficina7 from "@/../public/assets/images/oficina-7.webp";
 
 import { PALETTE, BRAND, getPaletteColor } from "@/app/ui/palette"; // 👈 misma paleta
 
@@ -21,6 +22,7 @@ const defaultImages = [
   { alt: "Consultorio", src: oficina4.src },
   { alt: "Consultorio", src: oficina5.src },
   { alt: "Fachada exterior", src: oficina6.src },
+  { alt: "Consultorio", src: oficina7.src },
 ];
 
 /* -------------------- Utils motion / reveal -------------------- */

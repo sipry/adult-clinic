@@ -12,9 +12,7 @@ import {
   type Variants,
 } from "framer-motion";
 import heropaint from "@/../public/assets/images/hero-paint.webp";
-import { PALETTE, BRAND } from "@/app/ui/palette";
 
-// usamos tu imagen
 const slides = [
   { src: heropaint.src, alt: "Hero background", pos: "100% 0%" },
 ];
@@ -28,7 +26,6 @@ export default function HeroBannerMixedCentered() {
   const [i, setI] = useState(0);
   const prefersReducedMotion = useReducedMotion();
 
-  // autoplay
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const startAutoplay = () => {
     if (prefersReducedMotion) return;
@@ -51,11 +48,9 @@ export default function HeroBannerMixedCentered() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prefersReducedMotion]);
 
-  // in view
   const heroRef = useRef<HTMLElement | null>(null);
   const inView = useInView(heroRef, { once: true, margin: "-10% 0px" });
 
-  // controls
   const eyebrowCtrls = useAnimation();
   const headlineCtrls = useAnimation();
   const brandCtrls = useAnimation();
@@ -85,7 +80,6 @@ export default function HeroBannerMixedCentered() {
     buttonsCtrls,
   ]);
 
-  // variants
   const fromBottomOrFade = (yHidden: number, dur = 0.32): Variants =>
     prefersReducedMotion || ONLY_FADE
       ? {
@@ -125,24 +119,7 @@ export default function HeroBannerMixedCentered() {
 
   const subtitleText = (t("hero.subtitle") as string) || "";
 
-  // keyboard nav
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "ArrowRight") {
-        setI((p) => (p + 1) % slides.length);
-        startAutoplay();
-      } else if (e.key === "ArrowLeft") {
-        setI((p) => (p - 1 + slides.length) % slides.length);
-        startAutoplay();
-      }
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // pasteles que vamos a usar
-  const pastelTeal = "#CFE7C5"; // eyebrow y CTA
+  const pastelTeal = "#CFE7C5";
   const darkText = "#001219";
 
   return (
@@ -174,17 +151,16 @@ export default function HeroBannerMixedCentered() {
                 fill
                 priority={idx === 0}
                 sizes="100vw"
-                className="object-cover scale-150"
+                className="object-cover"          // 👈 sin scale
                 style={{
-                  objectPosition: "right top",
+                  objectPosition: "right top",   // 👈 apunta a la parte que vas a recortar
                 }}
-                quality={90}
+                quality={75}                      // 👈 un poco menos que 90
               />
             </motion.div>
           );
         })}
 
-        {/* overlay pastelizado un poco más claro */}
         <div className="absolute inset-0 pointer-events-none">
           <div
             className="absolute inset-0"
@@ -200,7 +176,6 @@ export default function HeroBannerMixedCentered() {
       <div className="relative z-10 h-full">
         <div className="flex h-full items-center justify-center">
           <div className="w-full max-w-5xl px-6 md:px-10 text-center">
-            {/* pretitle */}
             <motion.div
               className="text-[11px] md:text-lg tracking-[0.28em] uppercase"
               style={{ color: pastelTeal }}
@@ -211,7 +186,6 @@ export default function HeroBannerMixedCentered() {
               {EYEBROW}
             </motion.div>
 
-            {/* title */}
             <motion.h2
               initial="hidden"
               animate={headlineCtrls}
@@ -228,7 +202,6 @@ export default function HeroBannerMixedCentered() {
               <motion.span>Your Health Adult Care</motion.span>
             </motion.h2>
 
-            {/* subtitle */}
             {subtitleText ? (
               <motion.p
                 initial="hidden"
@@ -237,62 +210,43 @@ export default function HeroBannerMixedCentered() {
                 className="mt-3 mx-auto max-w-4xl text-sm md:text-xl tracking-wide border-b pb-5"
                 style={{
                   color: "rgba(255,255,255,0.8)",
-                  borderColor: "rgba(154,218,216,0.35)", // borde pastel
+                  borderColor: "rgba(154,218,216,0.35)",
                 }}
               >
                 {subtitleText}
               </motion.p>
             ) : null}
 
-            {/* CTAs */}
             <motion.div
               initial="hidden"
               animate={buttonsCtrls}
               variants={buttonsWrapV}
               className="mt-8 flex flex-col sm:flex-row gap-3 justify-center"
             >
-              {/* primary pastel */}
               <motion.a
                 href="/#contact"
                 variants={buttonV}
-                whileHover={
-                  prefersReducedMotion || ONLY_FADE
-                    ? undefined
-                    : {
-                        scale: 1.04,
-                        transition: { duration: 0.12, ease: "easeOut" },
-                      }
-                }
-                whileTap={
-                  prefersReducedMotion || ONLY_FADE
-                    ? undefined
-                    : { scale: 0.98 }
-                }
                 className="inline-flex items-center justify-center px-5 py-3 rounded-sm font-semibold text-sm md:text-base shadow-md"
                 style={{
                   backgroundColor: pastelTeal,
                   color: darkText,
                   boxShadow: "0 8px 24px rgba(0,0,0,0.18)",
                 }}
-                aria-label={t("hero.contact") ?? "Book an appointment"}
               >
                 {t("hero.contact") ?? "Book an appointment"}
               </motion.a>
 
-              {/* secondary pastel border */}
               <motion.a
-  href="/#services"
-  variants={buttonV}
-  whileHover={{ scale: 1.04 }}
-  className="inline-flex items-center justify-center px-5 py-3 rounded-sm font-medium text-sm md:text-base backdrop-blur-md bg-white/15"
-  style={{
-    color: "#FFFFFF",
-    border: "1px solid rgba(154,218,216,0.55)",
-  }}
->
-  {t("hero.portal") ?? "Patient Portal"}
-</motion.a>
-
+                href="/#services"
+                variants={buttonV}
+                className="inline-flex items-center justify-center px-5 py-3 rounded-sm font-medium text-sm md:text-base backdrop-blur-md bg-white/15"
+                style={{
+                  color: "#FFFFFF",
+                  border: "1px solid rgba(154,218,216,0.55)",
+                }}
+              >
+                {t("hero.portal") ?? "Patient Portal"}
+              </motion.a>
             </motion.div>
           </div>
         </div>
@@ -315,16 +269,12 @@ export default function HeroBannerMixedCentered() {
                 aria-label={`Ir al slide ${idx + 1}`}
                 aria-current={active ? "true" : undefined}
               >
-                {/* base */}
                 <span
                   className="absolute inset-0 rounded-full transition"
                   style={{
-                    backgroundColor: active
-                      ? "#FFFFFF"
-                      : "rgba(154,218,216,0.5)", // pastel
+                    backgroundColor: active ? "#FFFFFF" : "rgba(154,218,216,0.5)",
                   }}
                 />
-                {/* active */}
                 {active ? (
                   <motion.span
                     layoutId="hero-dot"
