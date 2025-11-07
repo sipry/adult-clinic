@@ -24,6 +24,7 @@ import {
   useTranslation,
   ServiceTranslation,
 } from "@/app/contexts/TranslationContext";
+import { PALETTE } from "@/app/ui/palette";
 
 /* ---------------- Types & Icons ---------------- */
 type IconKey =
@@ -55,17 +56,6 @@ const ICONS: Record<IconKey, IconCmp> = {
   syringe: Syringe,
   eye: Eye,
 };
-
-const PALETTE = [
-  { base: "#B8EEE8", back: "#9EDBD4", text: "#001219" },
-  { base: "#A9E2D7", back: "#8FC8BE", text: "#001219" },
-  { base: "#D6F1D7", back: "#BFE0C1", text: "#001219" },
-  { base: "#F6EBCF", back: "#E6D5AE", text: "#001219" },
-  { base: "#FFE1A0", back: "#F2CD87", text: "#001219" },
-  { base: "#F6B588", back: "#E29663", text: "#001219" },
-  { base: "#EE9786", back: "#D77C6B", text: "#001219" },
-  { base: "#E47D79", back: "#CD6663", text: "#001219" },
-];
 
 
 /* ---------------- Utils ---------------- */
@@ -227,9 +217,10 @@ const ServicesRail: React.FC<{ featuredKeys?: string[] }> = ({
             >
               {t("services.pretitle")}
             </p>
-            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-[#001219]">
+            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-[#001219] text-center md:text-left">
               {t("services.title")}
             </h2>
+
             <p className="mt-3 text-base md:text-lg text-[#005F73]">
               {t("services.subtitle")}
             </p>
@@ -352,9 +343,8 @@ const ServicesRail: React.FC<{ featuredKeys?: string[] }> = ({
                   key={i}
                   onClick={() => scrollToLogical(i)}
                   aria-label={`Go to card ${i + 1}`}
-                  className={`h-1.5 rounded-full transition-all ${
-                    isActive ? "w-6" : "w-2.5"
-                  }`}
+                  className={`h-1.5 rounded-full transition-all ${isActive ? "w-6" : "w-2.5"
+                    }`}
                   style={{
                     backgroundColor: isActive ? color.base : "#D9D9D9",
                   }}

@@ -2,14 +2,14 @@
 
 // misma paleta que usaste en ServicesRail
 export const PALETTE = [
-  { base: "#9ADAD8", back: "#7EC4C2", text: "#001219" },
-  { base: "#C8E7DA", back: "#A8D1C2", text: "#001219" },
-  { base: "#F5EBC6", back: "#EAD7A4", text: "#001219" },
-  { base: "#FFD77A", back: "#EEC46A", text: "#001219" },
-  { base: "#F3A96C", back: "#E48B4F", text: "#001219" },
-  { base: "#E48C7A", back: "#D67463", text: "#001219" },
-  { base: "#E57B76", back: "#D66A65", text: "#001219" },
-  { base: "#DC767B", back: "#C85D61", text: "#001219" },
+  { base: "#B8EEE8", back: "#9EDBD4", text: "#001219" },
+  { base: "#A9E2D7", back: "#8FC8BE", text: "#001219" },
+  { base: "#D6F1D7", back: "#BFE0C1", text: "#001219" },
+  { base: "#F6EBCF", back: "#E6D5AE", text: "#001219" },
+  { base: "#FFE1A0", back: "#F2CD87", text: "#001219" },
+  { base: "#F6B588", back: "#E29663", text: "#001219" },
+  { base: "#EE9786", back: "#D77C6B", text: "#001219" },
+  { base: "#E47D79", back: "#CD6663", text: "#001219" },
 ];
 
 // colores “de marca” que se repiten en tus secciones
