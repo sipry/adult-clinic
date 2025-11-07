@@ -281,18 +281,18 @@ export default function HeroBannerMixedCentered() {
 
               {/* secondary pastel border */}
               <motion.a
-                href="/#services"
-                variants={buttonV}
-                whileHover={{ scale: 1.04 }}
-                className="inline-flex items-center justify-center px-5 py-3 rounded-sm font-medium text-sm md:text-base"
-                style={{
-                  backgroundColor: "transparent",
-                  color: "#FFFFFF",
-                  border: "1px solid rgba(154,218,216,0.55)",
-                }}
-              >
-                {t("hero.portal") ?? "Patient Portal"}
-              </motion.a>
+  href="/#services"
+  variants={buttonV}
+  whileHover={{ scale: 1.04 }}
+  className="inline-flex items-center justify-center px-5 py-3 rounded-sm font-medium text-sm md:text-base backdrop-blur-md bg-white/15"
+  style={{
+    color: "#FFFFFF",
+    border: "1px solid rgba(154,218,216,0.55)",
+  }}
+>
+  {t("hero.portal") ?? "Patient Portal"}
+</motion.a>
+
             </motion.div>
           </div>
         </div>
