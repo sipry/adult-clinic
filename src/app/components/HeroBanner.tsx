@@ -12,6 +12,7 @@ import {
   type Variants,
 } from "framer-motion";
 import heropaint from "@/../public/assets/images/hero-paint.webp";
+import { PALETTE, BRAND } from "@/app/ui/palette";
 
 const slides = [
   { src: heropaint.src, alt: "Hero background", pos: "100% 0%" },
@@ -25,6 +26,10 @@ export default function HeroBannerMixedCentered() {
   const EYEBROW = t("hero.pretitle");
   const [i, setI] = useState(0);
   const prefersReducedMotion = useReducedMotion();
+
+  // 👇 colores del sistema
+  const primary = PALETTE[0]; // { base: "#B8EEE8", back: "#9EDBD4" }
+  const textColor = BRAND.text;
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const startAutoplay = () => {
@@ -119,9 +124,6 @@ export default function HeroBannerMixedCentered() {
 
   const subtitleText = (t("hero.subtitle") as string) || "";
 
-  const pastelTeal = "#CFE7C5";
-  const darkText = "#001219";
-
   return (
     <section
       id="home"
@@ -151,11 +153,11 @@ export default function HeroBannerMixedCentered() {
                 fill
                 priority={idx === 0}
                 sizes="100vw"
-                className="object-cover"          // 👈 sin scale
+                className="object-cover"
                 style={{
-                  objectPosition: "right top",   // 👈 apunta a la parte que vas a recortar
+                  objectPosition: "right top",
                 }}
-                quality={75}                      // 👈 un poco menos que 90
+                quality={75}
               />
             </motion.div>
           );
@@ -178,7 +180,7 @@ export default function HeroBannerMixedCentered() {
           <div className="w-full max-w-5xl px-6 md:px-10 text-center">
             <motion.div
               className="text-[11px] md:text-lg tracking-[0.28em] uppercase"
-              style={{ color: pastelTeal }}
+              style={{ color: primary.base }}
               initial="hidden"
               animate={eyebrowCtrls}
               variants={eyebrowV}
@@ -210,7 +212,7 @@ export default function HeroBannerMixedCentered() {
                 className="mt-3 mx-auto max-w-4xl text-sm md:text-xl tracking-wide border-b pb-5"
                 style={{
                   color: "rgba(255,255,255,0.8)",
-                  borderColor: "rgba(154,218,216,0.35)",
+                  borderColor: primary.back,
                 }}
               >
                 {subtitleText}
@@ -223,26 +225,29 @@ export default function HeroBannerMixedCentered() {
               variants={buttonsWrapV}
               className="mt-8 flex flex-col sm:flex-row gap-3 justify-center"
             >
+              {/* primary CTA */}
               <motion.a
                 href="/#contact"
                 variants={buttonV}
                 className="inline-flex items-center justify-center px-5 py-3 rounded-sm font-semibold text-sm md:text-base shadow-md"
                 style={{
-                  backgroundColor: pastelTeal,
-                  color: darkText,
+                  backgroundColor: primary.base,
+                  color: textColor,
                   boxShadow: "0 8px 24px rgba(0,0,0,0.18)",
+                  border: `1px solid ${primary.back}`,
                 }}
               >
                 {t("hero.contact") ?? "Book an appointment"}
               </motion.a>
 
+              {/* secondary CTA */}
               <motion.a
                 href="/#services"
                 variants={buttonV}
                 className="inline-flex items-center justify-center px-5 py-3 rounded-sm font-medium text-sm md:text-base backdrop-blur-md bg-white/15"
                 style={{
                   color: "#FFFFFF",
-                  border: "1px solid rgba(154,218,216,0.55)",
+                  border: `1px solid ${primary.back}`,
                 }}
               >
                 {t("hero.portal") ?? "Patient Portal"}
@@ -272,7 +277,7 @@ export default function HeroBannerMixedCentered() {
                 <span
                   className="absolute inset-0 rounded-full transition"
                   style={{
-                    backgroundColor: active ? "#FFFFFF" : "rgba(154,218,216,0.5)",
+                    backgroundColor: active ? "#FFFFFF" : primary.back,
                   }}
                 />
                 {active ? (
