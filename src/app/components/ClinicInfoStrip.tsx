@@ -16,10 +16,10 @@ const PALETTE = [
 ];
 
 /* elegimos colores para el strip */
-const STRIP_BG = PALETTE[0].back;    // fondo
-const STRIP_TEXT = PALETTE[0].text;  // texto normal
+const STRIP_BG = PALETTE[0].back; // fondo
+const STRIP_TEXT = PALETTE[0].text; // texto normal
 const STRIP_HOVER = BRAND.cta; // hover texto -> #C85D61
-const STRIP_DOT = PALETTE[7].back;   // puntos -> #C85D61
+const STRIP_DOT = PALETTE[7].back; // puntos -> #C85D61
 
 /* --------- tipos --------- */
 type StripItem = {
@@ -31,6 +31,7 @@ type StripItem = {
 
 type ClinicInfoStripProps = {
   speedSec?: number;
+  /** si no lo pasas, por defecto pausa al hacer hover */
   pauseOnHover?: boolean;
   className?: string;
 };
@@ -92,7 +93,7 @@ const Icon: React.FC<{ name?: StripItem["icon"]; className?: string }> = ({
 /* --------- componente principal --------- */
 const ClinicInfoStrip: React.FC<ClinicInfoStripProps> = ({
   speedSec = 50,
-  pauseOnHover = false,
+  pauseOnHover = true, // ← ahora por defecto sí se detiene
   className = "",
 }) => {
   const { t } = useTranslation();
@@ -119,9 +120,7 @@ const ClinicInfoStrip: React.FC<ClinicInfoStripProps> = ({
     },
   ];
 
-  const pauseCls = pauseOnHover
-    ? "group-hover:[animation-play-state:paused]"
-    : "";
+  const pauseCls = pauseOnHover ? "group-hover:[animation-play-state:paused]" : "";
 
   return (
     <div
@@ -165,6 +164,10 @@ const ClinicInfoStrip: React.FC<ClinicInfoStripProps> = ({
         .clinic-track {
           animation: clinic-marquee var(--marquee-duration) linear infinite;
           width: max-content;
+        }
+        /* respaldo: si es hover en el contenedor, pausa la animación */
+        .group:hover .clinic-track {
+          animation-play-state: paused;
         }
         @media (prefers-reduced-motion: reduce) {
           .clinic-track {
