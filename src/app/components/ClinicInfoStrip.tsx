@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { useTranslation } from "../contexts/TranslationContext";
+import { BRAND } from "../ui/palette";
 
 /* --------- misma paleta que usas en services --------- */
 const PALETTE = [
@@ -17,7 +18,7 @@ const PALETTE = [
 /* elegimos colores para el strip */
 const STRIP_BG = PALETTE[0].back;    // fondo
 const STRIP_TEXT = PALETTE[0].text;  // texto normal
-const STRIP_HOVER = PALETTE[7].back; // hover texto -> #C85D61
+const STRIP_HOVER = BRAND.cta; // hover texto -> #C85D61
 const STRIP_DOT = PALETTE[7].back;   // puntos -> #C85D61
 
 /* --------- tipos --------- */
