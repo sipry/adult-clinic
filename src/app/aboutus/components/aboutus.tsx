@@ -3,8 +3,8 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import Image, { type StaticImageData } from "next/image";
-import doctorjaime from "@/../public/assets/images/Jaime.jpg";
-import doctorjuan from "@/../public/assets/images/Juan.jpg";
+import doctorjaime from "@/../public/assets/images/Jaime.webp";
+import doctorjuan from "@/../public/assets/images/Juan.webp";
 import { useTranslation } from "@/app/contexts/TranslationContext";
 import { BRAND } from "@/app/ui/palette";
 

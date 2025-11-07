@@ -1,5 +1,5 @@
-import doctorAvatar from "@/../public/assets/images/Jaime.jpg";
-import maleAvatar from "@/../public/assets/images/Juan.jpg";
+import doctorAvatar from "@/../public/assets/images/Jaime.webp";
+import maleAvatar from "@/../public/assets/images/Juan.webp";
 import { useTranslation } from "../contexts/TranslationContext";
 
 export interface ProviderItem {

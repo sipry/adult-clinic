@@ -11,7 +11,7 @@ import {
   useInView,
   type Variants,
 } from "framer-motion";
-import heropaint from "@/../public/assets/images/hero-paint.jpg";
+import heropaint from "@/../public/assets/images/hero-paint.webp";
 import { PALETTE, BRAND } from "@/app/ui/palette";
 
 // usamos tu imagen

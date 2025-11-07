@@ -40,7 +40,7 @@ type AwardsStripProps = {
 
 const AwardsStrip: React.FC<AwardsStripProps> = ({
   speedSec = 55,
-  pauseOnHover = true,
+  pauseOnHover = true, // ← por defecto sí se pausa
   className = "",
 }) => {
   const { t } = useTranslation();
@@ -70,7 +70,7 @@ const AwardsStrip: React.FC<AwardsStripProps> = ({
       style={{
         backgroundColor: STRIP_BG,
         color: STRIP_TEXT,
-        width: "100%", // si quieres full banda: "100vw"
+        width: "100%",
       }}
     >
       <div
@@ -80,7 +80,7 @@ const AwardsStrip: React.FC<AwardsStripProps> = ({
             "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
           maskImage:
             "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
-          backgroundColor: STRIP_BG, // 👈 fondo atrás del mask también verde
+          backgroundColor: STRIP_BG,
         }}
       >
         <div
@@ -88,7 +88,7 @@ const AwardsStrip: React.FC<AwardsStripProps> = ({
           style={
             {
               "--marquee-duration": `${Math.max(20, speedSec)}s`,
-              backgroundColor: STRIP_BG, // 👈 el track va sobre verde también
+              backgroundColor: STRIP_BG,
             } as React.CSSProperties
           }
         >
@@ -107,6 +107,10 @@ const AwardsStrip: React.FC<AwardsStripProps> = ({
         .awards-track {
           animation: awards-marquee var(--marquee-duration) linear infinite;
           width: max-content;
+        }
+        /* 👇 respaldo: si el mouse está sobre el contenedor, pausa la animación */
+        .group:hover .awards-track {
+          animation-play-state: paused;
         }
         @media (prefers-reduced-motion: reduce) {
           .awards-track {
@@ -127,7 +131,7 @@ const StripCopy: React.FC<{
     <div
       className="flex flex-none items-center gap-10"
       aria-hidden={ariaHidden ? "true" : undefined}
-      style={{ backgroundColor: STRIP_BG }} // 👈 por si acaso
+      style={{ backgroundColor: STRIP_BG }}
     >
       {items.map((it, i) => {
         const content = (

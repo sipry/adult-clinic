@@ -1,16 +1,15 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
-import { ChevronRight, ChevronLeft } from "lucide-react";
+import { ChevronRight, ChevronLeft, X } from "lucide-react";
 import { useTranslation } from "../contexts/TranslationContext";
 
-import oficina1 from "@/../public/assets/images/oficina-1.jpg";
-import oficina2 from "@/../public/assets/images/oficina-2.jpg";
-import oficina3 from "@/../public/assets/images/oficina-3.jpg";
-import oficina4 from "@/../public/assets/images/oficina-4.jpg";
-import oficina5 from "@/../public/assets/images/oficina-5.jpg";
-import oficina6 from "@/../public/assets/images/oficina-6.jpg";
+import oficina1 from "@/../public/assets/images/oficina-1.webp";
+import oficina2 from "@/../public/assets/images/oficina-2.webp";
+import oficina3 from "@/../public/assets/images/oficina-3.webp";
+import oficina4 from "@/../public/assets/images/oficina-4.webp";
+import oficina5 from "@/../public/assets/images/oficina-5.webp";
+import oficina6 from "@/../public/assets/images/oficina-6.webp";
 
 import { PALETTE, BRAND, getPaletteColor } from "@/app/ui/palette"; // 👈 misma paleta
 
@@ -152,6 +151,10 @@ export default function SeccionOficinaPediatra({
   const [step, setStep] = React.useState(0);
   const [noSnap, setNoSnap] = React.useState(false);
 
+  // 👇 nuevo estado para la galería modal
+  const [openGallery, setOpenGallery] = React.useState(false);
+  const [galleryIndex, setGalleryIndex] = React.useState(0);
+
   const measure = React.useCallback(() => {
     const ul = baseStripRef.current;
     if (!ul) return;
@@ -224,11 +227,32 @@ export default function SeccionOficinaPediatra({
     el.scrollTo({ left: target, behavior: "smooth" });
   };
 
-  // Colores tomados de la paleta
   const headerAccent = BRAND.accent;
   const titleColor = BRAND.title;
   const bgColor = BRAND.bg;
-  const panelBg = `${PALETTE[0].base}33`; // turquesa pastel translúcido
+
+  // helpers para galería
+  const openGalleryAt = (i: number) => {
+    setGalleryIndex(i);
+    setOpenGallery(true);
+    if (typeof document !== "undefined") {
+      document.documentElement.style.overflow = "hidden";
+    }
+  };
+
+  const closeGallery = () => {
+    setOpenGallery(false);
+    if (typeof document !== "undefined") {
+      document.documentElement.style.overflow = "";
+    }
+  };
+
+  const prevImg = () => {
+    setGalleryIndex((i) => (i - 1 + images.length) % images.length);
+  };
+  const nextImg = () => {
+    setGalleryIndex((i) => (i + 1) % images.length);
+  };
 
   return (
     <div
@@ -262,9 +286,10 @@ export default function SeccionOficinaPediatra({
 
           <Reveal y={14} delay={140}>
             <div className="mt-3 flex flex-wrap items-center justify-center gap-3 mb-15">
-              {/* CTA principal pastel durazno */}
-              <Link
-                href={"/gallery"}
+              {/* 👇 AQUÍ cambiamos el Link por un botón que abre la galería */}
+              <button
+                type="button"
+                onClick={() => openGalleryAt(0)}
                 className="font-semibold px-10 py-3 md:px-16 rounded-md transition-all inline-flex items-center gap-2 text-sm hover:scale-105 shadow-sm"
                 style={{
                   backgroundColor: PALETTE[4].base,
@@ -274,7 +299,7 @@ export default function SeccionOficinaPediatra({
               >
                 <span>{t("clinic.cta")}</span>
                 <ChevronRight className="w-4 h-4" />
-              </Link>
+              </button>
 
               {/* prev */}
               <button
@@ -313,11 +338,12 @@ export default function SeccionOficinaPediatra({
           <div
             ref={wrapRef}
             id="gallery-scroller"
-            className={`marquee-wrap ${withFades ? "with-fades" : ""} ${noSnap ? "no-snap" : ""} relative rounded-3xl`}
+            className={`marquee-wrap ${withFades ? "with-fades" : ""} ${
+              noSnap ? "no-snap" : ""
+            } relative rounded-3xl`}
             role="region"
             aria-label="Galería de fotos infinita"
             tabIndex={0}
-           
           >
             {/* tira oculta para medir */}
             <ul ref={baseStripRef} className="strip measure-only" aria-hidden="true">
@@ -337,16 +363,15 @@ export default function SeccionOficinaPediatra({
                     const color = getPaletteColor(i);
                     return (
                       <li key={`rep-${r}-${i}`} className="card">
-                        <figure
-                          className="card-frame"
-                          
-                        >
+                        <figure className="card-frame">
                           <img
                             src={img.src}
                             alt={img.alt}
                             loading="lazy"
                             decoding="async"
                             className="card-img"
+                            onClick={() => openGalleryAt(i)}
+                            style={{ cursor: "pointer" }}
                           />
                         </figure>
                       </li>
@@ -387,6 +412,64 @@ export default function SeccionOficinaPediatra({
           .card-img { width: 100%; height: 100%; object-fit: cover; }
         `}</style>
       </section>
+
+      {/* ------------ Modal / Galería --------------- */}
+      {openGallery && images[galleryIndex] ? (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-8"
+          style={{ backgroundColor: "rgba(0,0,0,0.85)" }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) closeGallery();
+          }}
+        >
+          {/* Close */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              closeGallery();
+            }}
+            className="absolute top-4 right-4 rounded-full bg-black/40 p-2 text-white hover:bg-black/60"
+            aria-label="Cerrar"
+          >
+            <X className="h-6 w-6" />
+          </button>
+
+          {/* Prev */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              prevImg();
+            }}
+            className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-black/40 p-3 text-white hover:bg-black/60"
+            aria-label="Anterior"
+          >
+            <ChevronLeft className="h-7 w-7" />
+          </button>
+
+          {/* Next */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              nextImg();
+            }}
+            className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-black/40 p-3 text-white hover:bg-black/60"
+            aria-label="Siguiente"
+          >
+            <ChevronRight className="h-7 w-7" />
+          </button>
+
+          <div className="max-h-[90vh] w-full max-w-5xl">
+            <img
+              src={images[galleryIndex].src}
+              alt={images[galleryIndex].alt}
+              className="mx-auto max-h-[90vh] w-auto max-w-full rounded-xl object-contain"
+            />
+            <p className="mt-3 text-center text-sm text-white/80">
+              {images[galleryIndex].alt}
+            </p>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
