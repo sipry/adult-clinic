@@ -1,33 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "../contexts/TranslationContext";
-import brandGrid from "@/../public/assets/svg/brand-grid.svg";
-import { Palette } from "lucide-react";
-
-/* -------------------- Paleta única (FULL) -------------------- */
-const BASE_PALETTE = [
-  { base: "#9ADAD8", back: "#7EC4C2", text: "#001219" }, // 0
-  { base: "#C8E7DA", back: "#A8D1C2", text: "#001219" }, // 1
-  { base: "#F5EBC6", back: "#EAD7A4", text: "#001219" }, // 2
-  { base: "#FFD77A", back: "#EEC46A", text: "#001219" }, // 3
-  { base: "#F3A96C", back: "#E48B4F", text: "#001219" }, // 4
-  { base: "#E48C7A", back: "#D67463", text: "#001219" }, // 5
-  { base: "#E57B76", back: "#D66A65", text: "#001219" }, // 6
-  { base: "#DC767B", back: "#C85D61", text: "#001219" }, // 7 -> contadores
-];
-
-// índices semánticos
-const IDX = {
-  textMain: 0,
-  accentCool: 0,
-  surface: 2,
-  warm: 3,
-  bullet: 3,
-  counter: 7,
-};
-
-// negro con 80% de opacidad
-const TEXT_MUTED = "rgba(0, 0, 0, 0.8)";
+import { PALETTE, BRAND } from "@/app/ui/palette";
 
 /* -------------------- Utils -------------------- */
 const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
@@ -105,31 +79,38 @@ const Reveal: React.FC<{
   duration?: number;
   y?: number;
   once?: boolean;
-}> = ({ children, className, delay = 0, duration = 600, y = 16, once = true }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInOutViewport(ref, { threshold: 0.2 });
-  const [shown, setShown] = useState(false);
-  const reduce = usePrefersReducedMotion();
+}> = ({
+  children,
+  className,
+  delay = 0,
+  duration = 600,
+  y = 16,
+  once = true,
+}) => {
+    const ref = useRef<HTMLDivElement>(null);
+    const inView = useInOutViewport(ref, { threshold: 0.2 });
+    const [shown, setShown] = useState(false);
+    const reduce = usePrefersReducedMotion();
 
-  useEffect(() => {
-    if (inView) setShown(true);
-    else if (!once) setShown(false);
-  }, [inView, once]);
+    useEffect(() => {
+      if (inView) setShown(true);
+      else if (!once) setShown(false);
+    }, [inView, once]);
 
-  const style: React.CSSProperties = reduce
-    ? {}
-    : {
+    const style: React.CSSProperties = reduce
+      ? {}
+      : {
         opacity: shown ? 1 : 0,
         transform: shown ? "none" : `translateY(${y}px)`,
         transition: `opacity ${duration}ms ease-out ${delay}ms, transform ${duration}ms ease-out ${delay}ms`,
       };
 
-  return (
-    <div ref={ref} className={className} style={style}>
-      {children}
-    </div>
-  );
-};
+    return (
+      <div ref={ref} className={className} style={style}>
+        {children}
+      </div>
+    );
+  };
 
 /* -------------------- Count-up -------------------- */
 const AnimatedNumber: React.FC<{
@@ -139,26 +120,33 @@ const AnimatedNumber: React.FC<{
   delayMs?: number;
   suffix?: string;
   play?: boolean;
-}> = ({ start = 0, end, durationMs = 1000, delayMs = 0, suffix = "", play = true }) => {
-  const [value, setValue] = useState(start);
-  useEffect(() => {
-    if (!play) return;
-    const startTime = performance.now();
-    const step = (now: number) => {
-      const t = Math.min(1, (now - startTime) / durationMs);
-      setValue(start + (end - start) * easeOutCubic(t));
-      if (t < 1) requestAnimationFrame(step);
-    };
-    const timeout = setTimeout(() => requestAnimationFrame(step), delayMs);
-    return () => clearTimeout(timeout);
-  }, [play, start, end, durationMs, delayMs]);
-  return (
-    <span>
-      {Math.round(value).toLocaleString()}
-      {suffix}
-    </span>
-  );
-};
+}> = ({
+  start = 0,
+  end,
+  durationMs = 1000,
+  delayMs = 0,
+  suffix = "",
+  play = true,
+}) => {
+    const [value, setValue] = useState(start);
+    useEffect(() => {
+      if (!play) return;
+      const startTime = performance.now();
+      const step = (now: number) => {
+        const t = Math.min(1, (now - startTime) / durationMs);
+        setValue(start + (end - start) * easeOutCubic(t));
+        if (t < 1) requestAnimationFrame(step);
+      };
+      const timeout = setTimeout(() => requestAnimationFrame(step), delayMs);
+      return () => clearTimeout(timeout);
+    }, [play, start, end, durationMs, delayMs]);
+    return (
+      <span>
+        {Math.round(value).toLocaleString()}
+        {suffix}
+      </span>
+    );
+  };
 
 /* -------------------- Component -------------------- */
 export const AboutUsProfessional: React.FC = () => {
@@ -166,12 +154,16 @@ export const AboutUsProfessional: React.FC = () => {
   const sectionInView = useInOutViewport(sectionRef, { threshold: 0.2 });
   const { t } = useTranslation();
 
+  // tomamos un par de colores de la paleta
+  const bulletColor = PALETTE[3]; // amarillo cálido
+  const counterColor = PALETTE[7]; // rosado fuerte
+
   return (
     <section
       ref={sectionRef}
       id="about"
       className="relative overflow-hidden pt-20 pb-20 md:pt-28 md:pb-10"
-      style={{ backgroundColor: "#FFFFFF" }}
+      style={{ backgroundColor: BRAND.bg }}
     >
       <div className="relative z-10 max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-14 items-center">
         {/* LEFT COLUMN */}
@@ -179,7 +171,7 @@ export const AboutUsProfessional: React.FC = () => {
           <Reveal y={8}>
             <div
               className="text-xs font-semibold tracking-[0.2em] uppercase mb-3"
-              style={{ color: BASE_PALETTE[IDX.accentCool].back }}
+              style={{ color: BRAND.accent }}
             >
               {t("about.pretitle")}
             </div>
@@ -188,7 +180,7 @@ export const AboutUsProfessional: React.FC = () => {
           <Reveal y={12} delay={60}>
             <h2
               className="text-4xl md:text-5xl font-extrabold leading-[1.1] mb-5"
-              style={{ color: BASE_PALETTE[IDX.textMain].text }}
+              style={{ color: BRAND.title }}
             >
               {t("about.title")}
             </h2>
@@ -197,8 +189,7 @@ export const AboutUsProfessional: React.FC = () => {
           <Reveal y={14} delay={120}>
             <p
               className="text-lg leading-relaxed mb-6"
-              style={{ color: "#7EC4C2" }}
-
+              style={{ color: BRAND.subtitle }}
             >
               {t("about.subtitle")}
             </p>
@@ -212,15 +203,13 @@ export const AboutUsProfessional: React.FC = () => {
                     <span
                       className="mt-1 h-5 w-5 rounded-sm grid place-items-center text-xs font-bold"
                       style={{
-                        backgroundColor: BASE_PALETTE[IDX.bullet].base,
-                        color: BASE_PALETTE[IDX.textMain].text,
+                        backgroundColor: bulletColor.base,
+                        color: bulletColor.text,
                       }}
                     >
                       ✓
                     </span>
-                    <span style={{ color: BASE_PALETTE[IDX.textMain].text }}>
-                      {item}
-                    </span>
+                    <span style={{ color: BRAND.title }}>{item}</span>
                   </li>
                 </Reveal>
               )
@@ -231,10 +220,17 @@ export const AboutUsProfessional: React.FC = () => {
             <Reveal y={12} delay={160}>
               <a
                 href="/aboutus"
-                className="inline-flex w-full items-center gap-2 rounded-sm font-semibold px-6 py-3 shadow-md transition"
+                className="inline-flex w-full items-center gap-2 rounded-sm font-semibold px-6 py-3 shadow-md transition hover:translate-y-[1px]"
+                // TODO: change color on hover
+                //                 onMouseEnter={(e) => {
+                //   e.currentTarget.style.backgroundColor = PALETTE[4].back; // #E48B4F
+                // }}
+                // onMouseLeave={(e) => {
+                //   e.currentTarget.style.backgroundColor = PALETTE[4].base; // #F3A96C
+                // }}
                 style={{
-                  backgroundColor: BASE_PALETTE[IDX.accentCool].back,
-                  color: BASE_PALETTE[IDX.textMain].text,
+                  backgroundColor: PALETTE[4].base,   // #F3A96C
+                  color: PALETTE[4].text,             // #001219
                 }}
               >
                 {t("about.cta1")}
@@ -244,11 +240,11 @@ export const AboutUsProfessional: React.FC = () => {
             <Reveal y={12} delay={220}>
               <a
                 href="#services"
-                className="inline-flex lg:w-full w-62 items-center gap-2 rounded-sm font-semibold px-6 py-3 border shadow-sm"
+                className="inline-flex lg:w-full w-62 items-center gap-2 rounded-sm font-semibold px-6 py-3 border shadow-sm hover:translate-y-[1px]"
                 style={{
-                  backgroundColor: "#FFFFFF",
-                  border: `1px solid ${BASE_PALETTE[IDX.accentCool].back}`,
-                  color: BASE_PALETTE[IDX.textMain].text,
+                  backgroundColor: BRAND.bg,
+                  border: `1px solid ${BRAND.accent}`,
+                  color: BRAND.title,
                 }}
               >
                 {t("about.cta2")}
@@ -260,7 +256,7 @@ export const AboutUsProfessional: React.FC = () => {
             <div className="mt-6">
               <div
                 className="text-xs uppercase tracking-wider mb-3"
-                style={{ color: '#DC767B' }}
+                style={{ color: PALETTE[7].base }}
               >
                 {t("about.insurance")}
               </div>
@@ -277,7 +273,7 @@ export const AboutUsProfessional: React.FC = () => {
                   <Reveal key={logo} y={8} delay={280 + i * 80}>
                     <span
                       className="text-sm font-semibold"
-                      style={{ color: TEXT_MUTED }} // negro /80
+                      style={{ color: "rgba(0,0,0,0.8)" }}
                     >
                       {logo}
                     </span>
@@ -292,7 +288,7 @@ export const AboutUsProfessional: React.FC = () => {
         <div className="relative">
           <div
             className="space-y-3 md:space-y-3 text-lg leading-relaxed mt-6"
-            style={{ color: BASE_PALETTE[IDX.textMain].text }}
+            style={{ color: BRAND.title }}
           >
             {[t("about.text1"), t("about.text2"), t("about.text3")].map(
               (txt, i) => (
@@ -309,7 +305,7 @@ export const AboutUsProfessional: React.FC = () => {
                   <div className="flex flex-col items-center text-center">
                     <span
                       className="tabular-nums text-3xl md:text-4xl font-extrabold"
-                      style={{ color: BASE_PALETTE[IDX.counter].base }}
+                      style={{ color: BRAND.cta }}
                     >
                       <AnimatedNumber
                         end={10}
@@ -320,7 +316,7 @@ export const AboutUsProfessional: React.FC = () => {
                     </span>
                     <span
                       className="mt-1 text-sm"
-                      style={{ color: TEXT_MUTED }} // descripción /80
+                      style={{ color: "rgba(0,0,0,0.8)" }}
                     >
                       {t("about.stats.families")}
                     </span>
@@ -329,7 +325,7 @@ export const AboutUsProfessional: React.FC = () => {
 
                 <span
                   className="hidden sm:block h-10 w-px"
-                  style={{ backgroundColor: BASE_PALETTE[IDX.accentCool].back }}
+                  style={{ backgroundColor: BRAND.accent }}
                 />
 
                 {/* CONTADOR 2: 20+ */}
@@ -337,13 +333,13 @@ export const AboutUsProfessional: React.FC = () => {
                   <div className="flex flex-col items-center text-center">
                     <span
                       className="tabular-nums text-3xl md:text-4xl font-extrabold"
-                      style={{ color: BASE_PALETTE[IDX.counter].base }}
+                      style={{ color: BRAND.cta }}
                     >
                       <AnimatedNumber end={20} suffix="+" play={sectionInView} />
                     </span>
                     <span
                       className="mt-1 text-sm"
-                      style={{ color: TEXT_MUTED }} // descripción /80
+                      style={{ color: "rgba(0,0,0,0.8)" }}
                     >
                       {t("about.stats.experience")}
                     </span>
