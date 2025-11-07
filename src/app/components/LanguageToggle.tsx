@@ -33,26 +33,26 @@ const LanguageToggle: React.FC<Props> = ({ scrolled }) => {
 
   const inactiveBtn: React.CSSProperties = {
     backgroundColor: "transparent",
-    color: isScrolled ? BRAND.title : BRAND.title,
+    color: BRAND.text,
   };
 
   const inactiveHover: React.CSSProperties = {
     backgroundColor: "rgba(10, 147, 150, 0.08)",
-    color: BRAND.title,
+    color: BRAND.text,
   };
 
   return (
     <div
       className="flex items-center gap-2 rounded-md px-2 py-1 transition-colors duration-200"
       style={{
-        backgroundColor: "#F3F4F6", // 👈 gris clarito fijo
+        backgroundColor: "#F3F4F6", // 👈 lo dejamos gris clarito
         boxShadow: "inset 0 0 4px rgba(0,0,0,0.02)",
         backdropFilter: "blur(2px)",
       }}
     >
       <Globe
         className="w-4 h-4 opacity-70"
-        style={{ color: BRAND.title }}
+        style={{ color: BRAND.text }}
       />
 
       <div className="flex">

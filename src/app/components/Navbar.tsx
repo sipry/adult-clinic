@@ -31,17 +31,17 @@ const Navbar: React.FC<NavbarProps> = ({ scheme = "auto" }) => {
   const { t } = useTranslation();
   const pathname = usePathname();
 
+  const primary = PALETTE[0]; // { base, back }
+
   const onServicesPage = !!pathname && pathname.startsWith("/services");
   const forceWhite = scheme === "white" || (scheme === "auto" && onServicesPage);
   const solidNav = forceWhite || isScrolled;
 
-  // scroll state + “scroll spy” light
   useEffect(() => {
     const applyScrollState = () => setIsScrolled(window.scrollY > 50);
     applyScrollState();
     window.addEventListener("scroll", applyScrollState, { passive: true });
 
-    // detectar qué sección está en vista
     const onScrollSection = () => {
       let current = "";
       SECTION_IDS.forEach((id) => {
@@ -88,8 +88,8 @@ const Navbar: React.FC<NavbarProps> = ({ scheme = "auto" }) => {
       "relative group transition-colors duration-300 hover:scale-105 font-medium text-sm tracking-widest",
       solidNav
         ? isActive
-          ? "text-[#001219]"
-          : "text-[#005F73] hover:text-[#001219]"
+          ? "text-[#001219]" // BRAND.text
+          : "text-[#005F73] hover:text-[#001219]" // BRAND.subtitle -> BRAND.text
         : isActive
           ? "text-white"
           : "text-white hover:text-[#94d2bd]",
@@ -109,7 +109,6 @@ const Navbar: React.FC<NavbarProps> = ({ scheme = "auto" }) => {
           transition: "background-color 400ms ease, box-shadow 400ms ease",
         }}
       >
-
         {/* right side */}
         <div className="flex items-center ml-auto">
           {/* desktop links */}
@@ -137,9 +136,9 @@ const Navbar: React.FC<NavbarProps> = ({ scheme = "auto" }) => {
               href="/contact"
               className="transition-transform rounded-md duration-300 font-normal text-sm py-2 px-6 tracking-wide hover:scale-105 shadow-md"
               style={{
-                backgroundColor: '#9ADAD8',
-                color: "#001219",
-                
+                backgroundColor: primary.base,
+                color: BRAND.text,
+                border: `1px solid ${primary.back}`,
               }}
             >
               {t("nav.explore")}
@@ -210,10 +209,11 @@ const Navbar: React.FC<NavbarProps> = ({ scheme = "auto" }) => {
                     key={href}
                     href={href}
                     onClick={closeMobileMenu}
-                    className={`block text-md font-medium py-2 tracking-wide transition-colors ${isActive
-                        ? "text-[#0A9396]"
-                        : "text-[#001219] hover:text-[#BB3E03]"
-                      }`}
+                    className={`block text-md font-medium py-2 tracking-wide transition-colors ${
+                      isActive
+                        ? "text-[#0A9396]" // BRAND.accent
+                        : "text-[#001219] hover:text-[#BB3E03]" // BRAND.text / BRAND.cta
+                    }`}
                   >
                     {label}
                   </a>
@@ -229,8 +229,9 @@ const Navbar: React.FC<NavbarProps> = ({ scheme = "auto" }) => {
               onClick={closeMobileMenu}
               className="inline-flex items-center font-semibold py-3 px-4 rounded-md transition-transform hover:scale-[1.015] shadow-sm"
               style={{
-                backgroundColor: '#9ADAD8',
-                color: "#001219",
+                backgroundColor: primary.base,
+                color: BRAND.text,
+                border: `1px solid ${primary.back}`,
               }}
             >
               {t("nav.explore")}
