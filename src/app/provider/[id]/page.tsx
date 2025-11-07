@@ -7,6 +7,7 @@ import { useProvidersData } from "../data";
 import { useTranslation } from "@/app/contexts/TranslationContext";
 import InsuranceDoctorModal from "../components/InsuranceDoctorModal";
 import { PALETTE, BRAND } from "@/app/ui/palette";
+import { Linkedin, FlaskConical } from "lucide-react"; // 👈 nuevos
 
 /* ============ Subcomponentes ============ */
 const Section = ({
@@ -16,13 +17,8 @@ const Section = ({
   title: string;
   children: React.ReactNode;
 }) => (
-  <section
-    className="rounded-md p-6"
-  >
-    <h3
-      className="mb-3 text-lg font-semibold"
-      style={{ color: BRAND.title }}
-    >
+  <section className="rounded-md p-6">
+    <h3 className="mb-3 text-lg font-semibold" style={{ color: BRAND.title }}>
       {title}
     </h3>
     <div
@@ -173,10 +169,9 @@ export default function ProviderDetailPage() {
           <aside className="lg:col-span-4">
             <div
               className="sticky rounded-md p-6 bg-transparent"
-              style={{
-                top: `calc(${toPx(navbarOffset)} + 16px)`,
-              }}
+              style={{ top: `calc(${toPx(navbarOffset)} + 16px)` }}
             >
+              {/* foto */}
               <div className="overflow-hidden rounded-lg">
                 <img
                   src={avatar}
@@ -190,31 +185,21 @@ export default function ProviderDetailPage() {
                 style={{ backgroundColor: `${BRAND.title}11` }}
               />
 
-              <h2
-                className="text-xl font-semibold"
-                style={{ color: BRAND.title }}
-              >
+              {/* nombre */}
+              <h2 className="text-xl font-semibold" style={{ color: BRAND.title }}>
                 {p.name}
               </h2>
-              <p
-                className="mt-1 text-sm"
-                style={{ color: `${BRAND.title}B3` }}
-              >
+              <p className="mt-1 text-sm" style={{ color: `${BRAND.title}B3` }}>
                 {p.title}
               </p>
 
+              {/* info extra */}
               {p.languages && (
                 <div className="mt-4">
-                  <p
-                    className="text-sm font-semibold"
-                    style={{ color: BRAND.title }}
-                  >
+                  <p className="text-sm font-semibold" style={{ color: BRAND.title }}>
                     Languages
                   </p>
-                  <p
-                    className="mt-1 text-sm"
-                    style={{ color: `${BRAND.title}B3` }}
-                  >
+                  <p className="mt-1 text-sm" style={{ color: `${BRAND.title}B3` }}>
                     {p.languages}
                   </p>
                 </div>
@@ -222,66 +207,139 @@ export default function ProviderDetailPage() {
 
               {p.experience && (
                 <div className="mt-4">
-                  <p
-                    className="text-sm font-semibold"
-                    style={{ color: BRAND.title }}
-                  >
+                  <p className="text-sm font-semibold" style={{ color: BRAND.title }}>
                     Years of Experience
                   </p>
-                  <p
-                    className="mt-1 text-sm"
-                    style={{ color: `${BRAND.title}B3` }}
-                  >
+                  <p className="mt-1 text-sm" style={{ color: `${BRAND.title}B3` }}>
                     {p.experience}
                   </p>
                 </div>
               )}
 
-              {/* Botón principal (pastel durazno) */}
-              <Link
-                href="/contact"
-                className="mt-6 inline-flex w-full items-center justify-center rounded-sm px-4 py-2 text-sm font-semibold transition hover:scale-[1.03]"
-                style={{
-                  backgroundColor: PALETTE[4].base,     // #F3A96C
-                  color: PALETTE[4].text,               // #001219
-                  border: `1px solid ${PALETTE[4].back}`, // #E48B4F
-                  boxShadow: "0 3px 8px rgba(0,0,0,0.08)",
-                }}
-              >
-                {t("about.cta2.detail")}
-              </Link>
+              {/* BOTONES PRINCIPALES */}
+            {/* BOTONES PRINCIPALES */}
+<div className="mt-6 flex flex-col gap-2">
+  {/* 1. schedule */}
+  <Link
+    href="/contact"
+    className="inline-flex w-full items-center justify-center rounded-lg px-4 py-3 text-sm font-semibold transition hover:scale-[1.02]"
+    style={{
+      backgroundColor: PALETTE[4].base,
+      color: PALETTE[4].text,
+      border: `1px solid ${PALETTE[4].back}`,
+      boxShadow: "0 3px 8px rgba(0,0,0,0.05)",
+    }}
+  >
+    {t("about.cta2.detail")}
+  </Link>
 
-              {/* Botones secundarios */}
-              <div className="mt-3 grid grid-cols-1 gap-2">
-                <a
-                  href="/services"
-                  className="inline-flex w-full items-center justify-center rounded-sm px-4 py-2 text-sm font-medium transition hover:scale-[1.02]"
-                  style={{
-                    color: BRAND.title,
-                    backgroundColor: BRAND.bg,
-                    boxShadow: "0 2px 6px rgba(0,0,0,0.03)",
-                    border: `1px solid ${BRAND.accent}33`,
-                  }}
-                >
-                  {t("service.seeAll.button")}
-                </a>
+  {/* 2. see all services */}
+  <a
+    href="/services"
+    className="inline-flex w-full items-center justify-center rounded-lg px-4 py-3 text-sm font-medium transition hover:scale-[1.01]"
+    style={{
+      backgroundColor: "#FFFFFF",
+      color: BRAND.title,
+      border: `1px solid ${BRAND.accent}22`,
+    }}
+  >
+    {t("service.seeAll.button")}
+  </a>
 
-                <button
-                  type="button"
-                  onClick={() => setInsuranceOpen(true)}
-                  className="inline-flex w-full items-center justify-center rounded-sm px-4 py-2 text-sm font-medium transition hover:scale-[1.02]"
-                  style={{
-                    color: BRAND.title,
-                    backgroundColor: BRAND.bg,
-                    boxShadow: "0 2px 6px rgba(0,0,0,0.03)",
-                    border: `1px solid ${BRAND.accent}33`,
-                  }}
-                >
-                  {t("provider.see.insurance")}
-                </button>
-              </div>
+  {/* 3. insurance */}
+  <button
+    type="button"
+    onClick={() => setInsuranceOpen(true)}
+    className="inline-flex w-full items-center justify-center rounded-lg px-4 py-3 text-sm font-medium transition hover:scale-[1.01]"
+    style={{
+      backgroundColor: "#FFFFFF",
+      color: BRAND.title,
+      border: `1px solid ${BRAND.accent}22`,
+    }}
+  >
+    {t("provider.see.insurance")}
+  </button>
+
+  {/* 4. fila 50/50 con marcas en pastel */}
+  <div className="flex gap-2">
+    {/* ResearchGate pastel */}
+    <a
+      href={p.researchGate ?? "#"}
+      target={p.researchGate ? "_blank" : undefined}
+      rel={p.researchGate ? "noopener noreferrer" : undefined}
+      className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2.5 text-xs font-medium transition hover:scale-[1.01]"
+      style={{
+        backgroundColor: "#B8EEE8", // RG pastel
+        color: "#001219",
+        border: "1px solid rgba(0,18,25,0.03)",
+      }}
+    >
+      <FlaskConical className="h-4 w-4" aria-hidden />
+      ResearchGate
+    </a>
+
+    {/* LinkedIn pastel */}
+    <a
+      href={p.linkedIn ?? "#"}
+      target={p.linkedIn ? "_blank" : undefined}
+      rel={p.linkedIn ? "noopener noreferrer" : undefined}
+      className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2.5 text-xs font-medium transition hover:scale-[1.01]"
+      style={{
+        backgroundColor: "#B7D7EA", // LinkedIn pastel
+        color: "#001219",
+        border: "1px solid rgba(0,18,25,0.03)",
+      }}
+    >
+      <Linkedin className="h-4 w-4" aria-hidden />
+      LinkedIn
+    </a>
+  </div>
+
+{/* 5. versión circular / pastel */}
+<div className="mt-2 flex gap-3 justify-center">
+  {/* RG circular */}
+  <a
+    href={p.researchGate ?? "#"}
+    target={p.researchGate ? "_blank" : undefined}
+    rel={p.researchGate ? "noopener noreferrer" : undefined}
+    className="inline-flex h-10 w-10 items-center justify-center rounded-full shadow-sm transition hover:scale-[1.04]"
+    style={{
+      backgroundColor: "#B8EEE8", // RG pastel
+      border: "1px solid rgba(0,18,25,0.04)",
+      color: "#001219",
+    }}
+    aria-label="ResearchGate"
+  >
+    <FlaskConical className="h-4 w-4" aria-hidden />
+  </a>
+
+  {/* LinkedIn pill con texto */}
+  <a
+    href={p.linkedIn ?? "#"}
+    target={p.linkedIn ? "_blank" : undefined}
+    rel={p.linkedIn ? "noopener noreferrer" : undefined}
+    className="inline-flex h-10 items-center gap-2 rounded-full px-4 shadow-sm transition hover:scale-[1.04]"
+    style={{
+      backgroundColor: "#B7D7EA", // LinkedIn pastel
+      border: "1px solid rgba(0,18,25,0.04)",
+      color: "#001219",
+      fontSize: "0.7rem",
+      fontWeight: 500,
+    }}
+  >
+    <Linkedin className="h-4 w-4" aria-hidden />
+    LinkedIn
+  </a>
+</div>
+
+
+</div>
+
+
             </div>
           </aside>
+
+
 
           {/* Contenido principal */}
           <main className="lg:col-span-8">
@@ -305,11 +363,42 @@ export default function ProviderDetailPage() {
                 </div>
               )}
 
-              {educationList.length > 0 && (
-                <Section title="Education">
-                  <Bullet items={educationList} />
-                </Section>
-              )}
+            {educationList.length > 0 && (
+  <Section title="Education">
+    <Bullet items={educationList} />
+
+{/* fila de botones de ejemplo */}
+<div className="mt-8 flex gap-2">
+  {/* ResearchGate pastel */}
+  <a
+    href={p.researchGate ?? "#"}
+    className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2 text-xs font-medium transition hover:scale-[1.01]"
+    style={{
+      backgroundColor: "#B8EEE8",             // verde agua pastel
+      border: "1px solid rgba(0,18,25,0.03)",
+      color: "#001219",
+    }}
+  >
+    ResearchGate
+  </a>
+
+  {/* LinkedIn pastel */}
+  <a
+    href={p.linkedIn ?? "#"}
+    className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2 text-xs font-medium transition hover:scale-[1.01]"
+    style={{
+      backgroundColor: "#B7D7EA",             // azul linkedin pastel
+      border: "1px solid rgba(0,18,25,0.03)",
+      color: "#001219",
+    }}
+  >
+    LinkedIn
+  </a>
+</div>
+
+  </Section>
+)}
+
             </div>
           </main>
         </div>

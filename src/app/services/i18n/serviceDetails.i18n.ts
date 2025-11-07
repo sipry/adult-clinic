@@ -1,16 +1,17 @@
-// ===== Tipos =====
+// serviceDetails.i18n.ts
+'use client';
+
 export type Locale = 'es' | 'en';
 
+// 👇 estos son los mismos ids que usas en las tarjetas de ServicesGrid
 export type ServiceId =
-  | 'well-visit'
-  | 'sick-visit'
-  | 'immunizations'
-  | 'vision-screening'
-  | 'audiology-screening'
-  | 'asthma'
-  | 'adhd'
-  | 'sports-physical'
-  | 'follow-up';
+  | 'preventive-medicine'
+  | 'adult-immunizations'
+  | 'minor-illness'
+  | 'minor-injury'
+  | 'chronic-disease'
+  | 'asthma-care'
+  | 'vision-screening';
 
 export type ServiceFAQ = { q: string; a: string };
 
@@ -29,7 +30,6 @@ export type ServiceDetailI18n = {
   insuranceNote?: string;
 };
 
-// ===== Tipos del panel (para claves bien tipadas) =====
 type PanelSections = {
   includes: string;
   preparation: string;
@@ -62,9 +62,16 @@ export type PanelKey =
   | `sections.${SectionsKey}`
   | `cta.${CTAKey}`;
 
-// ===== Diccionario exclusivo del panel =====
-// 👇 Anotación explícita del tipo (NO `satisfies`) para evitar uniones estrechas
-const DICT: Record<Locale, { panel: Panel; services: Record<ServiceId, ServiceDetailI18n> }> = {
+// ======================
+// DICCIONARIO
+// ======================
+const DICT: Record<
+  Locale,
+  {
+    panel: Panel;
+    services: Record<ServiceId, ServiceDetailI18n>;
+  }
+> = {
   es: {
     panel: {
       fallbackTitle: 'Detalles del servicio',
@@ -85,166 +92,168 @@ const DICT: Record<Locale, { panel: Panel; services: Record<ServiceId, ServiceDe
       },
     },
     services: {
-      'well-visit': {
-        title: 'Visita de Niño Sano',
+      'preventive-medicine': {
+        title: 'Medicina preventiva para adultos',
         summary:
-          'Evaluación integral periódica para crecimiento, desarrollo y prevención, con actualización de vacunas y consejería familiar.',
+          'Controles periódicos, laboratorios básicos y educación en estilos de vida para detectar factores de riesgo a tiempo.',
         duration: '20–30 min',
-        ageRange: '0–18 años',
+        ageRange: 'Adultos',
         includes: [
-          'Medición de peso, talla e IMC',
-          'Revisión de hitos del desarrollo',
-          'Esquema de vacunación',
-          'Tamizajes según edad (visión, audición, anemia, etc.)',
-          'Consejería en nutrición, sueño y seguridad',
+          'Historia clínica y medicación actual',
+          'Signos vitales (peso, IMC, presión)',
+          'Solicitudes de laboratorio según edad y riesgo',
+          'Actualización de vacunas si corresponde',
+          'Plan personalizado de cuidado',
         ],
         preparation: [
-          'Traer récord de vacunas y medicamentos actuales',
-          'Lista de dudas o cambios observados',
-          'Para lactantes: pañal y biberón si aplica',
+          'Traer lista de medicamentos y suplementos',
+          'Traer récord de vacunas si lo tiene',
+          'Llegar 10 min antes',
         ],
         whatToExpect: [
-          'Historia clínica y social',
-          'Examen físico completo',
-          'Recomendaciones personalizadas y plan preventivo',
+          'Revisión de antecedentes y factores de riesgo',
+          'Examen físico básico',
+          'Explicación de resultados o próximos pasos',
         ],
-        followUp: ['Próxima visita según edad', 'Referencias si se detecta alguna necesidad'],
+        followUp: ['Control anual o según indicación médica'],
+        recommendedFor: [
+          'Pacientes que no se revisan hace 1 año o más',
+          'Pacientes con antecedentes familiares',
+        ],
         faqs: [
           {
-            q: '¿Cada cuánto debo traer a mi hijo/a?',
-            a: 'Según edad: más seguido en el primer año y luego anual, salvo indicación diferente.',
+            q: '¿Cada cuánto debo hacerme este control?',
+            a: 'En general 1 vez al año, pero puede variar según tu edad o condiciones crónicas.',
           },
         ],
       },
-      'sick-visit': {
-        title: 'Visita por Enfermedad',
+      'adult-immunizations': {
+        title: 'Inmunizaciones en adultos',
         summary:
-          'Atención aguda para síntomas como fiebre, tos, dolor de oído, vómitos o lesiones leves.',
+          'Aplicación de vacunas recomendadas por edad o condición (influenza, neumococo, hepatitis) con orientación sobre efectos esperados.',
+        duration: '10–15 min',
+        ageRange: 'Adultos y adultos mayores',
+        includes: [
+          'Revisión del estado de vacunación',
+          'Aplicación de la vacuna indicada',
+          'Registro de la dosis aplicada',
+        ],
+        preparation: ['Traer historial de vacunas si está disponible'],
+        whatToExpect: [
+          'Evaluación breve',
+          'Aplicación rápida',
+          'Recomendaciones de cuidados en casa',
+        ],
+        followUp: ['Próximas dosis o refuerzos según calendario'],
+        risks: ['Enrojecimiento o dolor leve en el sitio de inyección', 'Fiebre baja ocasional'],
+        faqs: [
+          {
+            q: '¿Puedo vacunarme si estoy tomando medicamentos?',
+            a: 'La mayoría de las veces sí, pero coméntalo antes con el médico para elegir la vacuna adecuada.',
+          },
+        ],
+      },
+      'minor-illness': {
+        title: 'Atención de enfermedades comunes',
+        summary:
+          'Evaluación y manejo de cuadros agudos como resfriado, gripe, infecciones leves, alergias o dolor de garganta.',
         duration: '15–25 min',
-        ageRange: '0–18 años',
+        ageRange: 'Adultos',
         includes: [
-          'Evaluación dirigida por síntomas',
+          'Historia dirigida a los síntomas',
           'Examen físico focalizado',
-          'Pruebas rápidas si es necesario (estreptococo, influenza, COVID)',
-          'Plan de manejo y señales de alarma',
+          'Pruebas rápidas si se necesitan',
+          'Plan de tratamiento y señales de alarma',
         ],
         preparation: [
-          'Registrar temperatura y medicamentos ya administrados',
-          'Anotar inicio y evolución de los síntomas',
+          'Registrar fiebre y medicamentos ya tomados',
+          'Anotar tiempo de evolución de los síntomas',
         ],
         whatToExpect: [
-          'Historia breve y examen orientado',
-          'Explicación de diagnóstico probable',
-          'Indicaciones y cuándo regresar o ir a urgencias',
+          'Revisión rápida y directa',
+          'Recomendaciones de medicamentos o cuidados',
+          'Cuándo regresar o ir a urgencias',
         ],
-        followUp: [
-          'Control si los síntomas persisten o empeoran',
-          'Llamada si hay nuevas alarmas (dificultad respiratoria, deshidratación, letargo)',
-        ],
+        followUp: ['Control si los síntomas no mejoran en 48–72 h'],
       },
-      immunizations: {
-        title: 'Vacunas / Inmunizaciones',
+      'minor-injury': {
+        title: 'Lesiones leves',
         summary:
-          'Aplicación segura de vacunas según el calendario recomendado, con orientación sobre efectos esperados.',
-        duration: '10–20 min',
-        ageRange: '0–18 años (y refuerzos)',
+          'Valoración y tratamiento inicial de lesiones no graves como esguinces leves, golpes, pequeñas quemaduras o cortaduras superficiales.',
+        duration: '15–25 min',
+        ageRange: 'Adultos',
+        includes: ['Examen de la zona afectada', 'Limpieza o cura básica', 'Recomendaciones de reposo'],
+        preparation: ['Describir cómo ocurrió la lesión', 'Traer lista de medicamentos, si toma anticoagulantes mencionar'],
+        whatToExpect: [
+          'Revisión del movimiento y dolor',
+          'Manejo del dolor si aplica',
+          'Indicaciones para casa y signos de alarma',
+        ],
+        followUp: ['Revisión si hay empeoramiento o no hay mejoría en pocos días'],
+      },
+      'chronic-disease': {
+        title: 'Manejo de enfermedades crónicas',
+        summary:
+          'Seguimiento estructurado de condiciones como hipertensión, diabetes, colesterol alto u obesidad.',
+        duration: '20–30 min',
+        ageRange: 'Adultos',
         includes: [
-          'Revisión del historial de vacunas',
-          'Aplicación de dosis requeridas',
-          'Tarjeta/registro actualizado',
+          'Revisión de presión, peso y síntomas',
+          'Ajuste de medicamentos si hace falta',
+          'Solicitud de laboratorios de control',
+          'Educación sobre dieta y actividad física',
         ],
         preparation: [
-          'Traer récord de vacunas',
-          'Avisar si hubo reacciones previas',
-          'Hidratación previa y ropa cómoda',
+          'Traer lista de medicamentos',
+          'Si es diabético: traer registros de glucosa',
+          'Traer laboratorios recientes',
         ],
         whatToExpect: [
-          'Verificación de elegibilidad',
-          'Aplicación rápida por personal entrenado',
-          'Observación breve y cuidados en casa',
+          'Evaluación del control actual',
+          'Metas claras de tratamiento',
+          'Plan de seguimiento',
         ],
-        followUp: ['Próxima dosis / refuerzo según calendario'],
+        followUp: ['Controles cada 1–3 meses según la condición'],
         faqs: [
           {
-            q: '¿Es normal la fiebre después de vacunar?',
-            a: 'Sí, puede aparecer fiebre baja y dolor local por 24–48 h; manejo sintomático.',
+            q: '¿Puedo dejar el tratamiento si me siento bien?',
+            a: 'No sin hablarlo antes con el médico; muchas enfermedades crónicas no dan síntomas.',
           },
         ],
+      },
+      'asthma-care': {
+        title: 'Cuidado y control del asma en adultos',
+        summary:
+          'Evaluación del grado de control del asma, técnica de inhaladores y ajustes de tratamiento.',
+        duration: '20–25 min',
+        recommendedFor: ['Asma diagnosticada', 'Tos nocturna', 'Silbidos frecuentes'],
+        includes: [
+          'Historia dirigida y examen respiratorio',
+          'Revisión de la técnica del inhalador',
+          'Plan de acción (qué hacer si empeora)',
+        ],
+        preparation: ['Traer inhaladores actuales', 'Anotar frecuencia de síntomas'],
+        whatToExpect: [
+          'Revisión de desencadenantes',
+          'Ajuste de dosis o medicación',
+          'Educación sobre uso correcto',
+        ],
+        followUp: ['Control en 1–3 meses o antes si hay crisis'],
       },
       'vision-screening': {
-        title: 'Tamizaje de Visión',
+        title: 'Tamizaje visual / salud ocular',
         summary:
-          'Detección temprana de problemas visuales (miopía, ambliopía, astigmatismo) con pruebas apropiadas para la edad.',
+          'Chequeo básico de visión para detectar problemas de agudeza visual u otros hallazgos que requieran oftalmología.',
         duration: '10–15 min',
-        ageRange: 'Según edad y cooperación',
-        includes: ['Pruebas de agudeza', 'Instrumentos automáticos si corresponde'],
-        preparation: ['Evitar fatiga previa', 'Si usa gafas, traerlas'],
-        whatToExpect: ['Pruebas breves y lúdicas', 'Referencia a oftalmología si es necesario'],
-      },
-      'audiology-screening': {
-        title: 'Tamizaje de Audición',
-        summary:
-          'Revisión rápida de respuesta auditiva para detectar pérdidas leves o moderadas y problemas de conducción.',
-        duration: '10–15 min',
-        includes: ['Otoemisiones/tonos puros según edad', 'Otoscopia'],
-        preparation: ['Si hay cera, avisar; podríamos removerla'],
-        whatToExpect: ['Prueba breve con sonidos suaves', 'Resultados inmediatos'],
-        followUp: ['Referencia a audiología si el tamizaje no es satisfactorio'],
-      },
-      asthma: {
-        title: 'Asma: Plan de Manejo',
-        summary:
-          'Evaluación y control del asma con educación sobre inhaladores/espaciadores, plan escrito y control de desencadenantes.',
-        duration: '20–30 min',
-        recommendedFor: ['Sibilancias recurrentes', 'Diagnóstico de asma', 'Tos nocturna'],
-        includes: ['Historia dirigida y examen', 'Técnica de inhalación/espaciador', 'Plan de acción por zonas'],
-        preparation: ['Traer inhaladores/espaciador', 'Registro de síntomas y uso de rescate'],
-        whatToExpect: ['Ajuste de medicación según control', 'Educación y metas compartidas'],
-        followUp: ['Revisión en 1–3 meses o antes si hay exacerbación'],
-        faqs: [
-          {
-            q: '¿El controlador es permanente?',
-            a: 'Se reevalúa; buscamos la mínima dosis efectiva con buen control.',
-          },
-        ],
-      },
-      adhd: {
-        title: 'TDAH: Evaluación y Seguimiento',
-        summary: 'Abordaje multimodal del TDAH con escalas, apoyo escolar y ajuste terapéutico.',
-        duration: '30–40 min (inicial) / 15–20 min (control)',
-        recommendedFor: [
-          'Dificultades de atención',
-          'Hiperactividad/impulsividad',
-          'Rendimiento escolar',
-        ],
-        includes: ['Escalas validadas', 'Plan escolar y conductual', 'Opciones terapéuticas'],
-        preparation: ['Reportes de escuela', 'Escalas de cuidadores y docentes', 'Historial médico previo'],
-        whatToExpect: ['Evaluación integral', 'Plan individualizado', 'Monitoreo de respuesta y efectos'],
-        followUp: ['Controles periódicos para ajuste fino'],
-        faqs: [{ q: '¿Siempre se indican medicamentos?', a: 'No siempre; depende de severidad y contexto.' }],
-      },
-      'sports-physical': {
-        title: 'Examen Físico Deportivo',
-        summary:
-          'Aptitud para actividad deportiva con énfasis en corazón, respiración, articulaciones y antecedentes familiares.',
-        duration: '20–30 min',
-        includes: ['Historia deportiva y familiar', 'Examen cardiovascular y músculo-esquelético', 'Formulario de aptitud'],
-        preparation: ['Ropa cómoda', 'Formularios de escuela/club', 'Antecedentes de lesiones'],
-        whatToExpect: ['Examen dirigido', 'Prevención de lesiones'],
-        followUp: ['Control si hay hallazgos o lesiones previas'],
-      },
-      'follow-up': {
-        title: 'Visita de Seguimiento',
-        summary:
-          'Revisión del progreso tras una consulta previa: respuesta a tratamiento, resultados de estudios, ajustes necesarios.',
-        duration: '10–20 min',
-        includes: ['Revisión de síntomas', 'Lectura de estudios', 'Ajuste de plan'],
-        preparation: ['Traer resultados/laboratorios', 'Anotar adherencia / eventos adversos'],
-        whatToExpect: ['Actualización del plan', 'Próximos pasos claros'],
+        includes: ['Prueba de agudeza visual', 'Revisión básica de ojos'],
+        preparation: ['Traer lentes si usa', 'Evitar llegar muy cansado'],
+        whatToExpect: ['Pruebas breves', 'Referencias si se detecta algo'],
+        followUp: ['Control anual o con oftalmología si se encuentra alteración'],
       },
     },
   },
 
+  // ================= ENGLISH =================
   en: {
     panel: {
       fallbackTitle: 'Service details',
@@ -265,148 +274,136 @@ const DICT: Record<Locale, { panel: Panel; services: Record<ServiceId, ServiceDe
       },
     },
     services: {
-      'well-visit': {
-        title: 'Well-Child Visit',
+      'preventive-medicine': {
+        title: 'Preventive Medicine (Adults)',
         summary:
-          'Comprehensive periodic evaluation for growth, development, and prevention, with vaccine updates and family guidance.',
+          'Annual wellness visits, basic labs, and lifestyle counseling to detect risk factors early.',
         duration: '20–30 min',
-        ageRange: '0–18 years',
+        ageRange: 'Adults',
         includes: [
-          'Weight, height, and BMI',
-          'Developmental milestones review',
-          'Vaccination schedule',
-          'Age-appropriate screenings (vision, hearing, anemia, etc.)',
-          'Counseling on nutrition, sleep, and safety',
+          'Medical history and current meds',
+          'Vitals (weight, BMI, blood pressure)',
+          'Age/risk-based lab orders',
+          'Vaccine update if needed',
+          'Personalized care plan',
         ],
         preparation: [
-          'Bring vaccine record and current medications',
-          'List of questions or changes noticed',
-          'For infants: diaper and bottle if needed',
+          'Bring list of medications/supplements',
+          'Bring vaccine record if available',
+          'Arrive 10 minutes early',
         ],
         whatToExpect: [
-          'Medical and social history',
-          'Complete physical exam',
-          'Personalized recommendations and preventive plan',
+          'Risk review and brief exam',
+          'Discussion of lab needs',
+          'Next steps / follow-up plan',
         ],
-        followUp: ['Next visit according to age', 'Referrals if needed'],
-        faqs: [
-          {
-            q: 'How often should I bring my child?',
-            a: 'More often in the first year, then annually unless otherwise indicated.',
-          },
-        ],
+        followUp: ['Yearly follow-up or as indicated'],
+        recommendedFor: ['Adults with no recent check-up', 'Patients with family history'],
       },
-      'sick-visit': {
-        title: 'Sick Visit',
-        summary: 'Acute care for symptoms like fever, cough, ear pain, vomiting, or minor injuries.',
-        duration: '15–25 min',
-        ageRange: '0–18 years',
-        includes: [
-          'Symptom-directed evaluation',
-          'Focused physical exam',
-          'Rapid tests if needed (strep, flu, COVID)',
-          'Care plan and warning signs',
-        ],
-        preparation: [
-          'Record temperature and medications already given',
-          'Note onset and progression of symptoms',
-        ],
-        whatToExpect: [
-          'Brief history and focused exam',
-          'Explanation of likely diagnosis',
-          'Instructions and when to return or go to the ER',
-        ],
-        followUp: [
-          'Follow-up if symptoms persist or worsen',
-          'Call if new warning signs appear (breathing difficulty, dehydration, lethargy)',
-        ],
-      },
-      immunizations: {
-        title: 'Immunizations',
+      'adult-immunizations': {
+        title: 'Adult Immunizations',
         summary:
-          'Safe vaccine administration according to the recommended schedule, with guidance on expected effects.',
-        duration: '10–20 min',
-        ageRange: '0–18 years (and boosters)',
-        includes: ['Vaccine history review', 'Required doses given', 'Updated card/record'],
-        preparation: ['Bring vaccine record', 'Report prior reactions', 'Hydrate and wear comfortable clothing'],
-        whatToExpect: [
-          'Eligibility check',
-          'Quick administration by trained staff',
-          'Brief observation and home care instructions',
+          'CDC-recommended vaccines for adults, including influenza, pneumococcal, hepatitis and others.',
+        duration: '10–15 min',
+        ageRange: 'Adults / older adults',
+        includes: ['Vaccine record review', 'Vaccine administration', 'Updated documentation'],
+        preparation: ['Bring vaccine card if you have it'],
+        whatToExpect: ['Short visit', 'Injection and brief observation', 'At-home care instructions'],
+        followUp: ['Next booster according to schedule'],
+        risks: ['Mild soreness or redness', 'Low-grade fever'],
+      },
+      'minor-illness': {
+        title: 'Minor Illness Visit',
+        summary:
+          'Evaluation and treatment for acute conditions like colds, flu, sinusitis, sore throat, or mild infections.',
+        duration: '15–25 min',
+        includes: [
+          'Symptom-focused visit',
+          'Physical exam',
+          'Rapid tests when needed',
+          'Treatment plan + red flags',
         ],
-        followUp: ['Next dose/booster per schedule'],
+        preparation: ['Note fever and meds already taken', 'Note symptom onset'],
+        whatToExpect: [
+          'Quick, focused visit',
+          'Medication or home-care instructions',
+          'Return/ER indicators',
+        ],
+        followUp: ['Return if not improving in 48–72 hours'],
+      },
+      'minor-injury': {
+        title: 'Minor Injury Care',
+        summary:
+          'Initial management for non-emergency injuries such as minor sprains, cuts, burns, or contusions.',
+        duration: '15–25 min',
+        includes: ['Assessment of injury', 'Basic wound/area care', 'Pain/inflammation guidance'],
+        preparation: [
+          'Explain how the injury happened',
+          'Mention if you take blood thinners',
+        ],
+        whatToExpect: [
+          'Range of motion / pain check',
+          'Home care and warning signs',
+        ],
+        followUp: ['Return if swelling, redness, or pain worsens'],
+      },
+      'chronic-disease': {
+        title: 'Chronic Disease Management',
+        summary:
+          'Ongoing care for hypertension, diabetes, high cholesterol, obesity, and similar long-term conditions.',
+        duration: '20–30 min',
+        includes: [
+          'Vitals and symptom review',
+          'Medication adjustment',
+          'Lab orders for monitoring',
+          'Diet and exercise counseling',
+        ],
+        preparation: [
+          'Bring list of current meds',
+          'Bring glucose logs if diabetic',
+          'Bring recent labs if available',
+        ],
+        whatToExpect: [
+          'Review of current control',
+          'Clear goals',
+          'Follow-up plan',
+        ],
+        followUp: ['Every 1–3 months depending on condition'],
         faqs: [
           {
-            q: 'Is fever after vaccination normal?',
-            a: 'Low-grade fever and local soreness for 24–48 h can occur; use symptomatic care.',
+            q: 'Can I stop meds if I feel well?',
+            a: 'Not without talking to your provider; many chronic diseases are silent.',
           },
         ],
+      },
+      'asthma-care': {
+        title: 'Adult Asthma Care',
+        summary:
+          'Assessment of asthma control, inhaler technique, and step-up or step-down therapy.',
+        duration: '20–25 min',
+        recommendedFor: ['Known asthma', 'Night cough', 'Frequent wheezing'],
+        includes: [
+          'Respiratory exam',
+          'Inhaler/spacer technique',
+          'Action plan (what to do if worse)',
+        ],
+        preparation: ['Bring your inhalers', 'Note symptom frequency'],
+        whatToExpect: [
+          'Trigger and control review',
+          'Medication adjustment',
+          'Education',
+        ],
+        followUp: ['1–3 month follow-up or sooner for exacerbations'],
       },
       'vision-screening': {
-        title: 'Vision Screening',
+        title: 'Vision Screening / Eye Health',
         summary:
-          'Early detection of visual problems (myopia, amblyopia, astigmatism) with age-appropriate tests.',
+          'Basic vision check to detect issues that may need optometry/ophthalmology referral.',
         duration: '10–15 min',
-        ageRange: 'Depends on age and cooperation',
-        includes: ['Visual acuity tests', 'Automated devices if applicable'],
-        preparation: ['Avoid fatigue beforehand', 'Bring glasses if used'],
-        whatToExpect: ['Brief, playful tests', 'Ophthalmology referral if needed'],
-      },
-      'audiology-screening': {
-        title: 'Audiology Screening',
-        summary: 'Quick hearing check to detect mild to moderate loss and conduction issues.',
-        duration: '10–15 min',
-        includes: ['Otoacoustic emissions / pure tones (by age)', 'Otoscopy'],
-        preparation: ['Tell us if there is earwax; we may remove it'],
-        whatToExpect: ['Short test with soft sounds', 'Immediate results'],
-        followUp: ['Audiology referral if the screening is not satisfactory'],
-      },
-      asthma: {
-        title: 'Asthma: Care Plan',
-        summary:
-          'Evaluation and control of asthma with education on inhalers/spacers, written plan, and trigger control.',
-        duration: '20–30 min',
-        recommendedFor: ['Recurrent wheezing', 'Asthma diagnosis', 'Night cough'],
-        includes: ['Focused history and exam', 'Inhaler/spacer technique', 'Zone-based action plan'],
-        preparation: ['Bring inhalers/spacer', 'Symptom and rescue-use log'],
-        whatToExpect: ['Medication adjustment per control', 'Education and shared goals'],
-        followUp: ['Review in 1–3 months or sooner for exacerbation'],
-        faqs: [
-          {
-            q: 'Is controller use permanent?',
-            a: 'It’s reassessed; we seek the minimum effective dose for good control.',
-          },
-        ],
-      },
-      adhd: {
-        title: 'ADHD: Evaluation & Follow-up',
-        summary: 'Multimodal approach to ADHD with scales, school support, and therapy adjustment.',
-        duration: '30–40 min (initial) / 15–20 min (follow-up)',
-        recommendedFor: ['Attention difficulties', 'Hyperactivity/impulsivity', 'School performance'],
-        includes: ['Validated scales', 'School & behavioral plan', 'Therapy options discussion'],
-        preparation: ['School reports', 'Caregiver/teacher scales', 'Previous medical history'],
-        whatToExpect: ['Comprehensive evaluation', 'Individualized plan', 'Response & side-effect monitoring'],
-        followUp: ['Periodic visits for fine-tuning'],
-        faqs: [{ q: 'Are medications always indicated?', a: 'Not always; it depends on severity and context.' }],
-      },
-      'sports-physical': {
-        title: 'Sports Physical',
-        summary:
-          'Fitness for sports with focus on heart, breathing, joints, and family history.',
-        duration: '20–30 min',
-        includes: ['Sports & family history', 'Cardiovascular and musculoskeletal exam', 'Clearance form'],
-        preparation: ['Comfortable clothing', 'School/club forms', 'Injury history'],
-        whatToExpect: ['Focused physical exam', 'Injury prevention tips'],
-        followUp: ['Follow-up if there are findings or prior injuries'],
-      },
-      'follow-up': {
-        title: 'Follow-up Visit',
-        summary:
-          'Progress review after a prior appointment: treatment response, test results, needed adjustments.',
-        duration: '10–20 min',
-        includes: ['Symptom review', 'Lab/imaging review', 'Plan adjustment'],
-        preparation: ['Bring results/labs', 'Note adherence / side effects'],
-        whatToExpect: ['Plan update', 'Clear next steps'],
+        includes: ['Visual acuity test', 'Basic eye look'],
+        preparation: ['Bring your glasses', 'Avoid coming too tired'],
+        whatToExpect: ['Quick tests', 'Referral if needed'],
+        followUp: ['Yearly check or as advised'],
       },
     },
   },
@@ -421,11 +418,11 @@ export function getServicePanelLocale(): Locale {
   return CURRENT_LOCALE;
 }
 
-// Detección opcional por URL (SSR-safe)
 export function detectLocaleFromPath(pathname?: string): Locale {
   const path =
     pathname ??
-    (typeof window !== 'undefined' && typeof window.location?.pathname === 'string'
+    (typeof window !== 'undefined' &&
+    typeof window.location?.pathname === 'string'
       ? window.location.pathname
       : '');
   const p = path.split('/').filter(Boolean);
@@ -435,36 +432,54 @@ export function detectLocaleFromPath(pathname?: string): Locale {
 // ===== Helpers públicos =====
 export function panelT(locale: Locale, key: PanelKey): string {
   const panel = DICT[locale]?.panel ?? DICT.es.panel;
-
   if (key.startsWith('sections.')) {
     const k = key.slice('sections.'.length) as SectionsKey;
     return panel.sections?.[k] ?? DICT.es.panel.sections[k] ?? key;
   }
-
   if (key.startsWith('cta.')) {
     const k = key.slice('cta.'.length) as CTAKey;
     return panel.cta?.[k] ?? DICT.es.panel.cta[k] ?? key;
   }
-
   const ownKey = key as PanelOwnKey;
   return panel[ownKey] ?? DICT.es.panel[ownKey] ?? key;
 }
 
-export function svcStr(locale: Locale, id: ServiceId, k: keyof ServiceDetailI18n): string | undefined {
+export function svcStr(
+  locale: Locale,
+  id: ServiceId,
+  k: keyof ServiceDetailI18n
+): string | undefined {
   const v = DICT[locale].services[id]?.[k] ?? DICT.es.services[id]?.[k];
   return typeof v === 'string' ? v : undefined;
 }
 
-export function svcArr(locale: Locale, id: ServiceId, k: keyof ServiceDetailI18n): string[] {
+export function svcArr(
+  locale: Locale,
+  id: ServiceId,
+  k: keyof ServiceDetailI18n
+): string[] {
   const v = DICT[locale].services[id]?.[k];
   const fb = DICT.es.services[id]?.[k];
-  return Array.isArray(v) ? (v as string[]) : Array.isArray(fb) ? (fb as string[]) : [];
+  return Array.isArray(v)
+    ? (v as string[])
+    : Array.isArray(fb)
+    ? (fb as string[])
+    : [];
 }
 
 export function svcFaqs(locale: Locale, id: ServiceId): ServiceFAQ[] {
-  return (DICT[locale].services[id]?.faqs ?? DICT.es.services[id]?.faqs ?? []) as ServiceFAQ[];
+  return (
+    (DICT[locale].services[id]?.faqs ??
+      DICT.es.services[id]?.faqs ??
+      []) as ServiceFAQ[]
+  );
 }
 
-export function format(template: string, vars: Record<string, string>): string {
-  return template.replace(/\{(\w+)\}/g, (_m, k: string) => (k in vars ? vars[k] : `{${k}}`));
+export function format(
+  template: string,
+  vars: Record<string, string>
+): string {
+  return template.replace(/\{(\w+)\}/g, (_m, k: string) =>
+    k in vars ? vars[k] : `{${k}}`
+  );
 }

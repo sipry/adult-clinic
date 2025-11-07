@@ -263,6 +263,8 @@ export default function AboutUs() {
         langs: t("providers.dr1.languages"),
         bio: t("provider.bio.dr1"),
         photo: doctorjaime,
+        researchGate: "#",
+        linkedIn: "#"
       },
       {
         id: "dr-Juan-Ortiz",

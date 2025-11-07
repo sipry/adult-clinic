@@ -1,4 +1,3 @@
-// components/ServiceDetailsPanel.tsx
 "use client";
 
 import React, { useEffect, useMemo, useRef } from "react";
@@ -7,6 +6,7 @@ import { X } from "lucide-react";
 // i18n exclusivo del panel
 import {
   type Locale,
+  type ServiceId,
   panelT,
   svcStr,
   svcArr,
@@ -14,48 +14,63 @@ import {
   format,
 } from "../i18n/serviceDetails.i18n";
 
-// data de servicios
+// 🩺 mismos íconos que las tarjetas
 import {
-  SERVICE_DETAILS,
-  resolveServiceId,
-  type ServiceDetail,
-} from "../serviceDetail";
+  Stethoscope,
+  Syringe,
+  Shield,
+  Activity,
+  HeartPulse,
+  Eye,
+  Brain,
+} from "lucide-react";
 
-/* 🎨 Paleta pastel */
-const PALETTE = {
-  headerBg: "#C8E7DA", // verde pastel
-  headerIcon: "#001219",
-  chip: "#E6F2EC", // chip pastel
-  chipBorder: "#A8D1C2",
-  bg: "#FFFFFF",
-  panel: "#FDFBF5",
+/* 🎨 Pasteles */
+const PASTEL = {
+  bg: "#FFFDF8",
+  border: "rgba(154, 218, 216, 0.45)",
+  chipBg: "rgba(154, 218, 216, 0.22)",
+  chipBorder: "rgba(154, 218, 216, 0.5)",
   text: "#001219",
-  border: "rgba(0,18,25,0.08)",
-  cta: "#9ADAD8",
-  ctaText: "#001219",
+  iconBg: "rgba(154, 218, 216, 0.35)",
+  iconBorder: "rgba(154, 218, 216, 0.7)",
+  cta: "#0A9396",
+};
+
+// 👉 el panel sabe resolver el icono por id
+const PANEL_ICONS: Record<ServiceId, React.ComponentType<any>> = {
+  "preventive-medicine": Stethoscope,
+  "adult-immunizations": Syringe,
+  "minor-illness": Shield,
+  "minor-injury": Activity,
+  "chronic-disease": HeartPulse,
+  "asthma-care": Brain,
+  "vision-screening": Eye,
 };
 
 /* ==================== Tipos ==================== */
 export type ServiceDetailsBasic = {
-  id: string;
+  id: ServiceId; // 👈 ahora sí lo tipamos con los ids del i18n
   title: string;
   description: string;
   longDescription?: string;
   tags?: string[];
+  /** si la tarjeta manda el icono directo */
   icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-  /** ← esto es lo que pusiste en las tarjetas */
+  /** badge que viene de la tarjeta ("Most requested", "Nuevo", etc.) */
   badge?: string;
 };
 
-type ServiceDetailsPanelProps = {
+type Props = {
   open: boolean;
   onClose: () => void;
   service?: ServiceDetailsBasic | null;
   locale: Locale;
 };
 
-/* ==================== Scroll lock ==================== */
+/* ==================== Scroll lock (global) ==================== */
 let __scrollLocks = 0;
+
 function lockScroll() {
   const html = document.documentElement;
   const body = document.body;
@@ -93,12 +108,15 @@ function Section({
   return (
     <section className="mt-6">
       <h3
-        className="text-[12px] font-semibold tracking-[0.08em] uppercase mb-2"
-        style={{ color: `${PALETTE.text}CC` }}
+        className="text-sm font-semibold uppercase tracking-wide"
+        style={{ color: PASTEL.text, opacity: 0.6 }}
       >
         {title}
       </h3>
-      <div className="leading-relaxed text-[14px]" style={{ color: PALETTE.text }}>
+      <div
+        className="mt-2 text-sm leading-relaxed"
+        style={{ color: PASTEL.text }}
+      >
         {children}
       </div>
     </section>
@@ -106,18 +124,20 @@ function Section({
 }
 
 /* ==================== Panel ==================== */
-const ServiceDetailsPanel: React.FC<ServiceDetailsPanelProps> = ({
+export default function ServiceDetailsPanel({
   open,
   onClose,
   service,
   locale,
-}) => {
+}: Props) {
   const closeBtnRef = useRef<HTMLButtonElement>(null);
+  const startTrapRef = useRef<HTMLSpanElement>(null);
+  const endTrapRef = useRef<HTMLSpanElement>(null);
   const titleId = "svc-panel-title";
 
   useLockBody(open);
 
-  // focus en el botón de cerrar
+  // enfocar botón al abrir
   useEffect(() => {
     if (open) {
       const t = setTimeout(() => closeBtnRef.current?.focus(), 0);
@@ -125,7 +145,7 @@ const ServiceDetailsPanel: React.FC<ServiceDetailsPanelProps> = ({
     }
   }, [open]);
 
-  // ESC para cerrar
+  // esc para cerrar
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -135,20 +155,29 @@ const ServiceDetailsPanel: React.FC<ServiceDetailsPanelProps> = ({
     return () => window.removeEventListener("keydown", onKey);
   }, [open, onClose]);
 
-  // resolvemos el service completo
-  const data: ServiceDetail | null = useMemo(() => {
-    const id = resolveServiceId(service?.id);
-    return id ? SERVICE_DETAILS[id] : null;
-  }, [service?.id]);
+  // focus trap
+  const onTrapFocus = (which: "start" | "end") => {
+    if (!open) return;
+    if (which === "start") {
+      endTrapRef.current?.previousElementSibling instanceof HTMLElement
+        ? (endTrapRef.current.previousElementSibling as HTMLElement).focus()
+        : closeBtnRef.current?.focus();
+    } else {
+      closeBtnRef.current?.focus();
+    }
+  };
 
-  const sid = data?.id ?? resolveServiceId(service?.id) ?? null;
-  const Icon = service?.icon;
+  // 👇 si no hay servicio, evitamos calcular todo
+  const sid = (service?.id as ServiceId) || null;
 
-  // textos desde i18n o desde la tarjeta
+  // ===== textos del i18n usando el id que viene de la tarjeta
   const title =
     (sid && (svcStr(locale, sid, "title") ?? undefined)) ||
     service?.title ||
     panelT(locale, "fallbackTitle");
+
+  const ageRange = sid ? svcStr(locale, sid, "ageRange") : undefined;
+  const duration = sid ? svcStr(locale, sid, "duration") : undefined;
 
   const summary =
     (sid && (svcStr(locale, sid, "summary") ?? undefined)) ||
@@ -164,122 +193,152 @@ const ServiceDetailsPanel: React.FC<ServiceDetailsPanelProps> = ({
   const risks = sid ? svcArr(locale, sid, "risks") : [];
   const faqs = sid ? svcFaqs(locale, sid) : [];
 
-  // badge que venía desde la tarjeta
-  const cardBadge = service?.badge ? [service.badge] : [];
+  // icono: 1) lo mandó la tarjeta 2) lo buscamos por id
+  const Icon =
+    service?.icon || (sid ? PANEL_ICONS[sid] : undefined) || undefined;
 
   return (
     <>
       <div
         aria-hidden={!open}
         className={[
-          "fixed inset-0 z-[120] pointer-events-none",
+          "fixed inset-0 z-[100] pointer-events-none",
           open ? "block" : "hidden",
         ].join(" ")}
       >
-        {/* overlay */}
+        {/* Overlay */}
         <div
-          className="pointer-events-auto fixed inset-0 bg-[#001219]/35"
+          className="pointer-events-auto fixed inset-0 bg-black/40 opacity-100 transition-opacity"
           onClick={onClose}
           aria-hidden="true"
         />
 
-        {/* panel */}
+        {/* Panel */}
         <section
           role="dialog"
           aria-modal="true"
           aria-labelledby={titleId}
-          className="pointer-events-auto fixed right-0 top-0 h-full w-full max-w-[620px] shadow-2xl"
+          className="pointer-events-auto fixed right-0 top-0 h-full w-full max-w-[620px] shadow-2xl outline-none"
           style={{
-            backgroundColor: PALETTE.panel,
+            backgroundColor: PASTEL.bg,
             transform: open ? "translateX(0%)" : "translateX(100%)",
-            transition: "transform 300ms cubic-bezier(.2,.8,.2,1)",
+            transition: "transform 320ms cubic-bezier(.2,.8,.2,1)",
           }}
           onClick={(e) => e.stopPropagation()}
         >
+          {/* sentinela inicio */}
+          <span
+            tabIndex={0}
+            ref={startTrapRef}
+            onFocus={() => onTrapFocus("start")}
+          />
+
           {/* header */}
-          <header
-  className="flex items-center justify-between gap-3 px-5 py-4 border-b"
-  style={{ backgroundColor: PALETTE.headerBg, borderColor: "#00000011" }}
->
-  <div className="flex items-center gap-3 min-w-0">
-    {/* 👇 siempre intentamos mostrar el icono */}
-    <div
-      className="grid h-10 w-10 place-items-center rounded-full border"
-      style={{
-        backgroundColor: "#FFFFFF",
-        borderColor: `${PALETTE.headerIcon}11`,
-      }}
-    >
-      {Icon ? (
-        <Icon className="h-5 w-5" style={{ color: PALETTE.headerIcon }} />
-      ) : null}
-    </div>
-
-    <div className="min-w-0">
-      <h2
-        id={titleId}
-        className="text-base md:text-lg font-bold truncate"
-        style={{ color: PALETTE.headerIcon }}
-      >
-        {title}
-      </h2>
-    </div>
-  </div>
-
-  <button
-    ref={closeBtnRef}
-    onClick={onClose}
-    className="inline-flex h-9 w-9 items-center justify-center rounded-md hover:bg-white/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
-    aria-label={panelT(locale, "close")}
-  >
-    <X className="h-5 w-5" style={{ color: PALETTE.headerIcon }} />
-  </button>
-</header>
-
-
-          {/* contenido scrollable */}
           <div
-            className="h-[calc(100%-62px)] overflow-y-auto px-5 pb-20 pt-5 panel-scroll"
-            style={{ color: PALETTE.text }}
+            className="flex items-center justify-between p-4 border-b"
+            style={{ borderColor: PASTEL.border }}
           >
-            {/* descripción */}
-            <p className="text-[15px] leading-relaxed mb-4">{summary}</p>
+            <div className="flex items-center gap-3 min-w-0">
+              {Icon ? (
+                <div
+                  className="grid h-10 w-10 place-items-center rounded-full"
+                  style={{
+                    backgroundColor: PASTEL.iconBg,
+                    border: `1px solid ${PASTEL.iconBorder}`,
+                  }}
+                >
+                  <Icon className="h-5 w-5" style={{ color: PASTEL.text }} />
+                </div>
+              ) : null}
+              <div className="min-w-0">
+                <h2
+                  id={titleId}
+                  className="truncate text-lg font-bold"
+                  style={{ color: PASTEL.text }}
+                >
+                  {title}
+                </h2>
 
-            {/* badges: primero el de la tarjeta y luego los del servicio */}
-            {(cardBadge.length > 0 || recommendedFor.length > 0) && (
-              <div className="flex flex-wrap gap-2 mb-3">
-                {cardBadge.map((b) => (
+                {/* badge que viene de la tarjeta */}
+                {service?.badge ? (
                   <span
-                    key={`card-${b}`}
-                    className="inline-flex items-center rounded-md px-3 py-1 text-[13px] font-medium"
+                    className="inline-flex mt-1 rounded-full px-2 py-[2px] text-[11px] font-medium"
                     style={{
-                      backgroundColor: "#F5FDFB",
-                      border: `1px solid ${PALETTE.chipBorder}`,
-                      color: PALETTE.text,
+                      backgroundColor: PASTEL.chipBg,
+                      border: `1px solid ${PASTEL.chipBorder}`,
+                      color: PASTEL.text,
                     }}
                   >
-                    {b}
+                    {service.badge}
                   </span>
-                ))}
+                ) : null}
+
+                {(ageRange || duration) && (
+                  <p
+                    className="mt-1 text-xs"
+                    style={{ color: `${PASTEL.text}99` }}
+                  >
+                    {ageRange ?? ""}
+                    {ageRange && duration ? " • " : ""}
+                    {duration ?? ""}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            <button
+              ref={closeBtnRef}
+              onClick={onClose}
+              className="inline-flex h-9 w-9 items-center justify-center rounded-sm hover:bg-black/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#9ADAD8]"
+              aria-label={panelT(locale, "close")}
+            >
+              <X className="h-5 w-5" style={{ color: PASTEL.text }} />
+            </button>
+          </div>
+
+          {/* contenido */}
+          <div className="h-[calc(100%-56px)] overflow-y-auto p-5 panel-scroll">
+            <p
+              className="leading-relaxed text-sm"
+              style={{ color: PASTEL.text }}
+            >
+              {summary}
+            </p>
+
+            {(recommendedFor.length || service?.tags?.length) ? (
+              <div className="mt-4 flex flex-wrap gap-2">
                 {recommendedFor.map((tag) => (
                   <span
                     key={`rf-${tag}`}
-                    className="inline-flex items-center rounded-md px-3 py-1 text-[13px] font-medium"
+                    className="rounded-full px-3 py-1 text-[11px] font-medium"
                     style={{
-                      backgroundColor: "#F5FDFB",
-                      border: `1px solid ${PALETTE.chipBorder}`,
-                      color: PALETTE.text,
+                      backgroundColor: PASTEL.chipBg,
+                      border: `1px solid ${PASTEL.chipBorder}`,
+                      color: PASTEL.text,
+                    }}
+                  >
+                    {tag}
+                  </span>
+                ))}
+                {(service?.tags || []).map((tag) => (
+                  <span
+                    key={`tag-${tag}`}
+                    className="rounded-full px-3 py-1 text-[11px] font-medium"
+                    style={{
+                      backgroundColor: "rgba(255,255,255,0.5)",
+                      border: "1px solid rgba(0,0,0,0.03)",
+                      color: PASTEL.text,
                     }}
                   >
                     {tag}
                   </span>
                 ))}
               </div>
-            )}
+            ) : null}
 
             {!!includes.length && (
               <Section title={panelT(locale, "sections.includes")}>
-                <ul className="list-disc pl-5 space-y-1.5">
+                <ul className="list-disc pl-5 space-y-1">
                   {includes.map((it) => (
                     <li key={it}>{it}</li>
                   ))}
@@ -289,7 +348,7 @@ const ServiceDetailsPanel: React.FC<ServiceDetailsPanelProps> = ({
 
             {!!preparation.length && (
               <Section title={panelT(locale, "sections.preparation")}>
-                <ul className="list-disc pl-5 space-y-1.5">
+                <ul className="list-disc pl-5 space-y-1">
                   {preparation.map((it) => (
                     <li key={it}>{it}</li>
                   ))}
@@ -299,7 +358,7 @@ const ServiceDetailsPanel: React.FC<ServiceDetailsPanelProps> = ({
 
             {!!whatToExpect.length && (
               <Section title={panelT(locale, "sections.expect")}>
-                <ol className="list-decimal pl-5 space-y-1.5">
+                <ol className="list-decimal pl-5 space-y-1">
                   {whatToExpect.map((it) => (
                     <li key={it}>{it}</li>
                   ))}
@@ -309,7 +368,7 @@ const ServiceDetailsPanel: React.FC<ServiceDetailsPanelProps> = ({
 
             {!!followUp.length && (
               <Section title={panelT(locale, "sections.followUp")}>
-                <ul className="list-disc pl-5 space-y-1.5">
+                <ul className="list-disc pl-5 space-y-1">
                   {followUp.map((it) => (
                     <li key={it}>{it}</li>
                   ))}
@@ -319,7 +378,7 @@ const ServiceDetailsPanel: React.FC<ServiceDetailsPanelProps> = ({
 
             {!!risks.length && (
               <Section title={panelT(locale, "sections.risks")}>
-                <ul className="list-disc pl-5 space-y-1.5">
+                <ul className="list-disc pl-5 space-y-1">
                   {risks.map((it) => (
                     <li key={it}>{it}</li>
                   ))}
@@ -333,13 +392,12 @@ const ServiceDetailsPanel: React.FC<ServiceDetailsPanelProps> = ({
                   {faqs.map((f, i) => (
                     <details
                       key={`${f.q}-${i}`}
-                      className="rounded-md border bg-white/80 p-3"
-                      style={{ borderColor: `${PALETTE.border}` }}
+                      className="rounded-md border border-[#F0E3CE] bg-white/60 p-3"
                     >
                       <summary className="cursor-pointer text-sm font-semibold">
                         {f.q}
                       </summary>
-                      <p className="mt-1 text-sm leading-relaxed">{f.a}</p>
+                      <p className="mt-2 text-sm leading-relaxed">{f.a}</p>
                     </details>
                   ))}
                 </div>
@@ -347,44 +405,47 @@ const ServiceDetailsPanel: React.FC<ServiceDetailsPanelProps> = ({
             )}
 
             {/* CTA */}
-            <div className="mt-8 mb-4 flex justify-center px-1">
+            <div className="mt-8 mb-6 flex justify-center px-2">
               <a
                 href="/contact"
                 onClick={onClose}
-                className="inline-flex w-full max-w-md h-11 items-center justify-center rounded-md text-sm font-semibold shadow-sm transition hover:scale-[1.01]"
-                style={{
-                  backgroundColor: PALETTE.cta,
-                  color: PALETTE.ctaText,
-                }}
+                className="inline-flex w-full max-w-md items-center justify-center rounded-md px-5 py-2.5 text-sm font-semibold shadow-sm"
+                style={{ backgroundColor: PASTEL.cta, color: "#FFFFFF" }}
                 aria-label={format(panelT(locale, "cta.aria"), { title })}
               >
                 {panelT(locale, "cta.label")}
               </a>
             </div>
           </div>
+
+          {/* sentinela final */}
+          <span
+            tabIndex={0}
+            ref={endTrapRef}
+            onFocus={() => onTrapFocus("end")}
+          />
         </section>
       </div>
 
-      {/* scroll pastel */}
+      {/* scrollbar pastel */}
       <style jsx global>{`
         .panel-scroll {
+          color-scheme: light;
           scrollbar-width: thin;
-          scrollbar-color: #a8d1c2 #ffffff;
+          scrollbar-color: rgba(154, 218, 216, 0.6) transparent;
         }
         .panel-scroll::-webkit-scrollbar {
           width: 10px;
         }
         .panel-scroll::-webkit-scrollbar-track {
-          background: #ffffff;
+          background: transparent;
         }
         .panel-scroll::-webkit-scrollbar-thumb {
-          background-color: #a8d1c2;
-          border-radius: 9999px;
-          border: 2px solid #ffffff;
+          background-color: rgba(154, 218, 216, 0.6);
+          border-radius: 8px;
+          border: 2px solid transparent;
         }
       `}</style>
     </>
   );
-};
-
-export default ServiceDetailsPanel;
+}

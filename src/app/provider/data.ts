@@ -15,6 +15,8 @@ export interface ProviderItem {
   bio: string;
   bio2?: string; // <— opcional
   conditions?: string[];
+  researchGate?: string;
+  linkedIn?: string;
 
 }
 
@@ -37,7 +39,8 @@ export const useProvidersData = () => {
       languages: t("providers.dr1.languages"),
       bio: t("provider.bio.dr1"),
       bio2: t("provider.bio.dr1.text2"),
-
+      researchGate: '#',
+      linkedIn: '#',
     },
     {
       id: "dr-Juan-Ortiz",
