@@ -230,7 +230,7 @@ export default function SeccionOficinaPediatra({
   };
 
   const headerAccent = BRAND.accent;
-  const titleColor = BRAND.title;
+  const titleColor = BRAND.text;
   const bgColor = BRAND.bg;
 
   // helpers para galería
@@ -295,7 +295,7 @@ export default function SeccionOficinaPediatra({
                 className="font-semibold px-10 py-3 md:px-16 rounded-md transition-all inline-flex items-center gap-2 text-sm hover:scale-105 shadow-sm"
                 style={{
                   backgroundColor: PALETTE[4].base,
-                  color: PALETTE[4].text,
+                  color: BRAND.text,
                   border: `1px solid ${PALETTE[4].back}`,
                 }}
               >
@@ -311,7 +311,7 @@ export default function SeccionOficinaPediatra({
                 className="font-semibold px-10 py-3 md:px-10 rounded-md transition-all inline-flex items-center gap-2 text-sm hover:scale-105 border shadow-sm"
                 style={{
                   backgroundColor: PALETTE[1].base,
-                  color: PALETTE[1].text,
+                  color: BRAND.text,
                   border: `1px solid ${PALETTE[1].back}`,
                 }}
               >
@@ -326,7 +326,7 @@ export default function SeccionOficinaPediatra({
                 className="font-semibold px-10 py-3 md:px-10 rounded-md transition-all inline-flex items-center gap-2 text-sm hover:scale-105 border shadow-sm"
                 style={{
                   backgroundColor: PALETTE[1].base,
-                  color: PALETTE[1].text,
+                  color: BRAND.text,
                   border: `1px solid ${PALETTE[1].back}`,
                 }}
               >

@@ -24,7 +24,7 @@ import {
   useTranslation,
   ServiceTranslation,
 } from "@/app/contexts/TranslationContext";
-import { PALETTE } from "@/app/ui/palette";
+import { BRAND, PALETTE } from "@/app/ui/palette";
 
 /* ---------------- Types & Icons ---------------- */
 type IconKey =
@@ -286,7 +286,7 @@ const ServicesRail: React.FC<{ featuredKeys?: string[] }> = ({
                       {/* cara frontal */}
                       <div
                         className="absolute inset-0 flex flex-col items-center justify-center p-6 rounded-2xl text-center [backface-visibility:hidden]"
-                        style={{ backgroundColor: color.base, color: color.text }}
+                        style={{ backgroundColor: color.base, color: BRAND.text }}
                       >
                         <div
                           className="mb-4 flex items-center justify-center rounded-full"
@@ -296,7 +296,7 @@ const ServicesRail: React.FC<{ featuredKeys?: string[] }> = ({
                             backgroundColor: "rgba(255,255,255,0.18)",
                           }}
                         >
-                          <Icon className="w-7 h-7" style={{ color: color.text }} />
+                          <Icon className="w-7 h-7" style={{ color: BRAND.text }} />
                         </div>
 
                         <h3 className="text-lg md:text-xl font-bold mb-2">{s.title}</h3>
@@ -308,7 +308,7 @@ const ServicesRail: React.FC<{ featuredKeys?: string[] }> = ({
                       {/* cara trasera */}
                       <div
                         className="absolute inset-0 flex flex-col items-center justify-center p-6 rounded-2xl [transform:rotateY(180deg)] [backface-visibility:hidden]"
-                        style={{ backgroundColor: color.back, color: color.text }}
+                        style={{ backgroundColor: color.back, color: BRAND.text }}
                       >
                         <h4 className="text-lg md:text-xl font-semibold mb-3">
                           {s.title}
@@ -319,7 +319,7 @@ const ServicesRail: React.FC<{ featuredKeys?: string[] }> = ({
                         <Link
                           href={s.href || "#"}
                           className="inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-semibold bg-white/10 border border-white/20 hover:bg-white/20 transition-transform"
-                          style={{ color: color.text }}
+                          style={{ color: BRAND.text }}
                         >
                           {t("services.details") || "View Details"}
                         </Link>

@@ -137,15 +137,7 @@ const Navbar: React.FC<NavbarProps> = ({ scheme = "auto" }) => {
               href="/contact"
               className="transition-transform rounded-md duration-300 font-normal text-sm py-2 px-6 tracking-wide hover:scale-105 shadow-md"
               style={{
-                // solidos
-                // backgroundColor: BRAND.cta,
-                // backgroundColor: BRAND.accent,
-                // backgroundColor: BRAND.subtitle,
-                // color: "#FFFFFF",
-                // pasteles
                 backgroundColor: '#9ADAD8',
-                // backgroundColor: '#C8E7DA',
-                // backgroundColor: '#F5EBC6',
                 color: "#001219",
                 
               }}
@@ -158,7 +150,7 @@ const Navbar: React.FC<NavbarProps> = ({ scheme = "auto" }) => {
           <button
             onClick={toggleMobileMenu}
             className="p-2 ml-3 flex xl:hidden transition-transform duration-200 hover:scale-110"
-            style={{ color: solidNav ? BRAND.title : "#FFFFFF" }}
+            style={{ color: solidNav ? BRAND.text : "#FFFFFF" }}
             aria-label="Toggle mobile menu"
             aria-expanded={isMobileMenuOpen}
           >
@@ -194,14 +186,14 @@ const Navbar: React.FC<NavbarProps> = ({ scheme = "auto" }) => {
           <div className="shrink-0 flex items-center justify-between p-6 border-b border-[#00121910]">
             <span
               className="text-md tracking-wide font-semibold"
-              style={{ color: BRAND.title }}
+              style={{ color: BRAND.text }}
             >
               Your Health Adult Care
             </span>
             <button
               onClick={closeMobileMenu}
               className="p-2 transition-colors"
-              style={{ color: BRAND.title }}
+              style={{ color: BRAND.text }}
               aria-label="Close mobile menu"
             >
               <X className="w-5 h-5" />

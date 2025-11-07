@@ -2,20 +2,20 @@
 
 // misma paleta que usaste en ServicesRail
 export const PALETTE = [
-  { base: "#B8EEE8", back: "#9EDBD4", text: "#001219" },
-  { base: "#A9E2D7", back: "#8FC8BE", text: "#001219" },
-  { base: "#D6F1D7", back: "#BFE0C1", text: "#001219" },
-  { base: "#F6EBCF", back: "#E6D5AE", text: "#001219" },
-  { base: "#FFE1A0", back: "#F2CD87", text: "#001219" },
-  { base: "#F6B588", back: "#E29663", text: "#001219" },
-  { base: "#EE9786", back: "#D77C6B", text: "#001219" },
-  { base: "#E47D79", back: "#CD6663", text: "#001219" },
+  { base: "#B8EEE8", back: "#9EDBD4" },
+  { base: "#A9E2D7", back: "#8FC8BE" },
+  { base: "#D6F1D7", back: "#BFE0C1" },
+  { base: "#F6EBCF", back: "#E6D5AE" },
+  { base: "#FFE1A0", back: "#F2CD87" },
+  { base: "#F6B588", back: "#E29663" },
+  { base: "#EE9786", back: "#D77C6B" },
+  { base: "#E47D79", back: "#CD6663" },
 ];
 
 // colores “de marca” que se repiten en tus secciones
 export const BRAND = {
   bg: "#FFFFFF",
-  title: "#001219",
+  text: "#001219",
   subtitle: "#005F73",
   accent: "#0A9396",
   cta: "#BB3E03",

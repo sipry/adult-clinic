@@ -18,12 +18,12 @@ const Section = ({
   children: React.ReactNode;
 }) => (
   <section className="rounded-md p-6">
-    <h3 className="mb-3 text-lg font-semibold" style={{ color: BRAND.title }}>
+    <h3 className="mb-3 text-lg font-semibold" style={{ color: BRAND.text }}>
       {title}
     </h3>
     <div
       className="prose max-w-none text-sm leading-relaxed"
-      style={{ color: BRAND.title }}
+      style={{ color: BRAND.text }}
     >
       {children}
     </div>
@@ -33,7 +33,7 @@ const Section = ({
 const Bullet = ({ items }: { items: string[] }) => (
   <ul
     className="mt-2 list-disc space-y-2 pl-5"
-    style={{ color: BRAND.title }}
+    style={{ color: BRAND.text }}
   >
     {items.map((t, i) => (
       <li key={i}>{t}</li>
@@ -62,10 +62,10 @@ function RelatedDoctorItem({
         className="h-32 w-32 flex-none rounded-md object-cover"
       />
       <div className="min-w-0 flex-1">
-        <h4 className="font-semibold" style={{ color: BRAND.title }}>
+        <h4 className="font-semibold" style={{ color: BRAND.text }}>
           {name}
         </h4>
-        <p className="mt-0.5 text-xs" style={{ color: `${BRAND.title}B3` }}>
+        <p className="mt-0.5 text-xs" style={{ color: `${BRAND.text}B3` }}>
           {title}
         </p>
 
@@ -182,24 +182,24 @@ export default function ProviderDetailPage() {
 
               <div
                 className="my-6 h-px"
-                style={{ backgroundColor: `${BRAND.title}11` }}
+                style={{ backgroundColor: `${BRAND.text}11` }}
               />
 
               {/* nombre */}
-              <h2 className="text-xl font-semibold" style={{ color: BRAND.title }}>
+              <h2 className="text-xl font-semibold" style={{ color: BRAND.text }}>
                 {p.name}
               </h2>
-              <p className="mt-1 text-sm" style={{ color: `${BRAND.title}B3` }}>
+              <p className="mt-1 text-sm" style={{ color: `${BRAND.text}B3` }}>
                 {p.title}
               </p>
 
               {/* info extra */}
               {p.languages && (
                 <div className="mt-4">
-                  <p className="text-sm font-semibold" style={{ color: BRAND.title }}>
+                  <p className="text-sm font-semibold" style={{ color: BRAND.text }}>
                     Languages
                   </p>
-                  <p className="mt-1 text-sm" style={{ color: `${BRAND.title}B3` }}>
+                  <p className="mt-1 text-sm" style={{ color: `${BRAND.text}B3` }}>
                     {p.languages}
                   </p>
                 </div>
@@ -207,10 +207,10 @@ export default function ProviderDetailPage() {
 
               {p.experience && (
                 <div className="mt-4">
-                  <p className="text-sm font-semibold" style={{ color: BRAND.title }}>
+                  <p className="text-sm font-semibold" style={{ color: BRAND.text }}>
                     Years of Experience
                   </p>
-                  <p className="mt-1 text-sm" style={{ color: `${BRAND.title}B3` }}>
+                  <p className="mt-1 text-sm" style={{ color: `${BRAND.text}B3` }}>
                     {p.experience}
                   </p>
                 </div>
@@ -225,7 +225,7 @@ export default function ProviderDetailPage() {
     className="inline-flex w-full items-center justify-center rounded-lg px-4 py-3 text-sm font-semibold transition hover:scale-[1.02]"
     style={{
       backgroundColor: PALETTE[4].base,
-      color: PALETTE[4].text,
+      color: BRAND.text,
       border: `1px solid ${PALETTE[4].back}`,
       boxShadow: "0 3px 8px rgba(0,0,0,0.05)",
     }}
@@ -239,7 +239,7 @@ export default function ProviderDetailPage() {
     className="inline-flex w-full items-center justify-center rounded-lg px-4 py-3 text-sm font-medium transition hover:scale-[1.01]"
     style={{
       backgroundColor: "#FFFFFF",
-      color: BRAND.title,
+      color: BRAND.text,
       border: `1px solid ${BRAND.accent}22`,
     }}
   >
@@ -253,7 +253,7 @@ export default function ProviderDetailPage() {
     className="inline-flex w-full items-center justify-center rounded-lg px-4 py-3 text-sm font-medium transition hover:scale-[1.01]"
     style={{
       backgroundColor: "#FFFFFF",
-      color: BRAND.title,
+      color: BRAND.text,
       border: `1px solid ${BRAND.accent}22`,
     }}
   >
@@ -347,7 +347,7 @@ export default function ProviderDetailPage() {
               <Section title="About the Doctor">
                 <div
                   className="space-y-4 text-[15px] leading-7"
-                  style={{ color: BRAND.title }}
+                  style={{ color: BRAND.text }}
                 >
                   {aboutParagraphs.map((t, i) => (
                     <p key={i}>{t}</p>
@@ -410,7 +410,7 @@ export default function ProviderDetailPage() {
           <div className="mx-auto max-w-6xl px-4 py-10">
             <h3
               className="mb-4 text-lg font-semibold"
-              style={{ color: BRAND.title }}
+              style={{ color: BRAND.text }}
             >
               Related Doctors
             </h3>
