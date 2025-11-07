@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import Link from "next/link";
 import {
   Stethoscope,
   Syringe,
@@ -13,16 +12,22 @@ import {
   Search,
 } from "lucide-react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import ServiceDetailsPanel from "../components/ServiceSidePanel"; // 🔹 asegúrate de tener este componente
+import ServiceDetailsPanel from "../components/ServiceSidePanel";
+import { BRAND } from "@/app/ui/palette";
 
-/* 🎨 Paleta */
-const PALETTE = {
-  base: "#B67B39", // ámbar cálido
-  background: "#FAF4E6", // crema
-  dark: "#2B2725", // marrón oscuro
-};
+/* 🎨 Paleta pastel unificada */
+const PALETTE = [
+  { base: "#9ADAD8", back: "#7EC4C2", text: "#001219" }, // 0 teal pastel
+  { base: "#C8E7DA", back: "#A8D1C2", text: "#001219" }, // 1 mint
+  { base: "#F5EBC6", back: "#EAD7A4", text: "#001219" }, // 2 butter
+  { base: "#FFD77A", back: "#EEC46A", text: "#001219" }, // 3 soft yellow
+  { base: "#F3A96C", back: "#E48B4F", text: "#001219" }, // 4 peach
+  { base: "#E48C7A", back: "#D67463", text: "#001219" }, // 5 coral
+  { base: "#E57B76", back: "#D66A65", text: "#001219" }, // 6 warm rose
+  { base: "#DC767B", back: "#C85D61", text: "#001219" }, // 7 deep rose
+];
 
-/* 🩺 Íconos coherentes */
+/* 🩺 Íconos */
 const ICONS = {
   "preventive-medicine": Stethoscope,
   "adult-immunizations": Syringe,
@@ -73,11 +78,9 @@ const SERVICES = [
   },
 ];
 
-/* 🧱 Componente */
 const ServicesGrid: React.FC = () => {
   const [query, setQuery] = useState("");
 
-  /* ---------- 🔹 Lógica del panel ---------- */
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -98,47 +101,50 @@ const ServicesGrid: React.FC = () => {
 
   const selected = SERVICES.find((s) => s.id === detailId) || null;
 
-  /* ----------------------------------------- */
-
   const filtered = useMemo(() => {
     if (!query.trim()) return SERVICES;
+    const q = query.toLowerCase();
     return SERVICES.filter(
       (s) =>
-        s.title.toLowerCase().includes(query.toLowerCase()) ||
-        s.description.toLowerCase().includes(query.toLowerCase())
+        s.title.toLowerCase().includes(q) ||
+        s.description.toLowerCase().includes(q)
     );
   }, [query]);
 
   return (
     <section
       className="relative py-20"
-      style={{ backgroundColor: PALETTE.background }}
+      style={{ backgroundColor: "#FFFFFF" }} // 👈 fondo limpio
     >
       <div className="mx-auto max-w-7xl px-6">
-        {/* ---------- HEADER IZQUIERDA ---------- */}
+        {/* HEADER */}
         <div className="mb-10 space-y-3 md:space-y-4 text-left max-w-3xl">
           <p
             className="text-[11px] font-semibold tracking-[0.28em] uppercase"
-            style={{ color: "#7C8C4D" }}
+            style={{ color: BRAND.accent }}
           >
             Our Services
           </p>
           <h2
             className="text-3xl md:text-5xl font-extrabold tracking-tight"
-            style={{ color: PALETTE.dark }}
+            style={{ color: PALETTE[0].text }}
           >
             Comprehensive Primary Care
           </h2>
-          <p className="text-base md:text-lg" style={{ color: "#4F5635" }}>
+          <p
+            className="text-base md:text-lg"
+            style={{ color: "rgba(0,18,25,0.55)" }}
+          >
             Personalized care for every stage of life, designed to keep you and
             your family healthy, informed, and supported.
           </p>
         </div>
 
-        {/* ---------- SEARCH ---------- */}
+        {/* SEARCH */}
         <div className="relative mb-12 max-w-md">
           <Search
-            className="absolute left-3 top-2.5 h-5 w-5 text-gray-400"
+            className="absolute left-3 top-2.5 h-5 w-5"
+            style={{ color: "rgba(0,18,25,0.35)" }}
             strokeWidth={1.6}
           />
           <input
@@ -146,53 +152,59 @@ const ServicesGrid: React.FC = () => {
             placeholder="Search services..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="w-full rounded-md border border-[#D8C27A] bg-[#FFFDF8] py-2 pl-10 pr-3 text-sm text-[#2B2725] placeholder-gray-500 shadow-sm focus:border-[#B67B39] focus:ring-1 focus:ring-[#B67B39] outline-none transition"
+            className="w-full rounded-md py-2 pl-10 pr-3 text-sm shadow-sm outline-none transition"
+            style={{
+              backgroundColor: "#FFFFFF",
+              border: `1px solid ${PALETTE[1].back}55`,
+              color: PALETTE[0].text,
+            }}
           />
         </div>
 
-        {/* ---------- GRID ---------- */}
+        {/* GRID */}
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((s) => {
+          {filtered.map((s, idx) => {
             const Icon = ICONS[s.id as keyof typeof ICONS];
-            const words = s.description.split(" ");
             const shortDesc =
-              words.length > 20
-                ? words.slice(0, 20).join(" ") + "…"
+              s.description.split(" ").length > 20
+                ? s.description.split(" ").slice(0, 20).join(" ") + "…"
                 : s.description;
+
+            // vamos a rotar colores pastel en los iconos
+            const color = PALETTE[idx % PALETTE.length];
 
             return (
               <article
                 key={s.id}
                 className="group relative rounded-2xl p-6 flex flex-col justify-between"
                 style={{
-                  backgroundColor: PALETTE.background,
-                  border: "1px solid rgba(0,0,0,0.06)",
-                  boxShadow: "0 3px 10px rgba(0,0,0,0.06)",
-                  color: PALETTE.dark,
-                  minHeight: "320px", // 🔹 altura mínima uniforme
+                  backgroundColor: "#FFFFFF",
+                  border: `1px solid ${color.base}30`,
+                  boxShadow: "0 3px 12px rgba(0,0,0,0.03)",
+                  minHeight: "320px",
                 }}
               >
                 <div>
                   <div
                     className="mb-4 grid h-14 w-14 place-items-center rounded-full"
                     style={{
-                      backgroundColor: "#FFFDF8",
-                      border: "1px solid rgba(0,0,0,0.05)",
+                      backgroundColor: `${color.base}33`,
+                      border: `1px solid ${color.base}66`,
                     }}
                   >
-                    <Icon className="h-6 w-6" style={{ color: PALETTE.base }} />
+                    <Icon className="h-6 w-6" style={{ color: color.text }} />
                   </div>
 
                   <h3
                     className="text-lg font-bold mb-2"
-                    style={{ color: PALETTE.dark }}
+                    style={{ color: PALETTE[0].text }}
                   >
                     {s.title}
                   </h3>
 
                   <p
                     className="text-sm leading-relaxed"
-                    style={{ color: "rgba(43,39,37,0.8)" }}
+                    style={{ color: "rgba(0,18,25,0.7)" }}
                   >
                     {shortDesc}
                   </p>
@@ -201,25 +213,23 @@ const ServicesGrid: React.FC = () => {
                 <div className="mt-6">
                   <button
                     onClick={() => setDetail(s.id)}
-                    className="inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-semibold shadow-sm"
+                    className="inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-semibold shadow-sm transition hover:scale-[1.01]"
                     style={{
-                      backgroundColor: PALETTE.base,
-                      color: PALETTE.background,
+                      backgroundColor: PALETTE[0].back, // pastel teal
+                      color: PALETTE[0].text,
                     }}
                   >
                     View Details
                   </button>
                 </div>
               </article>
-
             );
           })}
 
-          {/* Mensaje si no hay resultados */}
           {filtered.length === 0 && (
             <p
               className="text-sm italic col-span-full text-center mt-6"
-              style={{ color: "#4F5635" }}
+              style={{ color: "rgba(0,18,25,0.5)" }}
             >
               No services found matching your search.
             </p>
@@ -227,7 +237,7 @@ const ServicesGrid: React.FC = () => {
         </div>
       </div>
 
-      {/* ---------- PANEL DETALLES ---------- */}
+      {/* PANEL DE DETALLES */}
       <ServiceDetailsPanel
         open={!!selected}
         onClose={() => setDetail(undefined)}

@@ -1,30 +1,22 @@
 // components/HeroBannerMixedCentered.tsx
-'use client';
+"use client";
 
-import { useEffect, useMemo, useRef, useState } from 'react';
-import Image from 'next/image';
-import { useTranslation } from '@/app/contexts/TranslationContext';
+import { useEffect, useMemo, useRef, useState } from "react";
+import Image from "next/image";
+import { useTranslation } from "@/app/contexts/TranslationContext";
 import {
   motion,
   useAnimation,
   useReducedMotion,
   useInView,
   type Variants,
-} from 'framer-motion';
-import heropaint from '@/../public/assets/images/hero-paint.jpg';
+} from "framer-motion";
+import heropaint from "@/../public/assets/images/hero-paint.jpg";
+import { PALETTE, BRAND } from "@/app/ui/palette";
 
-const PALETTE = {
-  amber: "#B67B39",  // ámbar cálido
-  moss: "#7C8C4D",   // verde musgo
-  wine: "#812D20",   // vino terroso
-  ochre: "#D8C27A",  // ocre claro
-  olive: "#4F5635",  // oliva profundo
-  cream: "#FAF4E6",  // crema suave
-  dark: "#2B2725",   // marrón oscuro
-};
-
+// usamos tu imagen
 const slides = [
-  { src: heropaint.src, alt: 'Globo 3', pos: '100% 0%' }, // parte superior derecha
+  { src: heropaint.src, alt: "Hero background", pos: "100% 0%" },
 ];
 
 const ONLY_FADE = false;
@@ -32,11 +24,11 @@ const AUTOPLAY_MS = 6000;
 
 export default function HeroBannerMixedCentered() {
   const { t } = useTranslation();
-  const EYEBROW = t('hero.pretitle');
+  const EYEBROW = t("hero.pretitle");
   const [i, setI] = useState(0);
   const prefersReducedMotion = useReducedMotion();
 
-  // ----- autoplay control (pausable / resettable) -----
+  // autoplay
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const startAutoplay = () => {
     if (prefersReducedMotion) return;
@@ -59,11 +51,11 @@ export default function HeroBannerMixedCentered() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prefersReducedMotion]);
 
-  // viewport
+  // in view
   const heroRef = useRef<HTMLElement | null>(null);
-  const inView = useInView(heroRef, { once: true, margin: '-10% 0px' });
+  const inView = useInView(heroRef, { once: true, margin: "-10% 0px" });
 
-  // animation sequence
+  // controls
   const eyebrowCtrls = useAnimation();
   const headlineCtrls = useAnimation();
   const brandCtrls = useAnimation();
@@ -74,22 +66,40 @@ export default function HeroBannerMixedCentered() {
   useEffect(() => {
     if (!inView) return;
     (async () => {
-      await eyebrowCtrls.start('show');
-      await headlineCtrls.start('show');
+      await eyebrowCtrls.start("show");
+      await headlineCtrls.start("show");
       await Promise.all([
-        brandCtrls.start('show'),
-        subtitleCtrls.start('show'),
-        featuresCtrls.start('show'),
+        brandCtrls.start("show"),
+        subtitleCtrls.start("show"),
+        featuresCtrls.start("show"),
       ]);
-      await buttonsCtrls.start('show');
+      await buttonsCtrls.start("show");
     })();
-  }, [inView, eyebrowCtrls, headlineCtrls, brandCtrls, subtitleCtrls, featuresCtrls, buttonsCtrls]);
+  }, [
+    inView,
+    eyebrowCtrls,
+    headlineCtrls,
+    brandCtrls,
+    subtitleCtrls,
+    featuresCtrls,
+    buttonsCtrls,
+  ]);
 
   // variants
   const fromBottomOrFade = (yHidden: number, dur = 0.32): Variants =>
     prefersReducedMotion || ONLY_FADE
-      ? { hidden: { opacity: 0 }, show: { opacity: 1, transition: { duration: dur } } }
-      : { hidden: { opacity: 0, y: yHidden }, show: { opacity: 1, y: 0, transition: { duration: dur, ease: 'easeOut' } } };
+      ? {
+          hidden: { opacity: 0 },
+          show: { opacity: 1, transition: { duration: dur } },
+        }
+      : {
+          hidden: { opacity: 0, y: yHidden },
+          show: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: dur, ease: "easeOut" },
+          },
+        };
 
   const eyebrowV = useMemo(() => fromBottomOrFade(10, 0.24), [prefersReducedMotion]);
   const subtitleV = useMemo(() => fromBottomOrFade(20, 0.28), [prefersReducedMotion]);
@@ -97,28 +107,43 @@ export default function HeroBannerMixedCentered() {
   const buttonV: Variants = useMemo(
     () =>
       prefersReducedMotion || ONLY_FADE
-        ? { hidden: { opacity: 0 }, show: { opacity: 1, transition: { duration: 0.28 } } }
-        : { hidden: { opacity: 0, y: 32, scale: 0.96 }, show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.32, ease: 'easeOut' } } },
+        ? {
+            hidden: { opacity: 0 },
+            show: { opacity: 1, transition: { duration: 0.28 } },
+          }
+        : {
+            hidden: { opacity: 0, y: 32, scale: 0.96 },
+            show: {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              transition: { duration: 0.32, ease: "easeOut" },
+            },
+          },
     [prefersReducedMotion]
   );
 
-  const subtitleText = (t('hero.subtitle') as string) || '';
+  const subtitleText = (t("hero.subtitle") as string) || "";
 
-  // keyboard nav for dots (← →)
+  // keyboard nav
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowRight') {
+      if (e.key === "ArrowRight") {
         setI((p) => (p + 1) % slides.length);
         startAutoplay();
-      } else if (e.key === 'ArrowLeft') {
+      } else if (e.key === "ArrowLeft") {
         setI((p) => (p - 1 + slides.length) % slides.length);
         startAutoplay();
       }
     };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // pasteles que vamos a usar
+  const pastelTeal = "#CFE7C5"; // eyebrow y CTA
+  const darkText = "#001219";
 
   return (
     <section
@@ -141,7 +166,7 @@ export default function HeroBannerMixedCentered() {
               aria-hidden={!isActive}
               initial={{ opacity: idx === 0 ? 1 : 0 }}
               animate={{ opacity: isActive ? 1 : 0 }}
-              transition={{ opacity: { duration: 0.5, ease: 'easeOut' } }}
+              transition={{ opacity: { duration: 0.5, ease: "easeOut" } }}
             >
               <Image
                 src={s.src}
@@ -151,18 +176,23 @@ export default function HeroBannerMixedCentered() {
                 sizes="100vw"
                 className="object-cover scale-150"
                 style={{
-                  objectPosition: 'right top',
+                  objectPosition: "right top",
                 }}
                 quality={90}
               />
-
             </motion.div>
           );
         })}
 
-        {/* overlay gradient (opacidad intermedia) */}
+        {/* overlay pastelizado un poco más claro */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.4)_0%,rgba(0,0,0,0.45)_35%,rgba(0,0,0,0.5)_55%,rgba(0,0,0,0.55)_100%)]" />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(circle at center, rgba(154,218,216,0.12) 0%, rgba(0,0,0,0.35) 48%, rgba(0,0,0,0.65) 100%)",
+            }}
+          />
         </div>
       </div>
 
@@ -172,8 +202,8 @@ export default function HeroBannerMixedCentered() {
           <div className="w-full max-w-5xl px-6 md:px-10 text-center">
             {/* pretitle */}
             <motion.div
-              className="text-[11px] md:text-lg tracking-[0.28em]  uppercase"
-              style={{ color: PALETTE.cream }}
+              className="text-[11px] md:text-lg tracking-[0.28em] uppercase"
+              style={{ color: pastelTeal }}
               initial="hidden"
               animate={eyebrowCtrls}
               variants={eyebrowV}
@@ -184,26 +214,18 @@ export default function HeroBannerMixedCentered() {
             {/* title */}
             <motion.h2
               initial="hidden"
-              animate={ /* reuse headlineCtrls for stagger */ headlineCtrls}
+              animate={headlineCtrls}
               variants={{
                 hidden: { opacity: 0 },
-                show: { opacity: 1, transition: { staggerChildren: 0.02, delayChildren: 0.06 } },
+                show: {
+                  opacity: 1,
+                  transition: { staggerChildren: 0.02, delayChildren: 0.06 },
+                },
               }}
-              className="mt-3 font-bold leading-[0.95]
-                         whitespace-nowrap text-3xl sm:text-5xl md:text-6xl lg:text-7xl"
-              style={{ color: PALETTE.cream }}
+              className="mt-3 font-bold leading-[0.95] whitespace-nowrap text-3xl sm:text-5xl md:text-6xl lg:text-7xl"
+              style={{ color: "#FFFFFF" }}
             >
-              {/* {topWords.map((w, idx) => ( */}
-              <motion.span
-              // key={idx}
-              // variants={prefersReducedMotion || ONLY_FADE
-              //   ? { hidden: { opacity: 0 }, show: { opacity: 1, transition: { duration: 0.36 } } }
-              //   : { hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0, transition: { duration: 0.36, ease: 'easeOut' } } }}
-              // className="inline-block mr-3"
-              >
-                Your Health Adult Care
-              </motion.span>
-              {/* ))} */}
+              <motion.span>Your Health Adult Care</motion.span>
             </motion.h2>
 
             {/* subtitle */}
@@ -212,43 +234,71 @@ export default function HeroBannerMixedCentered() {
                 initial="hidden"
                 animate={subtitleCtrls}
                 variants={subtitleV}
-                className="mt-3 mx-auto max-w-4xl text-sm md:text-xl text-white/80 tracking-wide border-b border-white/30 pb-5"
+                className="mt-3 mx-auto max-w-4xl text-sm md:text-xl tracking-wide border-b pb-5"
+                style={{
+                  color: "rgba(255,255,255,0.8)",
+                  borderColor: "rgba(154,218,216,0.35)", // borde pastel
+                }}
               >
                 {subtitleText}
               </motion.p>
             ) : null}
 
             {/* CTAs */}
-            <motion.div initial="hidden" animate={buttonsCtrls} variants={buttonsWrapV} className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+            <motion.div
+              initial="hidden"
+              animate={buttonsCtrls}
+              variants={buttonsWrapV}
+              className="mt-8 flex flex-col sm:flex-row gap-3 justify-center"
+            >
+              {/* primary pastel */}
               <motion.a
                 href="/#contact"
                 variants={buttonV}
-                whileHover={prefersReducedMotion || ONLY_FADE ? undefined : { scale: 1.04, transition: { duration: 0.12, ease: 'easeOut' } }}
-                whileTap={prefersReducedMotion || ONLY_FADE ? undefined : { scale: 0.98 }}
-                className="inline-flex items-center justify-center px-5 py-3 rounded-sm font-semibold text-sm md:text-base text-black shadow-[--shadow]"
-                style={{ backgroundColor: PALETTE.cream }}
-                aria-label={t('hero.contact') ?? 'Book an appointment'}
+                whileHover={
+                  prefersReducedMotion || ONLY_FADE
+                    ? undefined
+                    : {
+                        scale: 1.04,
+                        transition: { duration: 0.12, ease: "easeOut" },
+                      }
+                }
+                whileTap={
+                  prefersReducedMotion || ONLY_FADE
+                    ? undefined
+                    : { scale: 0.98 }
+                }
+                className="inline-flex items-center justify-center px-5 py-3 rounded-sm font-semibold text-sm md:text-base shadow-md"
+                style={{
+                  backgroundColor: pastelTeal,
+                  color: darkText,
+                  boxShadow: "0 8px 24px rgba(0,0,0,0.18)",
+                }}
+                aria-label={t("hero.contact") ?? "Book an appointment"}
               >
-                {t('hero.contact') ?? 'Book an appointment'}
+                {t("hero.contact") ?? "Book an appointment"}
               </motion.a>
 
-
+              {/* secondary pastel border */}
               <motion.a
                 href="/#services"
                 variants={buttonV}
                 whileHover={{ scale: 1.04 }}
-                className="inline-flex items-center justify-center px-5 py-3 rounded-sm font-medium text-sm md:text-base border border-white/50 bg-transparent"
-                style={{ color: PALETTE.cream }}
+                className="inline-flex items-center justify-center px-5 py-3 rounded-sm font-medium text-sm md:text-base"
+                style={{
+                  backgroundColor: "transparent",
+                  color: "#FFFFFF",
+                  border: "1px solid rgba(154,218,216,0.55)",
+                }}
               >
-                {t('hero.portal') ?? 'Patient Portal'}
+                {t("hero.portal") ?? "Patient Portal"}
               </motion.a>
-
             </motion.div>
           </div>
         </div>
       </div>
 
-      {/* dots pagination */}
+      {/* dots */}
       <div className="pointer-events-auto absolute inset-x-0 bottom-6 z-20 flex items-center justify-center gap-2 px-6">
         <div className="flex items-center justify-center gap-2 px-3 py-2">
           {slides.map((_, idx) => {
@@ -263,18 +313,26 @@ export default function HeroBannerMixedCentered() {
                 }}
                 className="group relative h-2.5 w-2.5 rounded-full outline-none"
                 aria-label={`Ir al slide ${idx + 1}`}
-                aria-current={active ? 'true' : undefined}
+                aria-current={active ? "true" : undefined}
               >
-                {/* base dot */}
-                <span className="absolute inset-0 rounded-full bg-white/40 group-hover:bg-white/60 transition" />
-                {/* active indicator */}
-                <motion.span
-                  layoutId="hero-dot"
-                  className="absolute inset-0 rounded-full"
-                  animate={{ scale: active ? 1 : 0 }}
-                  transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-                  style={{ background: 'white' }}
+                {/* base */}
+                <span
+                  className="absolute inset-0 rounded-full transition"
+                  style={{
+                    backgroundColor: active
+                      ? "#FFFFFF"
+                      : "rgba(154,218,216,0.5)", // pastel
+                  }}
                 />
+                {/* active */}
+                {active ? (
+                  <motion.span
+                    layoutId="hero-dot"
+                    className="absolute inset-0 rounded-full"
+                    transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                    style={{ background: "#FFFFFF" }}
+                  />
+                ) : null}
               </button>
             );
           })}

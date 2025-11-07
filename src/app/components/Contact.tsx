@@ -15,15 +15,27 @@ import {
 } from "lucide-react";
 import { useTranslation } from "../contexts/TranslationContext";
 
-/* 🎨 Paleta pictórica */
-const PALETTE = {
-  amber: "#B67B39",  // ámbar cálido
-  moss: "#7C8C4D",   // verde musgo
-  wine: "#812D20",   // vino terroso
-  ochre: "#D8C27A",  // ocre claro
-  olive: "#4F5635",  // oliva profundo
-  cream: "#FAF4E6",  // crema suave
-  dark: "#2B2725",   // marrón oscuro
+/* 🎨 Paleta tomada de la sección de servicios */
+const PALETTE = [
+  { base: "#9ADAD8", back: "#7EC4C2", text: "#001219" },
+  { base: "#C8E7DA", back: "#A8D1C2", text: "#001219" },
+  { base: "#F5EBC6", back: "#EAD7A4", text: "#001219" },
+  { base: "#FFD77A", back: "#EEC46A", text: "#001219" },
+  { base: "#F3A96C", back: "#E48B4F", text: "#001219" },
+  { base: "#E48C7A", back: "#D67463", text: "#001219" },
+  { base: "#E57B76", back: "#D66A65", text: "#001219" },
+  { base: "#DC767B", back: "#C85D61", text: "#001219" },
+];
+
+/* 🎯 Colores de marca que ya usabas en ServicesRail */
+const BRAND = {
+  bg: "#FFFFFF",
+  heading: "#001219",
+  muted: "#005F73",
+  accent: "#0A9396",
+  cta: "#BB3E03",
+  ctaBorder: "#CA6702",
+  borderSoft: "rgba(0, 18, 25, 0.08)",
 };
 
 /* ---------- Motion utils ---------- */
@@ -66,7 +78,10 @@ function useInOutViewport<T extends HTMLElement>(
 
     if ("IntersectionObserver" in window) {
       io = new IntersectionObserver(
-        (ents) => ents.forEach((e) => setInView(e.isIntersecting || e.intersectionRatio > 0)),
+        (ents) =>
+          ents.forEach((e) =>
+            setInView(e.isIntersecting || e.intersectionRatio > 0)
+          ),
         options ?? { threshold: 0.2, rootMargin: "0px 0px -10% 0px" }
       );
       io.observe(el);
@@ -74,7 +89,9 @@ function useInOutViewport<T extends HTMLElement>(
 
     raf = window.requestAnimationFrame(check);
 
-    const onScroll = () => { if (!raf) raf = window.requestAnimationFrame(check); };
+    const onScroll = () => {
+      if (!raf) raf = window.requestAnimationFrame(check);
+    };
 
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
@@ -119,7 +136,10 @@ const Reveal: React.FC<{
   const [shown, setShown] = React.useState(false);
   const reduce = usePrefersReducedMotion();
 
-  React.useEffect(() => { if (inView) setShown(true); else if (!once) setShown(false); }, [inView, once]);
+  React.useEffect(() => {
+    if (inView) setShown(true);
+    else if (!once) setShown(false);
+  }, [inView, once]);
 
   const style: React.CSSProperties = React.useMemo(() => {
     if (reduce) return {};
@@ -178,7 +198,7 @@ const ContactSplitWithForm: React.FC = () => {
   const INSTAGRAM_URL = "/instagramcommingsoon";
 
   const sectionRef = React.useRef<HTMLElement>(null);
-  const sectionInView = useInOutViewport(sectionRef, { threshold: 0.2 });
+  useInOutViewport(sectionRef, { threshold: 0.2 }); // mantenemos el hook por si lo usas para otra cosa
 
   /* ---------- Estado del formulario ---------- */
   const [form, setForm] = React.useState<FormState>({
@@ -198,7 +218,12 @@ const ContactSplitWithForm: React.FC = () => {
   const [chars, setChars] = React.useState(0);
 
   const onChange = React.useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    (
+      e:
+        | React.ChangeEvent<HTMLInputElement>
+        | React.ChangeEvent<HTMLTextAreaElement>
+        | React.ChangeEvent<HTMLSelectElement>
+    ) => {
       const { name } = e.target;
       let value: string | boolean;
       if (e.target instanceof HTMLInputElement && e.target.type === "checkbox") {
@@ -207,16 +232,19 @@ const ContactSplitWithForm: React.FC = () => {
         value = e.target.value;
       }
       setForm((f) => ({ ...f, [name]: value as never }));
-      if (name === "message" && typeof value === "string") setChars(value.length);
+      if (name === "message" && typeof value === "string")
+        setChars(value.length);
     },
     []
   );
 
   const validate = React.useCallback((): string | null => {
     if (!form.patientName.trim()) return t("contact.form.errors.patientName");
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) return t("contact.form.errors.email");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
+      return t("contact.form.errors.email");
     const phoneDigits = form.phone.replace(/\D/g, "");
-    if (!phoneDigits || phoneDigits.length < 10) return t("contact.form.errors.phoneRequired");
+    if (!phoneDigits || phoneDigits.length < 10)
+      return t("contact.form.errors.phoneRequired");
     if (!form.reason) return t("contact.form.errors.reason");
     if (form.company) return t("contact.form.errors.bot");
     if (!WEB3FORMS_KEY) return "Missing Web3Forms Access Key";
@@ -229,7 +257,10 @@ const ContactSplitWithForm: React.FC = () => {
       setSuccess(null);
       setError(null);
       const v = validate();
-      if (v) { setError(v); return; }
+      if (v) {
+        setError(v);
+        return;
+      }
 
       try {
         setSubmitting(true);
@@ -253,7 +284,8 @@ const ContactSplitWithForm: React.FC = () => {
 
         const res = await fetch(WEB3FORMS_ENDPOINT, { method: "POST", body: fd });
         const data = await res.json();
-        if (!res.ok || !data?.success) throw new Error(data?.message || "sendError");
+        if (!res.ok || !data?.success)
+          throw new Error(data?.message || "sendError");
 
         setSuccess(t("contact.form.success"));
         setForm({
@@ -270,7 +302,8 @@ const ContactSplitWithForm: React.FC = () => {
         setChars(0);
       } catch (err: unknown) {
         console.error(err);
-        const msg = err instanceof Error ? err.message : t("contact.form.errors.send");
+        const msg =
+          err instanceof Error ? err.message : t("contact.form.errors.send");
         setError(msg);
       } finally {
         setSubmitting(false);
@@ -284,12 +317,17 @@ const ContactSplitWithForm: React.FC = () => {
     setError(null);
   }, []);
 
+  // Tomamos un par de colores del array pastel
+  const softSurface = `${PALETTE[1].base}dd`; // fondo form
+  const softBorder = `${PALETTE[1].back}66`; // borde form
+  const asideSurface = `${PALETTE[0].base}22`;
+
   return (
     <section
       ref={sectionRef}
       id="contact"
       className="relative pb-20 pt-16 sm:pt-20 scroll-mt-10 overflow-x-clip overflow-hidden"
-      style={{ backgroundColor: PALETTE.cream }}
+      style={{ backgroundColor: BRAND.bg }}
     >
       {/* Header */}
       <div className="relative z-10">
@@ -297,15 +335,15 @@ const ContactSplitWithForm: React.FC = () => {
           <Reveal y={8} delay={0}>
             <p
               className="text-xs font-semibold tracking-[0.2em] uppercase mb-3"
-              style={{ color: PALETTE.moss }}
+              style={{ color: BRAND.accent }}
             >
               {t("contact.pretitle")}
             </p>
           </Reveal>
           <Reveal y={8}>
             <h2
-              className="text-4xl sm:text-5xl font-semibold tracking-tight"
-              style={{ color: PALETTE.dark }}
+              className="text-4xl sm:text-5xl font-extrabold tracking-tight"
+              style={{ color: BRAND.heading }}
             >
               {t("contact.title")}
             </h2>
@@ -313,7 +351,7 @@ const ContactSplitWithForm: React.FC = () => {
           <Reveal y={10} delay={80}>
             <p
               className="mt-2 text-sm max-w-2xl mx-auto"
-              style={{ color: `${PALETTE.dark}cc` }}
+              style={{ color: `${BRAND.muted}` }}
             >
               {t("contact.subtitle")}
             </p>
@@ -328,8 +366,8 @@ const ContactSplitWithForm: React.FC = () => {
               <div
                 className="rounded-2xl shadow-md p-6 md:p-8 backdrop-blur-sm border"
                 style={{
-                  backgroundColor: `${PALETTE.cream}ee`,
-                  borderColor: `${PALETTE.olive}33`,
+                  backgroundColor: softSurface,
+                  borderColor: softBorder,
                 }}
               >
                 {/* Éxito */}
@@ -338,18 +376,24 @@ const ContactSplitWithForm: React.FC = () => {
                     <div className="text-center max-w-md">
                       <div
                         className="mx-auto h-16 w-16 rounded-full flex items-center justify-center shadow-sm"
-                        style={{ backgroundColor: `${PALETTE.moss}22` }}
+                        style={{ backgroundColor: `${PALETTE[0].base}44` }}
                       >
                         <CheckCircle2
                           className="h-9 w-9"
-                          style={{ color: PALETTE.moss }}
+                          style={{ color: BRAND.accent }}
                           aria-hidden="true"
                         />
                       </div>
-                      <h3 className="mt-4 text-2xl font-semibold" style={{ color: PALETTE.dark }}>
+                      <h3
+                        className="mt-4 text-2xl font-semibold"
+                        style={{ color: BRAND.heading }}
+                      >
                         {t("contact.form.done.title")}
                       </h3>
-                      <p className="mt-2 text-sm" style={{ color: `${PALETTE.dark}cc` }}>
+                      <p
+                        className="mt-2 text-sm"
+                        style={{ color: `${BRAND.heading}cc` }}
+                      >
                         {t("contact.form.done.subtitle")}
                       </p>
 
@@ -357,10 +401,10 @@ const ContactSplitWithForm: React.FC = () => {
                         <button
                           type="button"
                           onClick={resetSuccess}
-                          className="inline-flex items-center justify-center gap-2 rounded-md px-5 py-2.5 text-sm font-semibold shadow-md hover:opacity-90"
+                          className="inline-flex items-center justify-center gap-2 rounded-md px-5 py-2.5 text-sm font-semibold shadow-md hover:scale-[1.01] transition"
                           style={{
-                            backgroundColor: PALETTE.olive,
-                            color: PALETTE.cream,
+                            backgroundColor: BRAND.accent,
+                            color: "#FFFFFF",
                           }}
                         >
                           <Send className="h-4 w-4" aria-hidden="true" />
@@ -370,9 +414,9 @@ const ContactSplitWithForm: React.FC = () => {
                           href={`tel:${PHONE_TEL}`}
                           className="inline-flex items-center justify-center gap-2 rounded-md border px-5 py-2.5 text-sm font-semibold shadow-sm hover:bg-white/70"
                           style={{
-                            color: PALETTE.dark,
-                            borderColor: `${PALETTE.dark}33`,
-                            backgroundColor: `${PALETTE.cream}`,
+                            color: BRAND.heading,
+                            borderColor: `${BRAND.heading}11`,
+                            backgroundColor: "#FFFFFF",
                           }}
                         >
                           <Phone className="h-4 w-4" aria-hidden="true" />
@@ -380,7 +424,10 @@ const ContactSplitWithForm: React.FC = () => {
                         </a>
                       </div>
 
-                      <div className="mt-6 text-xs" style={{ color: `${PALETTE.dark}99` }}>
+                      <div
+                        className="mt-6 text-xs"
+                        style={{ color: `${BRAND.heading}99` }}
+                      >
                         <Mail className="inline h-3.5 w-3.5 mr-1" />
                         {EMAIL}
                       </div>
@@ -388,10 +435,16 @@ const ContactSplitWithForm: React.FC = () => {
                   </div>
                 ) : (
                   <>
-                    <h3 className="text-xl font-semibold" style={{ color: PALETTE.dark }}>
+                    <h3
+                      className="text-xl font-semibold"
+                      style={{ color: BRAND.heading }}
+                    >
                       {t("contact.form.title")}
                     </h3>
-                    <p className="mt-1 text-sm" style={{ color: `${PALETTE.dark}cc` }}>
+                    <p
+                      className="mt-1 text-sm"
+                      style={{ color: `${BRAND.heading}cc` }}
+                    >
                       {t("contact.form.subtitle")}
                     </p>
 
@@ -400,19 +453,26 @@ const ContactSplitWithForm: React.FC = () => {
                       <div
                         className="mt-4 flex items-start gap-2 rounded-md border p-3 text-sm"
                         style={{
-                          borderColor: `${PALETTE.wine}33`,
-                          backgroundColor: `${PALETTE.wine}11`,
-                          color: PALETTE.wine,
+                          borderColor: "rgba(187, 62, 3, 0.25)",
+                          backgroundColor: "rgba(187, 62, 3, 0.08)",
+                          color: "#BB3E03",
                         }}
                         role="alert"
                       >
-                        <AlertCircle className="h-5 w-5 mt-0.5" aria-hidden="true" />
+                        <AlertCircle
+                          className="h-5 w-5 mt-0.5"
+                          aria-hidden="true"
+                        />
                         <span>{error}</span>
                       </div>
                     )}
 
                     {/* FORM */}
-                    <form onSubmit={onSubmit} noValidate className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <form
+                      onSubmit={onSubmit}
+                      noValidate
+                      className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4"
+                    >
                       {/* Honeypot */}
                       <input
                         type="text"
@@ -427,7 +487,10 @@ const ContactSplitWithForm: React.FC = () => {
 
                       {/* Nombre del paciente */}
                       <div className="col-span-1">
-                        <label className="block text-sm font-medium" style={{ color: PALETTE.dark }}>
+                        <label
+                          className="block text-sm font-medium"
+                          style={{ color: BRAND.heading }}
+                        >
                           {t("contact.form.fields.patientName.label")}
                         </label>
                         <input
@@ -438,19 +501,24 @@ const ContactSplitWithForm: React.FC = () => {
                           onChange={onChange}
                           required
                           autoComplete="name"
-                          className="mt-1 w-full rounded-md border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2"
+                          className="mt-1 w-full rounded-md border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A9396]"
                           style={{
-                            borderColor: `${PALETTE.olive}33`,
-                            backgroundColor: `${PALETTE.cream}`,
-                            color: PALETTE.dark,
+                            borderColor: `${BRAND.heading}11`,
+                            backgroundColor: "#FFFFFF",
+                            color: BRAND.heading,
                           }}
-                          placeholder={t("contact.form.fields.patientName.placeholder")}
+                          placeholder={t(
+                            "contact.form.fields.patientName.placeholder"
+                          )}
                         />
                       </div>
 
                       {/* Email */}
                       <div className="col-span-1">
-                        <label className="block text-sm font-medium" style={{ color: PALETTE.dark }}>
+                        <label
+                          className="block text-sm font-medium"
+                          style={{ color: BRAND.heading }}
+                        >
                           {t("contact.form.fields.email.label")}
                         </label>
                         <input
@@ -461,19 +529,24 @@ const ContactSplitWithForm: React.FC = () => {
                           onChange={onChange}
                           required
                           autoComplete="email"
-                          className="mt-1 w-full rounded-md border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2"
+                          className="mt-1 w-full rounded-md border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A9396]"
                           style={{
-                            borderColor: `${PALETTE.olive}33`,
-                            backgroundColor: `${PALETTE.cream}`,
-                            color: PALETTE.dark,
+                            borderColor: `${BRAND.heading}11`,
+                            backgroundColor: "#FFFFFF",
+                            color: BRAND.heading,
                           }}
-                          placeholder={t("contact.form.fields.email.placeholder")}
+                          placeholder={t(
+                            "contact.form.fields.email.placeholder"
+                          )}
                         />
                       </div>
 
                       {/* Teléfono */}
                       <div className="col-span-1">
-                        <label className="block text-sm font-medium" style={{ color: PALETTE.dark }}>
+                        <label
+                          className="block text-sm font-medium"
+                          style={{ color: BRAND.heading }}
+                        >
                           {t("contact.form.fields.phone.label")}
                         </label>
                         <input
@@ -485,19 +558,24 @@ const ContactSplitWithForm: React.FC = () => {
                           required
                           inputMode="tel"
                           autoComplete="tel"
-                          className="mt-1 w-full rounded-md border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2"
+                          className="mt-1 w-full rounded-md border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A9396]"
                           style={{
-                            borderColor: `${PALETTE.olive}33`,
-                            backgroundColor: `${PALETTE.cream}`,
-                            color: PALETTE.dark,
+                            borderColor: `${BRAND.heading}11`,
+                            backgroundColor: "#FFFFFF",
+                            color: BRAND.heading,
                           }}
-                          placeholder={t("contact.form.fields.phone.placeholder")}
+                          placeholder={t(
+                            "contact.form.fields.phone.placeholder"
+                          )}
                         />
                       </div>
 
                       {/* Motivo */}
                       <div className="col-span-1">
-                        <label className="block text-sm font-medium" style={{ color: PALETTE.dark }}>
+                        <label
+                          className="block text-sm font-medium"
+                          style={{ color: BRAND.heading }}
+                        >
                           {t("contact.form.fields.reason.label")}
                         </label>
                         <select
@@ -506,30 +584,50 @@ const ContactSplitWithForm: React.FC = () => {
                           value={form.reason}
                           onChange={onChange}
                           required
-                          className="mt-1 w-full rounded-md border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2"
+                          className="mt-1 w-full rounded-md border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A9396]"
                           style={{
-                            borderColor: `${PALETTE.olive}33`,
-                            backgroundColor: `${PALETTE.cream}`,
-                            color: PALETTE.dark,
+                            borderColor: `${BRAND.heading}11`,
+                            backgroundColor: "#FFFFFF",
+                            color: BRAND.heading,
                           }}
                         >
                           <option value="" disabled>
                             {t("contact.form.fields.reason.options.select")}
                           </option>
-                          <option value="well visit">{t("contact.form.fields.reason.options.wellvisit")}</option>
-                          <option value="sick visit">{t("contact.form.fields.reason.options.sickvisit")}</option>
-                          <option value="vaccine">{t("contact.form.fields.reason.options.vaccine")}</option>
-                          <option value="other">{t("contact.form.fields.reason.options.other")}</option>
+                          <option value="well visit">
+                            {t("contact.form.fields.reason.options.wellvisit")}
+                          </option>
+                          <option value="sick visit">
+                            {t("contact.form.fields.reason.options.sickvisit")}
+                          </option>
+                          <option value="vaccine">
+                            {t("contact.form.fields.reason.options.vaccine")}
+                          </option>
+                          <option value="other">
+                            {t("contact.form.fields.reason.options.other")}
+                          </option>
                         </select>
                       </div>
 
                       {/* Tipo de cita */}
                       <fieldset className="col-span-1 self-end">
-                        <legend className="block text-sm font-medium" style={{ color: PALETTE.dark }}>
+                        <legend
+                          className="block text-sm font-medium"
+                          style={{ color: BRAND.heading }}
+                        >
                           {t("contact.form.fields.appointmentType.label")}
                         </legend>
-                        <div className="mt-2 flex flex-wrap gap-4" role="radiogroup" aria-label={t("contact.form.fields.appointmentType.aria")}>
-                          <label className="inline-flex items-center gap-2 text-sm" style={{ color: PALETTE.dark }}>
+                        <div
+                          className="mt-2 flex flex-wrap gap-4"
+                          role="radiogroup"
+                          aria-label={t(
+                            "contact.form.fields.appointmentType.aria"
+                          )}
+                        >
+                          <label
+                            className="inline-flex items-center gap-2 text-sm"
+                            style={{ color: BRAND.heading }}
+                          >
                             <input
                               type="radio"
                               name="appointmentType"
@@ -537,11 +635,16 @@ const ContactSplitWithForm: React.FC = () => {
                               checked={form.appointmentType === "nueva"}
                               onChange={onChange}
                               className="h-4 w-4 border rounded"
-                              style={{ accentColor: PALETTE.olive }}
+                              style={{ accentColor: BRAND.accent }}
                             />
-                            {t("contact.form.fields.appointmentType.options.new")}
+                            {t(
+                              "contact.form.fields.appointmentType.options.new"
+                            )}
                           </label>
-                          <label className="inline-flex items-center gap-2 text-sm" style={{ color: PALETTE.dark }}>
+                          <label
+                            className="inline-flex items-center gap-2 text-sm"
+                            style={{ color: BRAND.heading }}
+                          >
                             <input
                               type="radio"
                               name="appointmentType"
@@ -549,18 +652,23 @@ const ContactSplitWithForm: React.FC = () => {
                               checked={form.appointmentType === "seguimiento"}
                               onChange={onChange}
                               className="h-4 w-4 border rounded"
-                              style={{ accentColor: PALETTE.olive }}
+                              style={{ accentColor: BRAND.accent }}
                             />
-                            {t("contact.form.fields.appointmentType.options.followup")}
+                            {t(
+                              "contact.form.fields.appointmentType.options.followup"
+                            )}
                           </label>
                         </div>
                       </fieldset>
 
                       {/* Doctor preferido */}
                       <div className="col-span-1 md:col-span-2">
-                        <label className="block text-sm font-medium" style={{ color: PALETTE.dark }}>
+                        <label
+                          className="block text-sm font-medium"
+                          style={{ color: BRAND.heading }}
+                        >
                           {t("contact.form.fields.doctor.label")}{" "}
-                          <span style={{ color: `${PALETTE.dark}88` }}>
+                          <span style={{ color: `${BRAND.heading}66` }}>
                             ({t("contact.form.fields.doctor.optional")})
                           </span>
                         </label>
@@ -569,27 +677,38 @@ const ContactSplitWithForm: React.FC = () => {
                           name="doctor"
                           value={form.doctor}
                           onChange={onChange}
-                          className="mt-1 w-full rounded-md border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2"
+                          className="mt-1 w-full rounded-md border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A9396]"
                           style={{
-                            borderColor: `${PALETTE.olive}33`,
-                            backgroundColor: `${PALETTE.cream}`,
-                            color: PALETTE.dark,
+                            borderColor: `${BRAND.heading}11`,
+                            backgroundColor: "#FFFFFF",
+                            color: BRAND.heading,
                           }}
                           aria-describedby="doctor-help"
                         >
-                          <option value="">{t("contact.form.fields.doctor.placeholder")}</option>
+                          <option value="">
+                            {t("contact.form.fields.doctor.placeholder")}
+                          </option>
                           {DOCTORS.map((d) => (
-                            <option key={d} value={d}>{d}</option>
+                            <option key={d} value={d}>
+                              {d}
+                            </option>
                           ))}
                         </select>
-                        <p id="doctor-help" className="mt-1 text-xs" style={{ color: `${PALETTE.dark}99` }}>
+                        <p
+                          id="doctor-help"
+                          className="mt-1 text-xs"
+                          style={{ color: `${BRAND.heading}80` }}
+                        >
                           {t("contact.form.fields.doctor.help")}
                         </p>
                       </div>
 
                       {/* Mensaje */}
                       <div className="md:col-span-2">
-                        <label className="block text-sm font-medium" style={{ color: PALETTE.dark }}>
+                        <label
+                          className="block text-sm font-medium"
+                          style={{ color: BRAND.heading }}
+                        >
                           {t("contact.form.fields.message.label")}
                         </label>
                         <textarea
@@ -599,37 +718,46 @@ const ContactSplitWithForm: React.FC = () => {
                           onChange={onChange}
                           rows={6}
                           maxLength={MAX_CHARS}
-                          className="mt-1 w-full rounded-md border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2"
+                          className="mt-1 w-full rounded-md border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A9396]"
                           style={{
-                            borderColor: `${PALETTE.olive}33`,
-                            backgroundColor: `${PALETTE.cream}`,
-                            color: PALETTE.dark,
+                            borderColor: `${BRAND.heading}11`,
+                            backgroundColor: "#FFFFFF",
+                            color: BRAND.heading,
                           }}
-                          placeholder={t("contact.form.fields.message.placeholder")}
+                          placeholder={t(
+                            "contact.form.fields.message.placeholder"
+                          )}
                         />
-                        <div className="mt-1 text-[11px] text-right" style={{ color: `${PALETTE.dark}99` }}>
+                        <div
+                          className="mt-1 text-[11px] text-right"
+                          style={{ color: `${BRAND.heading}66` }}
+                        >
                           {chars}/{MAX_CHARS}
                         </div>
                       </div>
-
-  
-                    
 
                       {/* Submit */}
                       <div className="md:col-span-2">
                         <button
                           type="submit"
                           disabled={submitting}
-                          className="inline-flex items-center justify-center gap-2 w-full sm:w-auto rounded-md px-5 py-2.5 text-sm font-semibold shadow-md transition-all hover:opacity-90 disabled:opacity-60 disabled:cursor-not-allowed"
+                          className="inline-flex items-center justify-center gap-2 w-full sm:w-auto rounded-md px-5 py-2.5 text-sm font-semibold shadow-md transition-all hover:scale-[1.01] disabled:opacity-60 disabled:cursor-not-allowed"
                           style={{
-                            backgroundColor: PALETTE.olive,
-                            color: PALETTE.cream,
+                            backgroundColor: BRAND.cta,
+                            color: "#FFFFFF",
+                            border: `1px solid ${BRAND.ctaBorder}44`,
                           }}
                           aria-busy={submitting}
-                          aria-label={submitting ? t("contact.form.buttons.sending") : t("contact.form.buttons.submit")}
+                          aria-label={
+                            submitting
+                              ? t("contact.form.buttons.sending")
+                              : t("contact.form.buttons.submit")
+                          }
                         >
                           <Send className="h-4 w-4" aria-hidden="true" />
-                          {submitting ? t("contact.form.buttons.sending") : t("contact.form.buttons.submit")}
+                          {submitting
+                            ? t("contact.form.buttons.sending")
+                            : t("contact.form.buttons.submit")}
                         </button>
                       </div>
                     </form>
@@ -643,15 +771,21 @@ const ContactSplitWithForm: React.FC = () => {
               <aside
                 className="lg:sticky lg:top-24 h-full rounded-2xl p-6 shadow-sm border"
                 style={{
-                  backgroundColor: `${PALETTE.amber}15`,
-                  borderColor: `${PALETTE.olive}33`,
+                  backgroundColor: asideSurface,
+                  borderColor: `${BRAND.heading}11`,
                 }}
               >
-                <h3 className="text-lg font-semibold" style={{ color: PALETTE.dark }}>
+                <h3
+                  className="text-lg font-semibold"
+                  style={{ color: BRAND.heading }}
+                >
                   {t("contact.info.title")}
                 </h3>
 
-                <div className="mt-4 space-y-4 text-sm" style={{ color: PALETTE.dark }}>
+                <div
+                  className="mt-4 space-y-4 text-sm"
+                  style={{ color: BRAND.heading }}
+                >
                   <a
                     href={MAP_LINK}
                     target="_blank"
@@ -660,7 +794,11 @@ const ContactSplitWithForm: React.FC = () => {
                     title={t("contact.address.openMap")}
                     aria-label={t("contact.address.openMap")}
                   >
-                    <MapPin className="h-4 w-4 shrink-0 mt-0.5" style={{ color: PALETTE.olive }} aria-hidden="true" />
+                    <MapPin
+                      className="h-4 w-4 shrink-0 mt-0.5"
+                      style={{ color: BRAND.accent }}
+                      aria-hidden="true"
+                    />
                     <span>
                       201 Hilda St Suite # 10
                       <br />
@@ -669,56 +807,88 @@ const ContactSplitWithForm: React.FC = () => {
                   </a>
 
                   <div className="flex items-start gap-2">
-                    <Mail className="h-4 w-4 mt-0.5" style={{ color: PALETTE.olive }} aria-hidden="true" />
-                    <a href={`mailto:${EMAIL}`} className="hover:opacity-80 break-all">
+                    <Mail
+                      className="h-4 w-4 mt-0.5"
+                      style={{ color: BRAND.accent }}
+                      aria-hidden="true"
+                    />
+                    <a
+                      href={`mailto:${EMAIL}`}
+                      className="hover:opacity-80 break-all"
+                    >
                       {EMAIL}
                     </a>
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <Phone className="h-4 w-4" style={{ color: PALETTE.olive }} aria-hidden="true" />
+                    <Phone
+                      className="h-4 w-4"
+                      style={{ color: BRAND.accent }}
+                      aria-hidden="true"
+                    />
                     <a href={`tel:${PHONE_TEL}`} className="hover:opacity-80">
                       {PHONE_DISPLAY}
                     </a>
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <Printer className="h-4 w-4" style={{ color: PALETTE.olive }} aria-hidden="true" />
+                    <Printer
+                      className="h-4 w-4"
+                      style={{ color: BRAND.accent }}
+                      aria-hidden="true"
+                    />
                     <a href={`tel:${FAX_TEL}`} className="hover:opacity-80">
                       {t("contact.info.fax")}: {FAX_DISPLAY}
                     </a>
                   </div>
 
-                  <div className="pt-2 border-t" style={{ borderColor: `${PALETTE.dark}22` }} />
+                  <div
+                    className="pt-2 border-t"
+                    style={{ borderColor: `${BRAND.heading}11` }}
+                  />
 
                   <div>
-                    <p className="text-xs font-semibold tracking-widest uppercase" style={{ color: `${PALETTE.dark}aa` }}>
+                    <p
+                      className="text-xs font-semibold tracking-widest uppercase"
+                      style={{ color: `${BRAND.heading}66` }}
+                    >
                       {t("contact.hours.label")}
                     </p>
                     <ul className="mt-2 text-sm space-y-1">
                       <li className="flex gap-2">
-                        <Clock className="h-4 w-4 shrink-0 mt-0.5" style={{ color: PALETTE.olive }} aria-hidden="true" />
+                        <Clock
+                          className="h-4 w-4 shrink-0 mt-0.5"
+                          style={{ color: BRAND.accent }}
+                          aria-hidden="true"
+                        />
                         <span>
-                          <span className="font-medium">{t("contact.hours.weekdays")}</span>
+                          <span className="font-medium">
+                            {t("contact.hours.weekdays")}
+                          </span>
                           &nbsp;8:00am – 5:00pm
                         </span>
                       </li>
                       <li>
-                        <span className="font-medium">{t("contact.hours.weekend")}</span>
+                        <span className="font-medium">
+                          {t("contact.hours.weekend")}
+                        </span>
                         &nbsp;{t("contact.hours.closed")}
                       </li>
                     </ul>
                   </div>
 
-                  <div className="pt-3 border-t flex justify-center gap-3" style={{ borderColor: `${PALETTE.dark}22` }}>
+                  <div
+                    className="pt-3 border-t flex justify-center gap-3"
+                    style={{ borderColor: `${BRAND.heading}11` }}
+                  >
                     <a
                       href={FACEBOOK_URL}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-sm px-4 py-2 text-sm font-semibold shadow-md transition hover:opacity-90"
+                      className="inline-flex items-center gap-2 rounded-sm px-4 py-2 text-sm font-semibold shadow-md transition hover:scale-[1.01]"
                       style={{
-                        backgroundColor: PALETTE.olive,
-                        color: PALETTE.cream,
+                        backgroundColor: BRAND.accent,
+                        color: "#FFFFFF",
                       }}
                       aria-label={t("contact.social.facebookAria")}
                       title="Facebook"
@@ -730,10 +900,10 @@ const ContactSplitWithForm: React.FC = () => {
                       href={INSTAGRAM_URL}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-sm px-4 py-2 text-sm font-semibold shadow-md transition hover:opacity-90"
+                      className="inline-flex items-center gap-2 rounded-sm px-4 py-2 text-sm font-semibold shadow-md transition hover:scale-[1.01]"
                       style={{
-                        background: `linear-gradient(45deg, ${PALETTE.wine}, ${PALETTE.amber})`,
-                        color: PALETTE.cream,
+                        background: `linear-gradient(45deg, ${PALETTE[6].base}, ${BRAND.cta})`,
+                        color: "#FFFFFF",
                       }}
                       aria-label={t("contact.social.instagramAria")}
                       title="Instagram"

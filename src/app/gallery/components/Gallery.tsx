@@ -12,19 +12,26 @@ import oficina4 from "@/../public/assets/images/oficina-4.jpg";
 import oficina5 from "@/../public/assets/images/oficina-5.jpg";
 import oficina6 from "@/../public/assets/images/oficina-6.jpg";
 
-/* 🎨 Paleta */
-const PALETTE = {
-  amber: "#B67B39", // dorado cálido
-  moss: "#7C8C4D", // verde musgo
-  wine: "#812D20", // vino terroso
-  ochre: "#D8C27A", // ocre claro
-  olive: "#4F5635", // oliva profundo
-  cream: "#FAF4E6", // crema suave
-  dark: "#2B2725", // marrón oscuro neutro
-};
+/* 🎨 Paleta pastel (misma que services) */
+const PALETTE = [
+  { base: "#9ADAD8", back: "#7EC4C2", text: "#001219" }, // 0
+  { base: "#C8E7DA", back: "#A8D1C2", text: "#001219" }, // 1
+  { base: "#F5EBC6", back: "#EAD7A4", text: "#001219" }, // 2
+  { base: "#FFD77A", back: "#EEC46A", text: "#001219" }, // 3
+  { base: "#F3A96C", back: "#E48B4F", text: "#001219" }, // 4
+  { base: "#E48C7A", back: "#D67463", text: "#001219" }, // 5
+  { base: "#E57B76", back: "#D66A65", text: "#001219" }, // 6
+  { base: "#DC767B", back: "#C85D61", text: "#001219" }, // 7
+];
 
 type Category = "Instalaciones";
-type GalleryItem = { id: string; src: string; alt: string; category: Category };
+
+type GalleryItem = {
+  id: string;
+  src: string;
+  alt: string;
+  category: Category;
+};
 
 const toSrc = (img: StaticImageData) => img?.src ?? "";
 
@@ -48,16 +55,19 @@ export default function Gallery({
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState(0);
 
+  // categorías
   const categories = useMemo<("Todas" | Category)[]>(() => {
     const set = new Set<Category>(ITEMS.map((g) => g.category));
     return ["Todas", ...Array.from(set)];
   }, []);
 
+  // lista filtrada
   const filtered = useMemo(
     () => (active === "Todas" ? ITEMS : ITEMS.filter((g) => g.category === active)),
     [active]
   );
 
+  // si cambia el filtro y el index quedó fuera, lo reseteo
   useEffect(() => {
     if (index >= filtered.length) setIndex(0);
   }, [filtered.length, index]);
@@ -67,13 +77,16 @@ export default function Gallery({
     setOpen(true);
     document.documentElement.style.overflow = "hidden";
   };
+
   const close = () => {
     setOpen(false);
     document.documentElement.style.overflow = "";
   };
+
   const prev = () => setIndex((i) => (i - 1 + filtered.length) % filtered.length);
   const next = () => setIndex((i) => (i + 1) % filtered.length);
 
+  // teclado en modal
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -88,18 +101,21 @@ export default function Gallery({
   const current = filtered[index];
 
   return (
-    <section style={{ backgroundColor: PALETTE.cream }} className="pt-40 pb-20">
+    <section
+      style={{ backgroundColor: "#FFFFFF" }}
+      className="pt-40 pb-20"
+    >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        {/* Título */}
+        {/* Header */}
         <header className="mb-6">
           <h1
             className="text-4xl font-extrabold tracking-tight sm:text-5xl"
-            style={{ color: PALETTE.dark }}
+            style={{ color: "#001219" }}
           >
             {title}
           </h1>
           {subtitle ? (
-            <p className="mt-2 text-lg" style={{ color: PALETTE.olive }}>
+            <p className="mt-2 text-lg" style={{ color: "#275E71" }}>
               {subtitle}
             </p>
           ) : null}
@@ -107,17 +123,18 @@ export default function Gallery({
 
         {/* Filtros */}
         <div className="mb-6 flex flex-wrap items-center gap-2">
-          {categories.map((c) => {
+          {categories.map((c, i) => {
             const isActive = active === c;
+            const color = PALETTE[i % PALETTE.length];
             return (
               <button
                 key={c}
                 onClick={() => setActive(c)}
                 className="rounded-full px-3 py-1 text-sm font-medium ring-1 ring-inset transition-colors"
                 style={{
-                  backgroundColor: isActive ? PALETTE.olive : `${PALETTE.ochre}33`,
-                  color: isActive ? PALETTE.cream : PALETTE.dark,
-                  borderColor: PALETTE.olive,
+                  backgroundColor: isActive ? color.base : "rgba(154, 218, 216, 0.12)",
+                  color: isActive ? color.text : "#001219",
+                  borderColor: isActive ? color.back : "transparent",
                 }}
                 aria-pressed={isActive}
               >
@@ -125,7 +142,7 @@ export default function Gallery({
               </button>
             );
           })}
-          <span className="ml-2 text-sm" style={{ color: PALETTE.olive }}>
+          <span className="ml-2 text-sm" style={{ color: "#00121999" }}>
             {filtered.length} fotos
           </span>
         </div>
@@ -137,8 +154,8 @@ export default function Gallery({
               key={item.id}
               className="mb-4 break-inside-avoid rounded-2xl p-2 transition-transform hover:scale-[1.01]"
               style={{
-                backgroundColor: PALETTE.cream,
-                border: `1px solid ${PALETTE.olive}33`,
+                backgroundColor: "#FFFFFF",
+                border: `1px solid rgba(0,18,25,0.06)`,
               }}
             >
               <button
@@ -164,12 +181,12 @@ export default function Gallery({
           role="dialog"
           aria-modal="true"
           className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-8"
-          style={{ backgroundColor: "rgba(43,39,37,0.9)" }} // fondo oscuro según PALETTE.dark
+          style={{ backgroundColor: "rgba(0,18,25,0.92)" }} // dark de la paleta global
           onClick={(e) => {
             if (e.target === e.currentTarget) close();
           }}
         >
-          {/* Controles */}
+          {/* Close */}
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -178,7 +195,7 @@ export default function Gallery({
             className="fixed z-[60] rounded-full p-3 md:p-3.5 text-white backdrop-blur-md transition hover:scale-105 focus:outline-none focus-visible:ring-2"
             aria-label="Cerrar"
             style={{
-              backgroundColor: `${PALETTE.dark}66`,
+              backgroundColor: "rgba(0,0,0,0.25)",
               top: "max(0.75rem, env(safe-area-inset-top))",
               right: "max(0.75rem, env(safe-area-inset-right))",
             }}
@@ -186,6 +203,7 @@ export default function Gallery({
             <X className="h-6 w-6 md:h-7 md:w-7" />
           </button>
 
+          {/* Prev */}
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -193,11 +211,12 @@ export default function Gallery({
             }}
             className="fixed left-2 sm:left-4 md:left-6 top-1/2 z-[60] -translate-y-1/2 rounded-full p-3 md:p-3.5 text-white backdrop-blur-md transition hover:scale-105 focus:outline-none"
             aria-label="Anterior"
-            style={{ backgroundColor: `${PALETTE.dark}66` }}
+            style={{ backgroundColor: "rgba(0,0,0,0.25)" }}
           >
             <ChevronLeft className="h-7 w-7 md:h-8 md:w-8" />
           </button>
 
+          {/* Next */}
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -205,12 +224,12 @@ export default function Gallery({
             }}
             className="fixed right-2 sm:right-4 md:right-6 top-1/2 z-[60] -translate-y-1/2 rounded-full p-3 md:p-3.5 text-white backdrop-blur-md transition hover:scale-105 focus:outline-none"
             aria-label="Siguiente"
-            style={{ backgroundColor: `${PALETTE.dark}66` }}
+            style={{ backgroundColor: "rgba(0,0,0,0.25)" }}
           >
             <ChevronRight className="h-7 w-7 md:h-8 md:w-8" />
           </button>
 
-          {/* Imagen centrada */}
+          {/* Imagen */}
           <div className="relative z-50 max-h-[90vh] w-full max-w-6xl">
             <img
               src={current.src}

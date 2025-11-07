@@ -5,21 +5,11 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useProvidersData } from "../provider/data";
 import { useTranslation } from "../contexts/TranslationContext";
+import { PALETTE, BRAND } from "../ui/palette";
 
-/* 🎨 Paleta unificada (misma que la de referencia) */
-const PALETTE = [
-  { base: "#9ADAD8", back: "#7EC4C2", text: "#001219" }, // 0
-  { base: "#C8E7DA", back: "#A8D1C2", text: "#001219" }, // 1
-  { base: "#F5EBC6", back: "#EAD7A4", text: "#001219" }, // 2
-  { base: "#FFD77A", back: "#EEC46A", text: "#001219" }, // 3
-  { base: "#F3A96C", back: "#E48B4F", text: "#001219" }, // 4
-  { base: "#E48C7A", back: "#D67463", text: "#001219" }, // 5
-  { base: "#E57B76", back: "#D66A65", text: "#001219" }, // 6
-  { base: "#DC767B", back: "#C85D61", text: "#001219" }, // 7
-];
-
-/* azul que estás usando para subtítulos */
 const SUBTITLE_BLUE = "#275E71";
+
+/* ───────────────── hooks utilitarios (los tuyos) ───────────────── */
 
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(false);
@@ -152,7 +142,7 @@ const Providers: React.FC<ProvidersProps> = ({ onProviderClick }) => {
     <section
       id="providers"
       className="relative pt-24 pb-10 md:pt-28 md:pb-12 overflow-hidden scroll-mt-28"
-      style={{ backgroundColor: "#FFFFFF" }} // siempre blanco
+      style={{ backgroundColor: BRAND.bg }} // mismo fondo blanco
     >
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-20 px-6 lg:px-8 xl:grid-cols-5">
         {/* Section Header */}
@@ -160,7 +150,7 @@ const Providers: React.FC<ProvidersProps> = ({ onProviderClick }) => {
           <Reveal y={8} delay={0}>
             <p
               className="text-xs font-semibold tracking-[0.2em] uppercase mb-3"
-              style={{ color: "#0A9396" }}
+              style={{ color: BRAND.accent }}
             >
               {t("providers.pretitle")}
             </p>
@@ -169,7 +159,7 @@ const Providers: React.FC<ProvidersProps> = ({ onProviderClick }) => {
           <Reveal y={8} delay={40}>
             <h2
               className="text-4xl font-semibold tracking-tight sm:text-5xl"
-              style={{ color: PALETTE[0].text }} // #001219
+              style={{ color: BRAND.title }}
             >
               {t("providers.title")}
             </h2>
@@ -178,7 +168,7 @@ const Providers: React.FC<ProvidersProps> = ({ onProviderClick }) => {
           <Reveal y={8} delay={80}>
             <p
               className="mt-6 text-lg leading-relaxed"
-              style={{ color: SUBTITLE_BLUE }} // azul de subtítulo
+              style={{ color: SUBTITLE_BLUE }}
             >
               {t("providers.subtitle")}
             </p>
@@ -189,13 +179,16 @@ const Providers: React.FC<ProvidersProps> = ({ onProviderClick }) => {
         <ul
           role="list"
           className="divide-y xl:col-span-3"
-          style={{ borderColor: `${PALETTE[0].text}22` }}
+          style={{ borderColor: `${BRAND.title}22` }}
         >
-          {providers.map((provider) => {
+          {providers.map((provider, idx) => {
             const imgSrc =
               typeof provider.image === "string"
                 ? provider.image
                 : provider.image.src;
+
+            // vamos rotando la paleta en cada provider
+            const color = PALETTE[idx % PALETTE.length];
 
             return (
               <li
@@ -208,8 +201,8 @@ const Providers: React.FC<ProvidersProps> = ({ onProviderClick }) => {
                   className="aspect-4/5 w-52 flex-none rounded-2xl object-cover shadow-md"
                   loading="lazy"
                   style={{
-                    outline: `1px solid ${PALETTE[0].text}22`,
-                    backgroundColor: `${PALETTE[0].text}08`,
+                    outline: `1px solid ${color.text}22`,
+                    backgroundColor: `${color.text}08`,
                   }}
                 />
 
@@ -217,7 +210,7 @@ const Providers: React.FC<ProvidersProps> = ({ onProviderClick }) => {
                   <Reveal y={6} delay={0} duration={520}>
                     <h3
                       className="text-lg font-semibold"
-                      style={{ color: PALETTE[0].text }}
+                      style={{ color: BRAND.title }}
                     >
                       {provider.name}
                     </h3>
@@ -235,7 +228,7 @@ const Providers: React.FC<ProvidersProps> = ({ onProviderClick }) => {
                   <Reveal y={8} delay={80} duration={520}>
                     <p
                       className="mt-6 text-base leading-relaxed"
-                      style={{ color: `${PALETTE[0].text}cc` }}
+                      style={{ color: `${BRAND.title}cc` }}
                     >
                       {((bio) => {
                         const MAX = 102;
@@ -248,10 +241,10 @@ const Providers: React.FC<ProvidersProps> = ({ onProviderClick }) => {
 
                   <Reveal y={8} delay={120} duration={520}>
                     <div className="mt-4 space-y-1">
-                      <p className="text-sm" style={{ color: `${PALETTE[0].text}99` }}>
+                      <p className="text-sm" style={{ color: `${BRAND.title}99` }}>
                         {provider.experience}
                       </p>
-                      <p className="text-sm" style={{ color: `${PALETTE[0].text}99` }}>
+                      <p className="text-sm" style={{ color: `${BRAND.title}99` }}>
                         {provider.languages}
                       </p>
                     </div>
@@ -259,19 +252,18 @@ const Providers: React.FC<ProvidersProps> = ({ onProviderClick }) => {
 
                   <Reveal y={8} delay={160} duration={520}>
                     <div className="mt-6">
-                     <Link
-  href={`/provider/${provider.id}`}
-  className="inline-flex items-center justify-center gap-1.5 px-3 h-9 rounded-md text-sm font-medium transition-all duration-200 w-30"
-  style={{
-    backgroundColor: "#0A9396", // TODO
-    color: "#FFFFFF",
-  }}
-  onClick={() => onProviderClick?.(provider.id)}
->
-  {t("provider.cta")}
-  <ArrowRight className="w-4 h-4" />
-</Link>
-
+                      <Link
+                        href={`/provider/${provider.id}`}
+                        className="inline-flex items-center justify-center gap-1.5 px-3 h-9 rounded-md text-sm font-medium transition-all duration-200 w-30 shadow-sm hover:scale-[1.02]"
+                        style={{
+                          backgroundColor: PALETTE[4].base,      // #F3A96C
+                          color: PALETTE[4].text,                // #001219
+                        }}
+                        onClick={() => onProviderClick?.(provider.id)}
+                      >
+                        {t("provider.cta")}
+                        <ArrowRight className="w-4 h-4" />
+                      </Link>
 
                     </div>
                   </Reveal>

@@ -6,17 +6,7 @@ import { useParams, notFound } from "next/navigation";
 import { useProvidersData } from "../data";
 import { useTranslation } from "@/app/contexts/TranslationContext";
 import InsuranceDoctorModal from "../components/InsuranceDoctorModal";
-
-/* 🎨 Paleta */
-const PALETTE = {
-  amber: "#B67B39",
-  moss: "#7C8C4D",
-  wine: "#812D20",
-  ochre: "#D8C27A",
-  olive: "#4F5635",
-  cream: "#FAF4E6",
-  dark: "#2B2725",
-};
+import { PALETTE, BRAND } from "@/app/ui/palette";
 
 /* ============ Subcomponentes ============ */
 const Section = ({
@@ -26,13 +16,18 @@ const Section = ({
   title: string;
   children: React.ReactNode;
 }) => (
-  <section className="rounded-md p-6" style={{ backgroundColor: PALETTE.cream }}>
-    <h3 className="mb-3 text-lg font-semibold" style={{ color: PALETTE.dark }}>
+  <section
+    className="rounded-md p-6"
+  >
+    <h3
+      className="mb-3 text-lg font-semibold"
+      style={{ color: BRAND.title }}
+    >
       {title}
     </h3>
     <div
       className="prose max-w-none text-sm leading-relaxed"
-      style={{ color: PALETTE.olive }}
+      style={{ color: BRAND.title }}
     >
       {children}
     </div>
@@ -40,7 +35,10 @@ const Section = ({
 );
 
 const Bullet = ({ items }: { items: string[] }) => (
-  <ul className="mt-2 list-disc space-y-2 pl-5" style={{ color: PALETTE.olive }}>
+  <ul
+    className="mt-2 list-disc space-y-2 pl-5"
+    style={{ color: BRAND.title }}
+  >
     {items.map((t, i) => (
       <li key={i}>{t}</li>
     ))}
@@ -68,17 +66,17 @@ function RelatedDoctorItem({
         className="h-32 w-32 flex-none rounded-md object-cover"
       />
       <div className="min-w-0 flex-1">
-        <h4 className="font-semibold" style={{ color: PALETTE.dark }}>
+        <h4 className="font-semibold" style={{ color: BRAND.title }}>
           {name}
         </h4>
-        <p className="mt-0.5 text-xs" style={{ color: `${PALETTE.olive}CC` }}>
+        <p className="mt-0.5 text-xs" style={{ color: `${BRAND.title}B3` }}>
           {title}
         </p>
 
         <Link
           href={`/provider/${id}`}
           className="mt-2 ml-1 inline-block text-xs font-medium hover:underline transition"
-          style={{ color: PALETTE.moss }}
+          style={{ color: BRAND.accent }}
         >
           {t("provider.cta")}
         </Link>
@@ -87,7 +85,7 @@ function RelatedDoctorItem({
   );
 }
 
-/* Utilidades */
+/* Utils */
 const toList = (v?: string | string[]) =>
   Array.isArray(v)
     ? v.filter(Boolean).map((s) => s.trim())
@@ -107,8 +105,8 @@ const isMeaningful = (v: string | undefined): v is string => {
 export default function ProviderDetailPage() {
   const params = useParams<{ id: string }>();
   const providers = useProvidersData();
-
   const { t } = useTranslation();
+
   const p = providers.find((it) => it.id === params.id);
   if (!p) notFound();
 
@@ -117,10 +115,14 @@ export default function ProviderDetailPage() {
 
   const baseParagraphs =
     typeof p.bio === "string" && p.bio.includes("\n")
-      ? p.bio.split("\n").map((s) => s.trim()).filter(Boolean)
+      ? p.bio
+        .split("\n")
+        .map((s) => s.trim())
+        .filter(Boolean)
       : [p.bio];
 
-  const fallbackDr2 = p.id === "dr-Juan-Ortiz" ? t("provider.bio.dr2.text2") : "";
+  const fallbackDr2 =
+    p.id === "dr-Juan-Ortiz" ? t("provider.bio.dr2.text2") : "";
   const secondParagraph = isMeaningful(p.bio2)
     ? p.bio2
     : isMeaningful(fallbackDr2)
@@ -130,7 +132,6 @@ export default function ProviderDetailPage() {
     ? [...baseParagraphs, secondParagraph.trim()]
     : baseParagraphs;
 
-  // ✅ Corrección ESLint: tipado y código limpio
   const defaultConditions = [
     "Preventive Medicine",
     "Adult Immunizations",
@@ -139,9 +140,10 @@ export default function ProviderDetailPage() {
     "Chronic Disease Management",
   ];
 
-  const conditions: string[] = Array.isArray(p.conditions) && p.conditions.length > 0
-    ? p.conditions
-    : defaultConditions;
+  const conditions: string[] =
+    Array.isArray(p.conditions) && p.conditions.length > 0
+      ? p.conditions
+      : defaultConditions;
 
   const educationList = toList(p.education);
   const navbarOffset = 88;
@@ -163,7 +165,7 @@ export default function ProviderDetailPage() {
         className="min-h-screen mx-auto max-w-6xl px-4"
         style={{
           paddingTop: toPx(navbarOffset),
-          backgroundColor: PALETTE.cream,
+          backgroundColor: BRAND.bg,
         }}
       >
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
@@ -185,18 +187,18 @@ export default function ProviderDetailPage() {
 
               <div
                 className="my-6 h-px"
-                style={{ backgroundColor: `${PALETTE.olive}33` }}
+                style={{ backgroundColor: `${BRAND.title}11` }}
               />
 
               <h2
                 className="text-xl font-semibold"
-                style={{ color: PALETTE.dark }}
+                style={{ color: BRAND.title }}
               >
                 {p.name}
               </h2>
               <p
                 className="mt-1 text-sm"
-                style={{ color: `${PALETTE.olive}CC` }}
+                style={{ color: `${BRAND.title}B3` }}
               >
                 {p.title}
               </p>
@@ -205,13 +207,13 @@ export default function ProviderDetailPage() {
                 <div className="mt-4">
                   <p
                     className="text-sm font-semibold"
-                    style={{ color: PALETTE.dark }}
+                    style={{ color: BRAND.title }}
                   >
                     Languages
                   </p>
                   <p
                     className="mt-1 text-sm"
-                    style={{ color: `${PALETTE.olive}CC` }}
+                    style={{ color: `${BRAND.title}B3` }}
                   >
                     {p.languages}
                   </p>
@@ -222,27 +224,28 @@ export default function ProviderDetailPage() {
                 <div className="mt-4">
                   <p
                     className="text-sm font-semibold"
-                    style={{ color: PALETTE.dark }}
+                    style={{ color: BRAND.title }}
                   >
                     Years of Experience
                   </p>
                   <p
                     className="mt-1 text-sm"
-                    style={{ color: `${PALETTE.olive}CC` }}
+                    style={{ color: `${BRAND.title}B3` }}
                   >
                     {p.experience}
                   </p>
                 </div>
               )}
 
-              {/* Botón principal */}
+              {/* Botón principal (pastel durazno) */}
               <Link
                 href="/contact"
                 className="mt-6 inline-flex w-full items-center justify-center rounded-sm px-4 py-2 text-sm font-semibold transition hover:scale-[1.03]"
                 style={{
-                  backgroundColor: PALETTE.olive,
-                  color: PALETTE.cream,
-                  boxShadow: "0 3px 8px rgba(0,0,0,0.15)",
+                  backgroundColor: PALETTE[4].base,     // #F3A96C
+                  color: PALETTE[4].text,               // #001219
+                  border: `1px solid ${PALETTE[4].back}`, // #E48B4F
+                  boxShadow: "0 3px 8px rgba(0,0,0,0.08)",
                 }}
               >
                 {t("about.cta2.detail")}
@@ -254,10 +257,10 @@ export default function ProviderDetailPage() {
                   href="/services"
                   className="inline-flex w-full items-center justify-center rounded-sm px-4 py-2 text-sm font-medium transition hover:scale-[1.02]"
                   style={{
-                    color: PALETTE.dark,
-                    backgroundColor: PALETTE.cream,
-                    boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
-                    border: `1px solid ${PALETTE.olive}33`,
+                    color: BRAND.title,
+                    backgroundColor: BRAND.bg,
+                    boxShadow: "0 2px 6px rgba(0,0,0,0.03)",
+                    border: `1px solid ${BRAND.accent}33`,
                   }}
                 >
                   {t("service.seeAll.button")}
@@ -268,10 +271,10 @@ export default function ProviderDetailPage() {
                   onClick={() => setInsuranceOpen(true)}
                   className="inline-flex w-full items-center justify-center rounded-sm px-4 py-2 text-sm font-medium transition hover:scale-[1.02]"
                   style={{
-                    color: PALETTE.dark,
-                    backgroundColor: PALETTE.cream,
-                    boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
-                    border: `1px solid ${PALETTE.olive}33`,
+                    color: BRAND.title,
+                    backgroundColor: BRAND.bg,
+                    boxShadow: "0 2px 6px rgba(0,0,0,0.03)",
+                    border: `1px solid ${BRAND.accent}33`,
                   }}
                 >
                   {t("provider.see.insurance")}
@@ -286,7 +289,7 @@ export default function ProviderDetailPage() {
               <Section title="About the Doctor">
                 <div
                   className="space-y-4 text-[15px] leading-7"
-                  style={{ color: PALETTE.olive }}
+                  style={{ color: BRAND.title }}
                 >
                   {aboutParagraphs.map((t, i) => (
                     <p key={i}>{t}</p>
@@ -314,9 +317,12 @@ export default function ProviderDetailPage() {
 
       {/* Footer con doctores relacionados */}
       {related.length > 0 && (
-        <footer className="mt-12" style={{ backgroundColor: PALETTE.cream }}>
+        <footer className="mt-12" style={{ backgroundColor: BRAND.bg }}>
           <div className="mx-auto max-w-6xl px-4 py-10">
-            <h3 className="mb-4 text-lg font-semibold" style={{ color: PALETTE.dark }}>
+            <h3
+              className="mb-4 text-lg font-semibold"
+              style={{ color: BRAND.title }}
+            >
               Related Doctors
             </h3>
             <ul className="rounded-md p-2 bg-transparent space-y-2">

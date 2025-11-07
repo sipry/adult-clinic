@@ -6,20 +6,19 @@ import Image, { type StaticImageData } from "next/image";
 import doctorjaime from "@/../public/assets/images/avatar.jpg";
 import doctorjuan from "@/../public/assets/images/Juan.jpg";
 import { useTranslation } from "@/app/contexts/TranslationContext";
+import { BRAND } from "@/app/ui/palette";
 
-/* ====================== Palette ====================== */
-const PALETTE = {
-  amber: "#B67B39", // dorado cálido
-  moss: "#7C8C4D", // verde musgo
-  wine: "#812D20", // vino terroso
-  ochre: "#D8C27A", // ocre claro
-  olive: "#4F5635", // oliva profundo
-  cream: "#FAF4E6", // crema suave
-  dark: "#2B2725", // marrón oscuro neutro
-};
-
-/* ====================== Utils ====================== */
-const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+/* ====================== Paleta pastel unificada ====================== */
+const PALETTE = [
+  { base: "#9ADAD8", back: "#7EC4C2", text: "#001219" }, // 0 teal pastel
+  { base: "#C8E7DA", back: "#A8D1C2", text: "#001219" }, // 1 mint
+  { base: "#F5EBC6", back: "#EAD7A4", text: "#001219" }, // 2 vanilla
+  { base: "#FFD77A", back: "#EEC46A", text: "#001219" }, // 3 yellow soft
+  { base: "#F3A96C", back: "#E48B4F", text: "#001219" }, // 4 melocotón
+  { base: "#E48C7A", back: "#D67463", text: "#001219" }, // 5 coral suave
+  { base: "#E57B76", back: "#D66A65", text: "#001219" }, // 6 salmón
+  { base: "#DC767B", back: "#C85D61", text: "#001219" }, // 7 rosado/coral
+];
 
 // helper por si Next devuelve string o StaticImageData
 type AssetModule = string | StaticImageData;
@@ -27,6 +26,8 @@ export const asset = (m?: AssetModule | null): string => {
   if (!m) return "";
   return typeof m === "string" ? m : m.src;
 };
+
+const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
 
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(false);
@@ -173,17 +174,6 @@ const AnimatedNumber: React.FC<AnimatedNumberProps> = ({
   const [value, setValue] = useState<number>(start);
   const rafRef = useRef<number | null>(null);
   const timeoutRef = useRef<number | null>(null);
-  const prefersReduced = useRef(false);
-
-  useEffect(() => {
-    if (typeof window === "undefined" || !("matchMedia" in window)) return;
-    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
-    prefersReduced.current = mql.matches;
-    const onChange = (e: MediaQueryListEvent) =>
-      (prefersReduced.current = e.matches);
-    mql.addEventListener?.("change", onChange);
-    return () => mql.removeEventListener?.("change", onChange);
-  }, []);
 
   useEffect(() => {
     if (!play) return;
@@ -220,7 +210,9 @@ const AnimatedNumber: React.FC<AnimatedNumberProps> = ({
       ? new Intl.NumberFormat(undefined, {
         notation: "compact",
         maximumFractionDigits: fractionDigits,
-      }).format(n).toLowerCase() // ← “10k”
+      })
+        .format(n)
+        .toLowerCase()
       : new Intl.NumberFormat(undefined, {
         minimumFractionDigits: fractionDigits,
         maximumFractionDigits: fractionDigits,
@@ -231,30 +223,21 @@ const AnimatedNumber: React.FC<AnimatedNumberProps> = ({
   return <span className={className}>{display}</span>;
 };
 
-/* ====================== Types & Data ====================== */
-type Doctor = {
-  id: string;
-  name: string;
-  tagline: string;
-  langs: string;
-  bio: string;
-  photo?: string | StaticImageData;
-};
-
+/* ====================== Mission ====================== */
 function Mission() {
   const { t } = useTranslation();
   return (
-    <section style={{ backgroundColor: PALETTE.cream }}>
+    <section style={{ backgroundColor: PALETTE[1].base }}>
       <div className="max-w-7xl mx-auto px-6 py-16">
         <h2
           className="text-2xl md:text-3xl font-extrabold mb-5"
-          style={{ color: PALETTE.dark }}
+          style={{ color: PALETTE[0].text }}
         >
           {t("about.mission")}
         </h2>
         <div
           className="prose max-w-none leading-relaxed"
-          style={{ color: PALETTE.olive }}
+          style={{ color: `${PALETTE[0].text}cc` }}
         >
           <p className="mt-0 mb-6 text-lg">{t("mission.text1")}</p>
           <p className="mt-0 text-lg">{t("mission.text2")}</p>
@@ -271,8 +254,7 @@ export default function AboutUs() {
   const { t } = useTranslation();
   const sectionRef = useRef<HTMLElement>(null);
 
-  // Lista de doctores traducida
-  const DOCTORS: Doctor[] = useMemo(
+  const DOCTORS = useMemo(
     () => [
       {
         id: "dr-Jaime-acosta",
@@ -295,18 +277,18 @@ export default function AboutUs() {
   );
 
   return (
-    <main style={{ backgroundColor: PALETTE.cream }}>
+    <main style={{ backgroundColor: "#FFFFFF" }}>
       {/* Hero / About */}
       <section
         ref={heroRef}
         className="relative pt-30 md:pt-20 mb-20"
-        style={{ backgroundColor: PALETTE.cream }}
+        style={{ backgroundColor: "#FFFFFF" }}
       >
         <div className="relative z-10 max-w-7xl mx-auto px-6 pt-20">
           <Reveal y={8}>
             <p
               className="text-xs font-semibold tracking-[0.2em] uppercase mb-3"
-              style={{ color: PALETTE.moss }}
+              style={{ color: BRAND.accent }}
             >
               {t("about.pretitle")}
             </p>
@@ -315,7 +297,7 @@ export default function AboutUs() {
           <Reveal y={12} delay={60}>
             <h1
               className="text-4xl md:text-5xl font-extrabold leading-[1.1] mb-5"
-              style={{ color: PALETTE.dark }}
+              style={{ color: PALETTE[0].text }}
             >
               {t("about.title.detail")}
             </h1>
@@ -324,7 +306,7 @@ export default function AboutUs() {
           <Reveal y={14} delay={120}>
             <p
               className="text-lg leading-relaxed max-w-none"
-              style={{ color: PALETTE.olive }}
+              style={{ color: "#275E71" }}
             >
               {t("about.text1.detail")}
             </p>
@@ -333,7 +315,7 @@ export default function AboutUs() {
           <Reveal y={14} delay={120}>
             <p
               className="text-lg leading-relaxed max-w-none mt-2"
-              style={{ color: PALETTE.olive }}
+              style={{ color: "#275E71" }}
             >
               {t("about.text2.detail")}
             </p>
@@ -342,7 +324,7 @@ export default function AboutUs() {
           <Reveal y={14} delay={120}>
             <p
               className="text-lg leading-relaxed max-w-none mt-2"
-              style={{ color: PALETTE.olive }}
+              style={{ color: "#275E71" }}
             >
               {t("about.text3.detail")}
             </p>
@@ -354,8 +336,8 @@ export default function AboutUs() {
                 href="/contact"
                 className="inline-flex items-center gap-2 rounded-sm px-6 py-3 font-semibold shadow-lg transition hover:scale-105"
                 style={{
-                  backgroundColor: PALETTE.olive,
-                  color: PALETTE.cream,
+                  backgroundColor: PALETTE[4].base,   // #F3A96C
+                  color: PALETTE[4].text,             // #001219
                 }}
               >
                 {t("about.cta2.detail")}
@@ -366,9 +348,10 @@ export default function AboutUs() {
                 href="#equipo"
                 className="inline-flex items-center gap-2 rounded-sm px-6 py-3 font-semibold shadow-sm transition hover:scale-105"
                 style={{
-                  backgroundColor: PALETTE.ochre,
-                  color: PALETTE.dark,
+                  backgroundColor: "#FFE3A7",
+                  color: "#001219",
                 }}
+
               >
                 {t("about.cta1.detail")}
               </Link>
@@ -380,36 +363,37 @@ export default function AboutUs() {
               <div className="flex flex-col items-start">
                 <span
                   className="tabular-nums text-3xl md:text-4xl font-extrabold"
-                  style={{ color: PALETTE.wine }}
+                  style={{ color: BRAND.cta }}
                 >
                   +
                   <AnimatedNumber
-                    end={10000}
+                    end={10}
+                    suffix="k"
                     compact
                     durationMs={900}
                     delayMs={120}
                     play={heroInView}
                   />
                 </span>
-                <span className="mt-1 text-sm" style={{ color: PALETTE.olive }}>
+                <span className="mt-1 text-sm" style={{ color: "#275E71" }}>
                   {t("about.stats.families")}
                 </span>
               </div>
 
               <span
                 className="hidden sm:block h-10 w-px"
-                style={{ backgroundColor: PALETTE.olive }}
+                style={{ backgroundColor: `${PALETTE[0].text}22` }}
               />
 
               <div className="flex flex-col items-start">
                 <span
                   className="tabular-nums text-3xl md:text-4xl font-extrabold"
-                  style={{ color: PALETTE.wine }}
+                  style={{ color: BRAND.cta }}
                 >
                   +
                   <AnimatedNumber end={20} durationMs={800} play={heroInView} />
                 </span>
-                <span className="mt-1 text-sm" style={{ color: PALETTE.olive }}>
+                <span className="mt-1 text-sm" style={{ color: "#275E71" }}>
                   {t("about.stats.experience")}
                 </span>
               </div>
@@ -421,25 +405,24 @@ export default function AboutUs() {
       {/* Misión */}
       <Mission />
 
-      {/* Doctores / Providers */}
-      {/* Doctores / Providers */}
+      {/* Doctores */}
       <section
         id="equipo"
         ref={sectionRef}
         className="relative z-10 py-14 md:py-20 scroll-mt-10"
-        style={{ backgroundColor: PALETTE.cream }}
+        style={{ backgroundColor: "#FFFFFF" }}
       >
         <div className="max-w-7xl mx-auto px-6">
           <Reveal y={10}>
             <h2
               className="text-2xl md:text-3xl font-extrabold mb-3"
-              style={{ color: PALETTE.dark }}
+              style={{ color: PALETTE[0].text }}
             >
               {t("providers.title")}
             </h2>
           </Reveal>
           <Reveal y={12}>
-            <p style={{ color: PALETTE.olive, marginBottom: "2rem" }}>
+            <p style={{ color: "#275E71", marginBottom: "2rem" }}>
               {t("about.equipo")}
             </p>
           </Reveal>
@@ -448,20 +431,20 @@ export default function AboutUs() {
             {DOCTORS.map((d, i) => (
               <Reveal key={d.id} y={12} delay={i * 90}>
                 <article
-                  className="group relative rounded-xl p-6 transition h-full flex flex-col shadow-sm hover:shadow-md"
+                  className="group relative rounded-xl p-6 transition h-full flex flex-col hover:shadow-md"
                   style={{
-                    backgroundColor: PALETTE.cream, // mismo fondo
-                    border: `1px solid ${PALETTE.olive}40`, // borde semitransparente
+                    backgroundColor: "#FFFFFF",
+                    border: `1px solid ${PALETTE[0].text}12`,
                     boxShadow:
-                      "0 2px 6px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.06)", // sombra sutil
+                      "0 2px 6px rgba(0,0,0,0.03), 0 4px 12px rgba(0,0,0,0.04)",
                   }}
                 >
                   <div className="flex items-start gap-4">
                     <div
                       className="relative h-24 w-24 rounded-xl overflow-hidden shrink-0 ring-1"
                       style={{
-                        backgroundColor: `${PALETTE.olive}15`,
-                        borderColor: `${PALETTE.olive}33`,
+                        backgroundColor: `${PALETTE[0].text}05`,
+                        borderColor: `${PALETTE[0].text}12`,
                       }}
                     >
                       {d.photo ? (
@@ -474,25 +457,28 @@ export default function AboutUs() {
                       ) : (
                         <div
                           className="grid place-items-center h-full w-full text-[11px]"
-                          style={{ color: `${PALETTE.dark}99` }}
+                          style={{ color: `${PALETTE[0].text}99` }}
                         >
-                          Añade foto
+
                         </div>
                       )}
                     </div>
                     <div>
                       <h3
                         className="text-lg font-extrabold"
-                        style={{ color: PALETTE.dark }}
+                        style={{ color: PALETTE[0].text }}
                       >
                         {d.name}
                       </h3>
-                      <p className="text-sm" style={{ color: PALETTE.olive }}>
+                      <p
+                        className="text-sm"
+                        style={{ color: "#275E71" }}
+                      >
                         {d.tagline}
                       </p>
                       <p
                         className="mt-1 text-[13px]"
-                        style={{ color: `${PALETTE.dark}99` }}
+                        style={{ color: `${PALETTE[0].text}99` }}
                       >
                         {d.langs}
                       </p>
@@ -501,7 +487,7 @@ export default function AboutUs() {
 
                   <p
                     className="mt-4 leading-relaxed"
-                    style={{ color: PALETTE.dark }}
+                    style={{ color: `${PALETTE[0].text}dd` }}
                   >
                     {((bio) => {
                       const MAX = 150;
@@ -516,8 +502,8 @@ export default function AboutUs() {
                       href={`/provider/${d.id}`}
                       className="inline-flex items-center rounded-sm px-4 py-2 text-sm font-semibold shadow transition hover:scale-[1.02]"
                       style={{
-                        backgroundColor: PALETTE.olive,
-                        color: PALETTE.cream,
+                        backgroundColor: PALETTE[0].back,
+                        color: "#FFFFFF",
                       }}
                       aria-label={`Agendar cita con ${d.name}`}
                     >
@@ -530,7 +516,6 @@ export default function AboutUs() {
           </div>
         </div>
       </section>
-
     </main>
   );
 }

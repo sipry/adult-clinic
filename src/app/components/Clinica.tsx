@@ -12,16 +12,7 @@ import oficina4 from "@/../public/assets/images/oficina-4.jpg";
 import oficina5 from "@/../public/assets/images/oficina-5.jpg";
 import oficina6 from "@/../public/assets/images/oficina-6.jpg";
 
-/* 🎨 Paleta pictórica */
-const PALETTE = {
-  amber: "#B67B39",
-  moss: "#7C8C4D",
-  wine: "#812D20",
-  ochre: "#D8C27A",
-  olive: "#4F5635",
-  cream: "#FAF4E6",
-  dark: "#2B2725",
-};
+import { PALETTE, BRAND, getPaletteColor } from "@/app/ui/palette"; // 👈 misma paleta
 
 /* -------------------- Datos -------------------- */
 const defaultImages = [
@@ -63,7 +54,10 @@ function useInOutViewport<T extends HTMLElement>(
       const vw = window.innerWidth || document.documentElement.clientWidth;
       return r.top < vh && r.bottom > 0 && r.left < vw && r.right > 0;
     };
-    const check = () => { raf = 0; setInView(visibleNow()); };
+    const check = () => {
+      raf = 0;
+      setInView(visibleNow());
+    };
     if ("IntersectionObserver" in window) {
       io = new IntersectionObserver(
         (ents) => ents.forEach((e) => setInView(e.isIntersecting || e.intersectionRatio > 0)),
@@ -72,7 +66,9 @@ function useInOutViewport<T extends HTMLElement>(
       io.observe(el);
     }
     raf = requestAnimationFrame(check);
-    const onScroll = () => { if (!raf) raf = requestAnimationFrame(check); };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(check);
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     return () => {
@@ -123,11 +119,11 @@ const Reveal: React.FC<RevealProps> = ({
   const style: React.CSSProperties = reduce
     ? {}
     : {
-      opacity: shown ? 1 : 0,
-      transform: shown ? "none" : `translate(${x}px, ${y}px) scale(${scale})`,
-      transition: `opacity ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms, transform ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms`,
-      willChange: "opacity, transform",
-    };
+        opacity: shown ? 1 : 0,
+        transform: shown ? "none" : `translate(${x}px, ${y}px) scale(${scale})`,
+        transition: `opacity ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms, transform ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms`,
+        willChange: "opacity, transform",
+      };
 
   return (
     <div ref={ref} className={className} style={style} aria-hidden={!shown}>
@@ -164,10 +160,7 @@ export default function SeccionOficinaPediatra({
     const firstCard = ul.querySelector<HTMLElement>(".card");
     const cardW = firstCard?.getBoundingClientRect().width ?? 0;
     const cs = getComputedStyle(ul);
-    const gap =
-      parseFloat(cs.columnGap || "0") ||
-      parseFloat(cs.gap || "0") ||
-      16;
+    const gap = parseFloat(cs.columnGap || "0") || parseFloat(cs.gap || "0") || 16;
     setStep(cardW + gap);
   }, []);
 
@@ -231,24 +224,29 @@ export default function SeccionOficinaPediatra({
     el.scrollTo({ left: target, behavior: "smooth" });
   };
 
+  // Colores tomados de la paleta
+  const headerAccent = BRAND.accent;
+  const titleColor = BRAND.title;
+  const bgColor = BRAND.bg;
+  const panelBg = `${PALETTE[0].base}33`; // turquesa pastel translúcido
+
   return (
     <div
       className="relative w-full overflow-hidden"
       style={{
-        backgroundColor: PALETTE.cream,
-        color: PALETTE.cream,
+        backgroundColor: bgColor,
       }}
     >
       <section
         id="gallery"
         className="relative z-10 pt-24 pb-10 scroll-mt-10"
-        aria-label="Oficina física de la pediatra"
+        aria-label="Oficina física"
       >
         <div className="text-center mb-6 mx-auto max-w-7xl lg:px-8 px-4 sm:px-6">
           <Reveal y={8} delay={0}>
             <p
               className="text-xs font-semibold tracking-[0.2em] uppercase mb-3"
-              style={{ color: PALETTE.ochre }}
+              style={{ color: headerAccent }}
             >
               {t("clinic.pretitle")}
             </p>
@@ -256,47 +254,53 @@ export default function SeccionOficinaPediatra({
           <Reveal y={12} delay={70}>
             <h2
               className="mt-6 mb-6 text-4xl md:text-5xl font-bold leading-tight"
-              style={{ color: PALETTE.dark }}
+              style={{ color: titleColor }}
             >
               {t("clinic.title")}
             </h2>
           </Reveal>
 
           <Reveal y={14} delay={140}>
-            <div className="mt-3 flex items-center justify-center gap-2 mb-15">
+            <div className="mt-3 flex flex-wrap items-center justify-center gap-3 mb-15">
+              {/* CTA principal pastel durazno */}
               <Link
                 href={"/gallery"}
-                className="font-semibold px-10 py-3 md:px-16 rounded-sm transition-all inline-flex items-center gap-2 text-sm hover:scale-105"
+                className="font-semibold px-10 py-3 md:px-16 rounded-md transition-all inline-flex items-center gap-2 text-sm hover:scale-105 shadow-sm"
                 style={{
-                  backgroundColor: PALETTE.wine,
-                  color: PALETTE.cream,
+                  backgroundColor: PALETTE[4].base,
+                  color: PALETTE[4].text,
+                  border: `1px solid ${PALETTE[4].back}`,
                 }}
               >
                 <span>{t("clinic.cta")}</span>
                 <ChevronRight className="w-4 h-4" />
               </Link>
 
+              {/* prev */}
               <button
                 type="button"
                 onClick={() => scrollOne(-1)}
                 aria-label="Foto anterior"
-                className="font-semibold px-10 py-3 md:px-10 rounded-sm transition-all inline-flex items-center gap-2 text-sm hover:scale-105"
+                className="font-semibold px-10 py-3 md:px-10 rounded-md transition-all inline-flex items-center gap-2 text-sm hover:scale-105 border shadow-sm"
                 style={{
-                  backgroundColor: PALETTE.olive,
-                  color: PALETTE.cream,
+                  backgroundColor: PALETTE[1].base,
+                  color: PALETTE[1].text,
+                  border: `1px solid ${PALETTE[1].back}`,
                 }}
               >
                 <ChevronLeft className="w-4 h-5" />
               </button>
 
+              {/* next */}
               <button
                 type="button"
                 onClick={() => scrollOne(1)}
                 aria-label="Foto siguiente"
-                className="font-semibold px-10 py-3 md:px-10 rounded-sm transition-all inline-flex items-center gap-2 text-sm hover:scale-105"
+                className="font-semibold px-10 py-3 md:px-10 rounded-md transition-all inline-flex items-center gap-2 text-sm hover:scale-105 border shadow-sm"
                 style={{
-                  backgroundColor: PALETTE.olive,
-                  color: PALETTE.cream,
+                  backgroundColor: PALETTE[1].base,
+                  color: PALETTE[1].text,
+                  border: `1px solid ${PALETTE[1].back}`,
                 }}
               >
                 <ChevronRight className="w-4 h-5" />
@@ -313,7 +317,9 @@ export default function SeccionOficinaPediatra({
             role="region"
             aria-label="Galería de fotos infinita"
             tabIndex={0}
+           
           >
+            {/* tira oculta para medir */}
             <ul ref={baseStripRef} className="strip measure-only" aria-hidden="true">
               {images.map((img, i) => (
                 <li key={`base-${i}`} className="card">
@@ -327,19 +333,25 @@ export default function SeccionOficinaPediatra({
             <div className="repeat-row" aria-label="Fotos">
               {Array.from({ length: REPEAT }).map((_, r) => (
                 <ul key={`rep-${r}`} className="strip">
-                  {images.map((img, i) => (
-                    <li key={`rep-${r}-${i}`} className="card">
-                      <figure className="card-frame">
-                        <img
-                          src={img.src}
-                          alt={img.alt}
-                          loading="lazy"
-                          decoding="async"
-                          className="card-img"
-                        />
-                      </figure>
-                    </li>
-                  ))}
+                  {images.map((img, i) => {
+                    const color = getPaletteColor(i);
+                    return (
+                      <li key={`rep-${r}-${i}`} className="card">
+                        <figure
+                          className="card-frame"
+                          
+                        >
+                          <img
+                            src={img.src}
+                            alt={img.alt}
+                            loading="lazy"
+                            decoding="async"
+                            className="card-img"
+                          />
+                        </figure>
+                      </li>
+                    );
+                  })}
                 </ul>
               ))}
             </div>
@@ -368,7 +380,7 @@ export default function SeccionOficinaPediatra({
             border-radius: 22px;
             background: white;
             box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-            border: 1px solid rgba(226,232,240,0.8);
+            border: 2px solid rgba(226,232,240,0.8);
             display: grid;
             place-items: center;
           }

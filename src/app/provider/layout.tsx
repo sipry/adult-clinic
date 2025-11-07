@@ -19,7 +19,7 @@ export default function ProvidersLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-[#FAF4E6]">
+    <div className="min-h-screen bg-white">
       <ClientTranslationProvider>
         <Navbar scheme="white"/>
         <main className="mx-auto max-w-7xl px-6 pb-16 lg:px-8">
