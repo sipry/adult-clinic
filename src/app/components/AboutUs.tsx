@@ -273,7 +273,7 @@ export const AboutUsProfessional: React.FC = () => {
                   <Reveal key={logo} y={8} delay={280 + i * 80}>
                     <span
                       className="text-sm font-semibold"
-                      style={{ color: "rgba(0,0,0,0.8)" }}
+                      style={{ color: "rgba(0, 18, 25, 0.6)" }}
                     >
                       {logo}
                     </span>

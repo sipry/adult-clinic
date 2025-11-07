@@ -218,7 +218,7 @@ const CompactMedicalPlans: React.FC = () => {
                           <span
                             key={name}
                             className="text-sm font-semibold"
-                            style={{ color: "rgba(0, 18, 25, 0.6)" }} // opacidad: 60%
+                            style={{ color: "rgba(0, 18, 25, 0.6)" }} // opacity: 60%
                           >
                             {name}
                           </span>

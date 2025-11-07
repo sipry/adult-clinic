@@ -1,4 +1,4 @@
-import doctorAvatar from "@/../public/assets/images/avatar.jpg";
+import doctorAvatar from "@/../public/assets/images/Jaime.jpg";
 import maleAvatar from "@/../public/assets/images/Juan.jpg";
 import { useTranslation } from "../contexts/TranslationContext";
 

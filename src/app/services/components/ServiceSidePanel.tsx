@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef } from "react";
-import { X } from "lucide-react";
+import React, { useEffect, useRef } from "react";
+import { X, Stethoscope, Syringe, Shield, Activity, HeartPulse, Eye, Brain } from "lucide-react";
 
 // i18n exclusivo del panel
 import {
@@ -13,17 +13,6 @@ import {
   svcFaqs,
   format,
 } from "../i18n/serviceDetails.i18n";
-
-// 🩺 mismos íconos que las tarjetas
-import {
-  Stethoscope,
-  Syringe,
-  Shield,
-  Activity,
-  HeartPulse,
-  Eye,
-  Brain,
-} from "lucide-react";
 
 /* 🎨 Pasteles */
 const PASTEL = {
@@ -37,8 +26,11 @@ const PASTEL = {
   cta: "#0A9396",
 };
 
+// 👉 tipo común para los íconos del panel
+type ServiceIcon = React.ComponentType<React.SVGProps<SVGSVGElement>>;
+
 // 👉 el panel sabe resolver el icono por id
-const PANEL_ICONS: Record<ServiceId, React.ComponentType<any>> = {
+const PANEL_ICONS: Record<ServiceId, ServiceIcon> = {
   "preventive-medicine": Stethoscope,
   "adult-immunizations": Syringe,
   "minor-illness": Shield,
@@ -50,14 +42,12 @@ const PANEL_ICONS: Record<ServiceId, React.ComponentType<any>> = {
 
 /* ==================== Tipos ==================== */
 export type ServiceDetailsBasic = {
-  id: ServiceId; // 👈 ahora sí lo tipamos con los ids del i18n
+  id: string;
   title: string;
   description: string;
   longDescription?: string;
   tags?: string[];
-  /** si la tarjeta manda el icono directo */
-  icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-  /** badge que viene de la tarjeta ("Most requested", "Nuevo", etc.) */
+  icon?: ServiceIcon;
   badge?: string;
 };
 
@@ -74,7 +64,7 @@ let __scrollLocks = 0;
 function lockScroll() {
   const html = document.documentElement;
   const body = document.body;
-  __scrollLocks++;
+  __scrollLocks += 1;
   if (__scrollLocks === 1) {
     html.style.overflowY = "hidden";
     body.style.overflowY = "hidden";
@@ -91,8 +81,11 @@ function unlockScroll() {
 }
 function useLockBody(lock: boolean) {
   useEffect(() => {
-    if (lock) lockScroll();
-    else unlockScroll();
+    if (lock) {
+      lockScroll();
+    } else {
+      unlockScroll();
+    }
     return () => unlockScroll();
   }, [lock]);
 }
@@ -143,11 +136,12 @@ export default function ServiceDetailsPanel({
       const t = setTimeout(() => closeBtnRef.current?.focus(), 0);
       return () => clearTimeout(t);
     }
+    return undefined;
   }, [open]);
 
   // esc para cerrar
   useEffect(() => {
-    if (!open) return;
+    if (!open) return undefined;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
@@ -159,16 +153,19 @@ export default function ServiceDetailsPanel({
   const onTrapFocus = (which: "start" | "end") => {
     if (!open) return;
     if (which === "start") {
-      endTrapRef.current?.previousElementSibling instanceof HTMLElement
-        ? (endTrapRef.current.previousElementSibling as HTMLElement).focus()
-        : closeBtnRef.current?.focus();
+      const prev = endTrapRef.current?.previousElementSibling;
+      if (prev instanceof HTMLElement) {
+        prev.focus();
+      } else {
+        closeBtnRef.current?.focus();
+      }
     } else {
       closeBtnRef.current?.focus();
     }
   };
 
   // 👇 si no hay servicio, evitamos calcular todo
-  const sid = (service?.id as ServiceId) || null;
+  const sid: ServiceId | null = service?.id ? (service.id as ServiceId) : null;
 
   // ===== textos del i18n usando el id que viene de la tarjeta
   const title =
@@ -194,8 +191,8 @@ export default function ServiceDetailsPanel({
   const faqs = sid ? svcFaqs(locale, sid) : [];
 
   // icono: 1) lo mandó la tarjeta 2) lo buscamos por id
-  const Icon =
-    service?.icon || (sid ? PANEL_ICONS[sid] : undefined) || undefined;
+  const Icon: ServiceIcon | undefined =
+    service?.icon || (sid ? PANEL_ICONS[sid] : undefined);
 
   return (
     <>
@@ -291,6 +288,7 @@ export default function ServiceDetailsPanel({
               onClick={onClose}
               className="inline-flex h-9 w-9 items-center justify-center rounded-sm hover:bg-black/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#9ADAD8]"
               aria-label={panelT(locale, "close")}
+              type="button"
             >
               <X className="h-5 w-5" style={{ color: PASTEL.text }} />
             </button>
@@ -391,6 +389,7 @@ export default function ServiceDetailsPanel({
                 <div className="space-y-3">
                   {faqs.map((f, i) => (
                     <details
+                      // eslint-disable-next-line react/no-array-index-key
                       key={`${f.q}-${i}`}
                       className="rounded-md border border-[#F0E3CE] bg-white/60 p-3"
                     >
