@@ -79,8 +79,8 @@ function useInOutViewport<T extends HTMLElement>(
 
 const Footer: React.FC = () => {
   const year = new Date().getFullYear();
-  const FACEBOOK_URL = "#";
-  const INSTAGRAM_URL = "#";
+  const FACEBOOK_URL = "https://www.facebook.com/";
+  const INSTAGRAM_URL = "https://www.instagram.com/";
   const ADDRESS = "201 Hilda St Suite 15, Kissimmee, FL 34741, United States";
   const mapQuery = React.useMemo(() => encodeURIComponent(ADDRESS), [ADDRESS]);
   const MAP_EMBED_SRC = `https://www.google.com/maps?q=${mapQuery}&output=embed`;

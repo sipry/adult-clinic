@@ -7,7 +7,8 @@ import { useProvidersData } from "../data";
 import { useTranslation } from "@/app/contexts/TranslationContext";
 import InsuranceDoctorModal from "../components/InsuranceDoctorModal";
 import { PALETTE, BRAND } from "@/app/ui/palette";
-import { Linkedin, FlaskConical } from "lucide-react"; // 👈 nuevos
+import { Linkedin } from "lucide-react";
+
 
 /* ============ Subcomponentes ============ */
 const Section = ({
@@ -193,6 +194,91 @@ export default function ProviderDetailPage() {
                 {p.title}
               </p>
 
+              {/* botones de RG y Linkedin */}
+              <div className="mt-2 flex gap-3 ">
+                {/* reasearch gate */}
+                <a
+                  href="https://www.researchgate.net/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Ir a ResearchGate"
+                  className="inline-block"
+                >
+                  <span
+                    className="inline-flex items-center justify-center transition-transform duration-150 hover:scale-[1.04]"
+                    style={{
+                      width: "48px",
+                      height: "48px",
+                      borderRadius: "14px",
+                      backgroundColor: '#74CDBD',
+                      border: "3px solid #FFFFFF",
+                      position: "relative",
+                      boxSizing: "border-box",
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: "#FFFFFF",
+                        fontFamily: "serif",
+                        fontSize: "22px",
+                        lineHeight: 1,
+                        fontWeight: 500,
+                      }}
+                    >
+                      R
+                    </span>
+                    <span
+                      style={{
+                        position: "absolute",
+                        top: "6px",
+                        right: "8px",
+                        color: "#FFFFFF",
+                        fontFamily: "serif",
+                        fontSize: "11px",
+                        lineHeight: 1,
+                        fontWeight: 500,
+                      }}
+                    >
+                      G
+                    </span>
+                  </span>
+                </a>
+                {/* LinkedIn */}
+                <a
+                  href="https://www.linkedin.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Ir a LinkedIn"
+                  className="inline-block"
+                >
+                  <span
+                    className="inline-flex items-center justify-center transition-transform duration-150 hover:scale-[1.04]"
+                    style={{
+                      width: "48px",
+                      height: "48px",
+                      borderRadius: "14px",
+                      backgroundColor: '#0A66C2',
+                      border: "3px solid #FFFFFF", // como el de RG
+                      boxSizing: "border-box",
+                      position: "relative",
+                    }}
+                  >
+                    {/* "in" de LinkedIn */}
+                    <span
+                      style={{
+                        color: "#FFFFFF",
+                        fontWeight: 700,
+                        fontSize: "18px",
+                        lineHeight: 1,
+                        fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+                      }}
+                    >
+                      in
+                    </span>
+                  </span>
+                </a>
+              </div>
+
               {/* info extra */}
               {p.languages && (
                 <div className="mt-4">
@@ -217,123 +303,48 @@ export default function ProviderDetailPage() {
               )}
 
               {/* BOTONES PRINCIPALES */}
-            {/* BOTONES PRINCIPALES */}
-<div className="mt-6 flex flex-col gap-2">
-  {/* 1. schedule */}
-  <Link
-    href="/contact"
-    className="inline-flex w-full items-center justify-center rounded-lg px-4 py-3 text-sm font-semibold transition hover:scale-[1.02]"
-    style={{
-      backgroundColor: PALETTE[0].base,
-      color: BRAND.text,
-      border: `1px solid ${PALETTE[0].back}`,
-      boxShadow: "0 3px 8px rgba(0,0,0,0.05)",
-    }}
-  >
-    {t("about.cta2.detail")}
-  </Link>
+              <div className="mt-6 flex flex-col gap-2">
+                {/* 1. schedule */}
+                <Link
+                  href="/contact"
+                  className="inline-flex w-full items-center justify-center rounded-lg px-4 py-3 text-sm font-semibold transition hover:scale-[1.02]"
+                  style={{
+                    backgroundColor: PALETTE[0].base,
+                    color: BRAND.text,
+                    border: `1px solid ${PALETTE[0].back}`,
+                    boxShadow: "0 3px 8px rgba(0,0,0,0.05)",
+                  }}
+                >
+                  {t("about.cta2.detail")}
+                </Link>
 
-  {/* 2. see all services */}
-  <a
-    href="/services"
-    className="inline-flex w-full items-center justify-center rounded-lg px-4 py-3 text-sm font-medium transition hover:scale-[1.01]"
-    style={{
-      backgroundColor: "#FFFFFF",
-      color: BRAND.text,
-      border: `1px solid ${BRAND.accent}22`,
-    }}
-  >
-    {t("service.seeAll.button")}
-  </a>
+                {/* 2. see all services */}
+                <a
+                  href="/services"
+                  className="inline-flex w-full items-center justify-center rounded-lg px-4 py-3 text-sm font-medium transition hover:scale-[1.01]"
+                  style={{
+                    backgroundColor: "#FFFFFF",
+                    color: BRAND.text,
+                    border: `1px solid ${BRAND.accent}22`,
+                  }}
+                >
+                  {t("service.seeAll.button")}
+                </a>
 
-  {/* 3. insurance */}
-  <button
-    type="button"
-    onClick={() => setInsuranceOpen(true)}
-    className="inline-flex w-full items-center justify-center rounded-lg px-4 py-3 text-sm font-medium transition hover:scale-[1.01]"
-    style={{
-      backgroundColor: "#FFFFFF",
-      color: BRAND.text,
-      border: `1px solid ${BRAND.accent}22`,
-    }}
-  >
-    {t("provider.see.insurance")}
-  </button>
-
-  {/* 4. fila 50/50 con marcas en pastel */}
-  <div className="flex gap-2">
-    {/* ResearchGate pastel */}
-    <a
-      href={p.researchGate ?? "#"}
-      target={p.researchGate ? "_blank" : undefined}
-      rel={p.researchGate ? "noopener noreferrer" : undefined}
-      className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2.5 text-xs font-medium transition hover:scale-[1.01]"
-      style={{
-        backgroundColor: "#B8EEE8", // RG pastel
-        color: "#001219",
-        border: "1px solid rgba(0,18,25,0.03)",
-      }}
-    >
-      <FlaskConical className="h-4 w-4" aria-hidden />
-      ResearchGate
-    </a>
-
-    {/* LinkedIn pastel */}
-    <a
-      href={p.linkedIn ?? "#"}
-      target={p.linkedIn ? "_blank" : undefined}
-      rel={p.linkedIn ? "noopener noreferrer" : undefined}
-      className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2.5 text-xs font-medium transition hover:scale-[1.01]"
-      style={{
-        backgroundColor: "#B7D7EA", // LinkedIn pastel
-        color: "#001219",
-        border: "1px solid rgba(0,18,25,0.03)",
-      }}
-    >
-      <Linkedin className="h-4 w-4" aria-hidden />
-      LinkedIn
-    </a>
-  </div>
-
-{/* 5. versión circular / pastel */}
-<div className="mt-2 flex gap-3 justify-center">
-  {/* RG circular */}
-  <a
-    href={p.researchGate ?? "#"}
-    target={p.researchGate ? "_blank" : undefined}
-    rel={p.researchGate ? "noopener noreferrer" : undefined}
-    className="inline-flex h-10 w-10 items-center justify-center rounded-full shadow-sm transition hover:scale-[1.04]"
-    style={{
-      backgroundColor: "#B8EEE8", // RG pastel
-      border: "1px solid rgba(0,18,25,0.04)",
-      color: "#001219",
-    }}
-    aria-label="ResearchGate"
-  >
-    <FlaskConical className="h-4 w-4" aria-hidden />
-  </a>
-
-  {/* LinkedIn pill con texto */}
-  <a
-    href={p.linkedIn ?? "#"}
-    target={p.linkedIn ? "_blank" : undefined}
-    rel={p.linkedIn ? "noopener noreferrer" : undefined}
-    className="inline-flex h-10 items-center gap-2 rounded-full px-4 shadow-sm transition hover:scale-[1.04]"
-    style={{
-      backgroundColor: "#B7D7EA", // LinkedIn pastel
-      border: "1px solid rgba(0,18,25,0.04)",
-      color: "#001219",
-      fontSize: "0.7rem",
-      fontWeight: 500,
-    }}
-  >
-    <Linkedin className="h-4 w-4" aria-hidden />
-    LinkedIn
-  </a>
-</div>
-
-
-</div>
+                {/* 3. insurance */}
+                <button
+                  type="button"
+                  onClick={() => setInsuranceOpen(true)}
+                  className="inline-flex w-full items-center justify-center rounded-lg px-4 py-3 text-sm font-medium transition hover:scale-[1.01]"
+                  style={{
+                    backgroundColor: "#FFFFFF",
+                    color: BRAND.text,
+                    border: `1px solid ${BRAND.accent}22`,
+                  }}
+                >
+                  {t("provider.see.insurance")}
+                </button>
+              </div>
 
 
             </div>
@@ -363,41 +374,11 @@ export default function ProviderDetailPage() {
                 </div>
               )}
 
-            {educationList.length > 0 && (
-  <Section title="Education">
-    <Bullet items={educationList} />
-
-{/* fila de botones de ejemplo */}
-<div className="mt-8 flex gap-2">
-  {/* ResearchGate pastel */}
-  <a
-    href={p.researchGate ?? "#"}
-    className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2 text-xs font-medium transition hover:scale-[1.01]"
-    style={{
-      backgroundColor: "#B8EEE8",             // verde agua pastel
-      border: "1px solid rgba(0,18,25,0.03)",
-      color: "#001219",
-    }}
-  >
-    ResearchGate
-  </a>
-
-  {/* LinkedIn pastel */}
-  <a
-    href={p.linkedIn ?? "#"}
-    className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2 text-xs font-medium transition hover:scale-[1.01]"
-    style={{
-      backgroundColor: "#B7D7EA",             // azul linkedin pastel
-      border: "1px solid rgba(0,18,25,0.03)",
-      color: "#001219",
-    }}
-  >
-    LinkedIn
-  </a>
-</div>
-
-  </Section>
-)}
+              {educationList.length > 0 && (
+                <Section title="Education">
+                  <Bullet items={educationList} />
+                </Section>
+              )}
 
             </div>
           </main>
