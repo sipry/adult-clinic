@@ -570,7 +570,7 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'providers.dr1.specialty3': 'Adolescent Medicine',
     'providers.dr1.experience': '20+ years of experience',
     'providers.dr1.languages': 'Language: Spanish, English',
-    'providers.dr2.title': 'Geriatrician',
+    'providers.dr2.title': 'Primary care physician and geriatrician',
     'providers.dr2.education': 'Dr. Ortiz Guevara graduated from the Universidad Central del Este (UCE) School of Medicine in the Dominican Republic in 1978 and worked for many years in Puerto Rico. He specializes in Family Medicine and Geriatric Medicine and is affiliated with AdventHealth Network. He is currently accepting new patients.',
     'providers.dr2.specialty1': 'General Pediatric Medicine',
     'providers.dr2.specialty2': 'Sports Physicals',
