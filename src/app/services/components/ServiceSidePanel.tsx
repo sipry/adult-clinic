@@ -15,7 +15,7 @@ import {
   format,
 } from "../i18n/serviceDetails.i18n";
 
-// 👉 tipo común para los íconos del panel
+
 type ServiceIcon = React.ComponentType<React.SVGProps<SVGSVGElement>>;
 
 // 👉 el panel sabe resolver el icono por id

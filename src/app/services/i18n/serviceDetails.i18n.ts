@@ -99,7 +99,7 @@ const DICT: Record<
         duration: "20–30 min",
         includes: [
           "Revisión de historia clínica y medicamentos",
-          "Signos vitales (peso, IMC, presión arterial)",
+          "Signos vitales (peso, presión arterial)",
           "Solicitud de laboratorios según edad y factores de riesgo",
           "Revisión y actualización de vacunas si corresponde",
           "Orientación en estilo de vida (alimentación, actividad)",
@@ -108,7 +108,7 @@ const DICT: Record<
           "Traer lista de medicamentos y suplementos",
           "Traer récord de vacunas si lo tiene",
           "Si le indicaron laboratorios en ayunas, no comer antes",
-          "Llegar 10 minutos antes",
+          "Llegar por lo menos 10 minutos antes",
         ],
         whatToExpect: [
           "Breve revisión de antecedentes y factores de riesgo",
@@ -135,7 +135,7 @@ const DICT: Record<
         ],
         preparation: [
           "Traer tarjeta o historial de vacunas si lo tiene",
-          "Avisar si tiene alergias a medicamentos o a huevos",
+          "Avisar si tiene alergias a medicamentos",
           "Usar ropa que permita descubrir el brazo",
         ],
         whatToExpect: [
