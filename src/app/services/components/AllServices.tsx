@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, type SVGProps, type ComponentType } from "react";
 import {
   Stethoscope,
   Syringe,
@@ -14,15 +14,25 @@ import ServiceDetailsPanel from "../components/ServiceSidePanel";
 import { BRAND, PALETTE } from "@/app/ui/palette";
 import { useTranslation } from "@/app/contexts/TranslationContext";
 
-// 👇 nuestro diccionario específico de servicios
+// i18n de servicios
 import {
   svcStr,
   detectLocaleFromPath,
   type ServiceId,
-} from "../i18n/serviceDetails.i18n"; // ajusta la ruta
+} from "../i18n/serviceDetails.i18n"; 
 
-// íconos por id
-const ICONS: Record<ServiceId, React.ComponentType<any>> = {
+type IconComponent = ComponentType<SVGProps<SVGSVGElement>>;
+
+const SERVICE_IDS: ServiceId[] = [
+  "preventive-medicine",
+  "adult-immunizations",
+  "minor-illness",
+  "minor-injury",
+  "chronic-disease",
+];
+
+// íconos por id, sin any
+const ICONS: Record<ServiceId, IconComponent> = {
   "preventive-medicine": Stethoscope,
   "adult-immunizations": Syringe,
   "minor-illness": Shield,
@@ -43,15 +53,6 @@ const ServicesGrid: React.FC = () => {
     (language as "en" | "es") || detectLocaleFromPath(pathname) || "es";
 
   const detailId = searchParams.get("detail") || "";
-
-  // 👇 SOLO los servicios que dijiste
-  const SERVICE_IDS: ServiceId[] = [
-    "preventive-medicine",
-    "adult-immunizations",
-    "minor-illness",
-    "minor-injury",
-    "chronic-disease",
-  ];
 
   // construimos lista con i18n
   const SERVICES = useMemo(
@@ -77,7 +78,7 @@ const ServicesGrid: React.FC = () => {
   };
 
   const selected =
-    SERVICES.find((s) => s.id === (detailId as ServiceId)) || null;
+    SERVICES.find((s) => s.id === (detailId as ServiceId)) ?? null;
 
   // filtro por buscador
   const filtered = useMemo(() => {
@@ -149,7 +150,7 @@ const ServicesGrid: React.FC = () => {
             const words = s.description ? s.description.split(" ") : [];
             const shortDesc =
               words.length > 20
-                ? words.slice(0, 20).join(" ") + "…"
+                ? `${words.slice(0, 20).join(" ")}…`
                 : s.description;
 
             const color = PALETTE[idx % PALETTE.length];
