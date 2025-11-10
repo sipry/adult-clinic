@@ -224,9 +224,9 @@ export default function ProviderDetailPage() {
     href="/contact"
     className="inline-flex w-full items-center justify-center rounded-lg px-4 py-3 text-sm font-semibold transition hover:scale-[1.02]"
     style={{
-      backgroundColor: PALETTE[4].base,
+      backgroundColor: PALETTE[0].base,
       color: BRAND.text,
-      border: `1px solid ${PALETTE[4].back}`,
+      border: `1px solid ${PALETTE[0].back}`,
       boxShadow: "0 3px 8px rgba(0,0,0,0.05)",
     }}
   >

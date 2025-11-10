@@ -6,19 +6,7 @@ import Image, { type StaticImageData } from "next/image";
 import doctorjaime from "@/../public/assets/images/Jaime.webp";
 import doctorjuan from "@/../public/assets/images/Juan.webp";
 import { useTranslation } from "@/app/contexts/TranslationContext";
-import { BRAND } from "@/app/ui/palette";
-
-/* ====================== Paleta pastel unificada ====================== */
-const PALETTE = [
-  { base: "#9ADAD8", back: "#7EC4C2", text: "#001219" }, // 0 teal pastel
-  { base: "#C8E7DA", back: "#A8D1C2", text: "#001219" }, // 1 mint
-  { base: "#F5EBC6", back: "#EAD7A4", text: "#001219" }, // 2 vanilla
-  { base: "#FFD77A", back: "#EEC46A", text: "#001219" }, // 3 yellow soft
-  { base: "#F3A96C", back: "#E48B4F", text: "#001219" }, // 4 melocotón
-  { base: "#E48C7A", back: "#D67463", text: "#001219" }, // 5 coral suave
-  { base: "#E57B76", back: "#D66A65", text: "#001219" }, // 6 salmón
-  { base: "#DC767B", back: "#C85D61", text: "#001219" }, // 7 rosado/coral
-];
+import { BRAND, PALETTE } from "@/app/ui/palette";
 
 // helper por si Next devuelve string o StaticImageData
 type AssetModule = string | StaticImageData;
@@ -227,17 +215,17 @@ const AnimatedNumber: React.FC<AnimatedNumberProps> = ({
 function Mission() {
   const { t } = useTranslation();
   return (
-    <section style={{ backgroundColor: PALETTE[1].base }}>
+    <section style={{ backgroundColor: PALETTE[0].base }}>
       <div className="max-w-7xl mx-auto px-6 py-16">
         <h2
           className="text-2xl md:text-3xl font-extrabold mb-5"
-          style={{ color: PALETTE[0].text }}
+          style={{ color: BRAND.text }}
         >
           {t("about.mission")}
         </h2>
         <div
           className="prose max-w-none leading-relaxed"
-          style={{ color: `${PALETTE[0].text}cc` }}
+          style={{ color: `${BRAND.text}cc` }}
         >
           <p className="mt-0 mb-6 text-lg">{t("mission.text1")}</p>
           <p className="mt-0 text-lg">{t("mission.text2")}</p>
@@ -299,7 +287,7 @@ export default function AboutUs() {
           <Reveal y={12} delay={60}>
             <h1
               className="text-4xl md:text-5xl font-extrabold leading-[1.1] mb-5"
-              style={{ color: PALETTE[0].text }}
+              style={{ color: BRAND.text }}
             >
               {t("about.title.detail")}
             </h1>
@@ -338,8 +326,8 @@ export default function AboutUs() {
                 href="/contact"
                 className="inline-flex items-center gap-2 rounded-sm px-6 py-3 font-semibold shadow-lg transition hover:scale-105"
                 style={{
-                  backgroundColor: PALETTE[4].base,   // #F3A96C
-                  color: PALETTE[4].text,             // #001219
+                  backgroundColor: PALETTE[0].base, 
+                  color: BRAND.text,             
                 }}
               >
                 {t("about.cta2.detail")}
@@ -350,12 +338,12 @@ export default function AboutUs() {
                 href="#equipo"
                 className="inline-flex items-center gap-2 rounded-sm px-6 py-3 font-semibold shadow-sm transition hover:scale-105"
                 style={{
-                  backgroundColor: "#FFE3A7",
-                  color: "#001219",
+                  backgroundColor: BRAND.accent,
+                  color: BRAND.bg,
                 }}
 
               >
-                {t("about.cta1.detail")}
+                {t("about.cta1.detail")} 
               </Link>
             </Reveal>
           </div>
@@ -384,7 +372,7 @@ export default function AboutUs() {
 
               <span
                 className="hidden sm:block h-10 w-px"
-                style={{ backgroundColor: `${PALETTE[0].text}22` }}
+                style={{ backgroundColor: `${BRAND.text}22` }}
               />
 
               <div className="flex flex-col items-start">
@@ -418,7 +406,7 @@ export default function AboutUs() {
           <Reveal y={10}>
             <h2
               className="text-2xl md:text-3xl font-extrabold mb-3"
-              style={{ color: PALETTE[0].text }}
+              style={{ color: BRAND.text }}
             >
               {t("providers.title")}
             </h2>
@@ -436,7 +424,7 @@ export default function AboutUs() {
                   className="group relative rounded-xl p-6 transition h-full flex flex-col hover:shadow-md"
                   style={{
                     backgroundColor: "#FFFFFF",
-                    border: `1px solid ${PALETTE[0].text}12`,
+                    border: `1px solid ${BRAND.text}12`,
                     boxShadow:
                       "0 2px 6px rgba(0,0,0,0.03), 0 4px 12px rgba(0,0,0,0.04)",
                   }}
@@ -445,8 +433,8 @@ export default function AboutUs() {
                     <div
                       className="relative h-24 w-24 rounded-xl overflow-hidden shrink-0 ring-1"
                       style={{
-                        backgroundColor: `${PALETTE[0].text}05`,
-                        borderColor: `${PALETTE[0].text}12`,
+                        backgroundColor: `${BRAND.text}05`,
+                        borderColor: `${BRAND.text}12`,
                       }}
                     >
                       {d.photo ? (
@@ -459,7 +447,7 @@ export default function AboutUs() {
                       ) : (
                         <div
                           className="grid place-items-center h-full w-full text-[11px]"
-                          style={{ color: `${PALETTE[0].text}99` }}
+                          style={{ color: `${BRAND.text}99` }}
                         >
 
                         </div>
@@ -468,7 +456,7 @@ export default function AboutUs() {
                     <div>
                       <h3
                         className="text-lg font-extrabold"
-                        style={{ color: PALETTE[0].text }}
+                        style={{ color: BRAND.text }}
                       >
                         {d.name}
                       </h3>
@@ -480,7 +468,7 @@ export default function AboutUs() {
                       </p>
                       <p
                         className="mt-1 text-[13px]"
-                        style={{ color: `${PALETTE[0].text}99` }}
+                        style={{ color: `${BRAND.text}99` }}
                       >
                         {d.langs}
                       </p>
@@ -489,7 +477,7 @@ export default function AboutUs() {
 
                   <p
                     className="mt-4 leading-relaxed"
-                    style={{ color: `${PALETTE[0].text}dd` }}
+                    style={{ color: `${BRAND.text}dd` }}
                   >
                     {((bio) => {
                       const MAX = 150;
@@ -505,7 +493,7 @@ export default function AboutUs() {
                       className="inline-flex items-center rounded-sm px-4 py-2 text-sm font-semibold shadow transition hover:scale-[1.02]"
                       style={{
                         backgroundColor: PALETTE[0].back,
-                        color: "#FFFFFF",
+                        color: BRAND.text,
                       }}
                       aria-label={`Agendar cita con ${d.name}`}
                     >

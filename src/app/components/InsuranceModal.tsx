@@ -146,7 +146,7 @@ export default function InsuranceModal({
     <>
       <div
         className="fixed inset-0 z-[120] flex items-center justify-center p-4"
-        style={{ backgroundColor: `${BRAND.title}99` }} // overlay oscurecido
+        style={{ backgroundColor: `${BRAND.text}99` }} // overlay oscurecido
         role="dialog"
         aria-modal="true"
         aria-label="Lista completa de seguros aceptados"
@@ -159,11 +159,11 @@ export default function InsuranceModal({
           {/* Header */}
           <div
             className="flex items-center justify-between px-6 py-4 border-b"
-            style={{ borderColor: `${BRAND.title}11` }}
+            style={{ borderColor: `${BRAND.text}11` }}
           >
             <h3
               className="text-lg xl:text-xl font-extrabold"
-              style={{ color: BRAND.title }}
+              style={{ color: BRAND.text }}
             >
               Aseguradoras aceptadas
             </h3>
@@ -171,7 +171,7 @@ export default function InsuranceModal({
               ref={closeBtnRef}
               onClick={onClose}
               className="p-2 rounded-sm transition-colors"
-              style={{ color: BRAND.title }}
+              style={{ color: BRAND.text }}
               aria-label="Cerrar modal"
             >
               <X className="w-5 h-5" />
@@ -189,7 +189,7 @@ export default function InsuranceModal({
                 <label
                   htmlFor="doctor"
                   className="block text-sm font-semibold mb-1"
-                  style={{ color: BRAND.title }}
+                  style={{ color: BRAND.text }}
                 >
                   Doctor
                 </label>
@@ -201,8 +201,8 @@ export default function InsuranceModal({
                     className="h-11 w-full pl-3 pr-16 rounded-md border text-sm shadow-sm appearance-none focus:ring-0"
                     style={{
                       backgroundColor: BRAND.bg,
-                      borderColor: `${BRAND.title}11`,
-                      color: BRAND.title,
+                      borderColor: `${BRAND.text}11`,
+                      color: BRAND.text,
                     }}
                   >
                     <option value="">Todos los doctores</option>
@@ -215,7 +215,7 @@ export default function InsuranceModal({
                   <ChevronDown
                     aria-hidden="true"
                     className="pointer-events-none absolute right-5 top-1/2 -translate-y-1/2 h-5 w-5"
-                    style={{ color: `${BRAND.title}80` }}
+                    style={{ color: `${BRAND.text}80` }}
                   />
                 </div>
               </div>
@@ -225,7 +225,7 @@ export default function InsuranceModal({
                 <label
                   htmlFor="search"
                   className="block text-sm font-semibold mb-1"
-                  style={{ color: BRAND.title }}
+                  style={{ color: BRAND.text }}
                 >
                   Buscar plan o aseguradora
                 </label>
@@ -233,7 +233,7 @@ export default function InsuranceModal({
                   <div className="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
                     <Search
                       className="h-5 w-5"
-                      style={{ color: `${BRAND.title}80` }}
+                      style={{ color: `${BRAND.text}80` }}
                     />
                   </div>
                   <input
@@ -245,8 +245,8 @@ export default function InsuranceModal({
                     className="h-11 w-full pl-10 pr-3 rounded-md border text-sm shadow-sm focus:ring-0"
                     style={{
                       backgroundColor: BRAND.bg,
-                      borderColor: `${BRAND.title}11`,
-                      color: BRAND.title,
+                      borderColor: `${BRAND.text}11`,
+                      color: BRAND.text,
                     }}
                   />
                 </div>
@@ -255,7 +255,7 @@ export default function InsuranceModal({
 
             <div
               className="mb-4 text-xs sm:text-sm"
-              style={{ color: `${BRAND.title}99` }}
+              style={{ color: `${BRAND.text}99` }}
             >
               La cobertura puede variar por plan y red. Si no ves tu seguro,
               contáctanos para verificar.
@@ -269,13 +269,13 @@ export default function InsuranceModal({
                     key={`${provider}-${i}`}
                     className="flex items-center gap-3 p-2 rounded-md"
                     style={{
-                      backgroundColor: `${PALETTE[1].base}18`, // pastel de fondo
-                      color: BRAND.title,
+                      backgroundColor: `${PALETTE[0].base}18`,
+                      color: BRAND.text,
                     }}
                   >
                     <span
                       className="w-2 h-2 rounded-full"
-                      style={{ backgroundColor: PALETTE[1].back }}
+                      style={{ backgroundColor: PALETTE[0].back }}
                     />
                     <span className="text-sm font-medium">{provider}</span>
                   </div>
@@ -283,10 +283,10 @@ export default function InsuranceModal({
               </div>
             ) : (
               <div className="text-center py-10">
-                <p style={{ color: `${BRAND.title}99` }}>
+                <p style={{ color: `${BRAND.text}99` }}>
                   No se encontraron planes
                 </p>
-                <p className="text-sm" style={{ color: `${BRAND.title}66` }}>
+                <p className="text-sm" style={{ color: `${BRAND.text}66` }}>
                   Verifica la selección de doctor o contacta para confirmar
                   cobertura.
                 </p>
@@ -299,13 +299,13 @@ export default function InsuranceModal({
             className="px-6 py-5 border-t space-y-4"
             style={{
               backgroundColor: BRAND.bg,
-              borderColor: `${BRAND.title}11`,
+              borderColor: `${BRAND.text}11`,
             }}
           >
             <button
               onClick={handleCopyPhone}
               className="mx-auto flex items-center gap-2 text-sm font-medium"
-              style={{ color: BRAND.title }}
+              style={{ color: BRAND.text }}
             >
               <span className="tabular-nums tracking-wide">
                 {displayNumber}
@@ -323,9 +323,9 @@ export default function InsuranceModal({
                 onClick={onClose}
                 className="text-sm font-semibold py-2.5 px-6 rounded-sm inline-flex items-center justify-center gap-2 transition-all hover:translate-y-[1px]"
                 style={{
-                  backgroundColor: PALETTE[4].base, // durazno pastel ❤️
-                  color: PALETTE[4].text,
-                  border: `1px solid ${PALETTE[4].back}`,
+                  backgroundColor: PALETTE[0].base,
+                  color: BRAND.text,
+                  border: `1px solid ${PALETTE[0].back}`,
                 }}
               >
                 Contáctanos
@@ -335,8 +335,8 @@ export default function InsuranceModal({
                 className="text-sm font-semibold py-2.5 px-6 rounded-sm border transition-all hover:translate-y-[1px]"
                 style={{
                   backgroundColor: BRAND.bg,
-                  color: BRAND.title,
-                  borderColor: `${BRAND.title}11`,
+                  color: BRAND.text,
+                  borderColor: `${BRAND.text}11`,
                 }}
               >
                 Cerrar

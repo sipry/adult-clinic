@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import { X, Stethoscope, Syringe, Shield, Activity, HeartPulse, Eye, Brain } from "lucide-react";
+import { X, Stethoscope, Syringe, Shield, Activity, HeartPulse, Eye, Brain, Palette } from "lucide-react";
+import { PALETTE, BRAND } from "@/app/ui/palette";
 
 // i18n exclusivo del panel
 import {
@@ -13,18 +14,6 @@ import {
   svcFaqs,
   format,
 } from "../i18n/serviceDetails.i18n";
-
-/* 🎨 Pasteles */
-const PASTEL = {
-  bg: "#FFFDF8",
-  border: "rgba(154, 218, 216, 0.45)",
-  chipBg: "rgba(154, 218, 216, 0.22)",
-  chipBorder: "rgba(154, 218, 216, 0.5)",
-  text: "#001219",
-  iconBg: "rgba(154, 218, 216, 0.35)",
-  iconBorder: "rgba(154, 218, 216, 0.7)",
-  cta: "#0A9396",
-};
 
 // 👉 tipo común para los íconos del panel
 type ServiceIcon = React.ComponentType<React.SVGProps<SVGSVGElement>>;
@@ -102,13 +91,13 @@ function Section({
     <section className="mt-6">
       <h3
         className="text-sm font-semibold uppercase tracking-wide"
-        style={{ color: PASTEL.text, opacity: 0.6 }}
+        style={{ color: BRAND.text, opacity: 0.6 }}
       >
         {title}
       </h3>
       <div
         className="mt-2 text-sm leading-relaxed"
-        style={{ color: PASTEL.text }}
+        style={{ color: BRAND.text }}
       >
         {children}
       </div>
@@ -217,7 +206,7 @@ export default function ServiceDetailsPanel({
           aria-labelledby={titleId}
           className="pointer-events-auto fixed right-0 top-0 h-full w-full max-w-[620px] shadow-2xl outline-none"
           style={{
-            backgroundColor: PASTEL.bg,
+            backgroundColor: BRAND.bg,
             transform: open ? "translateX(0%)" : "translateX(100%)",
             transition: "transform 320ms cubic-bezier(.2,.8,.2,1)",
           }}
@@ -233,25 +222,25 @@ export default function ServiceDetailsPanel({
           {/* header */}
           <div
             className="flex items-center justify-between p-4 border-b"
-            style={{ borderColor: PASTEL.border }}
+            style={{ borderColor: PALETTE[0].base }}
           >
             <div className="flex items-center gap-3 min-w-0">
               {Icon ? (
                 <div
                   className="grid h-10 w-10 place-items-center rounded-full"
                   style={{
-                    backgroundColor: PASTEL.iconBg,
-                    border: `1px solid ${PASTEL.iconBorder}`,
+                    backgroundColor: PALETTE[0].base,
+                    border: `1px solid ${PALETTE[0].back}`,
                   }}
                 >
-                  <Icon className="h-5 w-5" style={{ color: PASTEL.text }} />
+                  <Icon className="h-5 w-5" style={{ color: BRAND.text }} />
                 </div>
               ) : null}
               <div className="min-w-0">
                 <h2
                   id={titleId}
                   className="truncate text-lg font-bold"
-                  style={{ color: PASTEL.text }}
+                  style={{ color: BRAND.text }}
                 >
                   {title}
                 </h2>
@@ -261,9 +250,9 @@ export default function ServiceDetailsPanel({
                   <span
                     className="inline-flex mt-1 rounded-full px-2 py-[2px] text-[11px] font-medium"
                     style={{
-                      backgroundColor: PASTEL.chipBg,
-                      border: `1px solid ${PASTEL.chipBorder}`,
-                      color: PASTEL.text,
+                      backgroundColor: PALETTE[0].base,
+                      border: `1px solid ${PALETTE[0].back}`,
+                      color: BRAND.text,
                     }}
                   >
                     {service.badge}
@@ -273,7 +262,7 @@ export default function ServiceDetailsPanel({
                 {(ageRange || duration) && (
                   <p
                     className="mt-1 text-xs"
-                    style={{ color: `${PASTEL.text}99` }}
+                    style={{ color: `${BRAND.text}99` }}
                   >
                     {ageRange ?? ""}
                     {ageRange && duration ? " • " : ""}
@@ -290,7 +279,7 @@ export default function ServiceDetailsPanel({
               aria-label={panelT(locale, "close")}
               type="button"
             >
-              <X className="h-5 w-5" style={{ color: PASTEL.text }} />
+              <X className="h-5 w-5" style={{ color: BRAND.text }} />
             </button>
           </div>
 
@@ -298,7 +287,7 @@ export default function ServiceDetailsPanel({
           <div className="h-[calc(100%-56px)] overflow-y-auto p-5 panel-scroll">
             <p
               className="leading-relaxed text-sm"
-              style={{ color: PASTEL.text }}
+              style={{ color: BRAND.text }}
             >
               {summary}
             </p>
@@ -310,9 +299,9 @@ export default function ServiceDetailsPanel({
                     key={`rf-${tag}`}
                     className="rounded-full px-3 py-1 text-[11px] font-medium"
                     style={{
-                      backgroundColor: PASTEL.chipBg,
-                      border: `1px solid ${PASTEL.chipBorder}`,
-                      color: PASTEL.text,
+                      backgroundColor: PALETTE[0].base,
+                      border: `1px solid ${PALETTE[0].back}`,
+                      color: BRAND.text,
                     }}
                   >
                     {tag}
@@ -325,7 +314,7 @@ export default function ServiceDetailsPanel({
                     style={{
                       backgroundColor: "rgba(255,255,255,0.5)",
                       border: "1px solid rgba(0,0,0,0.03)",
-                      color: PASTEL.text,
+                      color: BRAND.text,
                     }}
                   >
                     {tag}
@@ -409,7 +398,7 @@ export default function ServiceDetailsPanel({
                 href="/contact"
                 onClick={onClose}
                 className="inline-flex w-full max-w-md items-center justify-center rounded-md px-5 py-2.5 text-sm font-semibold shadow-sm"
-                style={{ backgroundColor: PASTEL.cta, color: "#FFFFFF" }}
+                style={{ backgroundColor: PALETTE[0].base, color: BRAND.text, border: `1px solid ${PALETTE[0].back}` }}
                 aria-label={format(panelT(locale, "cta.aria"), { title })}
               >
                 {panelT(locale, "cta.label")}

@@ -13,19 +13,7 @@ import {
 } from "lucide-react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import ServiceDetailsPanel from "../components/ServiceSidePanel";
-import { BRAND } from "@/app/ui/palette";
-
-/* 🎨 Paleta pastel unificada */
-const PALETTE = [
-  { base: "#9ADAD8", back: "#7EC4C2", text: "#001219" }, // 0 teal pastel
-  { base: "#C8E7DA", back: "#A8D1C2", text: "#001219" }, // 1 mint
-  { base: "#F5EBC6", back: "#EAD7A4", text: "#001219" }, // 2 butter
-  { base: "#FFD77A", back: "#EEC46A", text: "#001219" }, // 3 soft yellow
-  { base: "#F3A96C", back: "#E48B4F", text: "#001219" }, // 4 peach
-  { base: "#E48C7A", back: "#D67463", text: "#001219" }, // 5 coral
-  { base: "#E57B76", back: "#D66A65", text: "#001219" }, // 6 warm rose
-  { base: "#DC767B", back: "#C85D61", text: "#001219" }, // 7 deep rose
-];
+import { BRAND, PALETTE } from "@/app/ui/palette";
 
 /* 🩺 Íconos */
 const ICONS = {
@@ -127,7 +115,7 @@ const ServicesGrid: React.FC = () => {
           </p>
           <h2
             className="text-3xl md:text-5xl font-extrabold tracking-tight"
-            style={{ color: PALETTE[0].text }}
+            style={{ color: BRAND.text }}
           >
             Comprehensive Primary Care
           </h2>
@@ -156,7 +144,7 @@ const ServicesGrid: React.FC = () => {
             style={{
               backgroundColor: "#FFFFFF",
               border: `1px solid ${PALETTE[1].back}55`,
-              color: PALETTE[0].text,
+              color: BRAND.text,
             }}
           />
         </div>
@@ -192,12 +180,12 @@ const ServicesGrid: React.FC = () => {
                       border: `1px solid ${color.base}66`,
                     }}
                   >
-                    <Icon className="h-6 w-6" style={{ color: color.text }} />
+                    <Icon className="h-6 w-6" style={{ color: BRAND.text }} />
                   </div>
 
                   <h3
                     className="text-lg font-bold mb-2"
-                    style={{ color: PALETTE[0].text }}
+                    style={{ color: BRAND.text }}
                   >
                     {s.title}
                   </h3>
@@ -215,8 +203,8 @@ const ServicesGrid: React.FC = () => {
                     onClick={() => setDetail(s.id)}
                     className="inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-semibold shadow-sm transition hover:scale-[1.01]"
                     style={{
-                      backgroundColor: PALETTE[0].back, // pastel teal
-                      color: PALETTE[0].text,
+                      backgroundColor: PALETTE[0].base,
+                      color: BRAND.text,
                     }}
                   >
                     View Details
