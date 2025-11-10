@@ -154,6 +154,9 @@ export default function ProviderDetailPage() {
       title: it.title,
       photo: typeof it.image === "string" ? it.image : it.image.src,
     }));
+  const isDrJaimeAcosta =
+    typeof p.name === "string" &&
+    p.name.toLowerCase().includes("dr. jaime a. acosta , md");
 
   return (
     <>
@@ -195,89 +198,99 @@ export default function ProviderDetailPage() {
               </p>
 
               {/* botones de RG y Linkedin */}
-              <div className="mt-2 flex gap-3 ">
-                {/* reasearch gate */}
-                <a
-                  href="https://www.researchgate.net/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Ir a ResearchGate"
-                  className="inline-block"
-                >
-                  <span
-                    className="inline-flex items-center justify-center transition-transform duration-150 hover:scale-[1.04]"
-                    style={{
-                      width: "48px",
-                      height: "48px",
-                      borderRadius: "14px",
-                      backgroundColor: '#74CDBD',
-                      border: "3px solid #FFFFFF",
-                      position: "relative",
-                      boxSizing: "border-box",
-                    }}
-                  >
-                    <span
-                      style={{
-                        color: "#FFFFFF",
-                        fontFamily: "serif",
-                        fontSize: "22px",
-                        lineHeight: 1,
-                        fontWeight: 500,
-                      }}
+
+              {isDrJaimeAcosta && (
+                <div>
+                  <p className="text-sm font-semibold mt-4" style={{ color: BRAND.text }}>
+                    Redes Sociales
+                  </p>
+
+                  <div className="mt-3 flex gap-3">
+
+                    {/* ResearchGate */}
+                    <a
+                      href="https://www.researchgate.net/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Ir a ResearchGate"
+                      className="inline-block"
                     >
-                      R
-                    </span>
-                    <span
-                      style={{
-                        position: "absolute",
-                        top: "6px",
-                        right: "8px",
-                        color: "#FFFFFF",
-                        fontFamily: "serif",
-                        fontSize: "11px",
-                        lineHeight: 1,
-                        fontWeight: 500,
-                      }}
+                      <span
+                        className="inline-flex items-center justify-center transition-transform duration-150 hover:scale-[1.04]"
+                        style={{
+                          width: "46px",
+                          height: "46px",
+                          borderRadius: "14px",
+                          backgroundColor: "#74CDBD",
+                          boxShadow: "0 4px 10px rgba(0,0,0,0.06)",
+                          position: "relative",
+                        }}
+                      >
+                        {/* R grande */}
+                        <span
+                          style={{
+                            color: "#FFFFFF",
+                            fontFamily: "serif",
+                            fontSize: "20px",
+                            lineHeight: 1,
+                            fontWeight: 500,
+                          }}
+                        >
+                          R
+                        </span>
+                        {/* G chiquita */}
+                        <span
+                          style={{
+                            position: "absolute",
+                            top: "5px",
+                            right: "7px",
+                            color: "#FFFFFF",
+                            fontFamily: "serif",
+                            fontSize: "10px",
+                            lineHeight: 1,
+                            fontWeight: 500,
+                          }}
+                        >
+                          G
+                        </span>
+                      </span>
+                    </a>
+
+                    {/* LinkedIn */}
+                    <a
+                      href="https://www.linkedin.com/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Ir a LinkedIn"
+                      className="inline-block"
                     >
-                      G
-                    </span>
-                  </span>
-                </a>
-                {/* LinkedIn */}
-                <a
-                  href="https://www.linkedin.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Ir a LinkedIn"
-                  className="inline-block"
-                >
-                  <span
-                    className="inline-flex items-center justify-center transition-transform duration-150 hover:scale-[1.04]"
-                    style={{
-                      width: "48px",
-                      height: "48px",
-                      borderRadius: "14px",
-                      backgroundColor: '#0A66C2',
-                      border: "3px solid #FFFFFF", // como el de RG
-                      boxSizing: "border-box",
-                      position: "relative",
-                    }}
-                  >
-                    {/* "in" de LinkedIn */}
-                    <span
-                      style={{
-                        color: "#FFFFFF",
-                        fontWeight: 700,
-                        fontSize: "18px",
-                        lineHeight: 1,
-                        fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-                      }}
-                    >
-                      in
-                    </span>
-                  </span>
-                </a>
-              </div>
+                      <span
+                        className="inline-flex items-center justify-center transition-transform duration-150 hover:scale-[1.04]"
+                        style={{
+                          width: "46px",
+                          height: "46px",
+                          borderRadius: "14px",
+                          backgroundColor: "#0A66C2",
+                          boxShadow: "0 4px 10px rgba(0,0,0,0.06)",
+                        }}
+                      >
+                        <span
+                          style={{
+                            color: "#FFFFFF",
+                            fontWeight: 700,
+                            fontSize: "18px",
+                            lineHeight: 1,
+                            fontFamily:
+                              "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+                          }}
+                        >
+                          in
+                        </span>
+                      </span>
+                    </a>
+                  </div>
+                </div>
+              )}
 
               {/* info extra */}
               {p.languages && (
