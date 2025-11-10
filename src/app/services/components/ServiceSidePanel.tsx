@@ -25,8 +25,6 @@ const PANEL_ICONS: Record<ServiceId, ServiceIcon> = {
   "minor-illness": Shield,
   "minor-injury": Activity,
   "chronic-disease": HeartPulse,
-  "asthma-care": Brain,
-  "vision-screening": Eye,
 };
 
 /* ==================== Tipos ==================== */

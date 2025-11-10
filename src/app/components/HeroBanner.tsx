@@ -12,10 +12,12 @@ import {
   type Variants,
 } from "framer-motion";
 import heropaint from "@/../public/assets/images/hero-paint.webp";
+import heropaint2 from "@/../public/assets/images/hero-paint-2.webp";
 import { PALETTE, BRAND } from "@/app/ui/palette";
 
 const slides = [
   { src: heropaint.src, alt: "Hero background", pos: "100% 0%" },
+  { src: heropaint2.src, alt: "Hero background 2" },
 ];
 
 const ONLY_FADE = false;

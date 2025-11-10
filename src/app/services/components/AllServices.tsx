@@ -7,64 +7,28 @@ import {
   Shield,
   Activity,
   HeartPulse,
-  Eye,
-  Brain,
   Search,
 } from "lucide-react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import ServiceDetailsPanel from "../components/ServiceSidePanel";
 import { BRAND, PALETTE } from "@/app/ui/palette";
+import { useTranslation } from "@/app/contexts/TranslationContext";
 
-/* 🩺 Íconos */
-const ICONS = {
+// 👇 nuestro diccionario específico de servicios
+import {
+  svcStr,
+  detectLocaleFromPath,
+  type ServiceId,
+} from "../i18n/serviceDetails.i18n"; // ajusta la ruta
+
+// íconos por id
+const ICONS: Record<ServiceId, React.ComponentType<any>> = {
   "preventive-medicine": Stethoscope,
   "adult-immunizations": Syringe,
   "minor-illness": Shield,
   "minor-injury": Activity,
   "chronic-disease": HeartPulse,
-  "asthma-care": Brain,
-  "vision-screening": Eye,
 };
-
-/* 🧾 Servicios */
-const SERVICES = [
-  {
-    id: "preventive-medicine",
-    title: "Preventive Medicine",
-    description:
-      "Medical screenings and treatments that can help you avoid unnecessary illness and detect a potentially dangerous health condition early on.",
-  },
-  {
-    id: "adult-immunizations",
-    title: "Adult Immunizations",
-    description:
-      "Our doctors provide all CDC-recommended immunizations including those that protect you against Influenza, Pneumococcal Infections, HPV, and Hepatitis.",
-  },
-  {
-    id: "minor-illness",
-    title: "Minor Illness Diagnosis and Treatment",
-    description:
-      "Evaluation and treatment for acute illnesses such as colds, flu, sinus infections, and other minor health concerns that do not require hospitalization.",
-  },
-  {
-    id: "minor-injury",
-    title: "Minor Injury Diagnosis and Treatment",
-    description:
-      "Care and management for injuries that are not life-threatening, including sprains, cuts, burns, and other common minor physical injuries.",
-  },
-  {
-    id: "chronic-disease",
-    title: "Chronic Disease Management",
-    description:
-      "Monitoring and treatment of chronic conditions such as diabetes, hypertension, asthma, and heart disease to help you maintain optimal health.",
-  },
-  {
-    id: "vision-screening",
-    title: "Vision Screening and Eye Health",
-    description:
-      "Comprehensive eye exams and screenings to help detect vision problems, manage eye health, and provide timely referrals to specialists if needed.",
-  },
-];
 
 const ServicesGrid: React.FC = () => {
   const [query, setQuery] = useState("");
@@ -73,7 +37,32 @@ const ServicesGrid: React.FC = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  // idioma desde el context, si existe
+  const { language } = useTranslation();
+  const locale =
+    (language as "en" | "es") || detectLocaleFromPath(pathname) || "es";
+
   const detailId = searchParams.get("detail") || "";
+
+  // 👇 SOLO los servicios que dijiste
+  const SERVICE_IDS: ServiceId[] = [
+    "preventive-medicine",
+    "adult-immunizations",
+    "minor-illness",
+    "minor-injury",
+    "chronic-disease",
+  ];
+
+  // construimos lista con i18n
+  const SERVICES = useMemo(
+    () =>
+      SERVICE_IDS.map((id) => ({
+        id,
+        title: svcStr(locale, id, "title") ?? id,
+        description: svcStr(locale, id, "summary") ?? "",
+      })),
+    [locale]
+  );
 
   const setDetail = (id?: string) => {
     const sp = new URLSearchParams(searchParams.toString());
@@ -87,8 +76,10 @@ const ServicesGrid: React.FC = () => {
     }
   };
 
-  const selected = SERVICES.find((s) => s.id === detailId) || null;
+  const selected =
+    SERVICES.find((s) => s.id === (detailId as ServiceId)) || null;
 
+  // filtro por buscador
   const filtered = useMemo(() => {
     if (!query.trim()) return SERVICES;
     const q = query.toLowerCase();
@@ -97,13 +88,10 @@ const ServicesGrid: React.FC = () => {
         s.title.toLowerCase().includes(q) ||
         s.description.toLowerCase().includes(q)
     );
-  }, [query]);
+  }, [query, SERVICES]);
 
   return (
-    <section
-      className="relative py-20"
-      style={{ backgroundColor: "#FFFFFF" }} // 👈 fondo limpio
-    >
+    <section className="relative py-20" style={{ backgroundColor: "#FFFFFF" }}>
       <div className="mx-auto max-w-7xl px-6">
         {/* HEADER */}
         <div className="mb-10 space-y-3 md:space-y-4 text-left max-w-3xl">
@@ -111,20 +99,23 @@ const ServicesGrid: React.FC = () => {
             className="text-[11px] font-semibold tracking-[0.28em] uppercase"
             style={{ color: BRAND.accent }}
           >
-            Our Services
+            {locale === "es" ? "Servicios que ofrecemos" : "Services We Offer"}
           </p>
           <h2
             className="text-3xl md:text-5xl font-extrabold tracking-tight"
             style={{ color: BRAND.text }}
           >
-            Comprehensive Primary Care
+            {locale === "es"
+              ? "Atención primaria integral"
+              : "Comprehensive Primary Care"}
           </h2>
           <p
             className="text-base md:text-lg"
             style={{ color: "rgba(0,18,25,0.55)" }}
           >
-            Personalized care for every stage of life, designed to keep you and
-            your family healthy, informed, and supported.
+            {locale === "es"
+              ? "Cuidado personalizado para mantenerte sano, informado y acompañado."
+              : "Personalized care for every stage of life, designed to keep you healthy, informed, and supported."}
           </p>
         </div>
 
@@ -137,7 +128,9 @@ const ServicesGrid: React.FC = () => {
           />
           <input
             type="text"
-            placeholder="Search services..."
+            placeholder={
+              locale === "es" ? "Buscar servicios..." : "Search services..."
+            }
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             className="w-full rounded-md py-2 pl-10 pr-3 text-sm shadow-sm outline-none transition"
@@ -152,13 +145,13 @@ const ServicesGrid: React.FC = () => {
         {/* GRID */}
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((s, idx) => {
-            const Icon = ICONS[s.id as keyof typeof ICONS];
+            const Icon = ICONS[s.id as ServiceId] ?? Stethoscope;
+            const words = s.description ? s.description.split(" ") : [];
             const shortDesc =
-              s.description.split(" ").length > 20
-                ? s.description.split(" ").slice(0, 20).join(" ") + "…"
+              words.length > 20
+                ? words.slice(0, 20).join(" ") + "…"
                 : s.description;
 
-            // vamos a rotar colores pastel en los iconos
             const color = PALETTE[idx % PALETTE.length];
 
             return (
@@ -194,7 +187,10 @@ const ServicesGrid: React.FC = () => {
                     className="text-sm leading-relaxed"
                     style={{ color: "rgba(0,18,25,0.7)" }}
                   >
-                    {shortDesc}
+                    {shortDesc ||
+                      (locale === "es"
+                        ? "Sin descripción."
+                        : "No description.")}
                   </p>
                 </div>
 
@@ -207,7 +203,7 @@ const ServicesGrid: React.FC = () => {
                       color: BRAND.text,
                     }}
                   >
-                    View Details
+                    {locale === "es" ? "Ver detalles" : "View Details"}
                   </button>
                 </div>
               </article>
@@ -219,7 +215,9 @@ const ServicesGrid: React.FC = () => {
               className="text-sm italic col-span-full text-center mt-6"
               style={{ color: "rgba(0,18,25,0.5)" }}
             >
-              No services found matching your search.
+              {locale === "es"
+                ? "No se encontraron servicios que coincidan con tu búsqueda."
+                : "No services found matching your search."}
             </p>
           )}
         </div>
@@ -230,7 +228,7 @@ const ServicesGrid: React.FC = () => {
         open={!!selected}
         onClose={() => setDetail(undefined)}
         service={selected}
-        locale="en"
+        locale={locale}
       />
     </section>
   );
