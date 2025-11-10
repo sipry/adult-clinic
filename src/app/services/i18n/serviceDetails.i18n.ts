@@ -91,11 +91,11 @@ const DICT: Record<
       },
     },
     services: {
-      /* 1. Preventive Medicine */
+      /* 1. Preventive Medicine es*/
       "preventive-medicine": {
         title: "Medicina preventiva",
         summary:
-          "Evaluaciones y tratamientos que ayudan a evitar enfermedades innecesarias y a detectar condiciones de riesgo cuando aún son fáciles de tratar.",
+          "Evaluaciones y tratamientos médicos que ayudan a evitar enfermedades innecesarias y a detectar una condición de salud potencialmente peligrosa cuando aún está en su etapa más temprana y tratable.",
         duration: "20–30 min",
         includes: [
           "Revisión de historia clínica y medicamentos",
@@ -121,11 +121,11 @@ const DICT: Record<
         ],
       },
 
-      /* 2. Adult Immunizations */
+      /* 2. Adult Immunizations es*/
       "adult-immunizations": {
         title: "Inmunizaciones para adultos",
         summary:
-          "Aplicación de vacunas recomendadas por los CDC para proteger contra influenza, neumococo, VPH, hepatitis, culebrilla (shingles), RSV y más.",
+          "Nuestros médicos aplican todas las inmunizaciones recomendadas por los CDC, incluidas las que lo protegen contra la influenza (gripe), infecciones neumocócicas, VPH, hepatitis, culebrilla (shingles), RSV y más.",
         duration: "10–15 min",
         includes: [
           "Revisión del estado de vacunación",
@@ -139,8 +139,7 @@ const DICT: Record<
           "Usar ropa que permita descubrir el brazo",
         ],
         whatToExpect: [
-          "Valoración muy breve",
-          "Aplicación rápida de la vacuna",
+          "Aplicación de la vacuna",
           "Indicaciones de cuidados en casa y efectos esperados",
         ],
         followUp: [
@@ -151,17 +150,32 @@ const DICT: Record<
           "Enrojecimiento o dolor leve en el sitio de inyección",
           "Malestar general leve o fiebre baja",
         ],
+        faqs: [
+          {
+            q: "¿Es posible vacunarme si estoy enfermo?",
+            a: "Depende de qué tan fuerte sea la infección y del tipo de vacuna. Lo ideal es que el médico lo evalue primero. Puede llamar para más información.",
+          },
+          {
+            q: "¿Puedo recibir varias vacunas al mismo tiempo?",
+            a: "En muchos casos sí es seguro aplicar más de una vacuna en la misma visita, pero debe confirmarse según su edad y condición. Puede llamar para más información.",
+          },
+          {
+            q: "¿Puedo vacunarme si estoy embarazada?",
+            a: "Algunas vacunas son seguras en el embarazo y otras se deben evitar, consulte con su médico primero. Puede llamar para más información.",
+          },
+        ],
+
       },
 
-      /* 3. Minor Illness Diagnosis and Treatment */
+      /* 3. Minor Illness Diagnosis and Treatment es */
       "minor-illness": {
         title: "Diagnóstico y tratamiento de enfermedades leves",
         summary:
-          "Evaluación y manejo de resfriados, gripe, sinusitis u otras enfermedades agudas frecuentes que no requieren hospitalización.",
+          "Evaluación y tratamiento de enfermedades agudas frecuentes, como el resfriado y la gripe, que no requieren hospitalización.",
         duration: "15–25 min",
         includes: [
-          "Historia dirigida a los síntomas",
-          "Examen físico focalizado",
+          "Evaluacion de síntomas",
+          "Examen físico",
           "Pruebas rápidas si se necesitan (gripe, COVID, estreptococo)",
           "Plan de tratamiento y señales de alarma",
         ],
@@ -169,17 +183,14 @@ const DICT: Record<
           "Anotar desde cuándo comenzaron los síntomas",
           "Traer lista de medicamentos ya tomados",
           "Registrar si ha tenido fiebre",
-          "Traer tarjeta del seguro si aplica",
         ],
         whatToExpect: [
-          "Evaluación rápida y directa",
           "Explicación del diagnóstico más probable",
           "Recomendaciones de medicamentos o cuidados en casa",
           "Indicaciones de cuándo regresar o ir a urgencias",
         ],
         followUp: [
           "Volver si no mejora en 48–72 horas",
-          "Volver antes si aparece fiebre alta o dificultad respiratoria",
         ],
       },
 
@@ -187,7 +198,7 @@ const DICT: Record<
       "minor-injury": {
         title: "Diagnóstico y tratamiento de lesiones leves",
         summary:
-          "Atención inicial de esguinces leves, golpes, cortaduras pequeñas o quemaduras superficiales que pueden manejarse en el consultorio.",
+          "Evaluación y tratamiento de lesiones que no ponen en riesgo la vida y que pueden manejarse habitualmente en el consultorio de atención primaria.",
         duration: "15–25 min",
         includes: [
           "Evaluación de la zona afectada",
@@ -216,7 +227,7 @@ const DICT: Record<
       "chronic-disease": {
         title: "Manejo de enfermedades crónicas",
         summary:
-          "Monitoreo y tratamiento continuos de condiciones como enfermedad cardiovascular, obesidad, diabetes, EPOC, asma y artritis.",
+          "Monitoreo regular y tratamiento de enfermedades crónicas que van desde la enfermedad cardiovascular hasta la obesidad, la diabetes, la EPOC, el asma y la artritis. Nuestro enfoque multidisciplinario de atención primaria le brinda las herramientas y el apoyo que necesita en cualquier edad y etapa de su salud.",
         duration: "20–30 min",
         includes: [
           "Control de signos vitales (presión, peso)",
@@ -240,12 +251,7 @@ const DICT: Record<
           "Controles cada 1–3 meses según la condición",
           "Consulta inmediata si hay empeoramiento de síntomas",
         ],
-        faqs: [
-          {
-            q: "¿Puedo suspender la medicina si me siento bien?",
-            a: "No lo hagas sin hablarlo con el médico; muchas enfermedades crónicas no dan síntomas aunque estén descontroladas.",
-          },
-        ],
+
       },
     },
   },
@@ -275,7 +281,7 @@ const DICT: Record<
       "preventive-medicine": {
         title: "Preventive Medicine",
         summary:
-          "Medical screenings and counseling to help you avoid unnecessary illness and detect high-risk conditions while they are still easy to treat.",
+          "Medical screenings and treatments that can help you avoid unnecessary illness and detect a potentially dangerous health condition while it is in its earliest and most treatable stage.",
         duration: "20–30 min",
         includes: [
           "Medical history and current medications review",
@@ -331,13 +337,28 @@ const DICT: Record<
           "Mild redness or soreness at the injection site",
           "Low-grade fever or malaise",
         ],
+        faqs: [
+          {
+            q: "Can I get vaccinated if I’m sick?",
+            a: "It depends on how severe the illness is and on the type of vaccine. Your doctor should evaluate you first. Call us for more information.",
+          },
+          {
+            q: "Can I receive multiple vaccines at the same visit?",
+            a: "In many cases it’s safe to give more than one vaccine in a single visit, but it should be confirmed based on your age and health status. Call us for more information.",
+          },
+          {
+            q: "Can I get vaccinated if I’m pregnant?",
+            a: "Some vaccines are safe during pregnancy and others should be avoided, so check with your provider first. Call us for more information.",
+          },
+        ]
+
       },
 
       /* 3. Minor Illness Diagnosis and Treatment */
       "minor-illness": {
         title: "Minor Illness Diagnosis and Treatment",
         summary:
-          "Visit for commonly diagnosed acute illnesses such as colds or flu that do not require hospitalization.",
+          "Evaluating and treating commonly diagnosed acute illnesses like cold and flu that do not require hospitalization.",
         duration: "15–25 min",
         includes: [
           "Symptom-focused medical history",
@@ -367,7 +388,7 @@ const DICT: Record<
       "minor-injury": {
         title: "Minor Injury Diagnosis and Treatment",
         summary:
-          "Assessment and treatment of non-life-threatening injuries that can be managed at a primary care office.",
+          "Evaluating and treating injuries that are not life threatening and can commonly be managed in a primary care physician’s office.",
         duration: "15–25 min",
         includes: [
           "Assessment of the injured area",
@@ -395,7 +416,7 @@ const DICT: Record<
       "chronic-disease": {
         title: "Chronic Disease Management",
         summary:
-          "Regular monitoring and treatment of long-term conditions such as cardiovascular disease, obesity, diabetes, COPD, asthma and arthritis.",
+          "Regular monitoring and treatment of chronic diseases ranging from cardiovascular disease to Obesity, Diabetes, COPD, Asthma and Arthritis. Our multidisciplinary approach to Primary Care gives you the tools and support you need at any age and stage of your health.",
         duration: "20–30 min",
         includes: [
           "Vitals and symptom review",
@@ -444,7 +465,7 @@ export function detectLocaleFromPath(pathname?: string): Locale {
   const path =
     pathname ??
     (typeof window !== "undefined" &&
-    typeof window.location?.pathname === "string"
+      typeof window.location?.pathname === "string"
       ? window.location.pathname
       : "");
   const p = path.split("/").filter(Boolean);
@@ -485,8 +506,8 @@ export function svcArr(
   return Array.isArray(v)
     ? (v as string[])
     : Array.isArray(fb)
-    ? (fb as string[])
-    : [];
+      ? (fb as string[])
+      : [];
 }
 
 export function svcFaqs(locale: Locale, id: ServiceId): ServiceFAQ[] {
