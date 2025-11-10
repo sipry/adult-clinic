@@ -4,23 +4,11 @@ import React from "react";
 import { useTranslation } from "../contexts/TranslationContext";
 import ncqa from "@/../public/assets/svg/ncqa.svg";
 import adventHealth from "@/../public/assets/svg/adventHealth.svg";
-import { BRAND } from "@/app/ui/palette";
-
-/* 🎨 misma paleta que usas en services */
-const PALETTE = [
-  { base: "#9ADAD8", back: "#7EC4C2", text: "#001219" }, // 0
-  { base: "#C8E7DA", back: "#A8D1C2", text: "#001219" }, // 1 ⭐ pastel verde
-  { base: "#F5EBC6", back: "#EAD7A4", text: "#001219" },
-  { base: "#FFD77A", back: "#EEC46A", text: "#001219" },
-  { base: "#F3A96C", back: "#E48B4F", text: "#001219" },
-  { base: "#E48C7A", back: "#D67463", text: "#001219" },
-  { base: "#E57B76", back: "#D66A65", text: "#001219" },
-  { base: "#DC767B", back: "#C85D61", text: "#001219" },
-];
+import {PALETTE, BRAND } from "@/app/ui/palette";
 
 /* un solo fondo pastel */
-const STRIP_BG = PALETTE[1].base; // verde pastel
-const STRIP_TEXT = PALETTE[1].text; // #001219
+const STRIP_BG = PALETTE[0].base; // verde pastel
+const STRIP_TEXT = BRAND.text; // #001219
 const STRIP_HOVER = BRAND?.cta ?? "#BB3E03";
 const STRIP_DOT = PALETTE[7].back;
 const LABEL_BG = "rgba(255,255,255,0.22)";

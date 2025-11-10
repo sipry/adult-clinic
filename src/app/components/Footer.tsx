@@ -11,18 +11,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useTranslation } from "../contexts/TranslationContext";
-
-/* 🎨 Paleta pastel unificada (la que vienes usando) */
-const PALETTE = [
-  { base: "#9ADAD8", back: "#7EC4C2", text: "#001219" }, // 0
-  { base: "#C8E7DA", back: "#A8D1C2", text: "#001219" }, // 1
-  { base: "#F5EBC6", back: "#EAD7A4", text: "#001219" }, // 2
-  { base: "#FFD77A", back: "#EEC46A", text: "#001219" }, // 3
-  { base: "#F3A96C", back: "#E48B4F", text: "#001219" }, // 4
-  { base: "#E48C7A", back: "#D67463", text: "#001219" }, // 5
-  { base: "#E57B76", back: "#D66A65", text: "#001219" }, // 6
-  { base: "#DC767B", back: "#C85D61", text: "#001219" }, // 7
-];
+import { BRAND, PALETTE } from "../ui/palette";
 
 /* ---------- Motion utils: Reveal on scroll ---------- */
 function usePrefersReducedMotion(): boolean {
@@ -122,38 +111,38 @@ const Footer: React.FC = () => {
     threshold = 0.2,
     rootMargin = "0px 0px -10% 0px",
   }) => {
-    const ref = React.useRef<HTMLDivElement>(null);
-    const inView = useInOutViewport(ref, { threshold, rootMargin });
-    const [shown, setShown] = React.useState(false);
-    const reduce = usePrefersReducedMotion();
+      const ref = React.useRef<HTMLDivElement>(null);
+      const inView = useInOutViewport(ref, { threshold, rootMargin });
+      const [shown, setShown] = React.useState(false);
+      const reduce = usePrefersReducedMotion();
 
-    React.useEffect(() => {
-      if (inView) setShown(true);
-      else if (!once) setShown(false);
-    }, [inView, once]);
+      React.useEffect(() => {
+        if (inView) setShown(true);
+        else if (!once) setShown(false);
+      }, [inView, once]);
 
-    const style: React.CSSProperties = reduce
-      ? {}
-      : {
+      const style: React.CSSProperties = reduce
+        ? {}
+        : {
           opacity: shown ? 1 : 0,
           transform: shown ? "none" : `translate(${x}px, ${y}px) scale(${scale})`,
           transition: `opacity ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms, transform ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms`,
           willChange: "opacity, transform",
         };
 
-    return (
-      <div ref={ref} className={className} style={style}>
-        {children}
-      </div>
-    );
-  };
+      return (
+        <div ref={ref} className={className} style={style}>
+          {children}
+        </div>
+      );
+    };
 
   return (
     <footer
       className="overflow-hidden"
       style={{
         backgroundColor: "#FFFFFF",
-        color: PALETTE[0].text, // #001219
+        color: BRAND.text,
       }}
     >
       {/* Map strip */}
@@ -188,13 +177,13 @@ const Footer: React.FC = () => {
         <div className="sm:col-span-2">
           <h2
             className="text-2xl font-semibold mb-3"
-            style={{ color: PALETTE[0].text }}
+            style={{ color: BRAND.text }}
           >
             {t("footer.brand")}
           </h2>
           <p
             className="text-sm mb-5"
-            style={{ color: `${PALETTE[0].text}CC` }}
+            style={{ color: `${BRAND.text}CC` }}
           >
             {t("footer.tagline")}
           </p>
@@ -215,7 +204,7 @@ const Footer: React.FC = () => {
         <nav>
           <h3
             className="text-base font-semibold mb-3"
-            style={{ color: PALETTE[0].text }}
+            style={{ color: BRAND.text }}
           >
             {t("footer.nav.title")}
           </h3>
@@ -224,7 +213,7 @@ const Footer: React.FC = () => {
               <Link
                 href="/"
                 className="transition-colors"
-                style={{ color: `${PALETTE[0].text}CC` }}
+                style={{ color: `${BRAND.text}CC` }}
               >
                 {t("footer.nav.home")}
               </Link>
@@ -233,7 +222,7 @@ const Footer: React.FC = () => {
               <Link
                 href="/all-services"
                 className="transition-colors"
-                style={{ color: `${PALETTE[0].text}CC` }}
+                style={{ color: `${BRAND.text}CC` }}
               >
                 {t("footer.nav.services")}
               </Link>
@@ -242,7 +231,7 @@ const Footer: React.FC = () => {
               <Link
                 href="/about"
                 className="transition-colors"
-                style={{ color: `${PALETTE[0].text}CC` }}
+                style={{ color: `${BRAND.text}CC` }}
               >
                 {t("footer.nav.about")}
               </Link>
@@ -251,7 +240,7 @@ const Footer: React.FC = () => {
               <Link
                 href="/contact"
                 className="transition-colors"
-                style={{ color: `${PALETTE[0].text}CC` }}
+                style={{ color: `${BRAND.text}CC` }}
               >
                 {t("footer.nav.contact")}
               </Link>
@@ -260,7 +249,7 @@ const Footer: React.FC = () => {
               <Link
                 href="/appointment"
                 className="transition-colors"
-                style={{ color: `${PALETTE[0].text}CC` }}
+                style={{ color: `${BRAND.text}CC` }}
               >
                 {t("footer.nav.appointment")}
               </Link>
@@ -272,7 +261,7 @@ const Footer: React.FC = () => {
         <div>
           <h3
             className="text-base font-semibold mb-3"
-            style={{ color: PALETTE[0].text }}
+            style={{ color: BRAND.text }}
           >
             {t("footer.contact.title")}
           </h3>
@@ -280,21 +269,21 @@ const Footer: React.FC = () => {
             <li className="flex gap-2 items-start">
               <Phone
                 className="w-4 h-4 shrink-0"
-                style={{ color: PALETTE[3].back }}
+                style={{ color: BRAND.accent }}
               />
-              <span style={{ color: `${PALETTE[0].text}CC` }}>
+              <span style={{ color: `${BRAND.text}CC` }}>
                 (407) 574 - 4848
               </span>
             </li>
             <li className="flex gap-2 items-start">
               <Mail
                 className="w-4 h-4 shrink-0"
-                style={{ color: PALETTE[3].back }}
+                style={{ color: BRAND.accent }}
               />
               <a
                 href="mailto:info@yourhealthadults.com"
                 className="hover:underline"
-                style={{ color: `${PALETTE[0].text}CC` }}
+                style={{ color: `${BRAND.text}CC` }}
               >
                 info@yourhealthadults.com
               </a>
@@ -302,9 +291,9 @@ const Footer: React.FC = () => {
             <li className="flex gap-2 items-start">
               <MapPin
                 className="w-4 h-4 shrink-0"
-                style={{ color: PALETTE[3].back }}
+                style={{ color: BRAND.accent }}
               />
-              <span style={{ color: `${PALETTE[0].text}CC` }}>
+              <span style={{ color: `${BRAND.text}CC` }}>
                 {t("footer.contact.address.line1")}
                 <br />
                 {t("footer.contact.address.line2")}
@@ -317,7 +306,7 @@ const Footer: React.FC = () => {
         <div>
           <h3
             className="text-base font-semibold mb-3"
-            style={{ color: PALETTE[0].text }}
+            style={{ color: BRAND.text }}
           >
             {t("footer.social.title")}
           </h3>
@@ -328,8 +317,8 @@ const Footer: React.FC = () => {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-sm px-3 py-2 text-sm font-semibold shadow-sm hover:scale-[1.01] transition"
               style={{
-                backgroundColor: PALETTE[0].base,
-                color: PALETTE[0].text,
+                backgroundColor: '#1877F2 ',
+                color: BRAND.bg,
               }}
             >
               <Facebook className="h-4 w-4" />
@@ -341,13 +330,15 @@ const Footer: React.FC = () => {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-sm px-3 py-2 text-sm font-semibold shadow-sm hover:scale-[1.01] transition"
               style={{
-                backgroundColor: PALETTE[4].base,
-                color: PALETTE[0].text,
+                background:
+                  "linear-gradient(45deg, #405DE6 0%, #833AB4 35%, #E1306C 65%, #FCB045 100%)",
+                color: "#FFFFFF",
               }}
             >
-              <Instagram className="h-4 w-4" />
+              <Instagram className="h-4 w-4" aria-hidden />
               Instagram
             </a>
+
           </div>
         </div>
       </div>
@@ -356,9 +347,9 @@ const Footer: React.FC = () => {
       <div
         className="text-center text-xs py-4 border-t"
         style={{
-          borderColor: `${PALETTE[0].text}11`,
+          borderColor: `${BRAND.text}11`,
           backgroundColor: "#FFFFFF",
-          color: `${PALETTE[0].text}99`,
+          color: `${BRAND.text}99`,
         }}
       >
         <p>

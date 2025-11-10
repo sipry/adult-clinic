@@ -6,10 +6,9 @@ import { UserRound, Calendar, Stethoscope } from "lucide-react";
 import { useTranslation } from "../contexts/TranslationContext";
 import { PALETTE, BRAND } from "@/app/ui/palette";
 
-// mismo azul de subtítulos que vienes usando
 const SUBTITLE_BLUE = "#275E71";
 
-/* ---------- Motion utils ---------- */
+/* ---------- Motion utils (same as yours) ---------- */
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = React.useState(false);
   React.useEffect(() => {
@@ -76,7 +75,7 @@ function useInOutViewport<T extends HTMLElement>(
   return inView;
 }
 
-/* ---------- Reveal ---------- */
+/* ---------- Reveal (same as yours) ---------- */
 const Reveal: React.FC<{
   children: React.ReactNode;
   className?: string;
@@ -147,7 +146,8 @@ export type AppointmentProcessProps = {
 const IconBubble: React.FC<{
   children: React.ReactNode;
   active?: boolean;
-  pastel: { base: string; back: string; text: string };
+  // 👇 ahora coincide con tu PALETTE
+  pastel: { base: string; back: string };
 }> = ({ children, active, pastel }) => (
   <motion.div
     animate={active ? { scale: [1, 1.1, 1] } : { scale: 1 }}
@@ -163,7 +163,10 @@ const IconBubble: React.FC<{
       {/* círculo interno */}
       <div
         className="grid place-items-center size-10 rounded-full"
-        style={{ backgroundColor: pastel.back, color: pastel.text }}
+        style={{
+          backgroundColor: pastel.back,
+          color: BRAND.text, // usamos el texto de marca
+        }}
       >
         {children}
       </div>
@@ -246,7 +249,7 @@ export default function AppointmentProcess({
             <Reveal y={12} delay={80}>
               <h2
                 className="mt-6 text-4xl font-extrabold tracking-tight md:text-5xl"
-                style={{ color: BRAND.title }}
+                style={{ color: BRAND.text }}
               >
                 {headingText}
               </h2>
@@ -265,14 +268,17 @@ export default function AppointmentProcess({
           <Reveal y={16} delay={60} className="order-2 lg:order-1">
             <ol className="relative w-full max-w-xl mx-auto space-y-12">
               {stepsData.map((step, idx) => {
-                const pastel = PALETTE[idx % PALETTE.length];
                 return (
                   <li
                     key={step.id}
                     className="relative grid gap-y-4 gap-x-6 grid-cols-1 text-center place-items-center md:grid-cols-[64px_1fr] md:text-left md:place-items-start"
                   >
                     <div className="col-start-1 md:row-span-2">
-                      <IconBubble active={current === idx} pastel={pastel}>
+                      {/* 👇 ahora sí pasamos el objeto completo */}
+                      <IconBubble
+                        active={current === idx}
+                        pastel={PALETTE[0]}
+                      >
                         {step.icon}
                       </IconBubble>
                     </div>
@@ -280,7 +286,7 @@ export default function AppointmentProcess({
                     <Reveal y={6} delay={0} duration={520}>
                       <h3
                         className="md:col-start-2 text-xl font-semibold tracking-tight"
-                        style={{ color: BRAND.title }}
+                        style={{ color: BRAND.text }}
                       >
                         {step.title}
                       </h3>
@@ -288,7 +294,7 @@ export default function AppointmentProcess({
                     <Reveal y={8} delay={50} duration={520}>
                       <p
                         className="md:col-start-2 mt-2 text-base leading-7"
-                        style={{ color: `${BRAND.title}99` }}
+                        style={{ color: `${BRAND.text}99` }}
                       >
                         {step.description}
                       </p>

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Palette } from "lucide-react";
 import { useProvidersData } from "../provider/data";
 import { useTranslation } from "../contexts/TranslationContext";
 import { PALETTE, BRAND } from "../ui/palette";
@@ -159,7 +159,7 @@ const Providers: React.FC<ProvidersProps> = ({ onProviderClick }) => {
           <Reveal y={8} delay={40}>
             <h2
               className="text-4xl font-semibold tracking-tight sm:text-5xl"
-              style={{ color: BRAND.title }}
+              style={{ color: BRAND.text }}
             >
               {t("providers.title")}
             </h2>
@@ -179,16 +179,13 @@ const Providers: React.FC<ProvidersProps> = ({ onProviderClick }) => {
         <ul
           role="list"
           className="divide-y xl:col-span-3"
-          style={{ borderColor: `${BRAND.title}22` }}
+          style={{ borderColor: `${BRAND.text}22` }}
         >
           {providers.map((provider, idx) => {
             const imgSrc =
               typeof provider.image === "string"
                 ? provider.image
                 : provider.image.src;
-
-            // vamos rotando la paleta en cada provider
-            const color = PALETTE[idx % PALETTE.length];
 
             return (
               <li
@@ -200,17 +197,14 @@ const Providers: React.FC<ProvidersProps> = ({ onProviderClick }) => {
                   src={imgSrc}
                   className="aspect-4/5 w-52 flex-none rounded-2xl object-cover shadow-md"
                   loading="lazy"
-                  style={{
-                    outline: `1px solid ${color.text}22`,
-                    backgroundColor: `${color.text}08`,
-                  }}
+                  
                 />
 
                 <div className="max-w-xl flex-auto">
                   <Reveal y={6} delay={0} duration={520}>
                     <h3
                       className="text-lg font-semibold"
-                      style={{ color: BRAND.title }}
+                      style={{ color: BRAND.text }}
                     >
                       {provider.name}
                     </h3>
@@ -228,7 +222,7 @@ const Providers: React.FC<ProvidersProps> = ({ onProviderClick }) => {
                   <Reveal y={8} delay={80} duration={520}>
                     <p
                       className="mt-6 text-base leading-relaxed"
-                      style={{ color: `${BRAND.title}cc` }}
+                      style={{ color: `${BRAND.text}cc` }}
                     >
                       {((bio) => {
                         const MAX = 102;
@@ -241,10 +235,10 @@ const Providers: React.FC<ProvidersProps> = ({ onProviderClick }) => {
 
                   <Reveal y={8} delay={120} duration={520}>
                     <div className="mt-4 space-y-1">
-                      <p className="text-sm" style={{ color: `${BRAND.title}99` }}>
+                      <p className="text-sm" style={{ color: `${BRAND.text}99` }}>
                         {provider.experience}
                       </p>
-                      <p className="text-sm" style={{ color: `${BRAND.title}99` }}>
+                      <p className="text-sm" style={{ color: `${BRAND.text}99` }}>
                         {provider.languages}
                       </p>
                     </div>
@@ -256,8 +250,8 @@ const Providers: React.FC<ProvidersProps> = ({ onProviderClick }) => {
                         href={`/provider/${provider.id}`}
                         className="inline-flex items-center justify-center gap-1.5 px-3 h-9 rounded-md text-sm font-medium transition-all duration-200 w-30 shadow-sm hover:scale-[1.02]"
                         style={{
-                          backgroundColor: PALETTE[4].base,      // #F3A96C
-                          color: PALETTE[4].text,                // #001219
+                          backgroundColor: PALETTE[0].base,      // #F3A96C
+                          color: BRAND.text,                // #001219
                         }}
                         onClick={() => onProviderClick?.(provider.id)}
                       >

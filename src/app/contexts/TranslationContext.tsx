@@ -588,8 +588,7 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'provider.bio.dr1': 'Dr. Jaime A. Acosta, MD, is a highly skilled and compassionate general practitioner committed to providing comprehensive healthcare services to adult patients in Kissimmee, Florida. With a focus on continuity of care and preventative medicine, he offers personalized treatment plans to address a wide range of medical conditions and promote overall well-being.',
     'provider.bio.dr1.text2': 'At Your Health Adult Care, he offers a variety of services, including health screenings, acute and chronic disease management, and minor surgical procedures. Dr. Acosta is a general medicine specialist, licensed to practice medicine in Florida, Michigan, and Puerto Rico, and affiliated with AdventHealth Network. He is currently accepting new patients.',
     'provider.bio.dr2': 'Dr. Juan Ortiz Guevara, MD, is a geriatric physician in Kissimmee, Florida. He is affiliated with the AdventHealth Network. He is accepting new patients and telehealth consultations and accepts all major health insurance plans. Please call ahead to schedule an appointment and confirm all accepted health insurance plans.',
-
-    'proider.cta': 'See more',
+    
     'provider.see.insurance': 'See insurance covered by this doctor',
     'provider.treated': 'Conditions Treated',
     'provider.cta': 'See more',

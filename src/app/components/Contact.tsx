@@ -131,35 +131,35 @@ const Reveal: React.FC<{
   threshold = 0.2,
   rootMargin = "0px 0px -10% 0px",
 }) => {
-  const ref = React.useRef<HTMLDivElement>(null);
-  const inView = useInOutViewport(ref, { threshold, rootMargin });
-  const [shown, setShown] = React.useState(false);
-  const reduce = usePrefersReducedMotion();
+    const ref = React.useRef<HTMLDivElement>(null);
+    const inView = useInOutViewport(ref, { threshold, rootMargin });
+    const [shown, setShown] = React.useState(false);
+    const reduce = usePrefersReducedMotion();
 
-  React.useEffect(() => {
-    if (inView) setShown(true);
-    else if (!once) setShown(false);
-  }, [inView, once]);
+    React.useEffect(() => {
+      if (inView) setShown(true);
+      else if (!once) setShown(false);
+    }, [inView, once]);
 
-  const style: React.CSSProperties = React.useMemo(() => {
-    if (reduce) return {};
-    if (!shown) {
-      return {
-        opacity: 0,
-        transform: `translate(${x}px, ${y}px) scale(${scale})`,
-        transition: `opacity ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms, transform ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms`,
-        willChange: "opacity, transform",
-      };
-    }
-    return {};
-  }, [reduce, shown, x, y, scale, duration, delay]);
+    const style: React.CSSProperties = React.useMemo(() => {
+      if (reduce) return {};
+      if (!shown) {
+        return {
+          opacity: 0,
+          transform: `translate(${x}px, ${y}px) scale(${scale})`,
+          transition: `opacity ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms, transform ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms`,
+          willChange: "opacity, transform",
+        };
+      }
+      return {};
+    }, [reduce, shown, x, y, scale, duration, delay]);
 
-  return (
-    <div ref={ref} className={className} style={style}>
-      {children}
-    </div>
-  );
-};
+    return (
+      <div ref={ref} className={className} style={style}>
+        {children}
+      </div>
+    );
+  };
 
 /* ---------- Tipos ---------- */
 type FormState = {
@@ -194,8 +194,8 @@ const ContactSplitWithForm: React.FC = () => {
 
   const mapQuery = React.useMemo(() => encodeURIComponent(ADDRESS), [ADDRESS]);
   const MAP_LINK = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
-  const FACEBOOK_URL = "/facebookcommingsoon";
-  const INSTAGRAM_URL = "/instagramcommingsoon";
+  const FACEBOOK_URL = "https://www.facebook.com/";
+  const INSTAGRAM_URL = "https://www.instagram.com/";
 
   const sectionRef = React.useRef<HTMLElement>(null);
   useInOutViewport(sectionRef, { threshold: 0.2 }); // mantenemos el hook por si lo usas para otra cosa
@@ -743,7 +743,7 @@ const ContactSplitWithForm: React.FC = () => {
                           disabled={submitting}
                           className="inline-flex items-center justify-center gap-2 w-full sm:w-auto rounded-md px-5 py-2.5 text-sm font-semibold shadow-md transition-all hover:scale-[1.01] disabled:opacity-60 disabled:cursor-not-allowed"
                           style={{
-                            backgroundColor: BRAND.cta,
+                            backgroundColor: BRAND.accent,
                             color: "#FFFFFF",
                             border: `1px solid ${BRAND.ctaBorder}44`,
                           }}
@@ -887,7 +887,7 @@ const ContactSplitWithForm: React.FC = () => {
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 rounded-sm px-4 py-2 text-sm font-semibold shadow-md transition hover:scale-[1.01]"
                       style={{
-                        backgroundColor: BRAND.accent,
+                        backgroundColor: '#1877F2',
                         color: "#FFFFFF",
                       }}
                       aria-label={t("contact.social.facebookAria")}
@@ -902,7 +902,8 @@ const ContactSplitWithForm: React.FC = () => {
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 rounded-sm px-4 py-2 text-sm font-semibold shadow-md transition hover:scale-[1.01]"
                       style={{
-                        background: `linear-gradient(45deg, ${PALETTE[6].base}, ${BRAND.cta})`,
+                        background:
+                          "linear-gradient(45deg, #405DE6 0%, #833AB4 35%, #E1306C 65%, #FCB045 100%)",
                         color: "#FFFFFF",
                       }}
                       aria-label={t("contact.social.instagramAria")}
@@ -911,6 +912,7 @@ const ContactSplitWithForm: React.FC = () => {
                       <Instagram className="h-4 w-4" aria-hidden="true" />
                       Instagram
                     </a>
+
                   </div>
                 </div>
               </aside>

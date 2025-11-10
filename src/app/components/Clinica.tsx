@@ -294,9 +294,9 @@ export default function SeccionOficinaPediatra({
                 onClick={() => openGalleryAt(0)}
                 className="font-semibold px-10 py-3 md:px-16 rounded-md transition-all inline-flex items-center gap-2 text-sm hover:scale-105 shadow-sm"
                 style={{
-                  backgroundColor: PALETTE[4].base,
+                  backgroundColor: PALETTE[0].base,
                   color: BRAND.text,
-                  border: `1px solid ${PALETTE[4].back}`,
+                  border: `1px solid ${PALETTE[0].back}`,
                 }}
               >
                 <span>{t("clinic.cta")}</span>
@@ -310,9 +310,9 @@ export default function SeccionOficinaPediatra({
                 aria-label="Foto anterior"
                 className="font-semibold px-10 py-3 md:px-10 rounded-md transition-all inline-flex items-center gap-2 text-sm hover:scale-105 border shadow-sm"
                 style={{
-                  backgroundColor: PALETTE[1].base,
+                  backgroundColor: BRAND.accent,
                   color: BRAND.text,
-                  border: `1px solid ${PALETTE[1].back}`,
+                  border: `1px solid ${BRAND.accent}`,
                 }}
               >
                 <ChevronLeft className="w-4 h-5" />
@@ -325,9 +325,9 @@ export default function SeccionOficinaPediatra({
                 aria-label="Foto siguiente"
                 className="font-semibold px-10 py-3 md:px-10 rounded-md transition-all inline-flex items-center gap-2 text-sm hover:scale-105 border shadow-sm"
                 style={{
-                  backgroundColor: PALETTE[1].base,
+                  backgroundColor: BRAND.accent,
                   color: BRAND.text,
-                  border: `1px solid ${PALETTE[1].back}`,
+                  border: `1px solid ${BRAND.accent}`,
                 }}
               >
                 <ChevronRight className="w-4 h-5" />

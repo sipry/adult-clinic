@@ -184,7 +184,7 @@ const CompactMedicalPlans: React.FC = () => {
               <Reveal y={8}>
                 <h2
                   className="text-xl md:text-4xl font-bold mb-2"
-                  style={{ color: BRAND.title }}
+                  style={{ color: BRAND.text }}
                 >
                   {t("insurance.title")}
                 </h2>
@@ -235,7 +235,7 @@ const CompactMedicalPlans: React.FC = () => {
                   className="mt-2 font-semibold px-10 py-3 md:px-16 rounded-lg transition-all inline-flex items-center gap-2 text-sm hover:scale-105"
                   style={{
                     backgroundColor: PALETTE[1].base,   // #C8E7DA
-                    color: PALETTE[1].text,             // #001219
+                    color: BRAND.text,             // #001219
                     border: `1px solid ${PALETTE[1].back}`, // #A8D1C2
                   }}
 
