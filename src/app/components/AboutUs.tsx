@@ -87,30 +87,30 @@ const Reveal: React.FC<{
   y = 16,
   once = true,
 }) => {
-    const ref = useRef<HTMLDivElement>(null);
-    const inView = useInOutViewport(ref, { threshold: 0.2 });
-    const [shown, setShown] = useState(false);
-    const reduce = usePrefersReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInOutViewport(ref, { threshold: 0.2 });
+  const [shown, setShown] = useState(false);
+  const reduce = usePrefersReducedMotion();
 
-    useEffect(() => {
-      if (inView) setShown(true);
-      else if (!once) setShown(false);
-    }, [inView, once]);
+  useEffect(() => {
+    if (inView) setShown(true);
+    else if (!once) setShown(false);
+  }, [inView, once]);
 
-    const style: React.CSSProperties = reduce
-      ? {}
-      : {
+  const style: React.CSSProperties = reduce
+    ? {}
+    : {
         opacity: shown ? 1 : 0,
         transform: shown ? "none" : `translateY(${y}px)`,
         transition: `opacity ${duration}ms ease-out ${delay}ms, transform ${duration}ms ease-out ${delay}ms`,
       };
 
-    return (
-      <div ref={ref} className={className} style={style}>
-        {children}
-      </div>
-    );
-  };
+  return (
+    <div ref={ref} className={className} style={style}>
+      {children}
+    </div>
+  );
+};
 
 /* -------------------- Count-up -------------------- */
 const AnimatedNumber: React.FC<{
@@ -128,25 +128,25 @@ const AnimatedNumber: React.FC<{
   suffix = "",
   play = true,
 }) => {
-    const [value, setValue] = useState(start);
-    useEffect(() => {
-      if (!play) return;
-      const startTime = performance.now();
-      const step = (now: number) => {
-        const t = Math.min(1, (now - startTime) / durationMs);
-        setValue(start + (end - start) * easeOutCubic(t));
-        if (t < 1) requestAnimationFrame(step);
-      };
-      const timeout = setTimeout(() => requestAnimationFrame(step), delayMs);
-      return () => clearTimeout(timeout);
-    }, [play, start, end, durationMs, delayMs]);
-    return (
-      <span>
-        {Math.round(value).toLocaleString()}
-        {suffix}
-      </span>
-    );
-  };
+  const [value, setValue] = useState(start);
+  useEffect(() => {
+    if (!play) return;
+    const startTime = performance.now();
+    const step = (now: number) => {
+      const t = Math.min(1, (now - startTime) / durationMs);
+      setValue(start + (end - start) * easeOutCubic(t));
+      if (t < 1) requestAnimationFrame(step);
+    };
+    const timeout = setTimeout(() => requestAnimationFrame(step), delayMs);
+    return () => clearTimeout(timeout);
+  }, [play, start, end, durationMs, delayMs]);
+  return (
+    <span>
+      {Math.round(value).toLocaleString()}
+      {suffix}
+    </span>
+  );
+};
 
 /* -------------------- Component -------------------- */
 export const AboutUsProfessional: React.FC = () => {
@@ -155,8 +155,8 @@ export const AboutUsProfessional: React.FC = () => {
   const { t } = useTranslation();
 
   // tomamos un par de colores de la paleta
-  const bulletColor = PALETTE[3]; // amarillo cálido
-  const counterColor = PALETTE[7]; // rosado fuerte
+  const bulletColor = PALETTE[3]; // #F6EBCF
+  const counterColor = PALETTE[7]; // #E47D79 (por si lo quieres usar luego)
 
   return (
     <section
@@ -180,7 +180,7 @@ export const AboutUsProfessional: React.FC = () => {
           <Reveal y={12} delay={60}>
             <h2
               className="text-4xl md:text-5xl font-extrabold leading-[1.1] mb-5"
-              style={{ color: BRAND.title }}
+              style={{ color: BRAND.text }}
             >
               {t("about.title")}
             </h2>
@@ -204,12 +204,12 @@ export const AboutUsProfessional: React.FC = () => {
                       className="mt-1 h-5 w-5 rounded-sm grid place-items-center text-xs font-bold"
                       style={{
                         backgroundColor: bulletColor.base,
-                        color: bulletColor.text,
+                        color: BRAND.text, // 👈 tu paleta no tiene .text
                       }}
                     >
                       ✓
                     </span>
-                    <span style={{ color: BRAND.title }}>{item}</span>
+                    <span style={{ color: BRAND.text }}>{item}</span>
                   </li>
                 </Reveal>
               )
@@ -221,16 +221,9 @@ export const AboutUsProfessional: React.FC = () => {
               <a
                 href="/aboutus"
                 className="inline-flex w-full items-center gap-2 rounded-sm font-semibold px-6 py-3 shadow-md transition hover:translate-y-[1px]"
-                // TODO: change color on hover
-                //                 onMouseEnter={(e) => {
-                //   e.currentTarget.style.backgroundColor = PALETTE[4].back; // #E48B4F
-                // }}
-                // onMouseLeave={(e) => {
-                //   e.currentTarget.style.backgroundColor = PALETTE[4].base; // #F3A96C
-                // }}
                 style={{
-                  backgroundColor: PALETTE[4].base,   // #F3A96C
-                  color: PALETTE[4].text,             // #001219
+                  backgroundColor: PALETTE[0].base, // #B8EEE8 en tu paleta actual
+                  color: BRAND.text,
                 }}
               >
                 {t("about.cta1")}
@@ -244,7 +237,7 @@ export const AboutUsProfessional: React.FC = () => {
                 style={{
                   backgroundColor: BRAND.bg,
                   border: `1px solid ${BRAND.accent}`,
-                  color: BRAND.title,
+                  color: BRAND.text,
                 }}
               >
                 {t("about.cta2")}
@@ -288,7 +281,7 @@ export const AboutUsProfessional: React.FC = () => {
         <div className="relative">
           <div
             className="space-y-3 md:space-y-3 text-lg leading-relaxed mt-6"
-            style={{ color: BRAND.title }}
+            style={{ color: BRAND.text }}
           >
             {[t("about.text1"), t("about.text2"), t("about.text3")].map(
               (txt, i) => (
