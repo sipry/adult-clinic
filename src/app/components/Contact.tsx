@@ -329,8 +329,8 @@ const ContactSplitWithForm: React.FC = () => {
       className="relative pb-20 pt-16 sm:pt-20 scroll-mt-10 overflow-x-clip overflow-hidden"
       style={{ backgroundColor: BRAND.bg }}
     >
-      {/* Header */}
       <div className="relative z-10">
+        {/* Header */}
         <div className="mx-auto max-w-7xl px-6 lg:px-8 text-center">
           <Reveal y={8} delay={0}>
             <p

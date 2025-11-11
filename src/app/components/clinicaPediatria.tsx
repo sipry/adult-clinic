@@ -11,7 +11,9 @@ import {
   Languages,
   Baby,
 } from "lucide-react";
-import { PALETTE, BRAND } from "@/app/ui/palette";
+import Reveal from "../ui/reveal";
+import { BRAND, PALETTE } from "../ui/palette";
+import { b } from "framer-motion/client";
 
 export type PediatricClinicPromoProps = {
   nombre?: string;
@@ -52,7 +54,7 @@ export default function PediatricClinicPromo({
     },
     {
       icon: ShieldCheck,
-      title: "Aceptamos uan gran variedad de planes",
+      title: "Aceptamos la mayoría de planes",
       desc: "Llámanos para verificar tu cubierta.",
     },
     {
@@ -65,10 +67,41 @@ export default function PediatricClinicPromo({
   return (
     <section
       className="relative isolate mt-14 pb-20"
-      aria-labelledby="peds-clinic-heading"
+      aria-labelledby="peds-section-title"
       style={{ backgroundColor: BRAND.bg }}
     >
-      <div className="mx-auto max-w-7xl px-6 py-14 sm:py-16">
+      {/* Header consistente */}
+      <div className="mx-auto max-w-7xl px-6 lg:px-8 text-center mb-10">
+        <Reveal y={8} delay={0}>
+          <p
+            className="text-xs font-semibold tracking-[0.2em] uppercase mb-3"
+            style={{ color: BRAND.accent }}
+          >
+            Vea también nuestra clínica de pediatría
+          </p>
+        </Reveal>
+        <Reveal y={8}>
+          <h2
+            id="peds-section-title"
+            className="text-4xl sm:text-5xl font-extrabold tracking-tight"
+            style={{ color: BRAND.text }}
+          >
+            Your Health Clínica Pediátrica
+          </h2>
+        </Reveal>
+        <Reveal y={10} delay={80}>
+          <p
+            className="mt-2 text-sm max-w-2xl mx-auto"
+            style={{ color: BRAND.subtitle }}
+          >
+            Todo en un solo lugar: consultas, vacunas, seguimiento y orientación
+            para padres y madres.
+          </p>
+        </Reveal>
+      </div>
+
+      {/* Contenido */}
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] items-stretch">
           {/* IZQUIERDA */}
           <motion.div
@@ -77,29 +110,27 @@ export default function PediatricClinicPromo({
             transition={{ duration: 0.4 }}
             className="rounded-3xl p-7 sm:p-9 shadow-sm"
             style={{
-              backgroundColor: "#FFFFFF",
-              border: `1px solid ${PALETTE[0].back}33`,
+              backgroundColor: BRAND.bg,
+              border: `1px solid ${BRAND.border}`,
             }}
           >
-            {/* pill */}
             <div
-              className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.15em]"
+              className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.15em] mb-3"
               style={{
-                backgroundColor: `${PALETTE[0].base}55`,
+                backgroundColor: PALETTE[3].base,
                 color: BRAND.text,
               }}
             >
-            
-              Pediatría cercana
+
+              Atención pediátrica
             </div>
 
-            <h1
-              id="peds-clinic-heading"
-              className="mt-4 text-4xl sm:text-5xl font-extrabold leading-[1.05]"
+            <h3
+              className="text-3xl sm:text-4xl font-extrabold leading-tight"
               style={{ color: BRAND.text }}
             >
-              Your Health Pediatrics
-            </h1>
+              Atención cariñosa para tus hijos
+            </h3>
 
             <p
               className="mt-4 text-base sm:text-lg leading-7"
@@ -110,15 +141,27 @@ export default function PediatricClinicPromo({
 
             <div className="mt-5 space-y-2 text-sm" style={{ color: BRAND.text }}>
               <p className="flex items-center gap-2">
-                <CalendarClock className="h-4 w-4" style={{ color: PALETTE[1].back }} />
+                <CalendarClock
+                  className="h-4 w-4"
+                  style={{ color: BRAND.accent }}
+                  aria-hidden
+                />
                 Horario extendido para familias ocupadas
               </p>
               <p className="flex items-center gap-2">
-                <Phone className="h-4 w-4" style={{ color: PALETTE[1].back }} />
+                <Phone
+                  className="h-4 w-4"
+                  style={{ color: BRAND.accent }}
+                  aria-hidden
+                />
                 Línea directa con la clínica: {telefono}
               </p>
               <p className="flex items-center gap-2">
-                <MapPin className="h-4 w-4" style={{ color: PALETTE[1].back }} />
+                <MapPin
+                  className="h-4 w-4"
+                  style={{ color: BRAND.accent }}
+                  aria-hidden
+                />
                 {direccion} · {ciudad}
               </p>
             </div>
@@ -126,11 +169,10 @@ export default function PediatricClinicPromo({
             <div className="mt-7 flex flex-wrap gap-3">
               <a
                 href={ctaHref}
-                className="inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus-visible:ring-2"
+                className="inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
                 style={{
-                  backgroundColor: PALETTE[0].base,
-                  color: BRAND.text,
-                  boxShadow: "0 8px 16px rgba(0,0,0,0.05)",
+                  backgroundColor: BRAND.text,
+                  color: BRAND.bg,
                 }}
                 aria-label="Agendar cita pediátrica"
               >
@@ -140,11 +182,11 @@ export default function PediatricClinicPromo({
 
               <a
                 href={telHref}
-                className="inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus-visible:ring-2"
+                className="inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
                 style={{
-                  backgroundColor: "#FFFFFF",
-                  color: BRAND.text,
-                  border: `1px solid ${PALETTE[1].back}77`,
+                  backgroundColor: BRAND.bg,
+                  border: `1px solid ${BRAND.accent}`,
+                  color: BRAND.accent,
                 }}
                 aria-label={`Llamar a ${nombre} al ${telefono}`}
               >
@@ -153,7 +195,7 @@ export default function PediatricClinicPromo({
               </a>
             </div>
 
-            <p className="mt-4 text-xs" style={{ color: "rgba(0,18,25,0.4)" }}>
+            <p className="mt-4 text-xs" style={{ color: BRAND.subtitle }}>
               ¿Primera visita? Trae el récord de vacunas y el plan médico del menor.
             </p>
           </motion.div>
@@ -166,45 +208,43 @@ export default function PediatricClinicPromo({
             className="flex flex-col gap-5"
             aria-label="Información rápida de la clínica pediátrica"
           >
-          
 
-            {/* tarjetas pequeñas */}
+
             <div className="grid gap-3 sm:grid-cols-2">
-              {beneficios.map(({ icon: Icon, title, desc }, idx) => {
-                const col = PALETTE[idx % PALETTE.length];
-                return (
-                  <motion.div
-                    key={title}
-                    whileHover={{ y: -3 }}
-                    transition={{ type: "spring", stiffness: 260, damping: 20 }}
-                    className="flex h-full flex-col gap-2 rounded-2xl p-4 shadow-sm border"
+              {beneficios.map(({ icon: Icon, title, desc }) => (
+                <motion.div
+                  key={title}
+                  whileHover={{ y: -3 }}
+                  transition={{ type: "spring", stiffness: 260, damping: 20 }}
+                  className="flex h-full flex-col gap-2 rounded-2xl p-4 shadow-sm border"
+                  style={{
+                    backgroundColor: BRAND.bg,
+                    border: `1px solid ${BRAND.border}`,
+                  }}
+                >
+                  <span
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-xl"
                     style={{
-                      backgroundColor: "#FFFFFF",
-                      borderColor: `${col.base}33`,
+                      backgroundColor: PALETTE[2].base,
+                      color: BRAND.text,
                     }}
                   >
-                    <span
-                      className="inline-flex h-9 w-9 items-center justify-center rounded-xl ring-1 ring-inset"
-                      style={{
-                        backgroundColor: `${col.base}33`,
-                        color: BRAND.text,
-                        borderColor: `${col.base}66`,
-                      }}
-                    >
-                      <Icon className="h-5 w-5" aria-hidden />
-                    </span>
-                    <p className="text-sm font-semibold" style={{ color: BRAND.text }}>
-                      {title}
-                    </p>
-                    <p
-                      className="text-[13px] leading-5"
-                      style={{ color: "rgba(0,18,25,0.6)" }}
-                    >
-                      {desc}
-                    </p>
-                  </motion.div>
-                );
-              })}
+                    <Icon className="h-5 w-5" aria-hidden />
+                  </span>
+                  <p
+                    className="text-sm font-semibold"
+                    style={{ color: BRAND.text }}
+                  >
+                    {title}
+                  </p>
+                  <p
+                    className="text-[13px] leading-5"
+                    style={{ color: BRAND.subtitle }}
+                  >
+                    {desc}
+                  </p>
+                </motion.div>
+              ))}
             </div>
           </motion.div>
         </div>
