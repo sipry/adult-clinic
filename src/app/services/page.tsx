@@ -16,7 +16,6 @@ export default function ServicesPage() {
         <Suspense fallback={<div>Loading services...</div>}>
           <AllServices />
         </Suspense>
-
         <Footer />
       </div>
     </>

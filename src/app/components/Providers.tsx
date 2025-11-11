@@ -9,7 +9,7 @@ import { PALETTE, BRAND } from "../ui/palette";
 
 const SUBTITLE_BLUE = "#275E71";
 
-/* ───────────────── hooks utilitarios (los tuyos) ───────────────── */
+/* ───────────────── hooks utilitarios ───────────────── */
 
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(false);
@@ -116,11 +116,11 @@ const Reveal: React.FC<RevealProps> = ({
   const style: React.CSSProperties = reduce
     ? {}
     : {
-      opacity: shown ? 1 : 0,
-      transform: shown ? "none" : `translate(${x}px, ${y}px) scale(${scale})`,
-      transition: `opacity ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms, transform ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms`,
-      willChange: "opacity, transform",
-    };
+        opacity: shown ? 1 : 0,
+        transform: shown ? "none" : `translate(${x}px, ${y}px) scale(${scale})`,
+        transition: `opacity ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms, transform ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms`,
+        willChange: "opacity, transform",
+      };
 
   return (
     <div ref={ref} className={className} style={style} aria-hidden={!shown}>
@@ -142,7 +142,7 @@ const Providers: React.FC<ProvidersProps> = ({ onProviderClick }) => {
     <section
       id="providers"
       className="relative pt-24 pb-10 md:pt-28 md:pb-12 overflow-hidden scroll-mt-28"
-      style={{ backgroundColor: BRAND.bg }} // mismo fondo blanco
+      style={{ backgroundColor: BRAND.bg }}
     >
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-20 px-6 lg:px-8 xl:grid-cols-5">
         {/* Section Header */}
@@ -181,7 +181,7 @@ const Providers: React.FC<ProvidersProps> = ({ onProviderClick }) => {
           className="divide-y xl:col-span-3"
           style={{ borderColor: `${BRAND.text}22` }}
         >
-          {providers.map((provider, idx) => {
+          {providers.map((provider) => {
             const imgSrc =
               typeof provider.image === "string"
                 ? provider.image
@@ -192,12 +192,14 @@ const Providers: React.FC<ProvidersProps> = ({ onProviderClick }) => {
                 key={provider.id}
                 className="flex flex-col gap-10 py-12 first:pt-0 last:pb-0 sm:flex-row"
               >
+                {/* 👇 AQUÍ el cambio */}
                 <img
                   alt={provider.name}
                   src={imgSrc}
-                  className="aspect-4/5 w-52 flex-none rounded-2xl object-cover shadow-md"
+                  className="aspect-4/5 w-52 flex-none rounded-2xl object-cover object-left shadow-md"
                   loading="lazy"
-                  
+                  // si quieres más control:
+                  style={{ objectPosition: "30% 80%" }}
                 />
 
                 <div className="max-w-xl flex-auto">
@@ -250,15 +252,14 @@ const Providers: React.FC<ProvidersProps> = ({ onProviderClick }) => {
                         href={`/provider/${provider.id}`}
                         className="inline-flex items-center justify-center gap-1.5 px-3 h-9 rounded-md text-sm font-medium transition-all duration-200 w-30 shadow-sm hover:scale-[1.02]"
                         style={{
-                          backgroundColor: PALETTE[0].base,      // #F3A96C
-                          color: BRAND.text,                // #001219
+                          backgroundColor: PALETTE[0].base,
+                          color: BRAND.text,
                         }}
                         onClick={() => onProviderClick?.(provider.id)}
                       >
                         {t("provider.cta")}
                         <ArrowRight className="w-4 h-4" />
                       </Link>
-
                     </div>
                   </Reveal>
                 </div>

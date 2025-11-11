@@ -16,6 +16,7 @@ import Process from './components/Process';
 import AdultClinicSection from './components/AdultClinicSection';
 import AwardsStrip from './components/awardsStrip';
 import ScrollToTop from './components/ScrollTop';
+import PediatricClinicPromo from './components/clinicaPediatria';
 
 
 type ViewType = 'home' | 'provider-detail' | 'all-services';
@@ -45,7 +46,7 @@ function App() {
           <AwardsStrip />
           <Process />
           <StackedMasonryGallery/>
-          {/* <AdultClinicSection /> */}
+          <PediatricClinicPromo />
           <Contact />
           <Footer />
           <ScrollToTop showAfterPx={200} hideNearTopPx={4} />

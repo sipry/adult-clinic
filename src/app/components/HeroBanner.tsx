@@ -21,7 +21,7 @@ const slides = [
 ];
 
 const ONLY_FADE = false;
-const AUTOPLAY_MS = 6000;
+const AUTOPLAY_MS = 5000;
 
 export default function HeroBannerMixedCentered() {
   const { t } = useTranslation();
@@ -29,34 +29,24 @@ export default function HeroBannerMixedCentered() {
   const [i, setI] = useState(0);
   const prefersReducedMotion = useReducedMotion();
 
-  // 👇 colores del sistema
-  const primary = PALETTE[0]; // { base: "#B8EEE8", back: "#9EDBD4" }
+  // colores del sistema
+  const primary = PALETTE[0];
   const textColor = BRAND.text;
-
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
-  const startAutoplay = () => {
-    if (prefersReducedMotion) return;
-    stopAutoplay();
-    timerRef.current = setInterval(
-      () => setI((p) => (p + 1) % slides.length),
-      AUTOPLAY_MS
-    );
-  };
-  const stopAutoplay = () => {
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-      timerRef.current = null;
-    }
-  };
-
-  useEffect(() => {
-    startAutoplay();
-    return stopAutoplay;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [prefersReducedMotion]);
 
   const heroRef = useRef<HTMLElement | null>(null);
   const inView = useInView(heroRef, { once: true, margin: "-10% 0px" });
+
+  // 👇 autoplay sencillo: cada AUTOPLAY_MS cambia al siguiente
+  useEffect(() => {
+    if (prefersReducedMotion) return;
+    // si quieres que solo se mueva cuando está en pantalla, descomenta esta línea:
+    // if (!inView) return;
+    const timer = setTimeout(() => {
+      setI((prev) => (prev + 1) % slides.length);
+    }, AUTOPLAY_MS);
+
+    return () => clearTimeout(timer);
+  }, [i, prefersReducedMotion, inView]);
 
   const eyebrowCtrls = useAnimation();
   const headlineCtrls = useAnimation();
@@ -131,8 +121,6 @@ export default function HeroBannerMixedCentered() {
       id="home"
       ref={heroRef}
       className="relative h-[720px] md:min-h-screen w-full overflow-hidden bg-black"
-      onMouseEnter={stopAutoplay}
-      onMouseLeave={startAutoplay}
       aria-roledescription="carousel"
       aria-label="Hero image carousel"
     >
@@ -227,7 +215,6 @@ export default function HeroBannerMixedCentered() {
               variants={buttonsWrapV}
               className="mt-8 flex flex-col sm:flex-row gap-3 justify-center"
             >
-              {/* primary CTA */}
               <motion.a
                 href="/#contact"
                 variants={buttonV}
@@ -242,7 +229,6 @@ export default function HeroBannerMixedCentered() {
                 {t("hero.contact") ?? "Book an appointment"}
               </motion.a>
 
-              {/* secondary CTA */}
               <motion.a
                 href="/#services"
                 variants={buttonV}
@@ -268,10 +254,7 @@ export default function HeroBannerMixedCentered() {
               <button
                 key={idx}
                 type="button"
-                onClick={() => {
-                  setI(idx);
-                  startAutoplay();
-                }}
+                onClick={() => setI(idx)}
                 className="group relative h-2.5 w-2.5 rounded-full outline-none"
                 aria-label={`Ir al slide ${idx + 1}`}
                 aria-current={active ? "true" : undefined}
