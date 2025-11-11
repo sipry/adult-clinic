@@ -1,3 +1,4 @@
+// TODO: clean file
 import React from 'react';
 import { ArrowLeft, Clock, Users, Phone, Calendar, CheckCircle, AlertCircle, Info } from 'lucide-react';
 import { useTranslation } from '../contexts/TranslationContext';
@@ -52,7 +53,7 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ serviceId, onBack }) => {
       description: t('services.asthma.desc'),
       image: "https://images.pexels.com/photos/4386467/pexels-photo-4386467.jpeg?auto=compress&cs=tinysrgb&w=800",
       details: {
-        overview: "Brindamos diagnóstico, tratamiento y manejo integral del asma y alergias pediátricas para mejorar la calidad de vida de su hijo.",
+        overview: "Brindamos diagnóstico, tratamiento y manejo integral del asma y alergias para mejorar la calidad de vida de su hijo.",
         whatToExpect: [
           "Evaluación de síntomas y desencadenantes",
           "Pruebas de función pulmonar cuando sea apropiado",

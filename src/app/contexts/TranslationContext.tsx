@@ -66,6 +66,7 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'about.text2': 'En Your Health Adult Care tratamos una amplia variedad de condiciones agudas y crónicas, como diabetes, hipertensión, enfermedades del corazón y asma. Nuestros médicos brindan atención compasiva y personalizada, adaptada a las necesidades de cada paciente.',
     'about.text3': 'Te ayudamos a mantener tu bienestar con chequeos regulares, medicina preventiva, laboratorios, vacunas y atención bilingüe en un ambiente cálido y profesional.',
     'about.stats.families': 'Familias Felices',
+    'about.stats.experience': 'Años de Experiencia',
 
     // detalles de about us (TODO)
     'about.title.detail': 'Your Health Adult Care: Atención médica bilingüe',
@@ -178,8 +179,8 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'providers.cta.subtitle': 'profesionales capacitados para brindar el mejor servicio a tu familia, horarios amplios para tu conveniencia y atención personalizada. Conócelos y reserva tu cita.',
     'providers.schedule': 'Programar Cita',
     'providers.meet': 'Conocer al Equipo',
-    'provider.bio.dr1': 'La Dr. Jaime A. Acosta es una médica consolidada y con experiencia que ha ejercido en Florida por más de 20 años. Es reconocida en el campo por brindar atención de calidad, centrada en el paciente, para niños desde recién nacidos hasta adolescentes.',
-    'provider.bio.dr2': 'Dr. Juan Ortiz Guevara, MD, is a geriatric physician in Kissimmee, Florida. He is affiliated with the AdventHealth Network. He is accepting new patients and telehealth consultations and accepts all major health insurance plans. Please call ahead to schedule an appointment and confirm all accepted health insurance plans.',
+    'provider.bio.dr1': 'El Dr. Jaime A. Acosta, MD, es un médico general altamente capacitado y compasivo, comprometido con brindar servicios de atención médica integral a pacientes adultos en Kissimmee, Florida. Con un enfoque en la continuidad del cuidado y la medicina preventiva, ofrece planes de tratamiento personalizados para abordar una amplia variedad de condiciones médicas y promover el bienestar integral.',
+    'provider.bio.dr2': 'El Dr. Juan Ortiz Guevara, MD, es un médico geriatra en Kissimmee, Florida. Está afiliado a la red de AdventHealth. Acepta nuevos pacientes y consultas por telemedicina, y acepta todos los principales planes de seguro médico. Por favor, llame con anticipación para programar una cita y confirmar todos los planes de seguro médico aceptados.',
     'proider.cta': 'Ver mas',
     'provider.see.insurance': 'Ver planes aceptados',
     'provider.treated': 'Condiciones atendidas',
@@ -198,7 +199,7 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
 
     // Clinica
     'clinic.pretitle': 'Nuestra oficina',
-    'clinic.title': 'Espacio diseñado para la comodidad de tus pequeños.',
+    'clinic.title': 'Espacio diseñado para tu comodidad.',
     'clinic.cta': 'Ver galería de fotos',
 
     // Adulto / Clínica para adultos (texto original)
@@ -272,7 +273,7 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
 
     // insurance
     'insurance.title': 'Aceptamos planes medicos!',
-    'insurance.subtitle': 'Trabajamos con proveedores de seguros para hacer que la atención pediátrica de calidad sea accesible y asequible para su familia.',
+    'insurance.subtitle': 'Trabajamos con proveedores de seguros para hacer que la atención médica sea de calidad, accesible y asequible para su familia.',
     'insurance.search': 'Buscar mi seguro',
     'insurance.inline': '¿Quieres saber si tu plan está cubierto?',
 
@@ -588,7 +589,7 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'provider.bio.dr1': 'Dr. Jaime A. Acosta, MD, is a highly skilled and compassionate general practitioner committed to providing comprehensive healthcare services to adult patients in Kissimmee, Florida. With a focus on continuity of care and preventative medicine, he offers personalized treatment plans to address a wide range of medical conditions and promote overall well-being.',
     'provider.bio.dr1.text2': 'At Your Health Adult Care, he offers a variety of services, including health screenings, acute and chronic disease management, and minor surgical procedures. Dr. Acosta is a general medicine specialist, licensed to practice medicine in Florida, Michigan, and Puerto Rico, and affiliated with AdventHealth Network. He is currently accepting new patients.',
     'provider.bio.dr2': 'Dr. Juan Ortiz Guevara, MD, is a geriatric physician in Kissimmee, Florida. He is affiliated with the AdventHealth Network. He is accepting new patients and telehealth consultations and accepts all major health insurance plans. Please call ahead to schedule an appointment and confirm all accepted health insurance plans.',
-    
+
     'provider.see.insurance': 'See insurance covered by this doctor',
     'provider.treated': 'Conditions Treated',
     'provider.cta': 'See more',
@@ -663,7 +664,7 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     // Insurance
     'insurance.title': 'We Accept Insurance!',
     'insurance.search': 'Search my insurance',
-    'insurance.subtitle': 'We work with insurance providers to make quality pediatric care accessible and affordable for your family.',
+    'insurance.subtitle': 'We work with insurance providers to make quality medical care accessible and affordable for your family.',
     'insurance.accepted.title': 'Accepted Insurance Plans',
     'insurance.images.title': 'Major Insurance Partners',
     'insurance.not.listed': "Don't see your insurance listed?",

@@ -13,7 +13,6 @@ import {
 } from "lucide-react";
 import Reveal from "../ui/reveal";
 import { BRAND, PALETTE } from "../ui/palette";
-import { b } from "framer-motion/client";
 
 export type PediatricClinicPromoProps = {
   nombre?: string;
@@ -121,7 +120,6 @@ export default function PediatricClinicPromo({
                 color: BRAND.text,
               }}
             >
-
               Atención pediátrica
             </div>
 
@@ -208,8 +206,6 @@ export default function PediatricClinicPromo({
             className="flex flex-col gap-5"
             aria-label="Información rápida de la clínica pediátrica"
           >
-
-
             <div className="grid gap-3 sm:grid-cols-2">
               {beneficios.map(({ icon: Icon, title, desc }) => (
                 <motion.div
@@ -246,6 +242,19 @@ export default function PediatricClinicPromo({
                 </motion.div>
               ))}
             </div>
+
+            {/* Botón fuera del grid para no romper el layout */}
+            <Link
+              href={websiteHref}
+              className="inline-flex items-center justify-center rounded-lg px-5 py-3 text-sm font-semibold shadow-sm transition hover:-translate-y-0.5 hover:shadow-md w-fit"
+              style={{
+                backgroundColor: PALETTE[1].base,
+                color: BRAND.text,
+                border: `1px solid ${BRAND.border}`,
+              }}
+            >
+              Ver servicios de pediatría
+            </Link>
           </motion.div>
         </div>
       </div>
