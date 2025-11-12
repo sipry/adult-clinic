@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Stethoscope } from "lucide-react";
 import { useTranslation } from "../contexts/TranslationContext";
 import LanguageToggle from "./LanguageToggle";
 import { usePathname } from "next/navigation";
@@ -31,16 +31,17 @@ const Navbar: React.FC<NavbarProps> = ({ scheme = "auto" }) => {
   const { t } = useTranslation();
   const pathname = usePathname();
 
-  const primary = PALETTE[0]; // { base, back }
+  const primary = PALETTE[0];
 
   const onServicesPage = !!pathname && pathname.startsWith("/services");
-  const forceWhite = scheme === "white" || (scheme === "auto" && onServicesPage);
+  const forceWhite =
+    scheme === "white" || (scheme === "auto" && onServicesPage);
   const solidNav = forceWhite || isScrolled;
 
+  // scroll + scrollspy + resize
   useEffect(() => {
     const applyScrollState = () => setIsScrolled(window.scrollY > 50);
     applyScrollState();
-    window.addEventListener("scroll", applyScrollState, { passive: true });
 
     const onScrollSection = () => {
       let current = "";
@@ -52,12 +53,15 @@ const Navbar: React.FC<NavbarProps> = ({ scheme = "auto" }) => {
           current = id;
         }
       });
-      if (current !== activeSection) {
-        setActiveSection(current);
-      }
+      setActiveSection((prev) => (prev !== current ? current : prev));
     };
-    window.addEventListener("scroll", onScrollSection, { passive: true });
 
+    window.addEventListener("scroll", applyScrollState, { passive: true });
+    window.addEventListener("scroll", onScrollSection, { passive: true });
+    window.addEventListener("load", applyScrollState);
+    window.addEventListener("pageshow", applyScrollState);
+
+    // cerrar drawer al pasar a desktop
     const onResize = () => {
       if (window.innerWidth >= 1280) setIsMobileMenuOpen(false);
     };
@@ -66,9 +70,33 @@ const Navbar: React.FC<NavbarProps> = ({ scheme = "auto" }) => {
     return () => {
       window.removeEventListener("scroll", applyScrollState);
       window.removeEventListener("scroll", onScrollSection);
+      window.removeEventListener("load", applyScrollState);
+      window.removeEventListener("pageshow", applyScrollState);
       window.removeEventListener("resize", onResize);
     };
-  }, [activeSection]);
+  }, []);
+
+  // re-evaluar scroll al cambiar de ruta
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsScrolled(window.scrollY > 50);
+    }
+  }, [pathname]);
+
+  // bloquear scroll cuando el drawer está abierto
+  useEffect(() => {
+    const { body, documentElement } = document;
+    if (isMobileMenuOpen) {
+      const prevBody = body.style.overflow;
+      const prevHtml = documentElement.style.overflow;
+      body.style.overflow = "hidden";
+      documentElement.style.overflow = "hidden";
+      return () => {
+        body.style.overflow = prevBody;
+        documentElement.style.overflow = prevHtml;
+      };
+    }
+  }, [isMobileMenuOpen]);
 
   const toggleMobileMenu = () => setIsMobileMenuOpen((p) => !p);
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
@@ -88,8 +116,8 @@ const Navbar: React.FC<NavbarProps> = ({ scheme = "auto" }) => {
       "relative group transition-colors duration-300 hover:scale-105 font-medium text-sm tracking-widest",
       solidNav
         ? isActive
-          ? "text-[#001219]" // BRAND.text
-          : "text-[#005F73] hover:text-[#001219]" // BRAND.subtitle -> BRAND.text
+          ? "text-[#001219]"
+          : "text-[#005F73] hover:text-[#001219]"
         : isActive
           ? "text-white"
           : "text-white hover:text-[#94d2bd]",
@@ -109,9 +137,9 @@ const Navbar: React.FC<NavbarProps> = ({ scheme = "auto" }) => {
           transition: "background-color 400ms ease, box-shadow 400ms ease",
         }}
       >
-        {/* right side */}
+        {/* contenido derecho */}
         <div className="flex items-center ml-auto">
-          {/* desktop links */}
+          {/* desktop links (xl+) */}
           <div className="hidden xl:flex items-center space-x-6 mr-4">
             {navLinks.map(({ href, id, label }) => {
               const isActive = activeSection === id;
@@ -129,8 +157,11 @@ const Navbar: React.FC<NavbarProps> = ({ scheme = "auto" }) => {
             })}
           </div>
 
-          {/* actions */}
-          <div className="hidden md:flex items-center gap-3">
+          {/* acciones en md–<xl (solo cuando el menú NO está abierto) */}
+          <div
+            className={`${isMobileMenuOpen ? "hidden" : "hidden md:flex xl:hidden"
+              } items-center gap-3`}
+          >
             <LanguageToggle scrolled={solidNav} />
             <Link
               href="/contact"
@@ -145,7 +176,23 @@ const Navbar: React.FC<NavbarProps> = ({ scheme = "auto" }) => {
             </Link>
           </div>
 
-          {/* mobile menu button */}
+          {/* acciones desktop (>=xl) */}
+          <div className="hidden xl:flex items-center gap-3">
+            <LanguageToggle scrolled={solidNav} />
+            <Link
+              href="/contact"
+              className="transition-transform rounded-md duration-300 font-normal text-sm py-2 px-6 tracking-wide hover:scale-105 shadow-md"
+              style={{
+                backgroundColor: primary.base,
+                color: BRAND.text,
+                border: `1px solid ${primary.back}`,
+              }}
+            >
+              {t("nav.explore")}
+            </Link>
+          </div>
+
+          {/* botón mobile */}
           <button
             onClick={toggleMobileMenu}
             className="p-2 ml-3 flex xl:hidden transition-transform duration-200 hover:scale-110"
@@ -181,23 +228,27 @@ const Navbar: React.FC<NavbarProps> = ({ scheme = "auto" }) => {
         style={{ backgroundColor: BRAND.bg }}
       >
         <div className="flex flex-col h-full">
-          {/* header */}
-          <div className="shrink-0 flex items-center justify-between p-6 border-b border-[#00121910]">
-            <span
-              className="text-md tracking-wide font-semibold"
-              style={{ color: BRAND.text }}
-            >
-              Your Health Adult Care
-            </span>
-            <button
-              onClick={closeMobileMenu}
-              className="p-2 transition-colors"
-              style={{ color: BRAND.text }}
-              aria-label="Close mobile menu"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
+        {/* header */}
+<div className="shrink-0 flex items-center justify-between p-6 border-b border-[#00121910]">
+  <div className="flex items-center gap-2">
+    <Stethoscope className="w-5 h-5" style={{ color: BRAND.text }} />
+    <span
+      className="text-md tracking-wide font-semibold"
+      style={{ color: BRAND.text }}
+    >
+      Your Health Adult Care
+    </span>
+  </div>
+  <button
+    onClick={closeMobileMenu}
+    className="p-2 transition-colors"
+    style={{ color: BRAND.text }}
+    aria-label="Close mobile menu"
+  >
+    <X className="w-5 h-5" />
+  </button>
+</div>
+
 
           {/* body */}
           <nav className="flex-1 min-h-0 px-6 py-8 overflow-y-auto">
@@ -209,11 +260,10 @@ const Navbar: React.FC<NavbarProps> = ({ scheme = "auto" }) => {
                     key={href}
                     href={href}
                     onClick={closeMobileMenu}
-                    className={`block text-md font-medium py-2 tracking-wide transition-colors ${
-                      isActive
-                        ? "text-[#0A9396]" // BRAND.accent
-                        : "text-[#001219] hover:text-[#BB3E03]" // BRAND.text / BRAND.cta
-                    }`}
+                    className={`block text-md font-medium py-2 tracking-wide transition-colors ${isActive
+                        ? "text-[#0A9396]"
+                        : "text-[#001219] hover:text-[#0A9396]"
+                      }`}
                   >
                     {label}
                   </a>
@@ -223,11 +273,18 @@ const Navbar: React.FC<NavbarProps> = ({ scheme = "auto" }) => {
           </nav>
 
           {/* footer */}
-          <div className="shrink-0 p-6 border-t border-[#00121910] flex justify-center">
+          <div className="shrink-0 p-6 border-t border-[#00121910] flex flex-col gap-4">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-medium" style={{ color: BRAND.text }}>
+                {t("nav.language")}
+              </span>
+              <LanguageToggle scrolled />
+            </div>
+
             <Link
               href="/contact"
               onClick={closeMobileMenu}
-              className="inline-flex items-center font-semibold py-3 px-4 rounded-md transition-transform hover:scale-[1.015] shadow-sm"
+              className="inline-flex items-center justify-center font-semibold py-3 px-4 rounded-md transition-transform hover:scale-[1.015] shadow-sm"
               style={{
                 backgroundColor: primary.base,
                 color: BRAND.text,
@@ -237,6 +294,7 @@ const Navbar: React.FC<NavbarProps> = ({ scheme = "auto" }) => {
               {t("nav.explore")}
             </Link>
           </div>
+
         </div>
       </div>
     </>

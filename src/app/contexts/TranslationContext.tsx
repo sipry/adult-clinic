@@ -39,6 +39,7 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'nav.home': 'Inicio',
     'nav.about': 'Sobre nosotros',
     'nav.services': 'Servicios',
+    'nav.insurance': 'Seguros',
     'nav.providers': 'Proveedores',
     'nav.clinic': 'Clínica',
     'nav.contact': 'Contactanos',
@@ -138,19 +139,34 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'services.search.hint': 'Prueba con otra búsqueda',
 
     // Lista de servicios (array de objetos)
-    'services.list': [
-      { key: 'well-visit', title: 'Chequeos regulares', description: 'Chequeos regulares para asegurar un desarrollo y crecimiento saludable en cada etapa.' },
-      { key: 'sick-visit', title: 'Visita por enfermedad', description: 'Atención médica cuando tu hijo presenta síntomas o malestar inesperado.' },
-      { key: 'follow-up', title: 'Cita de seguimiento', description: 'Consultas para evaluar el progreso después de un tratamiento o diagnóstico.' },
-      { key: 'immunizations', title: 'Inmunizaciones', description: 'Vacunas esenciales para proteger a tu hijo contra enfermedades prevenibles.' },
-      { key: 'food-allergy-test', title: 'Prueba de alergia alimentaria', description: 'Evaluaciones para detectar posibles reacciones a alimentos comunes.' },
-      { key: 'environmental-allergy-test', title: 'Prueba de alergia ambiental', description: 'Diagnóstico de alergias relacionadas con polvo, polen, mascotas u otros factores.' },
-      { key: 'vision-screening', title: 'Examen de la vista', description: 'Prueba rápida para identificar problemas visuales que puedan afectar el aprendizaje.' },
-      { key: 'audiology-screening', title: 'Examen de audición', description: 'Evaluación auditiva para asegurar un desarrollo óptimo del lenguaje y la comunicación.' },
-      { key: 'obesity-care-plan', title: 'Plan de cuidado para la obesidad', description: 'Apoyo médico y nutricional para promover un peso saludable y hábitos de vida positivos.' },
-      { key: 'asthma-care-plan', title: 'Plan de cuidado para el asma', description: 'Manejo personalizado para controlar síntomas y mejorar la calidad de vida.' },
-      { key: 'adhd-care-plan', title: 'Plan de cuidado para TDAH', description: 'Estrategias y seguimiento para apoyar el desarrollo escolar y emocional de tu hijo.' },
-    ],
+'services.list': [
+  {
+    key: 'preventive-medicine',
+    title: 'Medicina preventiva',
+    description: 'Pruebas médicas y tratamientos que pueden ayudarte a evitar enfermedades innecesarias y a detectar a tiempo una condición de salud potencialmente peligrosa, cuando aún está en su etapa más temprana y tratable.',
+  },
+  {
+    key: 'adult-immunizations',
+    title: 'Inmunizaciones para adultos',
+    description: 'Nuestros médicos ofrecen todas las inmunizaciones recomendadas por los CDC, incluyendo las que te protegen contra la influenza (gripe), infecciones neumocócicas, VPH, hepatitis, culebrilla (herpes zóster), VRS y más.',
+  },
+  {
+    key: 'minor-illness-diagnosis',
+    title: 'Diagnóstico y tratamiento de enfermedades menores',
+    description: 'Evaluación y tratamiento de enfermedades agudas comunes, como el resfriado o la gripe, que no requieren hospitalización.',
+  },
+  {
+    key: 'minor-injury-treatment',
+    title: 'Diagnóstico y tratamiento de lesiones menores',
+    description: 'Evaluación y tratamiento de lesiones que no ponen en riesgo la vida y que comúnmente pueden manejarse en el consultorio de un médico de atención primaria.',
+  },
+  {
+    key: 'chronic-disease-management',
+    title: 'Manejo de enfermedades crónicas',
+    description: 'Monitoreo regular y tratamiento de enfermedades crónicas que van desde enfermedades cardiovasculares hasta obesidad, diabetes, EPOC, asma y artritis. Nuestro enfoque multidisciplinario de atención primaria te brinda las herramientas y el apoyo que necesitas en cualquier edad y etapa de tu salud.',
+  },
+],
+
 
     // Providers
     'providers.pretitle': 'Atención confiable',
