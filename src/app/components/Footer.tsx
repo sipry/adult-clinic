@@ -211,16 +211,26 @@ const Footer: React.FC = () => {
           <ul className="space-y-2 text-sm">
             <li>
               <Link
-                href="/"
+                href="/#"
                 className="transition-colors"
                 style={{ color: `${BRAND.text}CC` }}
               >
                 {t("footer.nav.home")}
               </Link>
             </li>
+          
             <li>
               <Link
-                href="/all-services"
+                href="/aboutus"
+                className="transition-colors"
+                style={{ color: `${BRAND.text}CC` }}
+              >
+                {t("footer.nav.about")}
+              </Link>
+            </li>
+              <li>
+              <Link
+                href="/services"
                 className="transition-colors"
                 style={{ color: `${BRAND.text}CC` }}
               >
@@ -229,25 +239,16 @@ const Footer: React.FC = () => {
             </li>
             <li>
               <Link
-                href="/about"
+                href="/#providers"
                 className="transition-colors"
                 style={{ color: `${BRAND.text}CC` }}
               >
-                {t("footer.nav.about")}
+                {t("footer.nav.providers")}
               </Link>
             </li>
             <li>
               <Link
                 href="/contact"
-                className="transition-colors"
-                style={{ color: `${BRAND.text}CC` }}
-              >
-                {t("footer.nav.contact")}
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/appointment"
                 className="transition-colors"
                 style={{ color: `${BRAND.text}CC` }}
               >

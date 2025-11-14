@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { X, Search, Copy, Check, ChevronDown } from "lucide-react";
 import { PALETTE, BRAND } from "@/app/ui/palette";
+import { useTranslation } from "@/app/contexts/TranslationContext";
 
 type Props = {
   open: boolean;
@@ -55,6 +56,8 @@ export default function InsuranceModal({
   doctors,
   doctorPlans,
 }: Props) {
+  const { t } = useTranslation();
+
   const plansByDoctor: Record<string, string[]> =
     doctorPlans && Object.keys(doctorPlans).length
       ? doctorPlans
@@ -101,11 +104,11 @@ export default function InsuranceModal({
   const closeBtnRef = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     if (!open) return;
-    const t = setTimeout(() => closeBtnRef.current?.focus(), 0);
+    const tmo = setTimeout(() => closeBtnRef.current?.focus(), 0);
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", onKey);
     return () => {
-      clearTimeout(t);
+      clearTimeout(tmo);
       window.removeEventListener("keydown", onKey);
     };
   }, [open, onClose]);
@@ -146,10 +149,10 @@ export default function InsuranceModal({
     <>
       <div
         className="fixed inset-0 z-[120] flex items-center justify-center p-4"
-        style={{ backgroundColor: `${BRAND.text}99` }} // overlay oscurecido
+        style={{ backgroundColor: `${BRAND.text}99` }}
         role="dialog"
         aria-modal="true"
-        aria-label="Lista completa de seguros aceptados"
+        aria-label={t("insurance.ariaLabel.title")}
         onClick={(e) => e.target === e.currentTarget && onClose()}
       >
         <div
@@ -163,16 +166,16 @@ export default function InsuranceModal({
           >
             <h3
               className="text-lg xl:text-xl font-extrabold"
-              style={{ color: BRAND.text }}
+              style={{ color: BRAND.text }} 
             >
-              Aseguradoras aceptadas
+              {t("insurance.title")}
             </h3>
             <button
               ref={closeBtnRef}
               onClick={onClose}
               className="p-2 rounded-sm transition-colors"
               style={{ color: BRAND.text }}
-              aria-label="Cerrar modal"
+              aria-label={t("insurance.closeAria")}
             >
               <X className="w-5 h-5" />
             </button>
@@ -191,7 +194,7 @@ export default function InsuranceModal({
                   className="block text-sm font-semibold mb-1"
                   style={{ color: BRAND.text }}
                 >
-                  Doctor
+                  {t("insurance.doctor.label")}
                 </label>
                 <div className="relative">
                   <select
@@ -205,7 +208,7 @@ export default function InsuranceModal({
                       color: BRAND.text,
                     }}
                   >
-                    <option value="">Todos los doctores</option>
+                    <option value="">{t("insurance.doctor.all")}</option>
                     {allDoctors.map((d) => (
                       <option key={d} value={d}>
                         {d}
@@ -227,7 +230,7 @@ export default function InsuranceModal({
                   className="block text-sm font-semibold mb-1"
                   style={{ color: BRAND.text }}
                 >
-                  Buscar plan o aseguradora
+                  {t("insurance.searchBox.label")}
                 </label>
                 <div className="relative">
                   <div className="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
@@ -241,7 +244,7 @@ export default function InsuranceModal({
                     type="text"
                     value={q}
                     onChange={(e) => setQ(e.target.value)}
-                    placeholder="Ej. Cigna, Aetna..."
+                    placeholder={t("insurance.searchBox.placeholder")}
                     className="h-11 w-full pl-10 pr-3 rounded-md border text-sm shadow-sm focus:ring-0"
                     style={{
                       backgroundColor: BRAND.bg,
@@ -257,8 +260,7 @@ export default function InsuranceModal({
               className="mb-4 text-xs sm:text-sm"
               style={{ color: `${BRAND.text}99` }}
             >
-              La cobertura puede variar por plan y red. Si no ves tu seguro,
-              contáctanos para verificar.
+              {t("insurance.disclaimer")}
             </div>
 
             {/* Lista */}
@@ -284,11 +286,10 @@ export default function InsuranceModal({
             ) : (
               <div className="text-center py-10">
                 <p style={{ color: `${BRAND.text}99` }}>
-                  No se encontraron planes
+                  {t("insurance.empty.title")}
                 </p>
                 <p className="text-sm" style={{ color: `${BRAND.text}66` }}>
-                  Verifica la selección de doctor o contacta para confirmar
-                  cobertura.
+                  {t("insurance.empty.subtitle")}
                 </p>
               </div>
             )}
@@ -306,6 +307,8 @@ export default function InsuranceModal({
               onClick={handleCopyPhone}
               className="mx-auto flex items-center gap-2 text-sm font-medium"
               style={{ color: BRAND.text }}
+              aria-label={t("insurance.copyNumberAria")}
+              title={t("insurance.copyNumberAria")}
             >
               <span className="tabular-nums tracking-wide">
                 {displayNumber}
@@ -328,7 +331,7 @@ export default function InsuranceModal({
                   border: `1px solid ${PALETTE[0].back}`,
                 }}
               >
-                Contáctanos
+                {t("insurance.contact")}
               </a>
               <button
                 onClick={onClose}
@@ -339,7 +342,7 @@ export default function InsuranceModal({
                   borderColor: `${BRAND.text}11`,
                 }}
               >
-                Cerrar
+                {t("insurance.close")}
               </button>
             </div>
           </div>

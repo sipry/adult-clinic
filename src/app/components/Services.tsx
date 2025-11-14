@@ -212,7 +212,7 @@ const ServicesRail: React.FC<{ featuredKeys?: string[] }> = ({
         <div className="space-y-3 md:flex md:items-end md:justify-between md:gap-4">
           <div>
             <p
-              className="text-[11px] font-semibold tracking-[0.28em]"
+              className="text-[11px] font-semibold tracking-[0.28em] text-center md:text-left"
               style={{ color: "#0A9396" }}
             >
               {t("services.pretitle")}
@@ -221,12 +221,13 @@ const ServicesRail: React.FC<{ featuredKeys?: string[] }> = ({
               {t("services.title")}
             </h2>
 
-            <p className="mt-3 text-base md:text-lg text-[#005F73]">
+            <p className="mt-3 text-base md:text-lg text-[#005F73] text-center md:text-left">
               {t("services.subtitle")}
             </p>
           </div>
 
-          <div className="hidden md:flex items-center gap-3 shrink-0">
+          {/* CONTROLES: botón "See all" + flechas */}
+          <div className="mt-4 flex items-center gap-3 shrink-0 justify-center md:mt-0 md:justify-end">
             <Link
               href="/services"
               className="inline-flex items-center rounded-md px-10 py-3 text-sm font-semibold text-white shadow-sm hover:scale-105 transition-transform"
@@ -255,6 +256,7 @@ const ServicesRail: React.FC<{ featuredKeys?: string[] }> = ({
               </button>
             </div>
           </div>
+
         </div>
       </div>
 

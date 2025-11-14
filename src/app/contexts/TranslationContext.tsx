@@ -18,7 +18,6 @@ type TranslationValue =
   | string
   | string[]
   | ServiceTranslation[]
-  | Record<string, string>;
 
 interface TranslationContextType {
   language: Language;
@@ -180,14 +179,14 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'providers.dr1.specialty1': 'Medicina Pediátrica General',
     'providers.dr1.specialty2': 'Cuidado del Recién Nacido',
     'providers.dr1.specialty3': 'Medicina del Adolescente',
-    'providers.dr1.experience': '20+ years of experience',
+    'providers.dr1.experience': '20+ años de experiencia',
     'providers.dr1.languages': 'Idiomas: Spanish, English',
     'providers.dr2.title': 'Médico de Atención Primaria y Geriatra',
     'providers.dr2.education': 'Dr. Ortiz Guevara graduated from the Universidad Central del Este (UCE) School of Medicine in the Dominican Republic in 1978 and worked for many years in Puerto Rico. He specializes in Family Medicine and Geriatric Medicine and is affiliated with AdventHealth Network. He is currently accepting new patients.',
     'providers.dr2.specialty1': 'Medicina Pediátrica General',
     'providers.dr2.specialty2': 'Exámenes Deportivos',
     'providers.dr2.specialty3': 'Medicina Preventiva',
-    'providers.dr2.experience': '20+ years of experience',
+    'providers.dr2.experience': '20+ años de experiencia',
     'providers.dr2.languages': 'Idiomas: Spanish, English',
     'providers.education': 'Educación',
     'providers.specialties': 'Especialidades',
@@ -307,6 +306,20 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'insurance.subtitle': 'Trabajamos con proveedores de seguros para hacer que la atención médica sea de calidad, accesible y asequible para su familia.',
     'insurance.search': 'Buscar mi seguro',
     'insurance.inline': '¿Quieres saber si tu plan está cubierto?',
+    "insurance.ariaLabel": "Lista completa de seguros aceptados",
+    "insurance.ariaLabel.title": "Aseguradoras aceptadas",
+    "insurance.closeAria": "Cerrar modal",
+    "insurance.doctor.label": "Doctor",
+    "insurance.doctor.all": "Todos los doctores",
+    "insurance.searchBox.label": "Buscar plan o aseguradora",
+    "insurance.searchBox.placeholder": "Ej. Cigna, Aetna...",
+    "insurance.disclaimer": "La cobertura puede variar por plan y red. Si no ves tu seguro, contáctanos para verificar.",
+    "insurance.empty.title": "No se encontraron planes",
+    "insurance.empty.subtitle": "Verifica la selección de doctor o contáctanos para confirmar cobertura.",
+    "insurance.copyNumberAria": "Copiar número de teléfono",
+    "insurance.contact": "Contáctanos",
+    "insuranceclose": "Cerrar",
+
 
     // awards strip
     // Etiquetas generales del componente
@@ -433,8 +446,8 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'footer.nav.title': 'Enlaces',
     'footer.nav.home': 'Inicio',
     'footer.nav.services': 'Servicios',
-    'footer.nav.about': 'Nosotros',
-    'footer.nav.contact': 'Contacto',
+    'footer.nav.about': 'Sobre Nosotros',
+    'footer.nav.providers': 'Proveedores',
     'footer.nav.appointment': 'Agendar cita',
 
     // Social
@@ -736,6 +749,21 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'insurance.request.verification': 'Request Coverage Verification',
     'insurance.inline': 'Want to know if your plan is covered?',
 
+    "insurance.ariaLabel": "Full list of accepted insurances",
+    "insurance.ariaLabel.title": "Accepted insurances",
+    "insurance.closeAria": "Close modal",
+    "insurance.doctor.label": "Doctor",
+    "insurance.doctor.all": "All doctors",
+    "insurance.searchBox.label": "Search plan or insurer",
+    "insurance.searchBox.placeholder": "e.g., Cigna, Aetna...",
+    "insurance.disclaimer": "Coverage may vary by plan and network. If you don't see your insurance, contact us to verify.",
+    "insurance.empty.title": "No plans found",
+    "insurance.empty.subtitle": "Check the selected doctor or contact us to confirm coverage.",
+    "insurance.copyNumberAria": "Copy phone number",
+    "insurance.contact": "Contact us",
+    "insurance.close": "Close",
+
+
     // awards strip
     // General labels
     'awards.label': 'Award',
@@ -860,8 +888,8 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'footer.nav.title': 'Links',
     'footer.nav.home': 'Home',
     'footer.nav.services': 'Services',
-    'footer.nav.about': 'About',
-    'footer.nav.contact': 'Contact',
+    'footer.nav.about': 'About Us',
+    'footer.nav.providers': 'Providers',
     'footer.nav.appointment': 'Book appointment',
 
     // Social
