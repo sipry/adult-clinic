@@ -1,6 +1,5 @@
 // src/app/ui/palette.ts
 
-// misma paleta que usaste en ServicesRail
 export const PALETTE = [
   { base: "#B8EEE8", back: "#9EDBD4" }, // 0
   { base: "#A9E2D7", back: "#8FC8BE" }, // 1
@@ -12,16 +11,14 @@ export const PALETTE = [
   { base: "#E47D79", back: "#CD6663" }, // 7
 ];
 
-// colores “de marca” que se repiten en tus secciones
 export const BRAND = {
   bg: "#FFFFFF",
   text: "#001219",
   subtitle: "#005F73",
   accent: "#0A9396",
   cta: "#BB3E03",
-  border: "rgba(202, 103, 2, 0.3)", // equivalente a #CA6702/30
+  border: "rgba(202, 103, 2, 0.3)",
 };
 
-// opcional, pero útil para listas/cards
 export const getPaletteColor = (index: number) =>
   PALETTE[index % PALETTE.length];

@@ -7,13 +7,12 @@ export interface ProviderItem {
   name: string;
   title: string;
   image: { src: string } | string;
-  education: string;
-  education2?: string; // <— opcional
+  education: string[];
   residency: string;
   experience: string;
   languages: string;
   bio: string;
-  bio2?: string; // <— opcional
+  bio2?: string; // <— opcional TODO
   conditions?: string[];
   researchGate?: string;
   linkedIn?: string;
@@ -32,8 +31,7 @@ export const useProvidersData = () => {
       name: "Dr. Jaime A. Acosta , MD",
       title: t("providers.dr1.title"),
       image: doctorAvatar,
-      education: t("providers.dr1.education"),
-      education2: t("providers.dr1.education2"),
+      education: [t("providers.dr1.education")],
       residency: "",
       experience: t("providers.dr1.experience"),
       languages: t("providers.dr1.languages"),
@@ -47,7 +45,7 @@ export const useProvidersData = () => {
       name: "Dr. Juan Ortiz Guevara, MD",
       title: t("providers.dr2.title"),
       image: maleAvatar,
-      education: t("providers.dr2.education"),
+      education: [t("providers.dr2.education")],
       residency: "Jersey Shore Medical Center, Neptune City, NJ",
       experience: t("providers.dr2.experience"),
       languages: t("providers.dr2.languages"),

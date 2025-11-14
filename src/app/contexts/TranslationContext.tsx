@@ -139,48 +139,50 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'services.search.hint': 'Prueba con otra búsqueda',
 
     // Lista de servicios (array de objetos)
-'services.list': [
-  {
-    key: 'preventive-medicine',
-    title: 'Medicina preventiva',
-    description: 'Pruebas médicas y tratamientos que pueden ayudarte a evitar enfermedades innecesarias y a detectar a tiempo una condición de salud potencialmente peligrosa, cuando aún está en su etapa más temprana y tratable.',
-  },
-  {
-    key: 'adult-immunizations',
-    title: 'Inmunizaciones para adultos',
-    description: 'Nuestros médicos ofrecen todas las inmunizaciones recomendadas por los CDC, incluyendo las que te protegen contra la influenza (gripe), infecciones neumocócicas, VPH, hepatitis, culebrilla (herpes zóster), VRS y más.',
-  },
-  {
-    key: 'minor-illness-diagnosis',
-    title: 'Diagnóstico y tratamiento de enfermedades menores',
-    description: 'Evaluación y tratamiento de enfermedades agudas comunes, como el resfriado o la gripe, que no requieren hospitalización.',
-  },
-  {
-    key: 'minor-injury-treatment',
-    title: 'Diagnóstico y tratamiento de lesiones menores',
-    description: 'Evaluación y tratamiento de lesiones que no ponen en riesgo la vida y que comúnmente pueden manejarse en el consultorio de un médico de atención primaria.',
-  },
-  {
-    key: 'chronic-disease-management',
-    title: 'Manejo de enfermedades crónicas',
-    description: 'Monitoreo regular y tratamiento de enfermedades crónicas que van desde enfermedades cardiovasculares hasta obesidad, diabetes, EPOC, asma y artritis. Nuestro enfoque multidisciplinario de atención primaria te brinda las herramientas y el apoyo que necesitas en cualquier edad y etapa de tu salud.',
-  },
-],
+    'services.list': [
+      {
+        key: 'preventive-medicine',
+        title: 'Medicina preventiva',
+        description: 'Pruebas médicas y tratamientos que pueden ayudarte a evitar enfermedades innecesarias y a detectar a tiempo una condición de salud potencialmente peligrosa, cuando aún está en su etapa más temprana y tratable.',
+      },
+      {
+        key: 'adult-immunizations',
+        title: 'Inmunizaciones para adultos',
+        description: 'Nuestros médicos ofrecen todas las inmunizaciones recomendadas por los CDC, incluyendo las que te protegen contra la influenza (gripe), infecciones neumocócicas, VPH, hepatitis, culebrilla (herpes zóster), VRS y más.',
+      },
+      {
+        key: 'minor-illness-diagnosis',
+        title: 'Diagnóstico y tratamiento de enfermedades menores',
+        description: 'Evaluación y tratamiento de enfermedades agudas comunes, como el resfriado o la gripe, que no requieren hospitalización.',
+      },
+      {
+        key: 'minor-injury-treatment',
+        title: 'Diagnóstico y tratamiento de lesiones menores',
+        description: 'Evaluación y tratamiento de lesiones que no ponen en riesgo la vida y que comúnmente pueden manejarse en el consultorio de un médico de atención primaria.',
+      },
+      {
+        key: 'chronic-disease-management',
+        title: 'Manejo de enfermedades crónicas',
+        description: 'Monitoreo regular y tratamiento de enfermedades crónicas que van desde enfermedades cardiovasculares hasta obesidad, diabetes, EPOC, asma y artritis. Nuestro enfoque multidisciplinario de atención primaria te brinda las herramientas y el apoyo que necesitas en cualquier edad y etapa de tu salud.',
+      },
+    ],
 
 
     // Providers
     'providers.pretitle': 'Atención confiable',
     'providers.title': 'Nuestro Equipo',
     'providers.subtitle': 'Profesional comprometido para brindar el mejor servicio a tu familia.',
-    'providers.dr1.title': 'Pediatra',
-    'providers.dr1.education': 'Dr. Acosta graduated from the Faculty of Medicine of the Central University of Venezuela (UCV) (1986) in Caracas, Venezuela, and completed extensive training with a residency in General Surgery at the Military Hospital of Caracas, where he served as chief resident. He subsequently completed his residency in Plastic and Reconstructive Surgery at the Red Cross Hospital in Caracas, Venezuela.',
-    'providers.dr1.education2': 'He subsequently moved to Puerto Rico and, after passing the medical board exams, completed his internship (2005) at HIMA Hospital in Caguas, Puerto Rico, where he also served as chief resident. Dr. Acosta has also published several scientific articles throughout his career.',
+    'providers.dr1.title': 'Médico de Atención Primaria',
+    'providers.dr1.education': [
+      'El Dr. Acosta se graduó de la Facultad de Medicina de la Universidad Central de Venezuela (UCV) en 1986, en Caracas, Venezuela, y completó una amplia formación con una residencia en Cirugía General en el Hospital Militar de Caracas, donde se desempeñó como jefe de residentes. Posteriormente completó su residencia en Cirugía Plástica y Reconstructiva en el Hospital de la Cruz Roja en Caracas, Venezuela.',
+      'Posteriormente se trasladó a Puerto Rico y, después de aprobar los exámenes de la junta médica, completó su internado (2005) en el Hospital HIMA de Caguas, Puerto Rico, donde también se desempeñó como jefe de residentes. El Dr. Acosta ha publicado además varios artículos científicos a lo largo de su carrera.',
+    ],
     'providers.dr1.specialty1': 'Medicina Pediátrica General',
     'providers.dr1.specialty2': 'Cuidado del Recién Nacido',
     'providers.dr1.specialty3': 'Medicina del Adolescente',
     'providers.dr1.experience': '20+ years of experience',
     'providers.dr1.languages': 'Idiomas: Spanish, English',
-    'providers.dr2.title': 'Pediatra',
+    'providers.dr2.title': 'Médico de Atención Primaria y Geriatra',
     'providers.dr2.education': 'Dr. Ortiz Guevara graduated from the Universidad Central del Este (UCE) School of Medicine in the Dominican Republic in 1978 and worked for many years in Puerto Rico. He specializes in Family Medicine and Geriatric Medicine and is affiliated with AdventHealth Network. He is currently accepting new patients.',
     'providers.dr2.specialty1': 'Medicina Pediátrica General',
     'providers.dr2.specialty2': 'Exámenes Deportivos',
@@ -218,36 +220,49 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'clinic.title': 'Espacio diseñado para tu comodidad.',
     'clinic.cta': 'Ver galería de fotos',
 
-    // Adulto / Clínica para adultos (texto original)
-    'adult.kicker': 'Clínica para adultos',
-    'adult.heading': 'Clínica de adultos',
-    'adult.tagline': 'Medicina primaria para adultos, servicio bilingüe en la misma localidad oficinas independientes.',
-
-    'adult.hours': 'Lun–Vie 8:00 a.m.–5:00 p.m. · Sáb-Dom Cerrado',
-
-    'adult.cta': 'Solicitar cita',
-    'adult.ctaAria': 'Solicitar una cita',
-    'adult.call': 'Llamar',
-    'adult.callAria': 'Llamar a {{name}} al {{phone}}',
-
-    'adult.asideTitle': 'Comodidades que te facilitan la vida',
-
-    // Beneficios (texto original)
-    'adult.benefits.bilingual.title': 'Equipo bilingüe',
-    'adult.benefits.bilingual.desc': 'Atención en español e inglés',
-
-    'adult.benefits.twoInSameLocation.title': 'Nuevos pacientes',
-    'adult.benefits.twoInSameLocation.desc': 'Bienvenidos desde la primera llamada.',
-
-    'adult.benefits.oneAddress.title': 'Una sola dirección',
-    'adult.benefits.oneAddress.descWithAddress': '{{address}}, {{city}}',
-    'adult.benefits.oneAddress.descWithCity': '{{city}}',
-
-    'adult.benefits.insurance.title': 'Planes médicos',
-    'adult.benefits.insurance.desc': 'Aceptamos planes medicos',
-
-    'adult.websiteCta': 'Visítanos en la página web',
-
+    // Clinica de pediatria
+    "peds.pretitle": "Vea también nuestra clínica de pediatría",
+    "peds.title": "Your Health Clínica Pediátrica",
+    "peds.subtitle": "Todo en un solo lugar: consultas, vacunas, seguimiento y orientación para madres y padres.",
+    "peds.clinicName": "Clínica Pediátrica DulceCuidado",
+    "peds.phone": "(407) 554-5707",
+    "peds.city": "Kissimmee, FL 34741",
+    "peds.address": "201 Hilda St Suite # 10",
+    "peds.tagline": "Controles de niño sano, vacunación y atención el mismo día para tus peques.",
+    "peds.badge": "Atención pediátrica",
+    "peds.heroTitle": "Gentle Care, Trusted Services",
+    "peds.info.schedule": "Lunes – Viernes: 7:30 AM – 4:30 PM",
+    "peds.info.phoneLabel": "Llama o escribenos para agendar una cita",
+    "peds.ctaPrimary": "Agendar cita pediátrica",
+    "peds.ctaPrimaryAria": "Agendar una cita en la clínica pediátrica",
+    "peds.ctaSecondary": "Llamar ahora",
+    "peds.ctaSecondaryAria": "Llamar a la clínica pediátrica {{clinic}} al {{phone}}",
+    "peds.firstVisitNote": "¿Primera visita? Trae el récord de vacunas y el plan médico del menor.",
+    "peds.viewServices": "Ver servicios de pediatría",
+    "peds.benefits.ariaLabel": "Beneficios de la clínica pediátrica",
+    "peds.benefits.specialists.title": "Especialistas en niñez",
+    "peds.benefits.specialists.desc": "Atención centrada en bebés, niños y adolescentes.",
+    "peds.benefits.bilingual.title": "Equipo bilingüe",
+    "peds.benefits.bilingual.desc": "Español e inglés para que te sientas cómodo en cada visita.",
+    "peds.benefits.fastAppointments.title": "Citas rápidas",
+    "peds.benefits.fastAppointments.desc": "Intentamos verte el mismo día cuando tu hijo lo necesita.",
+    "peds.benefits.insurance.title": "Aceptamos la mayoría de planes",
+    "peds.benefits.insurance.desc": "Llámanos para verificar tu cubierta.",
+    "ctaPrimary": "Agendar cita pediátrica",
+    "ctaPrimaryAria": "Agendar una cita en la clínica pediátrica",
+    "ctaSecondary": "Llamar ahora",
+    "ctaSecondaryAria": "Llamar a la clínica pediátrica {{clinic}} al {{phone}}",
+    "firstVisitNote": "¿Primera visita? Trae el récord de vacunas y el plan médico del menor.",
+    "viewServices": "Ver servicios de pediatría",
+    "benefits.ariaLabel": "Beneficios de la clínica pediátrica",
+    "benefits.specialists.title": "Especialistas en niñez",
+    "benefits.specialists.desc": "Atención centrada en bebés, niños y adolescentes.",
+    "benefits.bilingual.title": "Equipo bilingüe",
+    "benefits.bilingual.desc": "Español e inglés para que te sientas cómodo en cada visita.",
+    "benefits.fastAppointments.title": "Citas rápidas",
+    "benefits.fastAppointments.desc": "Intentamos verte el mismo día cuando tu hijo lo necesita.",
+    "benefits.insurance.title": "Aceptamos la mayoría de planes",
+    "benefits.insurance.desc": "Llámanos para verificar tu cubierta.",
 
     // Provider Details
     'providers.click.details': 'Haz clic para ver detalles',
@@ -365,11 +380,12 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'contact.form.fields.phone.label': 'Teléfono',
     'contact.form.fields.phone.placeholder': '(000) 000-0000',
 
-    'contact.form.fields.reason.label': 'Motivo principal',
-    'contact.form.fields.reason.options.wellvisit': 'Niño sano',
-    'contact.form.fields.reason.options.sickvisit': 'Niño enfermo',
-    'contact.form.fields.reason.options.vaccine': 'Vacunas/inmunizaciones',
-    'contact.form.fields.reason.options.other': 'Otro',
+    "contact.form.fields.reason.label": "Motivo principal",
+    "contact.form.fields.reason.options.wellvisit": "Visita de control",
+    "contact.form.fields.reason.options.sickvisit": "Visita por enfermedad",
+    "contact.form.fields.reason.options.vaccine": "Vacunas/Inmunizaciones",
+    "contact.form.fields.reason.options.other": "Otro",
+
 
     'contact.form.fields.appointmentType.label': 'Tipo de cita',
     'contact.form.fields.appointmentType.aria': 'Tipo de cita',
@@ -580,14 +596,16 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'providers.title': 'Our Providers',
     'providers.subtitle': 'Committed professional to provide the best service to your family.',
     'providers.dr1.title': 'Primary Care Physician',
-    'providers.dr1.education': "Dr. Acosta graduated from the Faculty of Medicine of the Central University of Venezuela (UCV) (1986) in Caracas, Venezuela, and completed extensive training with a residency in General Surgery at the Military Hospital of Caracas, where he served as chief resident. He subsequently completed his residency in Plastic and Reconstructive Surgery at the Red Cross Hospital in Caracas, Venezuela.",
-    'providers.dr1.education2': 'He subsequently moved to Puerto Rico and, after passing the medical board exams, completed his internship (2005) at HIMA Hospital in Caguas, Puerto Rico, where he also served as chief resident. Dr. Acosta has also published several scientific articles throughout his career.',
+    'providers.dr1.education': [
+      'El Dr. Acosta se graduó de la Facultad de Medicina de la Universidad Central de Venezuela (UCV) en 1986, en Caracas, Venezuela, y completó una amplia formación con una residencia en Cirugía General en el Hospital Militar de Caracas, donde se desempeñó como jefe de residentes. Posteriormente completó su residencia en Cirugía Plástica y Reconstructiva en el Hospital de la Cruz Roja en Caracas, Venezuela.',
+      'Posteriormente se trasladó a Puerto Rico y, después de aprobar los exámenes de la junta médica, completó su internado (2005) en el Hospital HIMA de Caguas, Puerto Rico, donde también se desempeñó como jefe de residentes. El Dr. Acosta ha publicado además varios artículos científicos a lo largo de su carrera.',
+    ],
     'providers.dr1.specialty1': 'General Pediatric Medicine',
     'providers.dr1.specialty2': 'Newborn Care',
     'providers.dr1.specialty3': 'Adolescent Medicine',
     'providers.dr1.experience': '20+ years of experience',
     'providers.dr1.languages': 'Language: Spanish, English',
-    'providers.dr2.title': 'Primary care physician and geriatrician',
+    'providers.dr2.title': 'Primary Care Physician and Geriatrician',
     'providers.dr2.education': 'Dr. Ortiz Guevara graduated from the Universidad Central del Este (UCE) School of Medicine in the Dominican Republic in 1978 and worked for many years in Puerto Rico. He specializes in Family Medicine and Geriatric Medicine and is affiliated with AdventHealth Network. He is currently accepting new patients.',
     'providers.dr2.specialty1': 'General Pediatric Medicine',
     'providers.dr2.specialty2': 'Sports Physicals',
@@ -626,36 +644,53 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'clinic.title': 'A place designed for your Comfort',
     'clinic.cta': 'View Gallery',
 
-    // Adult / Clinic for adults (traducción fiel del original)
-    'adult.kicker': 'Clinic for adults',
-    'adult.heading': 'Adult clinic',
-    'adult.tagline': 'Primary care for adults, bilingual service in the same location independent offices.',
+    // Clinica de pediatria
+    "peds.pretitle": "See our pediatric clinic",
+    "peds.title": "Your Health Pediatric Clinic",
+    "peds.subtitle": "Everything in one place: visits, vaccines, follow-ups and guidance for parents.",
+    "peds.clinicName": "SweetCare Pediatric Clinic",
+    "peds.phone": "(407) 554-5707",
+    "peds.city": "Kissimmee, FL 34741",
+    "peds.address": "201 Hilda St Suite # 10",
+    "peds.tagline": "Well-child checkups, vaccinations and same-day care for your little ones.",
+    "peds.badge": "Pediatric care",
+    "peds.heroTitle": "Gentle Care, Trusted Services",
+    "peds.info.schedule": "Monday – Friday: 7:30 AM – 4:30 PM",
+    "peds.info.phoneLabel": "Call or message us to schedule an appointment",
+    "peds.ctaPrimary": "Book pediatric appointment",
+    "peds.ctaPrimaryAria": "Book a pediatric appointment",
+    "peds.ctaSecondary": "Call now",
+    "peds.ctaSecondaryAria": "Call the pediatric clinic {{clinic}} at {{phone}}",
+    "peds.firstVisitNote": "First visit? Bring vaccine records and your child's insurance plan.",
+    "peds.viewServices": "View pediatric services",
+    "peds.benefits.ariaLabel": "Pediatric clinic benefits",
+    "peds.benefits.specialists.title": "Childhood specialists",
+    "peds.benefits.specialists.desc": "Focused care for babies, children and adolescents.",
+    "peds.benefits.bilingual.title": "Bilingual team",
+    "peds.benefits.bilingual.desc": "Spanish and English so you feel comfortable in every visit.",
+    "peds.benefits.fastAppointments.title": "Fast appointments",
+    "peds.benefits.fastAppointments.desc": "We try to see you the same day when your child needs it.",
+    "peds.benefits.insurance.title": "We accept most plans",
+    "peds.benefits.insurance.desc": "Call us to verify your coverage.",
 
-    'adult.hours': 'Mon–Fri 8:00 a.m.–5:00 p.m. · Sat-Sun Closed',
+    "ctaPrimary": "Book pediatric appointment",
+    "ctaPrimaryAria": "Book a pediatric appointment",
+    "ctaSecondary": "Call now",
+    "ctaSecondaryAria": "Call the pediatric clinic {{clinic}} at {{phone}}",
+    "firstVisitNote": "First visit? Bring vaccine records and your child's insurance plan.",
+    "viewServices": "View pediatric services",
+    "benefits.ariaLabel": "Pediatric clinic benefits",
+    "benefits.specialists.title": "Childhood specialists",
+    "benefits.specialists.desc": "Focused care for babies, children and adolescents.",
+    "benefits.bilingual.title": "Bilingual team",
+    "benefits.bilingual.desc": "Spanish and English so you feel comfortable in every visit.",
+    "benefits.fastAppointments.title": "Fast appointments",
+    "benefits.fastAppointments.desc": "We try to see you the same day when your child needs it.",
+    "benefits.insurance.title": "We accept most plans",
+    "benefits.insurance.desc": "Call us to verify your coverage.",
 
-    'adult.cta': 'Request appointment',
-    'adult.ctaAria': 'Request an appointment',
-    'adult.call': 'Call',
-    'adult.callAria': 'Call {{name}} at {{phone}}',
-
-    'adult.asideTitle': 'Amenities that make your life easier',
-
-    // Benefits
-    'adult.benefits.bilingual.title': 'Bilingual team',
-    'adult.benefits.bilingual.desc': 'Care in Spanish and English',
-
-    'adult.benefits.twoInSameLocation.title': 'New Patients',
-    'adult.benefits.twoInSameLocation.desc': 'Welcome from day one.',
 
 
-    'adult.benefits.oneAddress.title': 'Single address',
-    'adult.benefits.oneAddress.descWithAddress': '{{address}}, {{city}}',
-    'adult.benefits.oneAddress.descWithCity': '{{city}}',
-
-    'adult.benefits.insurance.title': 'Medical plans',
-    'adult.benefits.insurance.desc': 'We accept medical plans',
-
-    'adult.websiteCta': 'Visit us on the website',
 
 
     // Provider Details

@@ -10,8 +10,10 @@ import {
   ShieldCheck,
   Languages,
   Baby,
+  ArrowRight,
 } from "lucide-react";
 import Reveal from "../ui/reveal";
+import { useTranslation } from "../contexts/TranslationContext";
 import { BRAND, PALETTE } from "../ui/palette";
 
 export type PediatricClinicPromoProps = {
@@ -25,41 +27,44 @@ export type PediatricClinicPromoProps = {
 };
 
 export default function PediatricClinicPromo({
-  nombre = "Clínica Pediátrica DulceCuidado",
-  telefono = "(407) 554-5707",
+  nombre,
+  telefono,
   ctaHref = "/cita-pediatria",
-  ciudad = "Área Metropolitana",
-  direccion = "123 Calle Salud, Suite 4",
-  tagline = "Controles de niño sano, vacunación y atención el mismo día para tus peques.",
+  ciudad,
+  direccion,
+  tagline,
   websiteHref = "/cita-pediatria",
 }: PediatricClinicPromoProps) {
-  const telHref = `tel:${telefono.replace(/[^\d+]/g, "")}`;
+  const { t } = useTranslation();
+
+  // valores con fallback al contexto
+  const clinicName = nombre || t("peds.clinicName");
+  const phone = telefono || t("peds.phone");
+  const city = ciudad || t("peds.city");
+  const address = direccion || t("peds.address");
+  const finalTagline = tagline || t("peds.tagline");
+  const telHref = `tel:${phone.replace(/[^\d+]/g, "")}`;
 
   const beneficios = [
     {
       icon: Baby,
-      title: "Especialistas en niñez",
-      desc: "Atención centrada en bebés, niños y adolescentes.",
+      title: t("peds.benefits.specialists.title"),
+      desc: t("peds.benefits.specialists.desc"),
     },
     {
       icon: Languages,
-      title: "Equipo bilingüe",
-      desc: "Español e inglés para que te sientas cómodo en cada visita.",
+      title: t("peds.benefits.bilingual.title"),
+      desc: t("peds.benefits.bilingual.desc"),
     },
     {
       icon: CalendarClock,
-      title: "Citas rápidas",
-      desc: "Intentamos verte el mismo día cuando tu hijo lo necesita.",
+      title: t("peds.benefits.fastAppointments.title"),
+      desc: t("peds.benefits.fastAppointments.desc"),
     },
     {
       icon: ShieldCheck,
-      title: "Aceptamos la mayoría de planes",
-      desc: "Llámanos para verificar tu cubierta.",
-    },
-    {
-      icon: MapPin,
-      title: "Ubicación conveniente",
-      desc: `${direccion} · ${ciudad}`,
+      title: t("peds.benefits.insurance.title"),
+      desc: t("peds.benefits.insurance.desc"),
     },
   ];
 
@@ -69,32 +74,34 @@ export default function PediatricClinicPromo({
       aria-labelledby="peds-section-title"
       style={{ backgroundColor: BRAND.bg }}
     >
-      {/* Header consistente */}
+      {/* Header */}
       <div className="mx-auto max-w-7xl px-6 lg:px-8 text-center mb-10">
-        <Reveal y={8} delay={0}>
-          <p
-            className="text-xs font-semibold tracking-[0.2em] uppercase mb-3"
-            style={{ color: BRAND.accent }}
+        <Reveal y={8}>
+          <span
+            className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-semibold tracking-[0.25em] uppercase"
+            style={{
+
+              color: BRAND.accent,
+            }}
           >
-            Vea también nuestra clínica de pediatría
-          </p>
+            {t("peds.pretitle")}
+          </span>
         </Reveal>
         <Reveal y={8}>
           <h2
             id="peds-section-title"
-            className="text-4xl sm:text-5xl font-extrabold tracking-tight"
+            className="mt-4 text-4xl sm:text-5xl font-extrabold tracking-tight"
             style={{ color: BRAND.text }}
           >
-            Your Health Clínica Pediátrica
+            {t("peds.title")}
           </h2>
         </Reveal>
         <Reveal y={10} delay={80}>
           <p
-            className="mt-2 text-sm max-w-2xl mx-auto"
+            className="mt-3 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed"
             style={{ color: BRAND.subtitle }}
           >
-            Todo en un solo lugar: consultas, vacunas, seguimiento y orientación
-            para padres y madres.
+            {t("peds.subtitle")}
           </p>
         </Reveal>
       </div>
@@ -107,44 +114,45 @@ export default function PediatricClinicPromo({
             initial={{ y: 16, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.4 }}
-            className="rounded-3xl p-7 sm:p-9 shadow-sm"
-            style={{
-              backgroundColor: BRAND.bg,
-              border: `1px solid ${BRAND.border}`,
-            }}
+            className="rounded-3xl p-6 sm:p-8 h-full"
           >
             <div
-              className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.15em] mb-3"
+              className="inline-flex items-center gap-2 rounded-full py-1.5 text-[11px] font-semibold uppercase tracking-[0.15em] mb-4"
               style={{
-                backgroundColor: PALETTE[3].base,
                 color: BRAND.text,
               }}
             >
-              Atención pediátrica
+              {t("peds.badge")}
             </div>
 
             <h3
               className="text-3xl sm:text-4xl font-extrabold leading-tight"
               style={{ color: BRAND.text }}
             >
-              Atención cariñosa para tus hijos
+              {t("peds.heroTitle")}
             </h3>
 
             <p
               className="mt-4 text-base sm:text-lg leading-7"
               style={{ color: BRAND.subtitle }}
             >
-              {tagline}
+              {finalTagline}
             </p>
 
-            <div className="mt-5 space-y-2 text-sm" style={{ color: BRAND.text }}>
+            {/* Info rápida */}
+            <div
+              className="mt-5 space-y-2 text-sm rounded-2xl p-3"
+              style={{
+                color: BRAND.text,
+              }}
+            >
               <p className="flex items-center gap-2">
                 <CalendarClock
                   className="h-4 w-4"
                   style={{ color: BRAND.accent }}
                   aria-hidden
                 />
-                Horario extendido para familias ocupadas
+                {t("peds.info.schedule")}
               </p>
               <p className="flex items-center gap-2">
                 <Phone
@@ -152,7 +160,7 @@ export default function PediatricClinicPromo({
                   style={{ color: BRAND.accent }}
                   aria-hidden
                 />
-                Línea directa con la clínica: {telefono}
+                {t("peds.info.phoneLabel")}
               </p>
               <p className="flex items-center gap-2">
                 <MapPin
@@ -160,41 +168,42 @@ export default function PediatricClinicPromo({
                   style={{ color: BRAND.accent }}
                   aria-hidden
                 />
-                {direccion} · {ciudad}
+                {address} · {city}
               </p>
             </div>
 
+            {/* CTAs */}
             <div className="mt-7 flex flex-wrap gap-3">
               <a
                 href={ctaHref}
-                className="inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+                className="inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 w-full sm:w-auto"
                 style={{
                   backgroundColor: BRAND.text,
                   color: BRAND.bg,
                 }}
-                aria-label="Agendar cita pediátrica"
+                aria-label={t("peds.ctaPrimaryAria")}
               >
                 <CalendarClock className="h-4 w-4" aria-hidden />
-                Agendar cita pediátrica
+                {t("peds.ctaPrimary")}
               </a>
 
               <a
                 href={telHref}
-                className="inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+                className="inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 w-full sm:w-auto"
                 style={{
-                  backgroundColor: BRAND.bg,
+                  backgroundColor: "#FFFFFF",
                   border: `1px solid ${BRAND.accent}`,
                   color: BRAND.accent,
                 }}
-                aria-label={`Llamar a ${nombre} al ${telefono}`}
+                aria-label={`${t("peds.ctaSecondaryAria")} ${clinicName} ${phone}`}
               >
                 <Phone className="h-4 w-4" aria-hidden />
-                Llamar ahora · {telefono}
+                {t("peds.ctaSecondary")} · {phone}
               </a>
             </div>
 
             <p className="mt-4 text-xs" style={{ color: BRAND.subtitle }}>
-              ¿Primera visita? Trae el récord de vacunas y el plan médico del menor.
+              {t("peds.firstVisitNote")}
             </p>
           </motion.div>
 
@@ -203,25 +212,21 @@ export default function PediatricClinicPromo({
             initial={{ y: 24, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.45, delay: 0.05 }}
-            className="flex flex-col gap-5"
-            aria-label="Información rápida de la clínica pediátrica"
+            className="flex flex-col gap-5 h-full"
+            aria-label={t("peds.benefits.ariaLabel")}
           >
-            <div className="grid gap-3 sm:grid-cols-2">
+            <div className="grid gap-4 sm:grid-cols-2 mt-4 sm:mt-0">
               {beneficios.map(({ icon: Icon, title, desc }) => (
                 <motion.div
                   key={title}
                   whileHover={{ y: -3 }}
                   transition={{ type: "spring", stiffness: 260, damping: 20 }}
-                  className="flex h-full flex-col gap-2 rounded-2xl p-4 shadow-sm border"
-                  style={{
-                    backgroundColor: BRAND.bg,
-                    border: `1px solid ${BRAND.border}`,
-                  }}
+                  className="flex h-full flex-col gap-1 mt-6 rounded-2xl p-2"
                 >
                   <span
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-xl"
+                    className="inline-flex h-8 w-8 items-center justify-center rounded-xl"
                     style={{
-                      backgroundColor: PALETTE[2].base,
+                      backgroundColor: PALETTE[0].base + "80",
                       color: BRAND.text,
                     }}
                   >
@@ -235,7 +240,7 @@ export default function PediatricClinicPromo({
                   </p>
                   <p
                     className="text-[13px] leading-5"
-                    style={{ color: BRAND.subtitle }}
+                    style={{ color: BRAND.text }}
                   >
                     {desc}
                   </p>
@@ -243,17 +248,17 @@ export default function PediatricClinicPromo({
               ))}
             </div>
 
-            {/* Botón fuera del grid para no romper el layout */}
+            {/* CTA informativo */}
             <Link
               href={websiteHref}
-              className="inline-flex items-center justify-center rounded-lg px-5 py-3 text-sm font-semibold shadow-sm transition hover:-translate-y-0.5 hover:shadow-md w-fit"
+              className="inline-flex items-center justify-between rounded-2xl px-5 py-4 mt-5text-sm font-semibold transition hover:-translate-y-0.5 hover:shadow-md w-full"
               style={{
-                backgroundColor: PALETTE[1].base,
+                backgroundColor: PALETTE[0].base + "80",
                 color: BRAND.text,
-                border: `1px solid ${BRAND.border}`,
               }}
             >
-              Ver servicios de pediatría
+              <span>{t("peds.viewServices")}</span>
+              <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
           </motion.div>
         </div>
