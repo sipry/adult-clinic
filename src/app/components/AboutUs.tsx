@@ -150,8 +150,10 @@ const AnimatedNumber: React.FC<{
 
 /* -------------------- Component -------------------- */
 export const AboutUsProfessional: React.FC = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const sectionInView = useInOutViewport(sectionRef, { threshold: 0.2 });
+  // 👉 ahora observamos SOLO el bloque de los contadores
+  const countersRef = useRef<HTMLDivElement | null>(null);
+  const countersInView = useInOutViewport(countersRef, { threshold: 0.2 });
+
   const { t } = useTranslation();
 
   // tomamos un par de colores de la paleta
@@ -160,7 +162,6 @@ export const AboutUsProfessional: React.FC = () => {
 
   return (
     <section
-      ref={sectionRef}
       id="about"
       className="relative overflow-hidden pt-20 pb-20 md:pt-28 md:pb-10"
       style={{ backgroundColor: BRAND.bg }}
@@ -204,7 +205,7 @@ export const AboutUsProfessional: React.FC = () => {
                       className="mt-1 h-5 w-5 rounded-sm grid place-items-center text-xs font-bold"
                       style={{
                         backgroundColor: bulletColor.base,
-                        color: BRAND.text, // 👈 tu paleta no tiene .text
+                        color: BRAND.text,
                       }}
                     >
                       ✓
@@ -222,7 +223,7 @@ export const AboutUsProfessional: React.FC = () => {
                 href="/aboutus"
                 className="inline-flex w-full items-center gap-2 rounded-sm font-semibold px-6 py-3 shadow-md transition hover:translate-y-[1px]"
                 style={{
-                  backgroundColor: PALETTE[0].base, // #B8EEE8 en tu paleta actual
+                  backgroundColor: PALETTE[0].base,
                   color: BRAND.text,
                 }}
               >
@@ -292,7 +293,11 @@ export const AboutUsProfessional: React.FC = () => {
             )}
 
             <Reveal y={16} delay={120}>
-              <div className="mt-8 flex items-end justify-center gap-10">
+              {/* 👉 Aquí ponemos el ref para observar los contadores */}
+              <div
+                ref={countersRef}
+                className="mt-8 flex items-end justify-center gap-10"
+              >
                 {/* CONTADOR 1: 10k */}
                 <Reveal y={10} delay={140}>
                   <div className="flex flex-col items-center text-center">
@@ -303,7 +308,7 @@ export const AboutUsProfessional: React.FC = () => {
                       <AnimatedNumber
                         end={10}
                         suffix="k"
-                        play={sectionInView}
+                        play={countersInView}
                         durationMs={900}
                       />
                     </span>
@@ -328,7 +333,11 @@ export const AboutUsProfessional: React.FC = () => {
                       className="tabular-nums text-3xl md:text-4xl font-extrabold"
                       style={{ color: BRAND.cta }}
                     >
-                      <AnimatedNumber end={20} suffix="+" play={sectionInView} />
+                      <AnimatedNumber
+                        end={20}
+                        suffix="+"
+                        play={countersInView}
+                      />
                     </span>
                     <span
                       className="mt-1 text-sm"
