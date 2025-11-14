@@ -209,7 +209,8 @@ const ServicesRail: React.FC<{ featuredKeys?: string[] }> = ({
     >
       {/* HEADER */}
       <div className="mb-4 md:mb-6 max-w-7xl mx-auto px-6">
-        <div className="space-y-3 md:flex md:items-end md:justify-between md:gap-4">
+        <div className="space-y-4">
+          {/* Textos: pretitle, title, subtitle */}
           <div>
             <p
               className="text-[11px] font-semibold tracking-[0.28em] text-center md:text-left"
@@ -226,15 +227,20 @@ const ServicesRail: React.FC<{ featuredKeys?: string[] }> = ({
             </p>
           </div>
 
-          {/* CONTROLES: botón "See all" + flechas */}
-          <div className="mt-4 flex items-center gap-3 shrink-0 justify-center md:mt-0 md:justify-end">
+          {/* Botón + flechas (siempre visibles) */}
+          <div className="flex items-center gap-3 shrink-0 justify-center md:justify-start">
             <Link
               href="/services"
-              className="inline-flex items-center rounded-md px-10 py-3 text-sm font-semibold text-white shadow-sm hover:scale-105 transition-transform"
+              className="inline-flex items-center whitespace-nowrap rounded-md 
+             px-8 sm:px-10 py-2.5 sm:py-3 
+             text-xs sm:text-sm font-semibold 
+             text-white shadow-sm hover:scale-105 transition-transform"
               style={{ backgroundColor: "#BB3E03" }}
             >
               {t("service.seeAll.button") || "See all services"}
             </Link>
+
+
             <div className="flex gap-2">
               <button
                 type="button"
@@ -256,9 +262,9 @@ const ServicesRail: React.FC<{ featuredKeys?: string[] }> = ({
               </button>
             </div>
           </div>
-
         </div>
       </div>
+
 
       {/* RAIL */}
       <div className="relative">
