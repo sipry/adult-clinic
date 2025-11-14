@@ -1,8 +1,12 @@
+// app/contexts/TranslationContext.tsx
 'use client';
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
-
-/* ===================== Tipos ===================== */
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+} from 'react';
 
 export type Language = 'es' | 'en';
 
@@ -14,23 +18,20 @@ export interface ServiceTranslation {
   tags?: string[];
 }
 
-type TranslationValue =
-  | string
-  | string[]
-  | ServiceTranslation[]
+type TranslationValue = string | string[] | ServiceTranslation[];
 
 interface TranslationContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
-  /** Devuelve siempre string; si la clave no es string, usa la clave como fallback */
   t: (key: string) => string;
-  /** Devuelve string con interpolación {var} (si no hay string, devuelve la clave) */
   tFormat: (key: string, params: Record<string, string | number>) => string;
-  /** Devuelve siempre un array; tipa el resultado con genérico */
   tArray: <T = unknown>(key: string) => T[];
 }
 
-/* ===================== Datos ===================== */
+const TranslationContext = createContext<TranslationContextType | undefined>(
+  undefined
+);
+
 
 const translations: Record<Language, Record<string, TranslationValue>> = {
   es: {
@@ -916,48 +917,60 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
   },
 };
 
-/* ===================== Context ===================== */
+/* ===== Helper para interpolación {var} en tFormat ===== */
 
-const TranslationContext = createContext<TranslationContextType | undefined>(undefined);
-
-/* ===================== Utils ===================== */
-
-function interpolate(src: string, params: Record<string, string | number>): string {
-  return src.replace(/\{(\w+)\}/g, (_, key) =>
-    Object.prototype.hasOwnProperty.call(params, key) ? String(params[key]) : `{${key}}`
-  );
+function interpolate(
+  template: string,
+  params: Record<string, string | number>
+): string {
+  return template.replace(/\{(\w+)\}/g, (_, key) => {
+    const v = params[key];
+    return v !== undefined ? String(v) : `{${key}}`;
+  });
 }
 
-/* ===================== Provider & Hook ===================== */
+/* ===================== Provider ===================== */
 
-type ProviderProps = { children: ReactNode };
+type ProviderProps = {
+  children: ReactNode;
+  initialLanguage: Language; // 👈 viene del layout
+};
 
-export function TranslationProvider({ children }: ProviderProps) {
-  const [language, setLanguage] = useState<Language>('en'); // default: en
+export function TranslationProvider({ children, initialLanguage }: ProviderProps) {
+  // 🔹 El estado inicial viene del servidor (cookie)
+  const [language, setLanguageState] = useState<Language>(initialLanguage);
 
-  const raw = (key: string): TranslationValue | undefined => translations[language][key];
+  const setLanguage = (lang: Language) => {
+    setLanguageState(lang);
 
-  /** t: siempre string (fallback a la clave si no es string) */
+    if (typeof document !== 'undefined') {
+      // Guardamos en cookie para siguientes requests/refresh
+      document.cookie = `lang=${lang}; path=/; max-age=31536000`;
+      document.documentElement.lang = lang;
+    }
+  };
+
+  const raw = (key: string): TranslationValue | undefined =>
+    translations[language]?.[key];
+
   const t = (key: string): string => {
     const v = raw(key);
     return typeof v === 'string' ? v : key;
-    // Si prefieres devolver '' cuando no es string:
-    // return typeof v === 'string' ? v : '';
   };
 
-  /** tFormat: interpolación {var} con fallback a la clave si no es string */
-  const tFormat = (key: string, params: Record<string, string | number>): string => {
+  const tFormat = (
+    key: string,
+    params: Record<string, string | number>
+  ): string => {
     const v = raw(key);
     return typeof v === 'string' ? interpolate(v, params) : key;
   };
 
-  /** tArray: siempre array; tipa con genérico al consumir */
   const tArray = <T = unknown,>(key: string): T[] => {
     const v = raw(key);
     return Array.isArray(v) ? (v as T[]) : [];
   };
 
-  // 👇 value exactamente del tipo TranslationContextType
   const value: TranslationContextType = {
     language,
     setLanguage,
