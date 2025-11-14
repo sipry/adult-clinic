@@ -11,6 +11,7 @@ import {
   Languages,
   Baby,
   ArrowRight,
+  Users
 } from "lucide-react";
 import Reveal from "../ui/reveal";
 import { useTranslation } from "../contexts/TranslationContext";
@@ -29,11 +30,11 @@ export type PediatricClinicPromoProps = {
 export default function PediatricClinicPromo({
   nombre,
   telefono,
-  ctaHref = "/cita-pediatria",
+  ctaHref = "https://www.yourhealthpediatrics.com/#contact",
   ciudad,
   direccion,
   tagline,
-  websiteHref = "/cita-pediatria",
+  websiteHref = "https://www.yourhealthpediatrics.com/services",
 }: PediatricClinicPromoProps) {
   const { t } = useTranslation();
 
@@ -57,7 +58,7 @@ export default function PediatricClinicPromo({
       desc: t("peds.benefits.bilingual.desc"),
     },
     {
-      icon: CalendarClock,
+      icon: Users,
       title: t("peds.benefits.fastAppointments.title"),
       desc: t("peds.benefits.fastAppointments.desc"),
     },
@@ -212,7 +213,7 @@ export default function PediatricClinicPromo({
             initial={{ y: 24, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.45, delay: 0.05 }}
-            className="flex flex-col gap-5 h-full"
+            className="flex flex-col gap-5 h-full justify-center"
             aria-label={t("peds.benefits.ariaLabel")}
           >
             <div className="grid gap-4 sm:grid-cols-2 mt-4 sm:mt-0">
@@ -221,10 +222,10 @@ export default function PediatricClinicPromo({
                   key={title}
                   whileHover={{ y: -3 }}
                   transition={{ type: "spring", stiffness: 260, damping: 20 }}
-                  className="flex h-full flex-col gap-1 mt-6 rounded-2xl p-2"
+                  className="flex h-full flex-col gap-1 mt-1 rounded-2xl p-2"
                 >
                   <span
-                    className="inline-flex h-8 w-8 items-center justify-center rounded-xl"
+                    className="inline-flex h-8 w-8 items-center justify-center rounded-xl mb-2"
                     style={{
                       backgroundColor: PALETTE[0].base + "80",
                       color: BRAND.text,
