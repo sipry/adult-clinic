@@ -660,7 +660,7 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
 
     // Clinica de pediatria
     "peds.pretitle": "See our pediatric clinic",
-    "peds.title": "Your Health Pediatric Clinic",
+    "peds.title": "Your Health Pediatric",
     "peds.subtitle": "Everything in one place: visits, vaccines, follow-ups and guidance for parents.",
     "peds.clinicName": "SweetCare Pediatric Clinic",
     "peds.phone": "(407) 554-5707",

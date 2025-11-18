@@ -12,12 +12,10 @@ import {
   type Variants,
 } from "framer-motion";
 import heropaint from "@/../public/assets/images/hero-paint.webp";
-import heropaint2 from "@/../public/assets/images/hero-paint-2.webp";
 import { PALETTE, BRAND } from "@/app/ui/palette";
 
 const slides = [
   { src: heropaint.src, alt: "Hero background", pos: "100% 0%" },
-  { src: heropaint2.src, alt: "Hero background 2" },
 ];
 
 const ONLY_FADE = false;
@@ -246,7 +244,7 @@ export default function HeroBannerMixedCentered() {
       </div>
 
       {/* dots */}
-      <div className="pointer-events-auto absolute inset-x-0 bottom-6 z-20 flex items-center justify-center gap-2 px-6">
+      {/* <div className="pointer-events-auto absolute inset-x-0 bottom-6 z-20 flex items-center justify-center gap-2 px-6">
         <div className="flex items-center justify-center gap-2 px-3 py-2">
           {slides.map((_, idx) => {
             const active = idx === i;
@@ -277,7 +275,7 @@ export default function HeroBannerMixedCentered() {
             );
           })}
         </div>
-      </div>
+      </div> */}
     </section>
   );
 }

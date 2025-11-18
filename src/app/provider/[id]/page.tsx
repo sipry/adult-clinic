@@ -201,9 +201,7 @@ export default function ProviderDetailPage() {
 
               {isDrJaimeAcosta && (
                 <div>
-                  <p className="text-sm font-semibold mt-4" style={{ color: BRAND.text }}>
-                    Redes Sociales
-                  </p>
+               
 
                   <div className="mt-3 flex gap-3">
 
