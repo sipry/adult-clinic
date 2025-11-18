@@ -52,7 +52,7 @@ function RelatedDoctorItem({
   title: string;
   photo: string;
 }) {
-const { t } = useTranslation();
+  const { t } = useTranslation();
   return (
     <li className="flex items-start gap-4 py-4 bg-transparent">
       <img
@@ -286,19 +286,19 @@ export default function ProviderDetailPage() {
                 </div>
               )}
 
-          {educationList.length > 0 && (
-  <Section title="Education">
-    <div className="mt-2 space-y-2" style={{ color: BRAND.text }}>
-      {educationList.map((item, i) => (
-        <p key={i} className="text-sm leading-relaxed">
-          {item}
-        </p>
-      ))}
-    </div>
+              {educationList.length > 0 && (
+                <Section title="Education">
+                  <div className="mt-2 space-y-2" style={{ color: BRAND.text }}>
+                    {educationList.map((item, i) => (
+                      <p key={i} className="text-sm leading-relaxed">
+                        {item}
+                      </p>
+                    ))}
+                  </div>
 
-    {isDrJaimeAcosta && (
-      <div className="mt-4 flex gap-3">
-{/* ResearchGate - cuadrado blanco con R y G en turquesa */}
+                  {isDrJaimeAcosta && (
+                    <div className="mt-4 flex gap-3">
+                      {/* ResearchGate - cuadrado blanco con R y G en turquesa */}
                       <a
                         href="https://www.researchgate.net/"
                         target="_blank"
@@ -380,9 +380,9 @@ export default function ProviderDetailPage() {
                           </span>
                         </span>
                       </a>      </div>
-    )}
-  </Section>
-)}
+                  )}
+                </Section>
+              )}
 
             </div>
           </main>
