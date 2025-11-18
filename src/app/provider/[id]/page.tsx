@@ -7,8 +7,6 @@ import { useProvidersData } from "../data";
 import { useTranslation } from "@/app/contexts/TranslationContext";
 import InsuranceDoctorModal from "../components/InsuranceDoctorModal";
 import { PALETTE, BRAND } from "@/app/ui/palette";
-import { Linkedin } from "lucide-react";
-
 
 /* ============ Subcomponentes ============ */
 const Section = ({
@@ -54,7 +52,7 @@ function RelatedDoctorItem({
   title: string;
   photo: string;
 }) {
-  const { t } = useTranslation();
+const { t } = useTranslation();
   return (
     <li className="flex items-start gap-4 py-4 bg-transparent">
       <img
@@ -197,99 +195,6 @@ export default function ProviderDetailPage() {
                 {p.title}
               </p>
 
-              {/* botones de RG y Linkedin */}
-
-              {isDrJaimeAcosta && (
-                <div>
-               
-
-                  <div className="mt-3 flex gap-3">
-
-                    {/* ResearchGate */}
-                    <a
-                      href="https://www.researchgate.net/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="Ir a ResearchGate"
-                      className="inline-block"
-                    >
-                      <span
-                        className="inline-flex items-center justify-center transition-transform duration-150 hover:scale-[1.04]"
-                        style={{
-                          width: "46px",
-                          height: "46px",
-                          borderRadius: "14px",
-                          backgroundColor: "#74CDBD",
-                          boxShadow: "0 4px 10px rgba(0,0,0,0.06)",
-                          position: "relative",
-                        }}
-                      >
-                        {/* R grande */}
-                        <span
-                          style={{
-                            color: "#FFFFFF",
-                            fontFamily: "serif",
-                            fontSize: "20px",
-                            lineHeight: 1,
-                            fontWeight: 500,
-                          }}
-                        >
-                          R
-                        </span>
-                        {/* G chiquita */}
-                        <span
-                          style={{
-                            position: "absolute",
-                            top: "5px",
-                            right: "7px",
-                            color: "#FFFFFF",
-                            fontFamily: "serif",
-                            fontSize: "10px",
-                            lineHeight: 1,
-                            fontWeight: 500,
-                          }}
-                        >
-                          G
-                        </span>
-                      </span>
-                    </a>
-
-                    {/* LinkedIn */}
-                    <a
-                      href="https://www.linkedin.com/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="Ir a LinkedIn"
-                      className="inline-block"
-                    >
-                      <span
-                        className="inline-flex items-center justify-center transition-transform duration-150 hover:scale-[1.04]"
-                        style={{
-                          width: "46px",
-                          height: "46px",
-                          borderRadius: "14px",
-                          backgroundColor: "#0A66C2",
-                          boxShadow: "0 4px 10px rgba(0,0,0,0.06)",
-                        }}
-                      >
-                        <span
-                          style={{
-                            color: "#FFFFFF",
-                            fontWeight: 700,
-                            fontSize: "18px",
-                            lineHeight: 1,
-                            fontFamily:
-                              "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-                          }}
-                        >
-                          in
-                        </span>
-                      </span>
-                    </a>
-                  </div>
-                </div>
-              )}
-
               {/* info extra */}
               {p.languages && (
                 <div className="mt-4">
@@ -356,12 +261,8 @@ export default function ProviderDetailPage() {
                   {t("provider.see.insurance")}
                 </button>
               </div>
-
-
             </div>
           </aside>
-
-
 
           {/* Contenido principal */}
           <main className="lg:col-span-8">
@@ -385,11 +286,103 @@ export default function ProviderDetailPage() {
                 </div>
               )}
 
-              {educationList.length > 0 && (
-                <Section title="Education">
-                  <Bullet items={educationList} />
-                </Section>
-              )}
+          {educationList.length > 0 && (
+  <Section title="Education">
+    <div className="mt-2 space-y-2" style={{ color: BRAND.text }}>
+      {educationList.map((item, i) => (
+        <p key={i} className="text-sm leading-relaxed">
+          {item}
+        </p>
+      ))}
+    </div>
+
+    {isDrJaimeAcosta && (
+      <div className="mt-4 flex gap-3">
+{/* ResearchGate - cuadrado blanco con R y G en turquesa */}
+                      <a
+                        href="https://www.researchgate.net/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Ir a ResearchGate"
+                        className="inline-block"
+                      >
+                        <span
+                          className="inline-flex items-center justify-center transition-transform duration-150 hover:scale-[1.05]"
+                          style={{
+                            width: 44,
+                            height: 44,
+                            borderRadius: 6,
+                            backgroundColor: "#00A9A0",
+                            boxShadow: "0 4px 10px rgba(0,0,0,0.18)",
+                            position: "relative",
+                          }}
+                        >
+                          {/* R grande */}
+                          <span
+                            style={{
+                              color: "#FFFFFF",
+                              fontFamily: "'Times New Roman', serif",
+                              fontSize: 22,
+                              lineHeight: 1,
+                              fontWeight: 500,
+                            }}
+                          >
+                            R
+                          </span>
+                          {/* G chiquita arriba a la derecha */}
+                          <span
+                            style={{
+                              position: "absolute",
+                              top: 8,
+                              right: 10,
+                              color: "#FFFFFF",
+                              fontFamily: "'Times New Roman', serif",
+                              fontSize: 11,
+                              lineHeight: 1,
+                              fontWeight: 500,
+                            }}
+                          >
+                            G
+                          </span>
+                        </span>
+                      </a>
+
+                      {/* LinkedIn - cuadrado azul con "in" blanco */}
+                      <a
+                        href="https://www.linkedin.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Ir a LinkedIn"
+                        className="inline-block"
+                      >
+                        <span
+                          className="inline-flex items-center justify-center transition-transform duration-150 hover:scale-[1.05]"
+                          style={{
+                            width: 44,
+                            height: 44,
+                            borderRadius: 6,
+                            backgroundColor: "#0A66C2",
+                            boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
+                          }}
+                        >
+                          <span
+                            style={{
+                              color: "#FFFFFF",
+                              fontWeight: 700,
+                              fontSize: 20,
+                              lineHeight: 1,
+                              fontFamily:
+                                "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+                              textTransform: "lowercase",
+                            }}
+                          >
+                            in
+                          </span>
+                        </span>
+                      </a>      </div>
+    )}
+  </Section>
+)}
 
             </div>
           </main>

@@ -7,23 +7,28 @@ export interface ProviderItem {
   name: string;
   title: string;
   image: { src: string } | string;
-  education: string[];
+  // 👇 CAMBIO: ahora puede ser texto o array de textos
+  education: string | string[];
   residency: string;
   experience: string;
   languages: string;
   bio: string;
-  bio2?: string; // <— opcional TODO
+  bio2?: string; // <— opcional
   conditions?: string[];
   researchGate?: string;
   linkedIn?: string;
-
 }
 
 /**
  * Genera los datos de proveedores traducidos usando el hook de traducción.
  */
 export const useProvidersData = () => {
-  const { t } = useTranslation();
+  // 👇 CAMBIO: extraemos también tArray del contexto
+  const { t, tArray } = useTranslation() as {
+    t: (key: string) => string;
+    tFormat: (key: string, params: Record<string, string | number>) => string;
+    tArray: <T = unknown>(key: string) => T[];
+  };
 
   const providers: ProviderItem[] = [
     {
@@ -31,21 +36,24 @@ export const useProvidersData = () => {
       name: "Dr. Jaime A. Acosta , MD",
       title: t("providers.dr1.title"),
       image: doctorAvatar,
-      education: [t("providers.dr1.education")],
+      // 👇 AQUÍ LA CLAVE: usamos tArray para leer el array de la traducción
+      // 'providers.dr1.education': [ '...', '...' ]
+      education: tArray<string>("providers.dr1.education"),
       residency: "",
       experience: t("providers.dr1.experience"),
       languages: t("providers.dr1.languages"),
       bio: t("provider.bio.dr1"),
       bio2: t("provider.bio.dr1.text2"),
-      researchGate: '#',
-      linkedIn: '#',
+      researchGate: "#",
+      linkedIn: "#",
     },
     {
       id: "dr-Juan-Ortiz",
       name: "Dr. Juan Ortiz Guevara, MD",
       title: t("providers.dr2.title"),
       image: maleAvatar,
-      education: [t("providers.dr2.education")],
+      // aquí sigue siendo un string normal
+      education: t("providers.dr2.education"),
       residency: "Jersey Shore Medical Center, Neptune City, NJ",
       experience: t("providers.dr2.experience"),
       languages: t("providers.dr2.languages"),
