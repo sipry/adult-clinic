@@ -14,29 +14,11 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { useTranslation } from "../contexts/TranslationContext";
+import { PALETTE, BRAND } from "../ui/palette";
 
-/* 🎨 Paleta tomada de la sección de servicios */
-const PALETTE = [
-  { base: "#9ADAD8", back: "#7EC4C2", text: "#001219" },
-  { base: "#C8E7DA", back: "#A8D1C2", text: "#001219" },
-  { base: "#F5EBC6", back: "#EAD7A4", text: "#001219" },
-  { base: "#FFD77A", back: "#EEC46A", text: "#001219" },
-  { base: "#F3A96C", back: "#E48B4F", text: "#001219" },
-  { base: "#E48C7A", back: "#D67463", text: "#001219" },
-  { base: "#E57B76", back: "#D66A65", text: "#001219" },
-  { base: "#DC767B", back: "#C85D61", text: "#001219" },
-];
-
-/* 🎯 Colores de marca que ya usabas en ServicesRail */
-const BRAND = {
-  bg: "#FFFFFF",
-  heading: "#001219",
-  muted: "#005F73",
-  accent: "#0A9396",
-  cta: "#BB3E03",
-  ctaBorder: "#CA6702",
-  borderSoft: "rgba(0, 18, 25, 0.08)",
-};
+/* 👉 URLs del portal del paciente según idioma (CAMBIA ESTO A TUS URL REALES) */
+const PATIENT_PORTAL_URL_ES = "https://echeckin.healow.com/webecheckin/echeckin/QRCheckin?v1=R01UQ0RUcW96bTN6SHFNcGV2MUVpVjZIamlkY1VBU3QrRGdoOHZlRmw1WVBEemlHc2pTWm9Eay93dzY5SmN3QVZHdE9aTHEwTmtJM0lLc25hZk82Y3EwZlcxVHJVaFYxV1FvRndTOTBFMHc9";
+const PATIENT_PORTAL_URL_EN = "https://echeckin.healow.com/webecheckin/echeckin/QRCheckin?v1=R01UQ0RUcW96bTN6SHFNcGV2MUVpVjZIamlkY1VBU3QrRGdoOHZlRmw1WVBEemlHc2pTWm9Eay93dzY5SmN3QVZHdE9aTHEwTmtJM0lLc25hZk82Y3EwZlcxVHJVaFYxV1FvRndTOTBFMHc9";
 
 /* ---------- Motion utils ---------- */
 function usePrefersReducedMotion(): boolean {
@@ -131,35 +113,35 @@ const Reveal: React.FC<{
   threshold = 0.2,
   rootMargin = "0px 0px -10% 0px",
 }) => {
-    const ref = React.useRef<HTMLDivElement>(null);
-    const inView = useInOutViewport(ref, { threshold, rootMargin });
-    const [shown, setShown] = React.useState(false);
-    const reduce = usePrefersReducedMotion();
+  const ref = React.useRef<HTMLDivElement>(null);
+  const inView = useInOutViewport(ref, { threshold, rootMargin });
+  const [shown, setShown] = React.useState(false);
+  const reduce = usePrefersReducedMotion();
 
-    React.useEffect(() => {
-      if (inView) setShown(true);
-      else if (!once) setShown(false);
-    }, [inView, once]);
+  React.useEffect(() => {
+    if (inView) setShown(true);
+    else if (!once) setShown(false);
+  }, [inView, once]);
 
-    const style: React.CSSProperties = React.useMemo(() => {
-      if (reduce) return {};
-      if (!shown) {
-        return {
-          opacity: 0,
-          transform: `translate(${x}px, ${y}px) scale(${scale})`,
-          transition: `opacity ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms, transform ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms`,
-          willChange: "opacity, transform",
-        };
-      }
-      return {};
-    }, [reduce, shown, x, y, scale, duration, delay]);
+  const style: React.CSSProperties = React.useMemo(() => {
+    if (reduce) return {};
+    if (!shown) {
+      return {
+        opacity: 0,
+        transform: `translate(${x}px, ${y}px) scale(${scale})`,
+        transition: `opacity ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms, transform ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms`,
+        willChange: "opacity, transform",
+      };
+    }
+    return {};
+  }, [reduce, shown, x, y, scale, duration, delay]);
 
-    return (
-      <div ref={ref} className={className} style={style}>
-        {children}
-      </div>
-    );
-  };
+  return (
+    <div ref={ref} className={className} style={style}>
+      {children}
+    </div>
+  );
+};
 
 /* ---------- Tipos ---------- */
 type FormState = {
@@ -183,7 +165,7 @@ const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
 const WEB3FORMS_KEY = "5339a63d-c8fc-445e-81df-7a853d7d570c";
 
 const ContactSplitWithForm: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
 
   const ADDRESS = "201 Hilda St Suite # 10, Kissimmee, FL 34741";
   const EMAIL = "info@yourhealthadult.com";
@@ -194,11 +176,17 @@ const ContactSplitWithForm: React.FC = () => {
 
   const mapQuery = React.useMemo(() => encodeURIComponent(ADDRESS), [ADDRESS]);
   const MAP_LINK = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
-  const FACEBOOK_URL = "https://www.facebook.com/";
-  const INSTAGRAM_URL = "https://www.instagram.com/";
 
   const sectionRef = React.useRef<HTMLElement>(null);
-  useInOutViewport(sectionRef, { threshold: 0.2 }); // mantenemos el hook por si lo usas para otra cosa
+  useInOutViewport(sectionRef, { threshold: 0.2 });
+
+  // ⚙️ Portal según idioma (ajusta la condición si tus codes son distintos)
+  const portalUrl =
+    language === "es" ? PATIENT_PORTAL_URL_ES : PATIENT_PORTAL_URL_EN;
+
+  const portalQrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(
+    portalUrl
+  )}`;
 
   /* ---------- Estado del formulario ---------- */
   const [form, setForm] = React.useState<FormState>({
@@ -270,7 +258,6 @@ const ContactSplitWithForm: React.FC = () => {
         fd.append("replyto", form.email);
         fd.append("from_name", form.patientName);
 
-        // Campos del cuerpo
         fd.append("patientName", form.patientName);
         fd.append("email", form.email);
         fd.append("phone", form.phone);
@@ -279,7 +266,6 @@ const ContactSplitWithForm: React.FC = () => {
         fd.append("doctor", form.doctor);
         fd.append("message", form.message);
 
-        // Honeypot
         fd.append("botcheck", form.company ?? "");
 
         const res = await fetch(WEB3FORMS_ENDPOINT, { method: "POST", body: fd });
@@ -317,9 +303,8 @@ const ContactSplitWithForm: React.FC = () => {
     setError(null);
   }, []);
 
-  // Tomamos un par de colores del array pastel
-  const softSurface = `${PALETTE[1].base}dd`; // fondo form
-  const softBorder = `${PALETTE[1].back}66`; // borde form
+  const softSurface = `${PALETTE[1].base}dd`;
+  const softBorder = `${PALETTE[1].back}66`;
   const asideSurface = `${PALETTE[0].base}22`;
 
   return (
@@ -343,7 +328,7 @@ const ContactSplitWithForm: React.FC = () => {
           <Reveal y={8}>
             <h2
               className="text-4xl sm:text-5xl font-extrabold tracking-tight"
-              style={{ color: BRAND.heading }}
+              style={{ color: BRAND.text }}
             >
               {t("contact.title")}
             </h2>
@@ -351,7 +336,7 @@ const ContactSplitWithForm: React.FC = () => {
           <Reveal y={10} delay={80}>
             <p
               className="mt-2 text-sm max-w-2xl mx-auto"
-              style={{ color: `${BRAND.muted}` }}
+              style={{ color: BRAND.subtitle }}
             >
               {t("contact.subtitle")}
             </p>
@@ -386,13 +371,13 @@ const ContactSplitWithForm: React.FC = () => {
                       </div>
                       <h3
                         className="mt-4 text-2xl font-semibold"
-                        style={{ color: BRAND.heading }}
+                        style={{ color: BRAND.text }}
                       >
                         {t("contact.form.done.title")}
                       </h3>
                       <p
                         className="mt-2 text-sm"
-                        style={{ color: `${BRAND.heading}cc` }}
+                        style={{ color: `${BRAND.text}cc` }}
                       >
                         {t("contact.form.done.subtitle")}
                       </p>
@@ -414,8 +399,8 @@ const ContactSplitWithForm: React.FC = () => {
                           href={`tel:${PHONE_TEL}`}
                           className="inline-flex items-center justify-center gap-2 rounded-md border px-5 py-2.5 text-sm font-semibold shadow-sm hover:bg-white/70"
                           style={{
-                            color: BRAND.heading,
-                            borderColor: `${BRAND.heading}11`,
+                            color: BRAND.text,
+                            borderColor: `${BRAND.text}11`,
                             backgroundColor: "#FFFFFF",
                           }}
                         >
@@ -426,7 +411,7 @@ const ContactSplitWithForm: React.FC = () => {
 
                       <div
                         className="mt-6 text-xs"
-                        style={{ color: `${BRAND.heading}99` }}
+                        style={{ color: `${BRAND.text}99` }}
                       >
                         <Mail className="inline h-3.5 w-3.5 mr-1" />
                         {EMAIL}
@@ -437,13 +422,13 @@ const ContactSplitWithForm: React.FC = () => {
                   <>
                     <h3
                       className="text-xl font-semibold"
-                      style={{ color: BRAND.heading }}
+                      style={{ color: BRAND.text }}
                     >
                       {t("contact.form.title")}
                     </h3>
                     <p
                       className="mt-1 text-sm"
-                      style={{ color: `${BRAND.heading}cc` }}
+                      style={{ color: `${BRAND.text}cc` }}
                     >
                       {t("contact.form.subtitle")}
                     </p>
@@ -455,7 +440,7 @@ const ContactSplitWithForm: React.FC = () => {
                         style={{
                           borderColor: "rgba(187, 62, 3, 0.25)",
                           backgroundColor: "rgba(187, 62, 3, 0.08)",
-                          color: "#BB3E03",
+                          color: BRAND.cta,
                         }}
                         role="alert"
                       >
@@ -489,7 +474,7 @@ const ContactSplitWithForm: React.FC = () => {
                       <div className="col-span-1">
                         <label
                           className="block text-sm font-medium"
-                          style={{ color: BRAND.heading }}
+                          style={{ color: BRAND.text }}
                         >
                           {t("contact.form.fields.patientName.label")}
                         </label>
@@ -503,9 +488,9 @@ const ContactSplitWithForm: React.FC = () => {
                           autoComplete="name"
                           className="mt-1 w-full rounded-md border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A9396]"
                           style={{
-                            borderColor: `${BRAND.heading}11`,
+                            borderColor: `${BRAND.text}11`,
                             backgroundColor: "#FFFFFF",
-                            color: BRAND.heading,
+                            color: BRAND.text,
                           }}
                           placeholder={t(
                             "contact.form.fields.patientName.placeholder"
@@ -517,7 +502,7 @@ const ContactSplitWithForm: React.FC = () => {
                       <div className="col-span-1">
                         <label
                           className="block text-sm font-medium"
-                          style={{ color: BRAND.heading }}
+                          style={{ color: BRAND.text }}
                         >
                           {t("contact.form.fields.email.label")}
                         </label>
@@ -531,9 +516,9 @@ const ContactSplitWithForm: React.FC = () => {
                           autoComplete="email"
                           className="mt-1 w-full rounded-md border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A9396]"
                           style={{
-                            borderColor: `${BRAND.heading}11`,
+                            borderColor: `${BRAND.text}11`,
                             backgroundColor: "#FFFFFF",
-                            color: BRAND.heading,
+                            color: BRAND.text,
                           }}
                           placeholder={t(
                             "contact.form.fields.email.placeholder"
@@ -545,7 +530,7 @@ const ContactSplitWithForm: React.FC = () => {
                       <div className="col-span-1">
                         <label
                           className="block text-sm font-medium"
-                          style={{ color: BRAND.heading }}
+                          style={{ color: BRAND.text }}
                         >
                           {t("contact.form.fields.phone.label")}
                         </label>
@@ -560,9 +545,9 @@ const ContactSplitWithForm: React.FC = () => {
                           autoComplete="tel"
                           className="mt-1 w-full rounded-md border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A9396]"
                           style={{
-                            borderColor: `${BRAND.heading}11`,
+                            borderColor: `${BRAND.text}11`,
                             backgroundColor: "#FFFFFF",
-                            color: BRAND.heading,
+                            color: BRAND.text,
                           }}
                           placeholder={t(
                             "contact.form.fields.phone.placeholder"
@@ -574,7 +559,7 @@ const ContactSplitWithForm: React.FC = () => {
                       <div className="col-span-1">
                         <label
                           className="block text-sm font-medium"
-                          style={{ color: BRAND.heading }}
+                          style={{ color: BRAND.text }}
                         >
                           {t("contact.form.fields.reason.label")}
                         </label>
@@ -586,9 +571,9 @@ const ContactSplitWithForm: React.FC = () => {
                           required
                           className="mt-1 w-full rounded-md border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A9396]"
                           style={{
-                            borderColor: `${BRAND.heading}11`,
+                            borderColor: `${BRAND.text}11`,
                             backgroundColor: "#FFFFFF",
-                            color: BRAND.heading,
+                            color: BRAND.text,
                           }}
                         >
                           <option value="" disabled>
@@ -613,7 +598,7 @@ const ContactSplitWithForm: React.FC = () => {
                       <fieldset className="col-span-1 self-end">
                         <legend
                           className="block text-sm font-medium"
-                          style={{ color: BRAND.heading }}
+                          style={{ color: BRAND.text }}
                         >
                           {t("contact.form.fields.appointmentType.label")}
                         </legend>
@@ -626,7 +611,7 @@ const ContactSplitWithForm: React.FC = () => {
                         >
                           <label
                             className="inline-flex items-center gap-2 text-sm"
-                            style={{ color: BRAND.heading }}
+                            style={{ color: BRAND.text }}
                           >
                             <input
                               type="radio"
@@ -643,7 +628,7 @@ const ContactSplitWithForm: React.FC = () => {
                           </label>
                           <label
                             className="inline-flex items-center gap-2 text-sm"
-                            style={{ color: BRAND.heading }}
+                            style={{ color: BRAND.text }}
                           >
                             <input
                               type="radio"
@@ -665,10 +650,10 @@ const ContactSplitWithForm: React.FC = () => {
                       <div className="col-span-1 md:col-span-2">
                         <label
                           className="block text-sm font-medium"
-                          style={{ color: BRAND.heading }}
+                          style={{ color: BRAND.text }}
                         >
                           {t("contact.form.fields.doctor.label")}{" "}
-                          <span style={{ color: `${BRAND.heading}66` }}>
+                          <span style={{ color: `${BRAND.text}66` }}>
                             ({t("contact.form.fields.doctor.optional")})
                           </span>
                         </label>
@@ -679,9 +664,9 @@ const ContactSplitWithForm: React.FC = () => {
                           onChange={onChange}
                           className="mt-1 w-full rounded-md border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A9396]"
                           style={{
-                            borderColor: `${BRAND.heading}11`,
+                            borderColor: `${BRAND.text}11`,
                             backgroundColor: "#FFFFFF",
-                            color: BRAND.heading,
+                            color: BRAND.text,
                           }}
                           aria-describedby="doctor-help"
                         >
@@ -697,7 +682,7 @@ const ContactSplitWithForm: React.FC = () => {
                         <p
                           id="doctor-help"
                           className="mt-1 text-xs"
-                          style={{ color: `${BRAND.heading}80` }}
+                          style={{ color: `${BRAND.text}80` }}
                         >
                           {t("contact.form.fields.doctor.help")}
                         </p>
@@ -707,7 +692,7 @@ const ContactSplitWithForm: React.FC = () => {
                       <div className="md:col-span-2">
                         <label
                           className="block text-sm font-medium"
-                          style={{ color: BRAND.heading }}
+                          style={{ color: BRAND.text }}
                         >
                           {t("contact.form.fields.message.label")}
                         </label>
@@ -720,9 +705,9 @@ const ContactSplitWithForm: React.FC = () => {
                           maxLength={MAX_CHARS}
                           className="mt-1 w-full rounded-md border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A9396]"
                           style={{
-                            borderColor: `${BRAND.heading}11`,
+                            borderColor: `${BRAND.text}11`,
                             backgroundColor: "#FFFFFF",
-                            color: BRAND.heading,
+                            color: BRAND.text,
                           }}
                           placeholder={t(
                             "contact.form.fields.message.placeholder"
@@ -730,7 +715,7 @@ const ContactSplitWithForm: React.FC = () => {
                         />
                         <div
                           className="mt-1 text-[11px] text-right"
-                          style={{ color: `${BRAND.heading}66` }}
+                          style={{ color: `${BRAND.text}66` }}
                         >
                           {chars}/{MAX_CHARS}
                         </div>
@@ -745,7 +730,7 @@ const ContactSplitWithForm: React.FC = () => {
                           style={{
                             backgroundColor: BRAND.accent,
                             color: "#FFFFFF",
-                            border: `1px solid ${BRAND.ctaBorder}44`,
+                            border: `1px solid ${BRAND.border}`,
                           }}
                           aria-busy={submitting}
                           aria-label={
@@ -772,19 +757,19 @@ const ContactSplitWithForm: React.FC = () => {
                 className="lg:sticky lg:top-24 h-full rounded-2xl p-6 shadow-sm border"
                 style={{
                   backgroundColor: asideSurface,
-                  borderColor: `${BRAND.heading}11`,
+                  borderColor: `${BRAND.text}11`,
                 }}
               >
                 <h3
                   className="text-lg font-semibold"
-                  style={{ color: BRAND.heading }}
+                  style={{ color: BRAND.text }}
                 >
                   {t("contact.info.title")}
                 </h3>
 
                 <div
                   className="mt-4 space-y-4 text-sm"
-                  style={{ color: BRAND.heading }}
+                  style={{ color: BRAND.text }}
                 >
                   <a
                     href={MAP_LINK}
@@ -844,13 +829,13 @@ const ContactSplitWithForm: React.FC = () => {
 
                   <div
                     className="pt-2 border-t"
-                    style={{ borderColor: `${BRAND.heading}11` }}
+                    style={{ borderColor: `${BRAND.text}11` }}
                   />
 
                   <div>
                     <p
                       className="text-xs font-semibold tracking-widest uppercase"
-                      style={{ color: `${BRAND.heading}66` }}
+                      style={{ color: `${BRAND.text}66` }}
                     >
                       {t("contact.hours.label")}
                     </p>
@@ -877,42 +862,51 @@ const ContactSplitWithForm: React.FC = () => {
                     </ul>
                   </div>
 
+                  {/* 💊 Sección para pacientes ya existentes */}
                   <div
-                    className="pt-3 border-t flex justify-center gap-3"
-                    style={{ borderColor: `${BRAND.heading}11` }}
+                    className="mt-4 rounded-xl p-4 border"
+                    style={{
+                      borderColor: `${BRAND.text}11`,
+                      backgroundColor: "#FFFFFFCC",
+                    }}
                   >
-                    <a
-                      href={FACEBOOK_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-sm px-4 py-2 text-sm font-semibold shadow-md transition hover:scale-[1.01]"
-                      style={{
-                        backgroundColor: '#1877F2',
-                        color: "#FFFFFF",
-                      }}
-                      aria-label={t("contact.social.facebookAria")}
-                      title="Facebook"
+                    <p
+                      className="text-xs font-semibold tracking-wide uppercase"
+                      style={{ color: `${BRAND.text}80` }}
                     >
-                      <Facebook className="h-4 w-4" aria-hidden="true" />
-                      Facebook
-                    </a>
-                    <a
-                      href={INSTAGRAM_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-sm px-4 py-2 text-sm font-semibold shadow-md transition hover:scale-[1.01]"
-                      style={{
-                        background:
-                          "linear-gradient(45deg, #405DE6 0%, #833AB4 35%, #E1306C 65%, #FCB045 100%)",
-                        color: "#FFFFFF",
-                      }}
-                      aria-label={t("contact.social.instagramAria")}
-                      title="Instagram"
-                    >
-                      <Instagram className="h-4 w-4" aria-hidden="true" />
-                      Instagram
-                    </a>
+                      {t("contact.portal.qr.label")}
+                    </p>
+                    <p className="mt-2 text-sm">
+                      {t("contact.portal.qr.desc")}
+                    </p>
 
+                    <div className="mt-3 flex flex-col items-center gap-3">
+                      <div className="flex flex-col items-center gap-1">
+                        <img
+                          src={portalQrSrc}
+                          alt="Código QR para acceder al portal del paciente"
+                          className="h-40 w-40 rounded-md bg-white p-1 shadow-sm"
+                        />
+                        <p
+                          className="text-[11px] text-center"
+                          style={{ color: `${BRAND.text}80` }}
+                        >
+                          {t("contact.portal.qr.scan")}
+                        </p>
+                      </div>
+                      <a
+                        href={portalUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-semibold shadow-md hover:scale-[1.01] transition"
+                        style={{
+                          backgroundColor: PALETTE[0].base,
+                          color: BRAND.text,
+                        }}
+                      >
+                        {t("contact.portal.qr.visit")}
+                      </a>
+                    </div>
                   </div>
                 </div>
               </aside>
