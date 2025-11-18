@@ -13,6 +13,10 @@ import Link from "next/link";
 import { useTranslation } from "../contexts/TranslationContext";
 import { BRAND, PALETTE } from "../ui/palette";
 
+/* 👉 URLs del portal del paciente según idioma (ajusta a tus URLs reales) */
+const PATIENT_PORTAL_URL_ES = "https://echeckin.healow.com/webecheckin/echeckin/QRCheckin?v1=R01UQ0RUcW96bTN6SHFNcGV2MUVpVjZIamlkY1VBU3QrRGdoOHZlRmw1WVBEemlHc2pTWm9Eay93dzY5SmN3QVZHdE9aTHEwTmtJM0lLc25hZk82Y3EwZlcxVHJVaFYxV1FvRndTOTBFMHc9";
+const PATIENT_PORTAL_URL_EN = "https://echeckin.healow.com/webecheckin/echeckin/QRCheckin?v1=R01UQ0RUcW96bTN6SHFNcGV2MUVpVjZIamlkY1VBU3QrRGdoOHZlRmw1WVBEemlHc2pTWm9Eay93dzY5SmN3QVZHdE9aTHEwTmtJM0lLc25hZk82Y3EwZlcxVHJVaFYxV1FvRndTOTBFMHc9";
+
 /* ---------- Motion utils: Reveal on scroll ---------- */
 function usePrefersReducedMotion(): boolean {
   const [reduced, setReduced] = React.useState(false);
@@ -85,7 +89,16 @@ const Footer: React.FC = () => {
   const mapQuery = React.useMemo(() => encodeURIComponent(ADDRESS), [ADDRESS]);
   const MAP_EMBED_SRC = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
   const MAP_LINK = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
+
+  // 🔁 URL del portal según idioma
+  const portalUrl =
+    language === "es" ? PATIENT_PORTAL_URL_ES : PATIENT_PORTAL_URL_EN;
+
+  // 🔳 QR con la URL dinámica
+  const portalQrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(
+    portalUrl
+  )}`;
 
   /* ---------- Reveal helper ---------- */
   const Reveal: React.FC<{
@@ -111,31 +124,31 @@ const Footer: React.FC = () => {
     threshold = 0.2,
     rootMargin = "0px 0px -10% 0px",
   }) => {
-      const ref = React.useRef<HTMLDivElement>(null);
-      const inView = useInOutViewport(ref, { threshold, rootMargin });
-      const [shown, setShown] = React.useState(false);
-      const reduce = usePrefersReducedMotion();
+    const ref = React.useRef<HTMLDivElement>(null);
+    const inView = useInOutViewport(ref, { threshold, rootMargin });
+    const [shown, setShown] = React.useState(false);
+    const reduce = usePrefersReducedMotion();
 
-      React.useEffect(() => {
-        if (inView) setShown(true);
-        else if (!once) setShown(false);
-      }, [inView, once]);
+    React.useEffect(() => {
+      if (inView) setShown(true);
+      else if (!once) setShown(false);
+    }, [inView, once]);
 
-      const style: React.CSSProperties = reduce
-        ? {}
-        : {
+    const style: React.CSSProperties = reduce
+      ? {}
+      : {
           opacity: shown ? 1 : 0,
           transform: shown ? "none" : `translate(${x}px, ${y}px) scale(${scale})`,
           transition: `opacity ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms, transform ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms`,
           willChange: "opacity, transform",
         };
 
-      return (
-        <div ref={ref} className={className} style={style}>
-          {children}
-        </div>
-      );
-    };
+    return (
+      <div ref={ref} className={className} style={style}>
+        {children}
+      </div>
+    );
+  };
 
   return (
     <footer
@@ -181,10 +194,7 @@ const Footer: React.FC = () => {
           >
             {t("footer.brand")}
           </h2>
-          <p
-            className="text-sm mb-5"
-            style={{ color: `${BRAND.text}CC` }}
-          >
+          <p className="text-sm mb-5" style={{ color: `${BRAND.text}CC` }}>
             {t("footer.tagline")}
           </p>
           <Link
@@ -218,7 +228,7 @@ const Footer: React.FC = () => {
                 {t("footer.nav.home")}
               </Link>
             </li>
-          
+
             <li>
               <Link
                 href="/aboutus"
@@ -228,7 +238,7 @@ const Footer: React.FC = () => {
                 {t("footer.nav.about")}
               </Link>
             </li>
-              <li>
+            <li>
               <Link
                 href="/services"
                 className="transition-colors"
@@ -272,9 +282,7 @@ const Footer: React.FC = () => {
                 className="w-4 h-4 shrink-0"
                 style={{ color: BRAND.accent }}
               />
-              <span style={{ color: `${BRAND.text}CC` }}>
-                (407) 574 - 4848
-              </span>
+              <span style={{ color: `${BRAND.text}CC` }}>(407) 574 - 4848</span>
             </li>
             <li className="flex gap-2 items-start">
               <Mail
@@ -318,8 +326,8 @@ const Footer: React.FC = () => {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-sm px-3 py-2 text-sm font-semibold shadow-sm hover:scale-[1.01] transition"
               style={{
-                backgroundColor: '#1877F2 ',
-                color: BRAND.bg,
+                backgroundColor: "#1877F2",
+                color: "#FFFFFF",
               }}
             >
               <Facebook className="h-4 w-4" />
@@ -339,7 +347,60 @@ const Footer: React.FC = () => {
               <Instagram className="h-4 w-4" aria-hidden />
               Instagram
             </a>
+          </div>
+        </div>
+      </div>
 
+      {/* 🧩 Franja especial para el portal del paciente + QR */}
+      <div
+        className="border-t"
+        style={{ borderColor: `${BRAND.text}11`, backgroundColor: "#F8FBFB" }}
+      >
+        <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-6">
+          {/* Texto explicativo */}
+          <div className="max-w-md text-center md:text-left">
+            <p
+              className="text-xs font-semibold tracking-wide uppercase"
+              style={{ color: `${BRAND.text}80` }}
+            >
+              {t("contact.portal.qr.label")}
+            </p>
+            <p
+              className="mt-2 text-sm"
+              style={{ color: `${BRAND.text}CC` }}
+            >
+              {t("contact.portal.qr.desc")}
+            </p>
+          </div>
+
+          {/* Bloque QR + botón */}
+          <div className="flex flex-col md:flex-row items-center gap-4">
+            <div className="flex flex-col items-center gap-1">
+              <img
+                src={portalQrSrc}
+                alt={t("contact.portal.qr.scan")}
+                className="h-28 w-28 md:h-32 md:w-32 rounded-md bg-white p-1 shadow-sm"
+              />
+              <p
+                className="text-[11px] text-center"
+                style={{ color: `${BRAND.text}80` }}
+              >
+                {t("contact.portal.qr.scan")}
+              </p>
+            </div>
+
+            <a
+              href={portalUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-semibold shadow-sm hover:scale-[1.01] transition"
+              style={{
+                backgroundColor: PALETTE[0].base,
+                color: BRAND.text,
+              }}
+            >
+              {t("contact.portal.qr.visit")}
+            </a>
           </div>
         </div>
       </div>
