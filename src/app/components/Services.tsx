@@ -57,7 +57,6 @@ const ICONS: Record<IconKey, IconCmp> = {
   eye: Eye,
 };
 
-
 /* ---------------- Utils ---------------- */
 const slugify = (s: string) =>
   s
@@ -83,6 +82,24 @@ const ServicesRail: React.FC<{ featuredKeys?: string[] }> = ({
   const [gap, setGap] = useState(16);
   const [activeIndex, setActiveIndex] = useState(0);
 
+  // 👉 detectar si es dispositivo táctil
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+  // 👉 qué tarjeta está volteada en mobile
+  const [flippedKey, setFlippedKey] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !("matchMedia" in window)) return;
+    const mql = window.matchMedia("(hover: none) and (pointer: coarse)");
+
+    const update = (e?: MediaQueryListEvent) => {
+      setIsTouchDevice(e ? e.matches : mql.matches);
+    };
+
+    update();
+    mql.addEventListener?.("change", update);
+    return () => mql.removeEventListener?.("change", update);
+  }, []);
+
   // --- datos desde i18n ---
   const i18nServices = tArray<ServiceTranslation>("services.list");
   const ICON_BY_KEY: Partial<Record<string, IconKey>> = {
@@ -104,7 +121,6 @@ const ServicesRail: React.FC<{ featuredKeys?: string[] }> = ({
     };
   });
 
-  // mismo orden que tenías
   const ordered = useMemo(() => {
     const featured = baseServices.filter((s) => featuredKeys.includes(s.id));
     const others = baseServices.filter((s) => !featuredKeys.includes(s.id));
@@ -116,17 +132,17 @@ const ServicesRail: React.FC<{ featuredKeys?: string[] }> = ({
 
   const N = ordered.length;
 
-  // cuántas copias tenemos renderizadas
-  const [copies, setCopies] = useState(3); // empezamos con 3 bloques
-  const items = useMemo(() => {
-    // [ordered, ordered, ordered, ...]
-    return Array.from({ length: copies }, (_, blockIdx) =>
-      ordered.map((item, i) => ({
-        ...item,
-        __key: `${item.id}-${blockIdx}-${i}`,
-      }))
-    ).flat();
-  }, [ordered, copies]);
+  const [copies, setCopies] = useState(3);
+  const items = useMemo(
+    () =>
+      Array.from({ length: copies }, (_, blockIdx) =>
+        ordered.map((item, i) => ({
+          ...item,
+          __key: `${item.id}-${blockIdx}-${i}`,
+        }))
+      ).flat(),
+    [ordered, copies]
+  );
 
   const recomputeDims = useCallback(() => {
     const w = railRef.current?.clientWidth ?? 0;
@@ -157,20 +173,18 @@ const ServicesRail: React.FC<{ featuredKeys?: string[] }> = ({
 
   const snapSize = cardW + gap;
 
-  // observamos el scroll para ir clonando más
   useEffect(() => {
     const el = railRef.current;
     if (!el || N === 0) return;
 
     const handleScroll = () => {
-      const nearEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - snapSize * 2;
+      const nearEnd =
+        el.scrollLeft + el.clientWidth >= el.scrollWidth - snapSize * 2;
 
-      // si estamos cerca del final: agregamos otra copia
       if (nearEnd) {
         setCopies((c) => c + 1);
       }
 
-      // índice lógico dentro de UN solo bloque
       const logicalPos = el.scrollLeft % (N * snapSize);
       const logicalIndex = Math.round(logicalPos / snapSize) % N;
       setActiveIndex((logicalIndex + N) % N);
@@ -192,7 +206,6 @@ const ServicesRail: React.FC<{ featuredKeys?: string[] }> = ({
   const scrollToLogical = (i: number) => {
     const el = railRef.current;
     if (!el || N === 0) return;
-    // tomamos en qué bloque estoy (entero)
     const block = Math.floor(el.scrollLeft / (N * snapSize));
     const base = block * N * snapSize;
     el.scrollTo({
@@ -210,7 +223,6 @@ const ServicesRail: React.FC<{ featuredKeys?: string[] }> = ({
       {/* HEADER */}
       <div className="mb-4 md:mb-6 max-w-7xl mx-auto px-6">
         <div className="space-y-4">
-          {/* Textos: pretitle, title, subtitle */}
           <div>
             <p
               className="text-[11px] font-semibold tracking-[0.28em] text-center md:text-left"
@@ -227,26 +239,26 @@ const ServicesRail: React.FC<{ featuredKeys?: string[] }> = ({
             </p>
           </div>
 
-          {/* Botón + flechas (siempre visibles) */}
           <div className="flex items-center gap-3 shrink-0 justify-center md:justify-start">
+            {/* Botón "See all services" */}
             <Link
               href="/services"
-              className="inline-flex items-center whitespace-nowrap rounded-md 
-             px-8 sm:px-10 py-2.5 sm:py-3 
-             text-xs sm:text-sm font-semibold 
-             text-white shadow-sm hover:scale-105 transition-transform"
+              className="inline-flex h-11 items-center whitespace-nowrap rounded-md 
+                   px-8 sm:px-10 
+                   text-xs sm:text-sm font-semibold 
+                   text-white shadow-sm hover:scale-105 transition-transform"
               style={{ backgroundColor: "#BB3E03" }}
             >
               {t("service.seeAll.button") || "See all services"}
             </Link>
 
-
+            {/* Flechas */}
             <div className="flex gap-2">
               <button
                 type="button"
                 aria-label="Previous"
                 onClick={() => scrollByOne(-1)}
-                className="inline-flex px-10 py-3 items-center justify-center rounded-md shadow-sm border border-[#CA6702]/30"
+                className="inline-flex h-11 px-10 items-center justify-center rounded-md shadow-sm border border-[#CA6702]/30"
                 style={{ color: "#001219" }}
               >
                 <ChevronLeft className="h-5 w-5" />
@@ -255,7 +267,7 @@ const ServicesRail: React.FC<{ featuredKeys?: string[] }> = ({
                 type="button"
                 aria-label="Next"
                 onClick={() => scrollByOne(1)}
-                className="inline-flex px-10 py-3 items-center justify-center rounded-md shadow-sm border border-[#CA6702]/30"
+                className="inline-flex h-11 px-10 items-center justify-center rounded-md shadow-sm border border-[#CA6702]/30"
                 style={{ color: "#001219" }}
               >
                 <ChevronRight className="h-5 w-5" />
@@ -280,6 +292,18 @@ const ServicesRail: React.FC<{ featuredKeys?: string[] }> = ({
             {items.map((s, i) => {
               const Icon = ICONS[s.icon];
               const color = PALETTE[i % PALETTE.length];
+              const isFlipped = isTouchDevice && flippedKey === s.__key;
+
+              // construir className según dispositivo
+              let articleClass =
+                "relative w-full h-full rounded-2xl shadow-md [transform-style:preserve-3d] transition-transform duration-700 cursor-pointer";
+              if (!isTouchDevice) {
+                articleClass += " group-hover:[transform:rotateY(180deg)]";
+              }
+              if (isTouchDevice && isFlipped) {
+                articleClass += " [transform:rotateY(180deg)]";
+              }
+
               return (
                 <li
                   key={s.__key}
@@ -288,13 +312,24 @@ const ServicesRail: React.FC<{ featuredKeys?: string[] }> = ({
                 >
                   <div className="group h-full w-full [perspective:1200px]">
                     <article
-                      className="relative w-full h-full rounded-2xl shadow-md [transform-style:preserve-3d] transition-transform duration-700 group-hover:[transform:rotateY(180deg)]"
+                      onClick={
+                        isTouchDevice
+                          ? () =>
+                            setFlippedKey((prev) =>
+                              prev === s.__key ? null : s.__key
+                            )
+                          : undefined
+                      }
+                      className={articleClass}
                       style={{ height: cardH }}
                     >
                       {/* cara frontal */}
                       <div
                         className="absolute inset-0 flex flex-col items-center justify-center p-6 rounded-2xl text-center [backface-visibility:hidden]"
-                        style={{ backgroundColor: color.base, color: BRAND.text }}
+                        style={{
+                          backgroundColor: color.base,
+                          color: BRAND.text,
+                        }}
                       >
                         <div
                           className="mb-4 flex items-center justify-center rounded-full"
@@ -304,10 +339,15 @@ const ServicesRail: React.FC<{ featuredKeys?: string[] }> = ({
                             backgroundColor: "rgba(255,255,255,0.18)",
                           }}
                         >
-                          <Icon className="w-7 h-7" style={{ color: BRAND.text }} />
+                          <Icon
+                            className="w-7 h-7"
+                            style={{ color: BRAND.text }}
+                          />
                         </div>
 
-                        <h3 className="text-lg md:text-xl font-bold mb-2">{s.title}</h3>
+                        <h3 className="text-lg md:text-xl font-bold mb-2">
+                          {s.title}
+                        </h3>
                         <p className="text-sm md:text-base opacity-90 line-clamp-3">
                           {s.description}
                         </p>
@@ -316,7 +356,10 @@ const ServicesRail: React.FC<{ featuredKeys?: string[] }> = ({
                       {/* cara trasera */}
                       <div
                         className="absolute inset-0 flex flex-col items-center justify-center p-6 rounded-2xl [transform:rotateY(180deg)] [backface-visibility:hidden]"
-                        style={{ backgroundColor: color.back, color: BRAND.text }}
+                        style={{
+                          backgroundColor: color.back,
+                          color: BRAND.text,
+                        }}
                       >
                         <h4 className="text-lg md:text-xl font-semibold mb-3">
                           {s.title}
