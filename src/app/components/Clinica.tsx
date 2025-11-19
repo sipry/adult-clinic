@@ -120,11 +120,11 @@ const Reveal: React.FC<RevealProps> = ({
   const style: React.CSSProperties = reduce
     ? {}
     : {
-        opacity: shown ? 1 : 0,
-        transform: shown ? "none" : `translate(${x}px, ${y}px) scale(${scale})`,
-        transition: `opacity ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms, transform ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms`,
-        willChange: "opacity, transform",
-      };
+      opacity: shown ? 1 : 0,
+      transform: shown ? "none" : `translate(${x}px, ${y}px) scale(${scale})`,
+      transition: `opacity ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms, transform ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms`,
+      willChange: "opacity, transform",
+    };
 
   return (
     <div ref={ref} className={className} style={style} aria-hidden={!shown}>
@@ -287,8 +287,14 @@ export default function SeccionOficinaPediatra({
           </Reveal>
 
           <Reveal y={14} delay={140}>
-            <div className="mt-3 flex flex-wrap items-center justify-center gap-3 mb-15">
-              {/* 👇 AQUÍ cambiamos el Link por un botón que abre la galería */}
+            <div
+              className="
+      mt-3 mb-10
+      flex flex-col items-center gap-3
+      sm:flex-row sm:flex-wrap sm:justify-center
+    "
+            >
+              {/* Botón principal: View Gallery */}
               <button
                 type="button"
                 onClick={() => openGalleryAt(0)}
@@ -303,46 +309,49 @@ export default function SeccionOficinaPediatra({
                 <ChevronRight className="w-4 h-4" />
               </button>
 
-              {/* prev */}
-              <button
-                type="button"
-                onClick={() => scrollOne(-1)}
-                aria-label="Foto anterior"
-                className="font-semibold px-10 py-3 md:px-10 rounded-md transition-all inline-flex items-center gap-2 text-sm hover:scale-105 border shadow-sm"
-                style={{
-                  backgroundColor: BRAND.accent,
-                  color: BRAND.text,
-                  border: `1px solid ${BRAND.accent}`,
-                }}
-              >
-                <ChevronLeft className="w-4 h-5" />
-              </button>
+              {/* Contenedor de flechas */}
+              <div className="flex gap-2 w-full justify-center sm:w-auto">
+                {/* Prev */}
+                <button
+                  type="button"
+                  onClick={() => scrollOne(-1)}
+                  aria-label="Foto anterior"
+                  className="font-semibold px-10 py-3 md:px-10 rounded-md transition-all inline-flex items-center gap-2 text-sm hover:scale-105 border shadow-sm"
+                  style={{
+                    backgroundColor: BRAND.accent,
+                    color: BRAND.text,
+                    border: `1px solid ${BRAND.accent}`,
+                  }}
+                >
+                  <ChevronLeft className="w-4 h-5" />
+                </button>
 
-              {/* next */}
-              <button
-                type="button"
-                onClick={() => scrollOne(1)}
-                aria-label="Foto siguiente"
-                className="font-semibold px-10 py-3 md:px-10 rounded-md transition-all inline-flex items-center gap-2 text-sm hover:scale-105 border shadow-sm"
-                style={{
-                  backgroundColor: BRAND.accent,
-                  color: BRAND.text,
-                  border: `1px solid ${BRAND.accent}`,
-                }}
-              >
-                <ChevronRight className="w-4 h-5" />
-              </button>
+                {/* Next */}
+                <button
+                  type="button"
+                  onClick={() => scrollOne(1)}
+                  aria-label="Foto siguiente"
+                  className="font-semibold px-10 py-3 md:px-10 rounded-md transition-all inline-flex items-center gap-2 text-sm hover:scale-105 border shadow-sm"
+                  style={{
+                    backgroundColor: BRAND.accent,
+                    color: BRAND.text,
+                    border: `1px solid ${BRAND.accent}`,
+                  }}
+                >
+                  <ChevronRight className="w-4 h-5" />
+                </button>
+              </div>
             </div>
           </Reveal>
+
         </div>
 
         <Reveal y={16} delay={100}>
           <div
             ref={wrapRef}
             id="gallery-scroller"
-            className={`marquee-wrap ${withFades ? "with-fades" : ""} ${
-              noSnap ? "no-snap" : ""
-            } relative rounded-3xl`}
+            className={`marquee-wrap ${withFades ? "with-fades" : ""} ${noSnap ? "no-snap" : ""
+              } relative rounded-3xl`}
             role="region"
             aria-label="Galería de fotos infinita"
             tabIndex={0}
@@ -466,9 +475,7 @@ export default function SeccionOficinaPediatra({
               alt={images[galleryIndex].alt}
               className="mx-auto max-h-[90vh] w-auto max-w-full rounded-xl object-contain"
             />
-            <p className="mt-3 text-center text-sm text-white/80">
-              {images[galleryIndex].alt}
-            </p>
+        
           </div>
         </div>
       ) : null}
