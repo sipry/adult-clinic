@@ -162,7 +162,7 @@ const DOCTORS: string[] = ["Dr. Jaime Acosta", "Dr. Juan Ortiz Diaz"];
 /* ---------- Web3Forms ---------- */
 const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
 // ⚠️ Usa tu Access Key real en .env.local -> NEXT_PUBLIC_WEB3FORMS_KEY
-const WEB3FORMS_KEY = "5339a63d-c8fc-445e-81df-7a853d7d570c";
+const WEB3FORMS_KEY = "573c941a-1c3b-49f9-b863-d26eda476324";
 
 const ContactSplitWithForm: React.FC = () => {
   const { t, language } = useTranslation();
