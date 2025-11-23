@@ -92,8 +92,8 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'about.peso': 'Peso saludable',
     'about.peso.detail': 'Hábitos y seguimiento personalizado.',
     'about.mission': 'Nuestra Misión',
-    'mission.text1': 'La misión de Your Health Adult Care es promover la salud y el bienestar de la población pediátrica local, brindando atención accesible y de alta calidad a niños, desde recién nacidos hasta adolescentes (18 años). Your Health Adult Care aspira a brindar servicios que superen las expectativas de nuestros pacientes, resultando en niños sanos y padres felices, lo que la convierte en la clínica pediátrica bilingüe preferida en el condado de Osceola.',
-    'mission.text2': 'Las estadísticas muestran que Osceola es uno de los condados de más rápido crecimiento en Florida y en la nación. Esto subraya la importancia de atender a un grupo diverso de culturas e idiomas en la zona. Por eso es fundamental para nosotros contar con pediatras y personal bilingüe en nuestra clínica.',
+    'mission.text1': "Brindar atención médica primaria integral y a largo plazo a los adultos de nuestra comunidad, enfocándonos en la prevención, el diagnóstico y el manejo de condiciones agudas y crónicas como la hipertensión, el colesterol elevado, la diabetes, las enfermedades del corazón y el asma. Nuestro compromiso es ofrecer un cuidado personalizado, compasivo y coordinado con especialistas cuando sea necesario, a través de chequeos anuales, medicina preventiva para adultos y personas mayores, servicios de laboratorio, inmunizaciones y atención de lesiones menores.",
+    'mission.text2': "Contamos con un equipo bilingüe y cercano, dedicado a ayudarte a mantenerte saludable, recuperarte de enfermedades y disfrutar de una mejor calidad de vida..",
     'about.equipo': 'Atención humana, cercana y en tu idioma.',
 
     // Contactanos Strip
@@ -534,8 +534,8 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'about.peso': 'Healthy weight',
     'about.peso.detail': 'Habits and personalized follow up.',
     'about.mission': 'Our Mission',
-    'mission.text1': "The mission of Your Health Adult Care is to promote the health and well-being of the local pediatric population by providing accessible, high-quality care to children from newborns to adolescents (18 years and older). Your Health Adult Care aspires to provide services that exceed our patients' expectations, resulting in healthy children and happy parents, making it the preferred bilingual pediatric clinic in Osceola County.",
-    'mission.text2': "Statistics show that Osceola is one of the fastest-growing counties in Florida and the nation. This underscores the importance of serving a diverse group of cultures and languages ​​in the area. That's why it's critical for us to have bilingual info and staff at our clinic.",
+    'mission.text1': "Provide comprehensive, long-term primary medical care to the adults in our community, focusing on the prevention, diagnosis, and management of acute and chronic conditions such as hypertension, high cholesterol, diabetes, heart disease, and asthma. Our commitment is to offer personalized, compassionate care, coordinated with specialists when necessary, through annual checkups, preventive medicine for adults and seniors, laboratory services, immunizations, and minor injury care.",
+    'mission.text2': "We have a friendly, bilingual team dedicated to helping you stay healthy, recover from illness, and enjoy a better quality of life.",
     'about.equipo': 'Human attention, close and in your language.',
     'about.mission.text1': 'At Your Health Adult Care, we promote the health of children and adolescents (0–18) with accessible, high-quality care. We aim to exceed expectations and be Osceola’s preferred bilingual pediatric clinic.',
     'about.mission.text2': 'Osceola is diverse and increasingly Hispanic; in Kissimmee, 60% speak Spanish at home. That’s why our team is bilingual and offers warm, respectful care.',
@@ -619,8 +619,8 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'providers.subtitle': 'Committed professional to provide the best service to your family.',
     'providers.dr1.title': 'Primary Care Physician',
     'providers.dr1.education': [
-      'El Dr. Acosta se graduó de la Facultad de Medicina de la Universidad Central de Venezuela (UCV) en 1986, en Caracas, Venezuela, y completó una amplia formación con una residencia en Cirugía General en el Hospital Militar de Caracas, donde se desempeñó como jefe de residentes. Posteriormente completó su residencia en Cirugía Plástica y Reconstructiva en el Hospital de la Cruz Roja en Caracas, Venezuela.',
-      'Posteriormente se trasladó a Puerto Rico y, después de aprobar los exámenes de la junta médica, completó su internado (2005) en el Hospital HIMA de Caguas, Puerto Rico, donde también se desempeñó como jefe de residentes. El Dr. Acosta ha publicado además varios artículos científicos a lo largo de su carrera.',
+      'Dr. Acosta graduated from the School of Medicine at the Central University of Venezuela (UCV) in 1986 in Caracas, Venezuela, and completed extensive training with a residency in General Surgery at the Military Hospital of Caracas, where he served as chief resident. He later completed his residency in Plastic and Reconstructive Surgery at the Red Cross Hospital in Caracas, Venezuela.',
+      'He subsequently moved to Puerto Rico and, after passing the medical board exams, completed his internship (2005) at HIMA Hospital in Caguas, Puerto Rico, where he also served as chief resident. Dr. Acosta has also published several scientific articles throughout his career.',
     ],
     'providers.dr1.specialty1': 'General Pediatric Medicine',
     'providers.dr1.specialty2': 'Newborn Care',

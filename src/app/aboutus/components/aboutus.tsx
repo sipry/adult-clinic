@@ -245,11 +245,12 @@ export default function AboutUs() {
   const DOCTORS = useMemo(
     () => [
       {
-        id: "dr-Jaime-acosta",
+        id: "dr-Jaime-Acosta",
         name: "Dr. Jaime A. Acosta, MD",
         tagline: t("providers.dr1.title"),
         langs: t("providers.dr1.languages"),
         bio: t("provider.bio.dr1"),
+        bio2: t("provider.bio.dr1.text2"),
         photo: doctorjaime,
         researchGate: "#",
         linkedIn: "#"
@@ -326,8 +327,8 @@ export default function AboutUs() {
                 href="/contact"
                 className="inline-flex items-center gap-2 rounded-sm px-6 py-3 font-semibold shadow-lg transition hover:scale-105"
                 style={{
-                  backgroundColor: PALETTE[0].base, 
-                  color: BRAND.text,             
+                  backgroundColor: PALETTE[0].base,
+                  color: BRAND.text,
                 }}
               >
                 {t("about.cta2.detail")}
@@ -343,7 +344,7 @@ export default function AboutUs() {
                 }}
 
               >
-                {t("about.cta1.detail")} 
+                {t("about.cta1.detail")}
               </Link>
             </Reveal>
           </div>
