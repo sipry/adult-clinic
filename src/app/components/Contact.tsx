@@ -168,7 +168,7 @@ const ContactSplitWithForm: React.FC = () => {
   const { t, language } = useTranslation();
 
   const ADDRESS = "201 Hilda St Suite # 10, Kissimmee, FL 34741";
-  const EMAIL = "info@yourhealthadult.com";
+  const EMAIL = "info@yourhealthadultcare.com";
   const PHONE_DISPLAY = "(407) 554-5707";
   const PHONE_TEL = "+407554-5707";
   const FAX_DISPLAY = "(321) 900-4411";
