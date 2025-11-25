@@ -123,19 +123,19 @@ export default function ProviderDetailPage() {
     : isMeaningful(fallbackDr2)
       ? fallbackDr2
       : undefined;
-const aboutParagraphs = isMeaningful(secondParagraph)
-  ? [...baseParagraphs, secondParagraph.trim()]
-  : baseParagraphs;
+  const aboutParagraphs = isMeaningful(secondParagraph)
+    ? [...baseParagraphs, secondParagraph.trim()]
+    : baseParagraphs;
 
-const defaultConditions = [
-  t("conditions.preventiveMedicine"),
-  t("conditions.adultImmunizations"),
-  t("conditions.minorIllness"),
-  t("conditions.minorInjury"),
-  t("conditions.chronicDiseaseManagement"),
-];
+  const defaultConditions = [
+    t("conditions.preventiveMedicine"),
+    t("conditions.adultImmunizations"),
+    t("conditions.minorIllness"),
+    t("conditions.minorInjury"),
+    t("conditions.chronicDiseaseManagement"),
+  ];
 
-const conditions: string[] =
+  const conditions: string[] =
     Array.isArray(p.conditions) && p.conditions.length > 0
       ? p.conditions
       : defaultConditions;
