@@ -75,37 +75,7 @@ export default function PediatricClinicPromo({
       aria-labelledby="peds-section-title"
       style={{ backgroundColor: BRAND.bg }}
     >
-      {/* Header */}
-      <div className="mx-auto max-w-7xl px-6 lg:px-8 text-center mb-10">
-        <Reveal y={8}>
-          <span
-            className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-semibold tracking-[0.25em] uppercase"
-            style={{
-
-              color: BRAND.accent,
-            }}
-          >
-            {t("peds.pretitle")}
-          </span>
-        </Reveal>
-        <Reveal y={8}>
-          <h2
-            id="peds-section-title"
-            className="mt-4 text-4xl sm:text-5xl font-extrabold tracking-tight"
-            style={{ color: BRAND.text }}
-          >
-            {t("peds.title")}
-          </h2>
-        </Reveal>
-        <Reveal y={10} delay={80}>
-          <p
-            className="mt-3 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed"
-            style={{ color: BRAND.subtitle }}
-          >
-            {t("peds.subtitle")}
-          </p>
-        </Reveal>
-      </div>
+     
 
       {/* Contenido */}
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -126,12 +96,12 @@ export default function PediatricClinicPromo({
               {t("peds.badge")}
             </div>
 
-            <h3
+            <h2
               className="text-3xl sm:text-4xl font-extrabold leading-tight"
               style={{ color: BRAND.text }}
             >
               {t("peds.heroTitle")}
-            </h3>
+            </h2>
 
             <p
               className="mt-4 text-base sm:text-lg leading-7"
@@ -203,9 +173,7 @@ export default function PediatricClinicPromo({
               </a>
             </div>
 
-            <p className="mt-4 text-xs" style={{ color: BRAND.subtitle }}>
-              {t("peds.firstVisitNote")}
-            </p>
+       
           </motion.div>
 
           {/* DERECHA */}
