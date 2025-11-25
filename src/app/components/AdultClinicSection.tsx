@@ -108,12 +108,12 @@ export default function ClinicPromoDeluxeFinal({
               {tv("adult.kicker")}
             </p>
 
-            <h1
+            <h2
               id="adult-clinic-heading"
               className="mt-2 text-4xl sm:text-5xl font-extrabold leading-[1.15] text-neutral-900"
             >
               {tv("adult.heading")}: <span className="whitespace-nowrap">{nombre}</span>
-            </h1>
+            </h2>
 
             <p className="mt-4 text-base sm:text-lg leading-7 sm:leading-8 text-neutral-700 max-w-2xl">
               {tagline || tv("adult.tagline")}

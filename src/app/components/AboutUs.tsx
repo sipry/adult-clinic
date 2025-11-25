@@ -245,37 +245,6 @@ export const AboutUsProfessional: React.FC = () => {
               </a>
             </Reveal>
           </div>
-
-          <Reveal y={10} delay={260}>
-            <div className="mt-6">
-              <div
-                className="text-xs uppercase tracking-wider mb-3"
-                style={{ color: PALETTE[7].base }}
-              >
-                {t("about.insurance")}
-              </div>
-              <div className="flex flex-wrap items-center gap-x-8 gap-y-3">
-                {[
-                  "OSCAR",
-                  "CIGNA",
-                  "SUNSHINE HEALTH",
-                  "HUMANA MEDICAID",
-                  "AETNA",
-                  "UNITED HEALTH CARE",
-                  "HEALTH FIRST",
-                ].map((logo, i) => (
-                  <Reveal key={logo} y={8} delay={280 + i * 80}>
-                    <span
-                      className="text-sm font-semibold"
-                      style={{ color: "rgba(0, 18, 25, 0.6)" }}
-                    >
-                      {logo}
-                    </span>
-                  </Reveal>
-                ))}
-              </div>
-            </div>
-          </Reveal>
         </div>
 
         {/* RIGHT COLUMN */}

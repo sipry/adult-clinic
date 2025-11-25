@@ -166,9 +166,9 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ serviceId, onBack }) => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <AlertCircle className="mx-auto h-12 w-12 text-red-500 mb-4" />
-            <h1 className="text-2xl font-bold text-gray-900 mb-4">
+            <p className="text-2xl font-bold text-gray-900 mb-4">
               Servicio no encontrado
-            </h1>
+            </p>
             <button
               onClick={onBack}
               className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"

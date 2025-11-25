@@ -36,8 +36,6 @@ export const useProvidersData = () => {
       name: "Dr. Jaime A. Acosta , MD",
       title: t("providers.dr1.title"),
       image: doctorAvatar,
-      // 👇 AQUÍ LA CLAVE: usamos tArray para leer el array de la traducción
-      // 'providers.dr1.education': [ '...', '...' ]
       education: tArray<string>("providers.dr1.education"),
       residency: "",
       experience: t("providers.dr1.experience"),
@@ -52,7 +50,6 @@ export const useProvidersData = () => {
       name: "Dr. Juan Ortiz Guevara, MD",
       title: t("providers.dr2.title"),
       image: maleAvatar,
-      // aquí sigue siendo un string normal
       education: t("providers.dr2.education"),
       residency: "Jersey Shore Medical Center, Neptune City, NJ",
       experience: t("providers.dr2.experience"),

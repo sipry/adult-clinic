@@ -1,8 +1,8 @@
 // app/provider/layout.tsx
 import React from "react";
 import type { Metadata } from "next";
-import ClientTranslationProvider from "./ClientTranslationProvider";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 export const metadata: Metadata = {
   title: {
@@ -20,12 +20,11 @@ export default function ProvidersLayout({
 }) {
   return (
     <div className="min-h-screen bg-white">
-      <ClientTranslationProvider>
         <Navbar scheme="white"/>
         <main className="mx-auto max-w-7xl px-6 pb-16 lg:px-8">
           {children}
         </main>
-      </ClientTranslationProvider>
+      <Footer />
     </div>
   );
 }

@@ -107,8 +107,8 @@ const ServicesGrid: React.FC = () => {
             style={{ color: BRAND.text }}
           >
             {locale === "es"
-              ? "Atención primaria integral"
-              : "Comprehensive Primary Care"}
+              ? "Atención primaria integral Kissimmee, FL"
+              : "Comprehensive Primary Care Kissimmee, FL"}
           </h2>
           <p
             className="text-base md:text-lg"

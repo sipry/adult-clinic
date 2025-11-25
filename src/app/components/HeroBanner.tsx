@@ -23,7 +23,6 @@ const AUTOPLAY_MS = 5000;
 
 export default function HeroBannerMixedCentered() {
   const { t } = useTranslation();
-  const EYEBROW = t("hero.pretitle");
   const [i, setI] = useState(0);
   const prefersReducedMotion = useReducedMotion();
 
@@ -166,15 +165,15 @@ export default function HeroBannerMixedCentered() {
       <div className="relative z-10 h-full">
         <div className="flex h-full items-center justify-center">
           <div className="w-full max-w-5xl px-6 md:px-10 text-center">
-            <motion.div
+            <motion.h1
               className="text-[11px] md:text-lg tracking-[0.28em] uppercase"
               style={{ color: primary.base }}
               initial="hidden"
               animate={eyebrowCtrls}
               variants={eyebrowV}
             >
-              {EYEBROW}
-            </motion.div>
+              {t("hero.pretitle")}
+            </motion.h1>
 
             <motion.h2
               initial="hidden"

@@ -86,7 +86,7 @@ const ClinicInfoStrip: React.FC<ClinicInfoStripProps> = ({
 }) => {
   const { t } = useTranslation();
 
-  const email = "info@yourhealthadults.com";
+  const email = "info@yourhealthadultcare.com";
   const phone = "+(407) 574 4848";
   const location = "201 Hilda St Suite #10, Kissimmee, FL 34741";
 

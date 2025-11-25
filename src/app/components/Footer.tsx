@@ -6,16 +6,16 @@ import {
   MapPin,
   Mail,
   Phone,
-  Facebook,
-  Instagram,
 } from "lucide-react";
 import Link from "next/link";
 import { useTranslation } from "../contexts/TranslationContext";
 import { BRAND, PALETTE } from "../ui/palette";
 
 /* 👉 URLs del portal del paciente según idioma (ajusta a tus URLs reales) */
-const PATIENT_PORTAL_URL_ES = "https://echeckin.healow.com/webecheckin/echeckin/QRCheckin?v1=R01UQ0RUcW96bTN6SHFNcGV2MUVpVjZIamlkY1VBU3QrRGdoOHZlRmw1WVBEemlHc2pTWm9Eay93dzY5SmN3QVZHdE9aTHEwTmtJM0lLc25hZk82Y3EwZlcxVHJVaFYxV1FvRndTOTBFMHc9";
-const PATIENT_PORTAL_URL_EN = "https://echeckin.healow.com/webecheckin/echeckin/QRCheckin?v1=R01UQ0RUcW96bTN6SHFNcGV2MUVpVjZIamlkY1VBU3QrRGdoOHZlRmw1WVBEemlHc2pTWm9Eay93dzY5SmN3QVZHdE9aTHEwTmtJM0lLc25hZk82Y3EwZlcxVHJVaFYxV1FvRndTOTBFMHc9";
+const PATIENT_PORTAL_URL_ES =
+  "https://echeckin.healow.com/webecheckin/echeckin/QRCheckin?v1=R01UQ0RUcW96bTN6SHFNcGV2MUVpVjZIamlkY1VBU3QrRGdoOHZlRmw1WVBEemlHc2pTWm9Eay93dzY5SmN3QVZHdE9aTHEwTmtJM0lLc25hZk82Y3EwZlcxVHJVaFYxV1FvRndTOTBFMHc9";
+const PATIENT_PORTAL_URL_EN =
+  "https://echeckin.healow.com/webecheckin/echeckin/QRCheckin?v1=R01UQ0RUcW96bTN6SHFNcGV2MUVpVjZIamlkY1VBU3QrRGdoOHZlRmw1WVBEemlHc2pTWm9Eay93dzY5SmN3QVZHdE9aTHEwTmtJM0lLc25hZk82Y3EwZlcxVHJVaFYxV1FvRndTOTBFMHc9";
 
 /* ---------- Motion utils: Reveal on scroll ---------- */
 function usePrefersReducedMotion(): boolean {
@@ -124,31 +124,31 @@ const Footer: React.FC = () => {
     threshold = 0.2,
     rootMargin = "0px 0px -10% 0px",
   }) => {
-    const ref = React.useRef<HTMLDivElement>(null);
-    const inView = useInOutViewport(ref, { threshold, rootMargin });
-    const [shown, setShown] = React.useState(false);
-    const reduce = usePrefersReducedMotion();
+      const ref = React.useRef<HTMLDivElement>(null);
+      const inView = useInOutViewport(ref, { threshold, rootMargin });
+      const [shown, setShown] = React.useState(false);
+      const reduce = usePrefersReducedMotion();
 
-    React.useEffect(() => {
-      if (inView) setShown(true);
-      else if (!once) setShown(false);
-    }, [inView, once]);
+      React.useEffect(() => {
+        if (inView) setShown(true);
+        else if (!once) setShown(false);
+      }, [inView, once]);
 
-    const style: React.CSSProperties = reduce
-      ? {}
-      : {
+      const style: React.CSSProperties = reduce
+        ? {}
+        : {
           opacity: shown ? 1 : 0,
           transform: shown ? "none" : `translate(${x}px, ${y}px) scale(${scale})`,
           transition: `opacity ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms, transform ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms`,
           willChange: "opacity, transform",
         };
 
-    return (
-      <div ref={ref} className={className} style={style}>
-        {children}
-      </div>
-    );
-  };
+      return (
+        <div ref={ref} className={className} style={style}>
+          {children}
+        </div>
+      );
+    };
 
   return (
     <footer
@@ -158,7 +158,7 @@ const Footer: React.FC = () => {
         color: BRAND.text,
       }}
     >
-      {/* Map strip */}
+      {/* 🗺️ Franja del mapa */}
       <Reveal y={16} delay={120}>
         <div>
           <div className="relative w-screen max-w-[100vw] ml-[calc(50%-50vw)]">
@@ -172,7 +172,9 @@ const Footer: React.FC = () => {
                 allowFullScreen
                 referrerPolicy="no-referrer-when-downgrade"
               />
-              {/* overlay clickable en mobile */}
+              {/* Degradado suave al final del mapa */}
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white to-transparent" />
+              {/* Overlay clickable en mobile */}
               <a
                 href={MAP_LINK}
                 target="_blank"
@@ -184,179 +186,14 @@ const Footer: React.FC = () => {
         </div>
       </Reveal>
 
-      {/* Main content */}
-      <div className="max-w-7xl mx-auto px-6 py-12 grid gap-x-8 gap-y-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-5">
-        {/* Brand */}
-        <div className="sm:col-span-2">
-          <h2
-            className="text-2xl font-semibold mb-3"
-            style={{ color: BRAND.text }}
-          >
-            {t("footer.brand")}
-          </h2>
-          <p className="text-sm mb-5" style={{ color: `${BRAND.text}CC` }}>
-            {t("footer.tagline")}
-          </p>
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm font-semibold shadow-sm hover:scale-[1.02] transition"
-            style={{
-              backgroundColor: PALETTE[7].base,
-              color: "#FFFFFF",
-            }}
-          >
-            <Calendar className="w-4 h-4" />
-            {t("footer.cta")}
-          </Link>
-        </div>
-
-        {/* Links */}
-        <nav>
-          <h3
-            className="text-base font-semibold mb-3"
-            style={{ color: BRAND.text }}
-          >
-            {t("footer.nav.title")}
-          </h3>
-          <ul className="space-y-2 text-sm">
-            <li>
-              <Link
-                href="/#"
-                className="transition-colors"
-                style={{ color: `${BRAND.text}CC` }}
-              >
-                {t("footer.nav.home")}
-              </Link>
-            </li>
-
-            <li>
-              <Link
-                href="/aboutus"
-                className="transition-colors"
-                style={{ color: `${BRAND.text}CC` }}
-              >
-                {t("footer.nav.about")}
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/services"
-                className="transition-colors"
-                style={{ color: `${BRAND.text}CC` }}
-              >
-                {t("footer.nav.services")}
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/#providers"
-                className="transition-colors"
-                style={{ color: `${BRAND.text}CC` }}
-              >
-                {t("footer.nav.providers")}
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/contact"
-                className="transition-colors"
-                style={{ color: `${BRAND.text}CC` }}
-              >
-                {t("footer.nav.appointment")}
-              </Link>
-            </li>
-          </ul>
-        </nav>
-
-        {/* Contact */}
-        <div>
-          <h3
-            className="text-base font-semibold mb-3"
-            style={{ color: BRAND.text }}
-          >
-            {t("footer.contact.title")}
-          </h3>
-          <ul className="space-y-2 text-sm">
-            <li className="flex gap-2 items-start">
-              <Phone
-                className="w-4 h-4 shrink-0"
-                style={{ color: BRAND.accent }}
-              />
-              <span style={{ color: `${BRAND.text}CC` }}>(407) 574 - 4848</span>
-            </li>
-            <li className="flex gap-2 items-start">
-              <Mail
-                className="w-4 h-4 shrink-0"
-                style={{ color: BRAND.accent }}
-              />
-              <a
-                href="mailto:info@yourhealthadults.com"
-                className="hover:underline"
-                style={{ color: `${BRAND.text}CC` }}
-              >
-                info@yourhealthadults.com
-              </a>
-            </li>
-            <li className="flex gap-2 items-start">
-              <MapPin
-                className="w-4 h-4 shrink-0"
-                style={{ color: BRAND.accent }}
-              />
-              <span style={{ color: `${BRAND.text}CC` }}>
-                {t("footer.contact.address.line1")}
-                <br />
-                {t("footer.contact.address.line2")}
-              </span>
-            </li>
-          </ul>
-        </div>
-
-        {/* Social */}
-        <div>
-          <h3
-            className="text-base font-semibold mb-3"
-            style={{ color: BRAND.text }}
-          >
-            {t("footer.social.title")}
-          </h3>
-          <div className="flex flex-col gap-2">
-            <a
-              href={FACEBOOK_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-sm px-3 py-2 text-sm font-semibold shadow-sm hover:scale-[1.01] transition"
-              style={{
-                backgroundColor: "#1877F2",
-                color: "#FFFFFF",
-              }}
-            >
-              <Facebook className="h-4 w-4" />
-              Facebook
-            </a>
-            <a
-              href={INSTAGRAM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-sm px-3 py-2 text-sm font-semibold shadow-sm hover:scale-[1.01] transition"
-              style={{
-                background:
-                  "linear-gradient(45deg, #405DE6 0%, #833AB4 35%, #E1306C 65%, #FCB045 100%)",
-                color: "#FFFFFF",
-              }}
-            >
-              <Instagram className="h-4 w-4" aria-hidden />
-              Instagram
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* 🧩 Franja especial para el portal del paciente + QR */}
+      {/* 🧩 Portal del paciente: justo después del mapa */}
       <div
-        className="border-t"
-        style={{ borderColor: `${BRAND.text}11`, backgroundColor: "#F8FBFB" }}
+        style={{
+          borderTop: `1px solid ${BRAND.text}11`,
+          backgroundColor: "#F8FBFB",
+        }}
       >
-        <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Texto explicativo */}
           <div className="max-w-md text-center md:text-left">
             <p
@@ -393,7 +230,7 @@ const Footer: React.FC = () => {
               href={portalUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-semibold shadow-sm hover:scale-[1.01] transition"
+              className="inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-semibold shadow-sm hover:scale-[1.02] transition"
               style={{
                 backgroundColor: PALETTE[0].base,
                 color: BRAND.text,
@@ -405,18 +242,165 @@ const Footer: React.FC = () => {
         </div>
       </div>
 
-      {/* Copy */}
+      {/* 🔗 Contenido principal del footer */}
       <div
-        className="text-center text-xs py-4 border-t"
         style={{
-          borderColor: `${BRAND.text}11`,
+          borderTop: `1px solid ${BRAND.text}11`,
           backgroundColor: "#FFFFFF",
+        }}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 grid gap-x-8 gap-y-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
+          {/* Marca + CTA + redes */}
+          <div className="sm:col-span-2 md:col-span-2 flex flex-col gap-4">
+            <div>
+              <h2
+                className="text-2xl sm:text-3xl font-semibold mb-2"
+                style={{ color: BRAND.text }}
+              >
+                {t("footer.brand")}
+              </h2>
+              <p
+                className="text-sm sm:text-base"
+                style={{ color: `${BRAND.text}CC` }}
+              >
+                {t("footer.tagline")}
+              </p>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-3 mt-2">
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm font-semibold shadow-sm hover:scale-[1.03] transition"
+                style={{
+                  backgroundColor: PALETTE[7].base,
+                  color: "#FFFFFF",
+                }}
+              >
+                <Calendar className="w-4 h-4" />
+                {t("footer.cta")}
+              </Link>
+
+
+            </div>
+          </div>
+
+          {/* Navegación */}
+          <nav>
+            <h3
+              className="text-base font-semibold mb-3"
+              style={{ color: BRAND.text }}
+            >
+              {t("footer.nav.title")}
+            </h3>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link
+                  href="/#"
+                  className="transition-colors hover:underline"
+                  style={{ color: `${BRAND.text}CC` }}
+                >
+                  {t("footer.nav.home")}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/aboutus"
+                  className="transition-colors hover:underline"
+                  style={{ color: `${BRAND.text}CC` }}
+                >
+                  {t("footer.nav.about")}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/services"
+                  className="transition-colors hover:underline"
+                  style={{ color: `${BRAND.text}CC` }}
+                >
+                  {t("footer.nav.services")}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/#providers"
+                  className="transition-colors hover:underline"
+                  style={{ color: `${BRAND.text}CC` }}
+                >
+                  {t("footer.nav.providers")}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/contact"
+                  className="transition-colors hover:underline"
+                  style={{ color: `${BRAND.text}CC` }}
+                >
+                  {t("footer.nav.appointment")}
+                </Link>
+              </li>
+            </ul>
+          </nav>
+
+          {/* Contacto */}
+          <div>
+            <h3
+              className="text-base font-semibold mb-3"
+              style={{ color: BRAND.text }}
+            >
+              {t("footer.contact.title")}
+            </h3>
+            <ul className="space-y-2 text-sm">
+              <li className="flex gap-2 items-start">
+                <Phone
+                  className="w-4 h-4 shrink-0 mt-[2px]"
+                  style={{ color: BRAND.accent }}
+                />
+                <span style={{ color: `${BRAND.text}CC` }}>
+                  (407) 574 - 4848
+                </span>
+              </li>
+              <li className="flex gap-2 items-start">
+                <Mail
+                  className="w-4 h-4 shrink-0 mt-[2px]"
+                  style={{ color: BRAND.accent }}
+                />
+                <a
+                  href="mailto:info@yourhealthadultcare.com"
+                  className="hover:underline"
+                  style={{ color: `${BRAND.text}CC` }}
+                >
+                  info@yourhealthadultcare.com
+                </a>
+              </li>
+              <li className="flex gap-2 items-start">
+                <MapPin
+                  className="w-4 h-4 shrink-0 mt-[2px]"
+                  style={{ color: BRAND.accent }}
+                />
+                <span style={{ color: `${BRAND.text}CC` }}>
+                  {t("footer.contact.address.line1")}
+                  <br />
+                  {t("footer.contact.address.line2")}
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* © Copy final */}
+      <div
+        style={{
+          borderTop: `1px solid ${BRAND.text}11`,
+          backgroundColor: "#FDFDFD",
           color: `${BRAND.text}99`,
         }}
       >
-        <p>
-          © {year} {t("footer.brand")}. {t("footer.copyright")}
-        </p>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 text-center text-xs">
+          <p>
+            © {year} {t("footer.brand")}. {t("footer.copyright")}
+          </p>
+        </div>
       </div>
     </footer>
   );

@@ -18,7 +18,7 @@ export interface ServiceTranslation {
   tags?: string[];
 }
 
-type TranslationValue = string | string[] | ServiceTranslation[];
+type TranslationValue = string | string[] | ServiceTranslation[] | Record<string, unknown>;
 
 interface TranslationContextType {
   language: Language;
@@ -48,15 +48,16 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'nav.language': 'Lenguaje',
 
     // Hero Banner
-    'hero.pretitle': 'CUIDADO FAMILIAR',
-    'hero.subtitle': 'Servicios médicos cercanos y confiables para cuidar lo más valioso: tu familia.',
+    'hero.pretitle': 'Atención primaria en Kissimmee, FL',
+    'hero.subtitle': 'Servicios cercanos y confiables para cuidar lo que más importa: su familia.',
     'hero.contact': 'Programar una cita',
     'hero.portal': 'Explorar servicios',
 
+
     // About Us
-    'about.pretitle': 'Sobre nosotros',
-    'about.title': 'Tus expertos de confianza',
-    'about.subtitle': 'Prevención, claridad y ciencia en cada consulta.',
+    'about.pretitle': 'Sobre Nuestra Clínica',
+    'about.title': 'Médico de Atención Primaria en Kissimmee, FL',
+    'about.subtitle': 'Medicina familiar personalizada en la que puede confiar',
     'about.bullet1': 'Tratamos enfermedades agudas como resfriados, gripe y neumonía.',
     'about.bullet2': 'Manejamos asma, diabetes y problemas cardíacos.',
     'about.bullet3': 'Ayudamos con colesterol alto, presión arterial alta y obesidad.',
@@ -124,9 +125,9 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'contact.footer': '© {year} YouHealth Pediatrics. Todos los derechos reservados.',
 
     // Services
-    'services.pretitle': 'Especialidades',
-    'services.title': 'Atención amable, servicios de confianza',
-    'services.subtitle': 'Comprometidos a brindarte el mejor servicio.',
+    'services.pretitle': 'Nuestros Servicios y Especialidades',
+    'services.title': 'Atención Primaria y Medicina Familiar en Kissimmee, FL',
+    'services.subtitle': 'Atención primaria integral, chequeos preventivos y manejo de enfermedades crónicas para toda la familia.',
     'services.hotline.title': 'Línea Directa de Enfermería 24/7',
     'services.hotline.desc': 'Orientación médica y apoyo las 24 horas',
     'services.flexible.title': 'Horarios Flexibles',
@@ -209,6 +210,12 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'provider.treated': 'Condiciones atendidas',
     'provider.cta': 'Ver más',
 
+    "conditions.preventiveMedicine": "Medicina preventiva",
+    "conditions.adultImmunizations": "Vacunas para adultos",
+    "conditions.minorIllness": "Diagnóstico y tratamiento de enfermedades menores",
+    "conditions.minorInjury": "Diagnóstico y tratamiento de lesiones menores",
+    "conditions.chronicDiseaseManagement": "Manejo de enfermedades crónicas",
+
     // appointment
     'appointment.pretitle': 'Cómo funciona',
     'appointment.title': 'Proceso de cita',
@@ -251,7 +258,7 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     "peds.benefits.bilingual.desc": "Español e inglés para que te sientas cómodo en cada visita.",
     "peds.benefits.fastAppointments.title": "Nuevos pacientes",
     "peds.benefits.fastAppointments.desc": "Bienvenidos desde la primera llamada.",
-    "peds.benefits.insurance.title": "Aceptamos la mayoría de planes",
+    "peds.benefits.insurance.title": "Aceptamos variedad de planes",
     "peds.benefits.insurance.desc": "Llámanos para verificar tu cubierta.",
     "ctaPrimary": "Agendar cita pediátrica",
     "ctaPrimaryAria": "Agendar una cita en la clínica pediátrica",
@@ -495,15 +502,15 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'nav.process': 'Process',
 
     // Hero Banner
-    'hero.pretitle': 'FAMILY CARE',
+    'hero.pretitle': 'Primary care, Kissimmee, FL',
     'hero.subtitle': "Close and reliable services to care for what matters most: your family.",
     'hero.contact': 'Schedule an appointment',
     'hero.portal': 'Explore Services',
 
     // About Us
-    'about.pretitle': 'About Us',
-    'about.title': 'Your Trusted Experts',
-    'about.subtitle': 'Prevention, clarity, and science in every visit.',
+    'about.pretitle': 'About Our Clinic',
+    'about.title': 'Primary Care Doctors in Kissimmee, FL',
+    'about.subtitle': 'Personalized Family Medicine You Can Trust',
     'about.bullet1': 'We treat acute illnesses such as colds, flu, and pneumonia.',
     'about.bullet2': 'We manage asthma, diabetes, and heart conditions.',
     'about.bullet3': 'We help with high cholesterol, high blood pressure, and obesity.',
@@ -570,9 +577,9 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'contact.footer': '© {year} YouHealth Pediatrics. All rights reserved.',
 
     // Services
-    'services.pretitle': 'Specialities',
-    'services.title': 'Gentle Care, Trusted Services',
-    'services.subtitle': 'Committed to providing you with the best service.',
+    'services.pretitle': 'Our Services & Specialties',
+    'services.title': 'Primary Care & Family Medicine in Kissimmee, FL',
+    'services.subtitle': 'Comprehensive primary care, preventive checkups, and chronic disease management for the whole family.',
     'services.cta.title': 'Ready to Schedule an Appointment?',
     'services.cta.subtitle': "Our friendly staff is ready to help you schedule your child's next visit. We accept most insurance plans and offer flexible payment options.",
     'services.call': 'Call Us Today',
@@ -651,6 +658,12 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'provider.treated': 'Conditions Treated',
     'provider.cta': 'See more',
 
+    "conditions.preventiveMedicine": "Preventive Medicine",
+    "conditions.adultImmunizations": "Adult Immunizations",
+    "conditions.minorIllness": "Minor Illness Diagnosis and Treatment",
+    "conditions.minorInjury": "Minor Injury Diagnosis and Treatment",
+    "conditions.chronicDiseaseManagement": "Chronic Disease Management",
+
     // appointment
     'appointment.pretitle': 'How it works',
     'appointment.title': 'Appointment Process',
@@ -663,14 +676,15 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     'appointment.step3.desc': 'Join your appointment on time and be prepared to discuss your concerns with the provider.',
 
     // Clinica
-    'clinic.pretitle': 'Our office',
-    'clinic.title': 'A place designed for your Comfort',
-    'clinic.cta': 'View Gallery',
+    'clinic.pretitle': 'Our Clinic',
+    'clinic.title': 'Primary Care Clinic in Kissimmee, FL Designed for Your Comfort',
+    'clinic.cta': 'View Photo Gallery',
+
 
     // Clinica de pediatria
-    "peds.pretitle": "See our pediatric clinic",
-    "peds.title": "Your Health Pediatric",
-    "peds.subtitle": "Everything in one place: visits, vaccines, follow-ups and guidance for parents.",
+    "peds.pretitle": "Our Pediatric Clinic",
+    "peds.title": "Pediatric Care for Your Child in Kissimmee, FL",
+    "peds.subtitle": "Everything in one place: checkups, vaccines, sick visits, follow-ups, and guidance for parents.",
     "peds.clinicName": "SweetCare Pediatric Clinic",
     "peds.phone": "(407) 554-5707",
     "peds.city": "Kissimmee, FL 34741",
@@ -693,7 +707,7 @@ const translations: Record<Language, Record<string, TranslationValue>> = {
     "peds.benefits.bilingual.desc": "Spanish and English so you feel comfortable in every visit.",
     "peds.benefits.fastAppointments.title": "New Patients",
     "peds.benefits.fastAppointments.desc": "Welcome from day one.",
-    "peds.benefits.insurance.title": "We accept most plans",
+    "peds.benefits.insurance.title": "We accept a variety of plans",
     "peds.benefits.insurance.desc": "Call us to verify your coverage.",
 
     "ctaPrimary": "Book pediatric appointment",
