@@ -252,7 +252,7 @@ const ServicesRail: React.FC<{ featuredKeys?: string[] }> = ({
               {t("service.seeAll.button") || "See all services"}
             </Link>
 
-            {/* Flechas */}
+            {/* Flechas arriba */}
             <div className="flex gap-2">
               <button
                 type="button"
@@ -276,7 +276,6 @@ const ServicesRail: React.FC<{ featuredKeys?: string[] }> = ({
           </div>
         </div>
       </div>
-
 
       {/* RAIL */}
       <div className="relative">
@@ -315,9 +314,9 @@ const ServicesRail: React.FC<{ featuredKeys?: string[] }> = ({
                       onClick={
                         isTouchDevice
                           ? () =>
-                            setFlippedKey((prev) =>
-                              prev === s.__key ? null : s.__key
-                            )
+                              setFlippedKey((prev) =>
+                                prev === s.__key ? null : s.__key
+                              )
                           : undefined
                       }
                       className={articleClass}
@@ -383,25 +382,51 @@ const ServicesRail: React.FC<{ featuredKeys?: string[] }> = ({
           </ul>
         </div>
 
-        {/* dots */}
+        {/* dots + flechas abajo */}
         <div className="mt-4 w-full flex justify-center">
-          <div className="flex items-center gap-2">
-            {ordered.map((_, i) => {
-              const isActive = i === activeIndex;
-              const color = PALETTE[i % PALETTE.length];
-              return (
-                <button
-                  key={i}
-                  onClick={() => scrollToLogical(i)}
-                  aria-label={`Go to card ${i + 1}`}
-                  className={`h-1.5 rounded-full transition-all ${isActive ? "w-6" : "w-2.5"
+          <div className="flex flex-col items-center gap-3">
+            {/* dots */}
+            <div className="flex items-center gap-2">
+              {ordered.map((_, i) => {
+                const isActive = i === activeIndex;
+                const color = PALETTE[i % PALETTE.length];
+                return (
+                  <button
+                    key={i}
+                    onClick={() => scrollToLogical(i)}
+                    aria-label={`Go to card ${i + 1}`}
+                    className={`h-1.5 rounded-full transition-all ${
+                      isActive ? "w-6" : "w-2.5"
                     }`}
-                  style={{
-                    backgroundColor: isActive ? color.base : "#D9D9D9",
-                  }}
-                />
-              );
-            })}
+                    style={{
+                      backgroundColor: isActive ? color.base : "#D9D9D9",
+                    }}
+                  />
+                );
+              })}
+            </div>
+
+            {/* flechas */}
+            <div className="flex gap-2">
+              <button
+                type="button"
+                aria-label="Previous service"
+                onClick={() => scrollByOne(-1)}
+                className="inline-flex h-11 px-10 items-center justify-center rounded-md shadow-sm border border-[#CA6702]/30"
+                style={{ color: "#001219" }}
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </button>
+              <button
+                type="button"
+                aria-label="Next service"
+                onClick={() => scrollByOne(1)}
+                className="inline-flex h-11 px-10 items-center justify-center rounded-md shadow-sm border border-[#CA6702]/30"
+                style={{ color: "#001219" }}
+              >
+                <ChevronRight className="h-5 w-5" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
